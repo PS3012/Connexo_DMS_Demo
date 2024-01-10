@@ -1,0 +1,60 @@
+/*! =================================================================================*/
+/*! DOCUMENT PANEL CSS */
+/*! =================================================================================*/
+#document-panel {
+    padding: 20px;
+}
+
+#document-panel .workflow-bar {
+    border-radius: 10px;
+    padding: 20px;
+    display: grid;
+    gap: 20px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+}
+
+#document-panel .workflow-bar .top-block {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+#document-panel .workflow-bar .top-block .head {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+#document-panel .workflow-bar .top-block .btn-bar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
+}
+
+#document-panel .workflow-bar .progress-block {
+    display: flex;
+    border: 1px solid #808080d6;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+#document-panel .workflow-bar .progress-block div {
+    flex: 1 1 auto;
+    text-align: center;
+    font-size: 0.9rem;
+    padding: 5px;
+    border-right: 1px solid #808080d6;
+}
+
+#document-panel .workflow-bar .progress-block div:nth-last-child(1) {
+    border-right: 0;
+}
+
+#document-panel .workflow-bar .progress-block div.active {
+    background: #00ff0073;
+}
+
+#document-panel .workflow-bar .progress-block div.active.closed {
+    background: #ff000073;
+}
