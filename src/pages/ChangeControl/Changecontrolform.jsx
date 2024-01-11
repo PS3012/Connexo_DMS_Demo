@@ -6,37 +6,86 @@ import Grid from '../../components/DataFields/Grid';
 
 
 function Changecontrolform() {
-
-
+    const [form, setForm] = useState("General Information");
+    const [typeOfChange, setTypeOfChange] = useState(0)
+    const [selected, setSelected] = useState([]);
+    const [groupComment, setGroupComment] = useState(0)
     const membership = [
         { label: "Grapes", value: "grapes" },
         { label: "Mango", value: "mango", disabled: true },
         { label: "Strawberry", value: "strawberry", },
     ];
-
     const cftreviewer = [
         { label: "Anshul Patel", value: "1" },
         { label: "Mango", value: "mango", disabled: true },
         { label: "Amit", value: "2", },
     ];
-
-
-    const [form, setForm] = useState("General Information");
-
-    const [selected, setSelected] = useState([]);
-
-    const docFile = {
-        label: 'Document Details',
-        instruction: <div></div>,
-        required: true,
-        columnList: [
-            { id: '2.1.1.1', name: 'Title of Dcoument', type: 'text' },
-            { id: '2.1.1.2', name: 'Attached File', type: 'File' },
-            { id: '2.1.1.3', name: 'Remark', type: 'text' },
-            
-        ]
-    }
-
+    const docFile = [
+        {
+            label: 'Initial attachment',
+            instruction: 'Please Attach all relevant or supporting documents',
+            required: true,
+            columnList: [
+                { id: '2.1.1.1', name: 'Title of Document', type: 'text' },
+                { id: '2.1.1.2', name: 'Attached File', type: 'File' },
+                { id: '2.1.1.3', name: 'Remark', type: 'text' },
+            ]
+        }, {
+            label: 'QA Attachments',
+            instruction: 'Please Attach all relevant or supporting documents',
+            required: true,
+            columnList: [
+                { id: '2.1.1.1', name: 'Title of Document', type: 'text' },
+                { id: '2.1.1.2', name: 'Attached File', type: 'File' },
+                { id: '2.1.1.3', name: 'Remark', type: 'text' },
+            ]
+        }, {
+            label: 'QA Attachments',
+            instruction: 'Please Attach all relevant or supporting documents',
+            required: true,
+            columnList: [
+                { id: '2.1.1.1', name: 'Title of Document', type: 'text' },
+                { id: '2.1.1.2', name: 'Attached File', type: 'File' },
+                { id: '2.1.1.3', name: 'Remark', type: 'text' },
+            ]
+        }, {
+            label: 'QA Attachments',
+            instruction: 'Please Attach all relevant or supporting documents',
+            required: true,
+            columnList: [
+                { id: '2.1.1.1', name: 'Title of Document', type: 'text' },
+                { id: '2.1.1.2', name: 'Attached File', type: 'File' },
+                { id: '2.1.1.3', name: 'Remark', type: 'text' },
+            ]
+        }, {
+            label: 'CFT Attachments',
+            instruction: 'Please Attach all relevant or supporting documents',
+            required: true,
+            columnList: [
+                { id: '2.1.1.1', name: 'Title of Document', type: 'text' },
+                { id: '2.1.1.2', name: 'Attached File', type: 'File' },
+                { id: '2.1.1.3', name: 'Remark', type: 'text' },
+            ]
+        }, {
+            label: 'Training Attachments',
+            instruction: 'Please Attach all relevant or supporting documents',
+            required: true,
+            columnList: [
+                { id: '2.1.1.1', name: 'Title of Document', type: 'text' },
+                { id: '2.1.1.2', name: 'Attached File', type: 'File' },
+                { id: '2.1.1.3', name: 'Remark', type: 'text' },
+            ]
+        }, {
+            label: 'List of Attachments',
+            instruction: 'Please Attach all relevant or supporting documents',
+            required: true,
+            columnList: [
+                { id: '2.1.1.1', name: 'Title of Document', type: 'text' },
+                { id: '2.1.1.2', name: 'Attached File', type: 'File' },
+                { id: '2.1.1.3', name: 'Remark', type: 'text' },
+            ]
+        },
+    ]
     const docDetails = {
         label: 'Document Details',
         instruction: <div></div>,
@@ -49,7 +98,6 @@ function Changecontrolform() {
             { id: '2.1.1.5', name: 'Remarks', type: 'text' },
         ]
     }
-
     const changeCloser = {
         label: 'Document Details',
         instruction: <div></div>,
@@ -92,7 +140,9 @@ function Changecontrolform() {
 
                         <div className={form === 'Additional Information' ? 'active' : ''} onClick={() => setForm('Additional Information')}>Additional Information</div>
 
-                        <div className={form === 'Group Comments' ? 'active' : ''} onClick={() => setForm('Group Comments')}>Group Comments</div>
+                        {groupComment === 'yes' &&
+                            <div className={form === 'Group Comments' ? 'active' : ''} onClick={() => setForm('Group Comments')}>Group Comments</div>
+                        }
 
                         <div className={form === 'Risk Assessment' ? 'active' : ''} onClick={() => setForm('Risk Assessment')}>Risk Assessment</div>
 
@@ -110,19 +160,19 @@ function Changecontrolform() {
 
                                 <div className="group-input">
                                     <label className='font-weight-detailsform'><b>Record Number</b></label>
-                                    <input type="text" className="form-control" value="Jordan/EA/2024/00000001" disabled />
+                                    <input type="text" value="Jordan/EA/2024/00000001" disabled />
                                 </div>
                                 <div className='form-flex'>
 
                                     <div className="group-input">
                                         <label className='font-weight-detailsform'><b>Initiator</b></label>
-                                        <input type="text" className="form-control" value="Amit Guru" disabled />
+                                        <input type="text" value="Amit Guru" disabled />
                                     </div>
 
 
                                     <div className="group-input">
                                         <label className='font-weight-detailsform'><b>Date of Initiation</b></label>
-                                        <input type="" className="form-control" value="10-Jan-2024" disabled />
+                                        <input type="" value="10-Jan-2024" disabled />
                                     </div>
 
                                     <div className="group-input">
@@ -135,25 +185,24 @@ function Changecontrolform() {
                                     <div className="group-input">
                                         <label className='font-weight-detailsform'><b>Due Date</b><span className="required">&nbsp;*</span></label>
                                         <div className='instruction'>Please mention expected date of completion</div>
-                                        <input type="date" className="form-control" placeholder="" />
+                                        <input type="date" placeholder="" />
                                     </div>
 
                                     <div className="group-input">
                                         <label className='font-weight-detailsform'><b>Initiator Group <span className="required">&nbsp;*</span></b></label>
-                                        <input type="date" className="form-control" placeholder="" />
+                                        <input type="date" placeholder="" />
                                     </div>
 
                                     <div className="group-input">
                                         <label className='font-weight-detailsform'><b>Initiator Group Code</b></label>
-                                        <input type="" className="form-control" value="" disabled />
+                                        <input type="" value="" disabled />
                                     </div>
                                 </div>
 
                                 <div className="group-input">
                                     <label className='font-weight-detailsform'><b>Short Description <span className="required">&nbsp;*</span></b></label>
                                     <div className='instruction'>Please mention brief summary</div>
-                                    <textarea className="form-control" name="w3review" rows="4" cols="50"></textarea>
-
+                                    <textarea name="w3review" rows="4" cols="50"></textarea>
                                 </div>
 
                                 <div className='form-flex'>
@@ -178,7 +227,7 @@ function Changecontrolform() {
                                     <div className="group-input">
                                         <label className='font-weight-detailsform'><b>Other</b></label>
                                         <div className='instruction'>Please select yes if it is has recurred in past six months</div>
-                                        <textarea className="form-control" name="w3review" rows="3" cols="50"></textarea>
+                                        <textarea name="w3review"></textarea>
                                     </div>
 
                                     <div className="group-input">
@@ -195,12 +244,12 @@ function Changecontrolform() {
 
                                     <div className="group-input">
                                         <label className='font-weight-detailsform'><b>Repeat Nature</b></label>
-                                        <textarea className="form-control" name="w3review" rows="3" cols="50"></textarea>
+                                        <textarea name="w3review"></textarea>
                                     </div>
 
                                     <div className="group-input">
                                         <label className='font-weight-detailsform'><b>Risk Level</b></label>
-                                        <select name="risk_level" className="form-control">
+                                        <select name="risk_level">
                                             <option value="0">-- Select --</option>
                                             <option value="minor">Minor</option>
                                             <option value="major">Major</option>
@@ -210,7 +259,7 @@ function Changecontrolform() {
 
                                     <div className="group-input">
                                         <label className='font-weight-detailsform'><b>Division Code</b><span>*</span></label>
-                                        <select name="div_code" className="form-control">
+                                        <select name="div_code">
                                             <option value="0">-- Select --</option>
                                             <option value="P1">P1</option>
                                             <option value="P2">P2</option>
@@ -236,89 +285,79 @@ function Changecontrolform() {
 
                                     <div className="group-input">
                                         <label className='font-weight-detailsform'><b>If Others</b></label>
-                                        <textarea className="form-control" name="w3review" rows="3" cols="50"></textarea>
+                                        <textarea name="w3review"></textarea>
                                     </div>
-
-
-
                                 </div>
 
                                 <div className="group-input">
-                                    <label type="others"><b>Initial attachment</b></label>
-                                    <div className="instruction">Please Attach all relevant or supporting documents</div>
                                     <Grid
-                                        label={docFile.label}
-                                        required={docFile.required}
-                                        instruction={docFile.instruction}
-                                        columnList={docFile.columnList}
+                                        label={docFile[0].label}
+                                        required={docFile[0].required}
+                                        instruction={docFile[0].instruction}
+                                        columnList={docFile[0].columnList}
                                     />
+                                </div>
 
+                                <div className="group-input">
+                                    <label htmlFor="group_comment_required">Group Comment Required</label>
+                                    <select name="group_comment_required" value={groupComment} onChange={(e) => setGroupComment(e.target.value)}>
+                                        <option value="0">-- Select --</option>
+                                        <option value="yes">Yes</option>
+                                        <option value="no">No</option>
+                                    </select>
                                 </div>
 
                             </div>
                         </div>
-
                     ) : form === 'Change Details' ? (
                         <div className='document-form'>
                             <div className='details-form-data'>
-
                                 <Grid
                                     label={docDetails.label}
                                     required={docDetails.required}
                                     instruction={docDetails.instruction}
                                     columnList={docDetails.columnList}
                                 />
-
                                 <div className="sub-head">
                                     Change Details
                                 </div>
-
                                 <div className="group-input">
                                     <label className='font-weight-detailsform'><b>Current Practice </b></label>
-                                    <textarea className="form-control" name="w3review" rows="3" cols="50"></textarea>
+                                    <textarea name="w3review"></textarea>
                                 </div>
-
                                 <div className="group-input">
                                     <label className='font-weight-detailsform'><b>Proposed Change</b></label>
-                                    <textarea className="form-control" name="w3review" rows="3" cols="50"></textarea>
+                                    <textarea name="w3review"></textarea>
                                 </div>
-
                                 <div className="group-input">
                                     <label className='font-weight-detailsform'><b>Reason for Change</b></label>
-                                    <textarea className="form-control" name="w3review" rows="3" cols="50"></textarea>
+                                    <textarea name="w3review"></textarea>
                                 </div>
-
                                 <div className="group-input">
                                     <label className='font-weight-detailsform'><b>Any Other Comments</b></label>
-                                    <textarea className="form-control" name="w3review" rows="3" cols="50"></textarea>
+                                    <textarea name="w3review"></textarea>
                                 </div>
-
                                 <div className="group-input">
                                     <label className='font-weight-detailsform'><b>Supervisor Comments</b></label>
-                                    <textarea className="form-control" name="w3review" rows="3" cols="50"></textarea>
+                                    <textarea name="w3review"></textarea>
                                 </div>
-
                             </div>
                         </div>
-
                     ) : form === 'QA Review' ? (
                         <div className='document-form'>
                             <div className='details-form-data'>
-
                                 <div className="group-input">
                                     <label className='font-weight-detailsform'><b>Type of Change</b></label>
-                                    <select name="type_chnage" className="form-control">
+                                    <select name="type_change" value={typeOfChange} onChange={(e) => setTypeOfChange(e.target.value)}>
                                         <option value="0">-- Select --</option>
-                                        <option value="major">Major</option>
                                         <option value="minor">Minor</option>
+                                        <option value="major">Major</option>
                                         <option value="critical">Critical</option>
                                     </select>
                                 </div>
-
                                 <div className="group-input">
                                     <label className='font-weight-detailsform'><b>QA Review Comments</b></label>
-                                    <textarea className="form-control" name="w3review" rows="3" cols="50"></textarea>
-
+                                    <textarea name="w3review"></textarea>
                                 </div>
                                 <div className="group-input">
                                     <label className='font-weight-detailsform'><b>Related Records</b></label>
@@ -328,23 +367,49 @@ function Changecontrolform() {
                                         onChange={setSelected}
                                         labelledBy="Select" />
                                 </div>
-
                                 <div className="group-input">
-                                    <label type="others"><b>QA Attachments</b></label>
-                                    <div className="instruction">Please Attach all relevant or supporting documents</div>
                                     <Grid
-                                        label={docFile.label}
-                                        required={docFile.required}
-                                        instruction={docFile.instruction}
-                                        columnList={docFile.columnList}
+                                        label={docFile[1].label}
+                                        required={docFile[1].required}
+                                        instruction={docFile[1].instruction}
+                                        columnList={docFile[1].columnList}
                                     />
-
-
                                 </div>
-
+                                {typeOfChange === 'minor' ?
+                                    <>
+                                        <div className="sub-head">
+                                            Minor Change Justification
+                                        </div>
+                                        <div className="group-input">
+                                            <label className='font-weight-detailsform'><b>Minor Change Justification</b></label>
+                                            <textarea name="minor_justification"></textarea>
+                                        </div>
+                                    </> : ''
+                                }
+                                {typeOfChange === 'major' ?
+                                    <>
+                                        <div className="sub-head">
+                                            Major Change Justification
+                                        </div>
+                                        <div className="group-input">
+                                            <label className='font-weight-detailsform'><b>Major Change Justification</b></label>
+                                            <textarea name="major_justification"></textarea>
+                                        </div>
+                                    </> : ''
+                                }
+                                {typeOfChange === 'critical' ?
+                                    <>
+                                        <div className="sub-head">
+                                            Critical Change Justification
+                                        </div>
+                                        <div className="group-input">
+                                            <label className='font-weight-detailsform'><b>Critical Change Justification</b></label>
+                                            <textarea name="critical_justification"></textarea>
+                                        </div>
+                                    </> : ''
+                                }
                             </div>
                         </div>
-
                     ) : form === 'Evaluation' ? (
                         <div className='document-form'>
                             <div className='details-form-data'>
@@ -355,17 +420,15 @@ function Changecontrolform() {
 
                                 <div className="group-input">
                                     <label className='font-weight-detailsform'><b>QA Evaluation Comments</b></label>
-                                    <textarea className="form-control" rows="3" cols="50"></textarea>
+                                    <textarea></textarea>
                                 </div>
 
                                 <div className="group-input">
-                                    <label type="text"><b>QA Attachments</b></label>
-                                    <div className="instruction">Please Attach all relevant or supporting documents</div>
                                     <Grid
-                                        label={docFile.label}
-                                        required={docFile.required}
-                                        instruction={docFile.instruction}
-                                        columnList={docFile.columnList}
+                                        label={docFile[2].label}
+                                        required={docFile[2].required}
+                                        instruction={docFile[2].instruction}
+                                        columnList={docFile[2].columnList}
                                     />
 
                                 </div>
@@ -376,7 +439,7 @@ function Changecontrolform() {
 
                                 <div className="group-input">
                                     <label className='font-weight-detailsform'><b>Training Required</b></label>
-                                    <select name="type_chnage" className="form-control">
+                                    <select name="type_chnage">
                                         <option value="0">-- Select --</option>
                                         <option value="major">No</option>
                                         <option value="minor">Yes</option>
@@ -385,12 +448,11 @@ function Changecontrolform() {
 
                                 <div className="group-input">
                                     <label className='font-weight-detailsform'><b>Training Comments</b></label>
-                                    <textarea className="form-control" rows="3" cols="50"></textarea>
+                                    <textarea></textarea>
                                 </div>
 
                             </div>
                         </div>
-
                     ) : form === 'Additional Information' ? (
                         <div className='document-form'>
                             <div className='details-form-data'>
@@ -403,7 +465,7 @@ function Changecontrolform() {
 
                                     <div className="group-input">
                                         <label className='font-weight-detailsform'><b>CFT Reviewer</b></label>
-                                        <select name="type_change" className="form-control">
+                                        <select name="type_change">
                                             <option value="0">-- Select --</option>
                                             <option value="major">No</option>
                                             <option value="minor">Yes</option>
@@ -417,7 +479,9 @@ function Changecontrolform() {
                                             options={cftreviewer}
                                             value={selected}
                                             onChange={setSelected}
-                                            labelledBy="Select" />                                            </div>
+                                            labelledBy="Select"
+                                        />
+                                    </div>
 
                                 </div>
 
@@ -427,7 +491,7 @@ function Changecontrolform() {
 
                                 <div className="group-input">
                                     <label className='font-weight-detailsform'><b>Is Concerned Group Review Required?</b></label>
-                                    <select name="type_change" className="form-control">
+                                    <select name="type_change">
                                         <option value="0">-- Select --</option>
                                         <option value="major">No</option>
                                         <option value="minor">Yes</option>
@@ -438,7 +502,7 @@ function Changecontrolform() {
 
                                     <div className="group-input">
                                         <label className='font-weight-detailsform'><b>Production</b></label>
-                                        <select name="type_change" className="form-control">
+                                        <select name="type_change">
                                             <option value="0">-- Select --</option>
                                             <option value="major">No</option>
                                             <option value="minor">Yes</option>
@@ -448,7 +512,7 @@ function Changecontrolform() {
 
                                     <div className="group-input">
                                         <label className='font-weight-detailsform'><b>Production Person</b></label>
-                                        <select name="Production_Person" className="form-control">
+                                        <select name="Production_Person">
                                             <option value="0">-- Select --</option>
                                             <option value="1">Amit Guru</option>
                                             <option value="2">Shaleen Mishra</option>
@@ -463,7 +527,7 @@ function Changecontrolform() {
 
                                     <div className="group-input">
                                         <label className='font-weight-detailsform'><b>Quality Approver</b></label>
-                                        <select name="type_change" className="form-control">
+                                        <select name="type_change">
                                             <option value="0">-- Select --</option>
                                             <option value="major">No</option>
                                             <option value="minor">Yes</option>
@@ -473,7 +537,7 @@ function Changecontrolform() {
 
                                     <div className="group-input">
                                         <label className='font-weight-detailsform'><b> Quality Approver Person</b></label>
-                                        <select name="Production_Person" className="form-control">
+                                        <select name="Production_Person">
                                             <option value="0">-- Select --</option>
                                             <option value="1">Amit Guru</option>
                                             <option value="2">Shaleen Mishra</option>
@@ -488,7 +552,7 @@ function Changecontrolform() {
 
                                     <div className="group-input">
                                         <label className='font-weight-detailsform'><b>Others</b></label>
-                                        <select name="type_change" className="form-control">
+                                        <select name="type_change">
                                             <option value="0">-- Select --</option>
                                             <option value="major">No</option>
                                             <option value="minor">Yes</option>
@@ -498,7 +562,7 @@ function Changecontrolform() {
 
                                     <div className="group-input">
                                         <label className='font-weight-detailsform'><b>Others Person</b></label>
-                                        <select name="Production_Person" className="form-control">
+                                        <select name="Production_Person">
                                             <option value="0">-- Select --</option>
                                             <option value="1">Amit Guru</option>
                                             <option value="2">Shaleen Mishra</option>
@@ -515,25 +579,21 @@ function Changecontrolform() {
 
                                 <div className="group-input">
                                     <label className='font-weight-detailsform'><b>QA Evaluation Comments</b></label>
-                                    <textarea className="form-control" rows="3" cols="50"></textarea>
+                                    <textarea></textarea>
                                 </div>
 
                                 <div className="group-input">
-                                    <label type="others"><b>QA Attachments</b></label>
-                                    <div className="instruction">Please Attach all relevant or supporting documents</div>
                                     <Grid
-                                        label={docFile.label}
-                                        required={docFile.required}
-                                        instruction={docFile.instruction}
-                                        columnList={docFile.columnList}
+                                        label={docFile[3].label}
+                                        required={docFile[3].required}
+                                        instruction={docFile[3].instruction}
+                                        columnList={docFile[3].columnList}
                                     />
-
                                 </div>
 
                             </div>
                         </div>
-
-                    ) : form === 'Group Comments' ? (
+                    ) : form === 'Group Comments' && groupComment === 'yes' ? (
                         <div className='document-form'>
                             <div className='details-form-data'>
 
@@ -543,17 +603,15 @@ function Changecontrolform() {
 
                                 <div className="group-input">
                                     <label className='font-weight-detailsform'><b>QA Evaluation Comments</b></label>
-                                    <textarea className="form-control" rows="3" cols="50"></textarea>
+                                    <textarea></textarea>
                                 </div>
 
                                 <div className="group-input">
-                                    <label type="text"><b>CFT Attachment</b></label>
-                                    <div className="instruction">Please Attach all relevant or supporting documents</div>
                                     <Grid
-                                        label={docFile.label}
-                                        required={docFile.required}
-                                        instruction={docFile.instruction}
-                                        columnList={docFile.columnList}
+                                        label={docFile[4].label}
+                                        required={docFile[4].required}
+                                        instruction={docFile[4].instruction}
+                                        columnList={docFile[4].columnList}
                                     />
 
                                 </div>
@@ -566,52 +624,52 @@ function Changecontrolform() {
 
                                     <div className="group-input">
                                         <label className='font-weight-detailsform'><b>QA Comments</b></label>
-                                        <textarea className="form-control" rows="3" cols="50"></textarea>
+                                        <textarea></textarea>
 
                                     </div>
 
 
                                     <div className="group-input">
                                         <label className='font-weight-detailsform'><b>QA Head Designee Comments</b></label>
-                                        <textarea className="form-control" rows="3" cols="50"></textarea>
+                                        <textarea></textarea>
 
                                     </div>
 
                                     <div className="group-input">
                                         <label className='font-weight-detailsform'><b>Warehouse Comments</b></label>
-                                        <textarea className="form-control" rows="3" cols="50"></textarea>
+                                        <textarea></textarea>
 
                                     </div>
 
                                     <div className="group-input">
                                         <label className='font-weight-detailsform'><b>Engineering Comments</b></label>
-                                        <textarea className="form-control" rows="3" cols="50"></textarea>
+                                        <textarea></textarea>
 
                                     </div>
 
                                     <div className="group-input">
                                         <label className='font-weight-detailsform'><b>Instrumentation Comments</b></label>
-                                        <textarea className="form-control" rows="3" cols="50"></textarea>
+                                        <textarea></textarea>
 
                                     </div>
 
 
                                     <div className="group-input">
                                         <label className='font-weight-detailsform'><b>Validation Comments</b></label>
-                                        <textarea className="form-control" rows="3" cols="50"></textarea>
+                                        <textarea></textarea>
 
                                     </div>
 
                                     <div className="group-input">
                                         <label className='font-weight-detailsform'><b>Others Comments</b></label>
-                                        <textarea className="form-control" rows="3" cols="50"></textarea>
+                                        <textarea></textarea>
 
                                     </div>
 
 
                                     <div className="group-input">
                                         <label className='font-weight-detailsform'><b>Group Comments</b></label>
-                                        <textarea className="form-control" rows="3" cols="50"></textarea>
+                                        <textarea></textarea>
 
                                     </div>
 
@@ -629,10 +687,8 @@ function Changecontrolform() {
 
                                 <div className="group-input">
                                     <label className='font-weight-detailsform'><b>Risk Identification</b></label>
-                                    <textarea className="form-control" rows="3" cols="50"></textarea>
+                                    <textarea></textarea>
                                 </div>
-
-
 
                                 <div className='form-flex'>
 
@@ -683,12 +739,12 @@ function Changecontrolform() {
 
                                 <div className="group-input">
                                     <label className='font-weight-detailsform'><b>Risk Evaluation</b></label>
-                                    <textarea className="form-control" rows="3" cols="50"></textarea>
+                                    <textarea></textarea>
                                 </div>
 
                                 <div className="group-input">
                                     <label className='font-weight-detailsform'><b>Migration Action</b></label>
-                                    <textarea className="form-control" rows="3" cols="50"></textarea>
+                                    <textarea></textarea>
                                 </div>
                             </div>
                         </div>
@@ -696,28 +752,24 @@ function Changecontrolform() {
                         <div className='document-form'>
                             <div className='details-form-data'>
 
-
                                 <div className="group-input">
                                     <label className='font-weight-detailsform'><b>QA Approval Comments</b></label>
-                                    <textarea className="form-control" rows="3" cols="50"></textarea>
+                                    <textarea></textarea>
                                 </div>
 
 
                                 <div className="group-input">
                                     <label className='font-weight-detailsform'><b>Training Feedback</b></label>
-                                    <textarea className="form-control" rows="3" cols="50"></textarea>
+                                    <textarea></textarea>
                                 </div>
 
                                 <div className="group-input">
-                                    <label type="text"><b>Training Attachments</b></label>
-                                    <div className="instruction">Please Attach all relevant or supporting documents</div>
                                     <Grid
-                                        label={docFile.label}
-                                        required={docFile.required}
-                                        instruction={docFile.instruction}
-                                        columnList={docFile.columnList}
+                                        label={docFile[5].label}
+                                        required={docFile[5].required}
+                                        instruction={docFile[5].instruction}
+                                        columnList={docFile[5].columnList}
                                     />
-
                                 </div>
 
                             </div>
@@ -735,19 +787,16 @@ function Changecontrolform() {
 
                                 <div className="group-input">
                                     <label className='font-weight-detailsform'><b>QA Closure Comments </b></label>
-                                    <textarea className="form-control" name="w3review" rows="3" cols="50"></textarea>
+                                    <textarea name="w3review"></textarea>
                                 </div>
 
                                 <div className="group-input">
-                                    <label type="text"><b>List Of Attachments</b></label>
-                                    <div className="instruction">Please Attach all relevant or supporting documents</div>
                                     <Grid
-                                        label={docFile.label}
-                                        required={docFile.required}
-                                        instruction={docFile.instruction}
-                                        columnList={docFile.columnList}
+                                        label={docFile[6].label}
+                                        required={docFile[6].required}
+                                        instruction={docFile[6].instruction}
+                                        columnList={docFile[6].columnList}
                                     />
-
                                 </div>
 
                                 <div className="sub-head">
@@ -791,7 +840,7 @@ function Changecontrolform() {
 
                                 <div className="group-input">
                                     <label className='font-weight-detailsform'><b>Effectiveness Check Plan</b></label>
-                                    <textarea className="form-control" name="w3review" rows="3" cols="50"></textarea>
+                                    <textarea name="w3review"></textarea>
                                 </div>
 
                                 <div className="sub-head">
@@ -801,12 +850,11 @@ function Changecontrolform() {
                                 <div className="group-input">
                                     <label className='font-weight-detailsform'><b>Due Date Extension Justification</b></label>
                                     <div className="instruction">Please Mention justification if due date is crossed</div>
-                                    <textarea className="form-control" name="w3review" rows="3" cols="50"></textarea>
+                                    <textarea name="w3review"></textarea>
                                 </div>
 
                             </div>
                         </div>
-
                     ) : form === 'Activity Log' ? (
                         <div className='document-form'>
                             <div className='details-form-data'>
