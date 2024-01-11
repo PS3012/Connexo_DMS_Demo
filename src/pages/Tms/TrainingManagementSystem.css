@@ -1,0 +1,40 @@
+.TrainingManagementSystem-page #desktop-select {
+    color: gray;
+}
+
+.TrainingManagementSystem-page .details-form {
+    padding: 25px 20px;
+}
+
+.TrainingManagementSystem-page .details-form form {
+    background: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 10px;
+}
+
+.TrainingManagementSystem-page .details-form .details-form-data {
+    padding: 10px 20px;
+}
+
+.TrainingManagementSystem-page .details-form .details-form-heading {
+    background: #006fc0;
+    ;
+    border-radius: 10px 10px 0px 0px;
+    padding: 8px;
+    font-size: 20px;
+    color: #ffff;
+    font-weight: 600;
+}
+
+.TrainingManagementSystem-page .details-form-data .group-input-flex {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    gap: 20px;
+}
+
+.TrainingManagementSystem-page .details-form-data .static {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}

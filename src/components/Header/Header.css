@@ -60,8 +60,30 @@ textarea:focus-visible {
 }
 
 /*! ===================================================================== */
-/*! FORM FIELDS CSS */
+/*! Table css */
 /*! ===================================================================== */
+
+
+table {
+    width: 100%;
+}
+
+th,td{
+    padding: 6px;
+    text-align: center;
+    font-size: 0.85rem;
+}
+
+table,td,th{
+    border: 1px solid gray;
+    border-collapse: collapse ;
+    text-align: center;
+}
+th{
+    background-color: #006fc04d;
+}
+
+
 .group-input {
     margin-bottom: 20px;
 }
@@ -72,6 +94,12 @@ textarea:focus-visible {
     display: block;
     width: 100%;
     font-weight: bold;
+}
+
+.group-input label.flex-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .group-input .instruction {
@@ -161,3 +189,4 @@ textarea:focus-visible {
     box-shadow: rgba(45, 35, 66, 0.3) 0 4px 8px, rgba(45, 35, 66, 0.2) 0 7px 13px -3px, #d6d6e7 0 -3px 0 inset;
     transform: translateY(-2px);
 }
+

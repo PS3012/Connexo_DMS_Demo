@@ -79,7 +79,7 @@
 }
 
 
-#change-control-fields .group-input .file-attachment-field {
+#config-form-document-page .group-input .file-attachment-field {
     display: grid;
     grid-template-columns: 1fr 150px;
     align-items: start;
@@ -87,11 +87,11 @@
     margin-bottom: 20px;
 }
 
-#change-control-fields .group-input .file-attachment-field input {
+#config-form-document-page .group-input .file-attachment-field input {
     margin: 0;
 }
 
-#change-control-fields .group-input .file-attachment-field .file-attachment-list {
+#config-form-document-page .group-input .file-attachment-field .file-attachment-list {
     background: white;
     border: 1px solid black;
     padding: 5px 10px;
@@ -102,21 +102,21 @@
     gap: 20px;
 }
 
-#change-control-fields .group-input .file-attachment-field .file-attachment-list>div {
+#config-form-document-page .group-input .file-attachment-field .file-attachment-list>div {
     font-size: 0.9rem;
 }
 
-#change-control-fields .group-input .file-attachment-field .file-attachment-list>div a {
+#config-form-document-page .group-input .file-attachment-field .file-attachment-list>div a {
     color: #0039bd;
     font-size: 0.8rem;
     text-decoration: underline;
 }
 
-#change-control-fields .group-input .file-attachment-field .add-btn {
+#config-form-document-page .group-input .file-attachment-field .add-btn {
     position: relative;
 }
 
-#change-control-fields .group-input .file-attachment-field .add-btn div {
+#config-form-document-page .group-input .file-attachment-field .add-btn div {
     background: #002bff;
     color: white;
     border-radius: 5px;
@@ -124,11 +124,18 @@
     padding: 5px;
 }
 
-#change-control-fields .group-input .file-attachment-field .add-btn input {
+#config-form-document-page .group-input .file-attachment-field .add-btn input {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     z-index: 2;
     opacity: 0;
+}
+
+#config-form-document-page .group-input table input, 
+#config-form-document-page .group-input table select {
+ border: 0;
+ padding: 0;
+ margin: 0;
 }

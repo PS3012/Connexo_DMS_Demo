@@ -2,6 +2,7 @@ import { useState } from 'react'
 import './Changecontrolform.css'
 import { MultiSelect } from 'react-multi-select-component';
 import HeaderTop from '../../components/Header/HeaderTop';
+import Grid from '../../components/DataFields/Grid';
 
 
 function Changecontrolform() {
@@ -19,77 +20,56 @@ function Changecontrolform() {
         { label: "Amit", value: "2", },
     ];
 
+
     const [form, setForm] = useState("General Information");
+
     const [selected, setSelected] = useState([]);
 
+    const docFile = {
+        label: 'Document Details',
+        instruction: <div></div>,
+        required: true,
+        columnList: [
+            { id: '2.1.1.1', name: 'Title of Dcoument', type: 'text' },
+            { id: '2.1.1.2', name: 'Attached File', type: 'File' },
+            { id: '2.1.1.3', name: 'Remark', type: 'text' },
+            
+        ]
+    }
 
+    const docDetails = {
+        label: 'Document Details',
+        instruction: <div></div>,
+        required: true,
+        columnList: [
+            { id: '2.1.1.1', name: 'Current Document No.', type: 'text' },
+            { id: '2.1.1.2', name: 'Current Version No.', type: 'number' },
+            { id: '2.1.1.3', name: 'New Document No.', type: 'text' },
+            { id: '2.1.1.4', name: 'New Version No.', type: 'number' },
+            { id: '2.1.1.5', name: 'Remarks', type: 'text' },
+        ]
+    }
+
+    const changeCloser = {
+        label: 'Document Details',
+        instruction: <div></div>,
+        required: true,
+        columnList: [
+            { id: '2.1.1.1', name: 'Affected Documents', type: 'text' },
+            { id: '2.1.1.2', name: 'Document Name', type: 'number' },
+            { id: '2.1.1.3', name: 'Document No.', type: 'text' },
+            { id: '2.1.1.4', name: 'Version No.', type: 'number' },
+            { id: '2.1.1.5', name: 'Implementation Date', type: 'date' },
+            { id: '2.1.1.6', name: 'New Document No.', type: 'text' },
+            { id: '2.1.1.7', name: 'New Version No.', type: 'text' },
+            { id: '2.1.1.8', name: 'Remarks', type: 'text' },
+
+        ]
+    }
 
     return (
         <>
-            {/* <header>
-                <div className="header_rcms_top">
-                    <div className="container-fluid">
-                        <div className="container">
-                            <div></div>
-                        </div>
-                    </div>
-                </div>
 
-                <div className="header_rcms_middle">
-                    <div className="container-fluid">
-                        <div className="middle-head">
-                            <div className="logo-container">
-                                <div className="logo">
-                                    <img src="/logo.png" alt="..." />
-                                </div>
-                                <div className="logo">
-                                    <img src="logo1.png" alt="..." />
-                                </div>
-                            </div>
-
-                            <div className="icon-grid">
-                                <div className="icon-drop">
-                                    <div className="icon">
-                                        <i className="fa-solid fa-user-gear"></i>
-                                        <i className="fa-solid fa-angle-down"></i>
-                                    </div>
-                                    <div className="icon-block">
-                                        <div><a id="/form-division">Quality Management System</a></div>
-                                        <div><a data-bs-toggle="modal" data-bs-target="#import-export-modal">
-                                            Import/Export Terms
-                                        </a></div>
-                                        <div><a href="#">MedDRA</a></div>
-                                        <div><a href="#">Report Duplicate Translate Terms</a></div>
-                                        <div><a href="#">Spellcheck Languages</a></div>
-                                        <div><a href="#">Spellcheck Settings</a></div>
-                                        <div><a href="#">Translate Terms</a></div>
-                                        <div><a href="/designate-proxy">Designate Proxy</a></div>
-                                    </div>
-                                </div>
-                                <div className="icon-drop">
-                                    <div className="icon">
-                                        <i className="fa-solid fa-user-tie"></i>
-                                        <i className="fa-solid fa-angle-down"></i>
-                                    </div>
-                                    <div className="icon-block small-block">
-                                        <div className="image">
-                                            <img src="/amit_guru.jpg" alt="..."
-                                                className="w-100 h-100" />
-                                            <img src="/logo.png" alt="..."
-                                                className="w-100 h-100"></img>
-                                        </div>
-                                        <div data-bs-toggle="modal" data-bs-target="#">Settings</div>
-                                        <div data-bs-toggle="modal" data-bs-target="#">About</div>
-                                        <div><a href="#">Help</a></div>
-                                        <div><a href="/">Helpdesk Personnel</a></div>
-                                        <div><a href="/">Log Out</a></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </header> */}
             <HeaderTop />
 
             <div id='config-form-document-page'>
@@ -122,8 +102,6 @@ function Changecontrolform() {
 
                         <div className={form === 'Activity Log' ? 'active' : ''} onClick={() => setForm('Activity Log')}>Activity Log</div>
 
-
-
                     </div>
 
                     {form === 'General Information' ? (
@@ -148,31 +126,31 @@ function Changecontrolform() {
                                     </div>
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>Assigned To</b><span>*</span></label>
+                                        <label className='font-weight-detailsform'><b>Assigned To</b><span className="required">&nbsp;*</span></label>
                                         <select id="select-state" className='form-control' placeholder="Select..." name="assign_to">
                                             <option value="">Select a value</option>
                                             <option value="2">Shaleen Mishra</option>
                                         </select>                                    </div>
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>Due Date</b><span>*</span></label>
+                                        <label className='font-weight-detailsform'><b>Due Date</b><span className="required">&nbsp;*</span></label>
                                         <div className='instruction'>Please mention expected date of completion</div>
                                         <input type="date" className="form-control" placeholder="" />
                                     </div>
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>Initiator Group *</b></label>
+                                        <label className='font-weight-detailsform'><b>Initiator Group <span className="required">&nbsp;*</span></b></label>
                                         <input type="date" className="form-control" placeholder="" />
                                     </div>
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>Initiator Group Code</b><span>*</span></label>
+                                        <label className='font-weight-detailsform'><b>Initiator Group Code</b></label>
                                         <input type="" className="form-control" value="" disabled />
                                     </div>
                                 </div>
 
                                 <div className="group-input">
-                                    <label className='font-weight-detailsform'><b>Short Description *</b></label>
+                                    <label className='font-weight-detailsform'><b>Short Description <span className="required">&nbsp;*</span></b></label>
                                     <div className='instruction'>Please mention brief summary</div>
                                     <textarea className="form-control" name="w3review" rows="4" cols="50"></textarea>
 
@@ -268,13 +246,12 @@ function Changecontrolform() {
                                 <div className="group-input">
                                     <label type="others"><b>Initial attachment</b></label>
                                     <div className="instruction">Please Attach all relevant or supporting documents</div>
-                                    <div className="file-attachment-field">
-                                        <div className="file-attachment-list" id="in_attachment"></div>
-                                        <div className="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="in_attachment[]" multiple="" />
-                                        </div>
-                                    </div>
+                                    <Grid
+                                        label={docFile.label}
+                                        required={docFile.required}
+                                        instruction={docFile.instruction}
+                                        columnList={docFile.columnList}
+                                    />
 
                                 </div>
 
@@ -284,6 +261,13 @@ function Changecontrolform() {
                     ) : form === 'Change Details' ? (
                         <div className='document-form'>
                             <div className='details-form-data'>
+
+                                <Grid
+                                    label={docDetails.label}
+                                    required={docDetails.required}
+                                    instruction={docDetails.instruction}
+                                    columnList={docDetails.columnList}
+                                />
 
                                 <div className="sub-head">
                                     Change Details
@@ -348,13 +332,13 @@ function Changecontrolform() {
                                 <div className="group-input">
                                     <label type="others"><b>QA Attachments</b></label>
                                     <div className="instruction">Please Attach all relevant or supporting documents</div>
-                                    <div className="file-attachment-field">
-                                        <div className="file-attachment-list" id="in_attachment"></div>
-                                        <div className="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="in_attachment[]" multiple="" />
-                                        </div>
-                                    </div>
+                                    <Grid
+                                        label={docFile.label}
+                                        required={docFile.required}
+                                        instruction={docFile.instruction}
+                                        columnList={docFile.columnList}
+                                    />
+
 
                                 </div>
 
@@ -377,13 +361,13 @@ function Changecontrolform() {
                                 <div className="group-input">
                                     <label type="text"><b>QA Attachments</b></label>
                                     <div className="instruction">Please Attach all relevant or supporting documents</div>
-                                    <div className="file-attachment-field">
-                                        <div className="file-attachment-list" id="in_attachment"></div>
-                                        <div className="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="in_attachment[]" multiple="" />
-                                        </div>
-                                    </div>
+                                    <Grid
+                                        label={docFile.label}
+                                        required={docFile.required}
+                                        instruction={docFile.instruction}
+                                        columnList={docFile.columnList}
+                                    />
+
                                 </div>
 
                                 <div className="sub-head">
@@ -414,6 +398,7 @@ function Changecontrolform() {
                                 <div className="sub-head">
                                     CFT Information
                                 </div>
+
                                 <div className='form-flex'>
 
                                     <div className="group-input">
@@ -536,13 +521,13 @@ function Changecontrolform() {
                                 <div className="group-input">
                                     <label type="others"><b>QA Attachments</b></label>
                                     <div className="instruction">Please Attach all relevant or supporting documents</div>
-                                    <div className="file-attachment-field">
-                                        <div className="file-attachment-list" id="in_attachment"></div>
-                                        <div className="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="in_attachment[]" multiple="" />
-                                        </div>
-                                    </div>
+                                    <Grid
+                                        label={docFile.label}
+                                        required={docFile.required}
+                                        instruction={docFile.instruction}
+                                        columnList={docFile.columnList}
+                                    />
+
                                 </div>
 
                             </div>
@@ -564,13 +549,13 @@ function Changecontrolform() {
                                 <div className="group-input">
                                     <label type="text"><b>CFT Attachment</b></label>
                                     <div className="instruction">Please Attach all relevant or supporting documents</div>
-                                    <div className="file-attachment-field">
-                                        <div className="file-attachment-list" id="in_attachment"></div>
-                                        <div className="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="in_attachment[]" multiple="" />
-                                        </div>
-                                    </div>
+                                    <Grid
+                                        label={docFile.label}
+                                        required={docFile.required}
+                                        instruction={docFile.instruction}
+                                        columnList={docFile.columnList}
+                                    />
+
                                 </div>
 
                                 <div className="sub-head">
@@ -635,19 +620,244 @@ function Changecontrolform() {
                             </div>
                         </div>
                     ) : form === 'Risk Assessment' ? (
-                        <div></div>
+                        <div className='document-form'>
+                            <div className='details-form-data'>
+
+                                <div className="sub-head">
+                                    Risk Assessment
+                                </div>
+
+                                <div className="group-input">
+                                    <label className='font-weight-detailsform'><b>Risk Identification</b></label>
+                                    <textarea className="form-control" rows="3" cols="50"></textarea>
+                                </div>
+
+
+
+                                <div className='form-flex'>
+
+                                    <div className="group-input">
+                                        <label className='font-weight-detailsform'><b>Severity Rate</b></label>
+                                        <select name="severity" className='form-control'>
+                                            <option value="">Enter Your Selection Here</option>
+                                            <option value="1">Negligible</option>
+                                            <option value="2">Moderate</option>
+                                            <option value="3">Major</option>
+                                            <option value="4">Fatal</option>
+                                        </select>
+                                    </div>
+
+
+                                    <div className="group-input">
+                                        <label className='font-weight-detailsform'><b>Occurrence</b></label>
+                                        <select name="Occurrence" id="analysisP">
+                                            <option value="">Enter Your Selection Here</option>
+                                            <option value="5">Extremely Unlikely</option>
+                                            <option value="4">Rare</option>
+                                            <option value="3">Unlikely</option>
+                                            <option value="2">Likely</option>
+                                            <option value="1">Very Likely</option>
+                                        </select>
+                                    </div>
+
+                                    <div className="group-input">
+                                        <label className='font-weight-detailsform'><b>Detection</b></label>
+                                        <select name="Detection" id="analysisN" >
+                                            <option value="">Enter Your Selection Here</option>
+                                            <option value="5">Impossible</option>
+                                            <option value="4">Rare</option>
+                                            <option value="3">Unlikely</option>
+                                            <option value="2">Likely</option>
+                                            <option value="1">Very Likely</option>
+                                        </select>
+                                    </div>
+
+
+                                    <div className="group-input">
+                                        <label className='font-weight-detailsform'><b>RPN</b></label>
+                                        <div className="instruction">Auto - Calculated</div>
+                                        <input type='text' name='RPN' id='' disabled />
+                                    </div>
+
+                                </div>
+
+                                <div className="group-input">
+                                    <label className='font-weight-detailsform'><b>Risk Evaluation</b></label>
+                                    <textarea className="form-control" rows="3" cols="50"></textarea>
+                                </div>
+
+                                <div className="group-input">
+                                    <label className='font-weight-detailsform'><b>Migration Action</b></label>
+                                    <textarea className="form-control" rows="3" cols="50"></textarea>
+                                </div>
+                            </div>
+                        </div>
                     ) : form === 'QA Approval Comments' ? (
-                        <div></div>
+                        <div className='document-form'>
+                            <div className='details-form-data'>
+
+
+                                <div className="group-input">
+                                    <label className='font-weight-detailsform'><b>QA Approval Comments</b></label>
+                                    <textarea className="form-control" rows="3" cols="50"></textarea>
+                                </div>
+
+
+                                <div className="group-input">
+                                    <label className='font-weight-detailsform'><b>Training Feedback</b></label>
+                                    <textarea className="form-control" rows="3" cols="50"></textarea>
+                                </div>
+
+                                <div className="group-input">
+                                    <label type="text"><b>Training Attachments</b></label>
+                                    <div className="instruction">Please Attach all relevant or supporting documents</div>
+                                    <Grid
+                                        label={docFile.label}
+                                        required={docFile.required}
+                                        instruction={docFile.instruction}
+                                        columnList={docFile.columnList}
+                                    />
+
+                                </div>
+
+                            </div>
+                        </div>
                     ) : form === 'Change Closure' ? (
-                        <div></div>
+                        <div className='document-form'>
+                            <div className='details-form-data'>
+
+                                <Grid
+                                    label={changeCloser.label}
+                                    required={changeCloser.required}
+                                    instruction={changeCloser.instruction}
+                                    columnList={changeCloser.columnList}
+                                />
+
+                                <div className="group-input">
+                                    <label className='font-weight-detailsform'><b>QA Closure Comments </b></label>
+                                    <textarea className="form-control" name="w3review" rows="3" cols="50"></textarea>
+                                </div>
+
+                                <div className="group-input">
+                                    <label type="text"><b>List Of Attachments</b></label>
+                                    <div className="instruction">Please Attach all relevant or supporting documents</div>
+                                    <Grid
+                                        label={docFile.label}
+                                        required={docFile.required}
+                                        instruction={docFile.instruction}
+                                        columnList={docFile.columnList}
+                                    />
+
+                                </div>
+
+                                <div className="sub-head">
+                                    Effectiveness Check Details
+                                </div>
+
+                                <div className='form-flex'>
+
+                                    <div className="group-input">
+                                        <label className='font-weight-detailsform'><b>Effectivess Check Required?</b></label>
+                                        <select name="severity" className='form-control'>
+                                            <option value="">Enter Your Selection Here</option>
+                                            <option value="1">Yes</option>
+                                            <option value="2">No</option>
+
+                                        </select>
+                                    </div>
+
+
+                                    <div className="group-input">
+                                        <label className='font-weight-detailsform'><b>Effectiveness Check Creation Date</b></label>
+                                        <input type='date' className='form-control' />
+                                    </div>
+
+                                </div>
+
+                                <div className="group-input">
+                                    <label className='font-weight-detailsform'><b>Effectiveness Checker</b></label>
+                                    <select name="Effectiveness_checker">
+                                        <option value="">Enter Your Selection Here</option>
+                                        <option value="1">Amit Guru</option>
+                                        <option value="2">Shaleen Mishra</option>
+                                        <option value="3">Vikas Prajapati</option>
+                                        <option value="4">Anshul Patel</option>
+                                        <option value="5">Amit Patel</option>
+                                        <option value="6">Madhulika Mishra</option>
+                                        <option value="7">Jin Kim</option>
+                                        <option value="8">Akash Asthana</option>
+                                    </select>
+                                </div>
+
+                                <div className="group-input">
+                                    <label className='font-weight-detailsform'><b>Effectiveness Check Plan</b></label>
+                                    <textarea className="form-control" name="w3review" rows="3" cols="50"></textarea>
+                                </div>
+
+                                <div className="sub-head">
+                                    Extension Justification
+                                </div>
+
+                                <div className="group-input">
+                                    <label className='font-weight-detailsform'><b>Due Date Extension Justification</b></label>
+                                    <div className="instruction">Please Mention justification if due date is crossed</div>
+                                    <textarea className="form-control" name="w3review" rows="3" cols="50"></textarea>
+                                </div>
+
+                            </div>
+                        </div>
+
                     ) : form === 'Activity Log' ? (
-                        <div></div>
+                        <div className='document-form'>
+                            <div className='details-form-data'>
+
+                                <div className="sub-head">
+                                    Electronic Signatures
+                                </div>
+
+                                <div className='form-flex'>
+
+                                    <div className="group-input">
+                                        <label className='font-weight-detailsform'><b>Submitted By</b></label>
+
+                                    </div>
+
+                                    <div className="group-input">
+                                        <label className='font-weight-detailsform'><b>Submitted On</b></label>
+
+                                    </div>
+
+                                    <div className="group-input">
+                                        <label className='font-weight-detailsform'><b>Cancelled By</b></label>
+
+                                    </div>
+
+                                    <div className="group-input">
+                                        <label className='font-weight-detailsform'><b>Cancelled On</b></label>
+
+                                    </div>
+
+                                    <div className="group-input">
+                                        <label className='font-weight-detailsform'><b>More Information Required By</b></label>
+
+                                    </div>
+
+                                    <div className="group-input">
+                                        <label className='font-weight-detailsform'><b>More Information Required On</b></label>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
                     ) : ''}
                 </div>
 
                 <div className="button-block">
-                    <button>Save</button>
-                    <button>Cancel</button>
+                    <button className='themeBtn'>Save</button>
+                    <button className='themeBtn'>Back</button>
+                    <button className='themeBtn'>Next</button>
+                    <button className='themeBtn'>Exit</button>
                 </div>
             </div >
         </>
