@@ -26,70 +26,7 @@ function Changecontrolform() {
 
     return (
         <>
-            {/* <header>
-                <div className="header_rcms_top">
-                    <div className="container-fluid">
-                        <div className="container">
-                            <div></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="header_rcms_middle">
-                    <div className="container-fluid">
-                        <div className="middle-head">
-                            <div className="logo-container">
-                                <div className="logo">
-                                    <img src="/logo.png" alt="..." />
-                                </div>
-                                <div className="logo">
-                                    <img src="logo1.png" alt="..." />
-                                </div>
-                            </div>
-
-                            <div className="icon-grid">
-                                <div className="icon-drop">
-                                    <div className="icon">
-                                        <i className="fa-solid fa-user-gear"></i>
-                                        <i className="fa-solid fa-angle-down"></i>
-                                    </div>
-                                    <div className="icon-block">
-                                        <div><a id="/form-division">Quality Management System</a></div>
-                                        <div><a data-bs-toggle="modal" data-bs-target="#import-export-modal">
-                                            Import/Export Terms
-                                        </a></div>
-                                        <div><a href="#">MedDRA</a></div>
-                                        <div><a href="#">Report Duplicate Translate Terms</a></div>
-                                        <div><a href="#">Spellcheck Languages</a></div>
-                                        <div><a href="#">Spellcheck Settings</a></div>
-                                        <div><a href="#">Translate Terms</a></div>
-                                        <div><a href="/designate-proxy">Designate Proxy</a></div>
-                                    </div>
-                                </div>
-                                <div className="icon-drop">
-                                    <div className="icon">
-                                        <i className="fa-solid fa-user-tie"></i>
-                                        <i className="fa-solid fa-angle-down"></i>
-                                    </div>
-                                    <div className="icon-block small-block">
-                                        <div className="image">
-                                            <img src="/amit_guru.jpg" alt="..."
-                                                className="w-100 h-100" />
-                                            <img src="/logo.png" alt="..."
-                                                className="w-100 h-100"></img>
-                                        </div>
-                                        <div data-bs-toggle="modal" data-bs-target="#">Settings</div>
-                                        <div data-bs-toggle="modal" data-bs-target="#">About</div>
-                                        <div><a href="#">Help</a></div>
-                                        <div><a href="/">Helpdesk Personnel</a></div>
-                                        <div><a href="/">Log Out</a></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </header> */}
+            
             <HeaderTop />
 
             <div id='config-form-document-page'>

@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Changecontrolform from './pages/ChangeControl/Changecontrolform'
 import DocumentPanel from './pages/DocumentPanel/DocumentPanel'
+import Question from './pages/Question/Question'
 
 function App() {
   localStorage.setItem('username', 'amit.patel@connexo.io')
@@ -9,6 +10,7 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
+          <Route path='/question' element={<Question />} />
           <Route path='/change-control-form' element={<Changecontrolform />} />
           <Route path='/document-panel' element={<DocumentPanel />} />
         </Routes>

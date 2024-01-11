@@ -74,6 +74,12 @@ textarea:focus-visible {
     font-weight: bold;
 }
 
+.group-input label.flex-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
 .group-input .instruction {
     font-size: 0.8rem;
     color: #006fc0;
