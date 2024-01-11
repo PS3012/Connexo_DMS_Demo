@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import './Changecontrolform.css'
+import './ConfigForms.css'
 import { MultiSelect } from 'react-multi-select-component';
 import HeaderTop from '../../components/Header/HeaderTop';
 import Grid from '../../components/DataFields/Grid';
 
 
-function Changecontrolform() {
+function ChangeControlForm() {
     const [form, setForm] = useState("General Information");
     const [typeOfChange, setTypeOfChange] = useState(0)
     const [selected, setSelected] = useState([]);
@@ -15,7 +15,7 @@ function Changecontrolform() {
         { label: "Mango", value: "mango", disabled: true },
         { label: "Strawberry", value: "strawberry", },
     ];
-    const cftreviewer = [
+    const CFTReviewer = [
         { label: "Anshul Patel", value: "1" },
         { label: "Mango", value: "mango", disabled: true },
         { label: "Amit", value: "2", },
@@ -124,7 +124,7 @@ function Changecontrolform() {
                 <div className="top-block">
                     <div className="head">New Change Control</div>
                     <div className="content">
-                        Site-Division / Project : Jordan / Change Control
+                        Site / Project : Jordan / Change Control
                     </div>
                 </div>
 
@@ -159,48 +159,48 @@ function Changecontrolform() {
                             <div className='details-form-data'>
 
                                 <div className="group-input">
-                                    <label className='font-weight-detailsform'><b>Record Number</b></label>
+                                    <label><b>Record Number</b></label>
                                     <input type="text" value="Jordan/EA/2024/00000001" disabled />
                                 </div>
                                 <div className='form-flex'>
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>Initiator</b></label>
+                                        <label><b>Initiator</b></label>
                                         <input type="text" value="Amit Guru" disabled />
                                     </div>
 
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>Date of Initiation</b></label>
+                                        <label><b>Date of Initiation</b></label>
                                         <input type="" value="10-Jan-2024" disabled />
                                     </div>
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>Assigned To</b><span className="required">&nbsp;*</span></label>
+                                        <label><b>Assigned To</b><span className="required">&nbsp;*</span></label>
                                         <select id="select-state" className='form-control' placeholder="Select..." name="assign_to">
                                             <option value="">Select a value</option>
                                             <option value="2">Shaleen Mishra</option>
                                         </select>                                    </div>
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>Due Date</b><span className="required">&nbsp;*</span></label>
+                                        <label><b>Due Date</b><span className="required">&nbsp;*</span></label>
                                         <div className='instruction'>Please mention expected date of completion</div>
                                         <input type="date" placeholder="" />
                                     </div>
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>Initiator Group <span className="required">&nbsp;*</span></b></label>
+                                        <label><b>Initiator Group <span className="required">&nbsp;*</span></b></label>
                                         <input type="date" placeholder="" />
                                     </div>
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>Initiator Group Code</b></label>
+                                        <label><b>Initiator Group Code</b></label>
                                         <input type="" value="" disabled />
                                     </div>
                                 </div>
 
                                 <div className="group-input">
-                                    <label className='font-weight-detailsform'><b>Short Description <span className="required">&nbsp;*</span></b></label>
+                                    <label><b>Short Description <span className="required">&nbsp;*</span></b></label>
                                     <div className='instruction'>Please mention brief summary</div>
                                     <textarea name="w3review" rows="4" cols="50"></textarea>
                                 </div>
@@ -208,7 +208,7 @@ function Changecontrolform() {
                                 <div className='form-flex'>
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>Initiated Through</b></label>
+                                        <label><b>Initiated Through</b></label>
                                         <div className='instruction'>Please select related information</div>
                                         <select name="initiated_through" className='form-control'>
                                             <option>Enter Your Selection Here</option>
@@ -225,13 +225,13 @@ function Changecontrolform() {
 
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>Other</b></label>
+                                        <label><b>Other</b></label>
                                         <div className='instruction'>Please select yes if it is has recurred in past six months</div>
                                         <textarea name="w3review"></textarea>
                                     </div>
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>Repeat</b></label>
+                                        <label><b>Repeat</b></label>
                                         <div className='instruction'>Please select yes if it is has recurred in past six months</div>
                                         <select name="initiated_through" className='form-control'>
                                             <option>Enter Your Selection Here</option>
@@ -243,12 +243,12 @@ function Changecontrolform() {
 
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>Repeat Nature</b></label>
+                                        <label><b>Repeat Nature</b></label>
                                         <textarea name="w3review"></textarea>
                                     </div>
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>Risk Level</b></label>
+                                        <label><b>Risk Level</b></label>
                                         <select name="risk_level">
                                             <option value="0">-- Select --</option>
                                             <option value="minor">Minor</option>
@@ -258,7 +258,7 @@ function Changecontrolform() {
                                     </div>
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>Division Code</b><span>*</span></label>
+                                        <label><b>Division Code</b><span>*</span></label>
                                         <select name="div_code">
                                             <option value="0">-- Select --</option>
                                             <option value="P1">P1</option>
@@ -275,7 +275,7 @@ function Changecontrolform() {
                                     </div>
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>Nature Of Change</b></label>
+                                        <label><b>Nature Of Change</b></label>
                                         <select name="natureChange">
                                             <option value="0">-- Select --</option>
                                             <option value="Temporary">Temporary</option>
@@ -284,7 +284,7 @@ function Changecontrolform() {
                                     </div>
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>If Others</b></label>
+                                        <label><b>If Others</b></label>
                                         <textarea name="w3review"></textarea>
                                     </div>
                                 </div>
@@ -322,23 +322,23 @@ function Changecontrolform() {
                                     Change Details
                                 </div>
                                 <div className="group-input">
-                                    <label className='font-weight-detailsform'><b>Current Practice </b></label>
+                                    <label><b>Current Practice </b></label>
                                     <textarea name="w3review"></textarea>
                                 </div>
                                 <div className="group-input">
-                                    <label className='font-weight-detailsform'><b>Proposed Change</b></label>
+                                    <label><b>Proposed Change</b></label>
                                     <textarea name="w3review"></textarea>
                                 </div>
                                 <div className="group-input">
-                                    <label className='font-weight-detailsform'><b>Reason for Change</b></label>
+                                    <label><b>Reason for Change</b></label>
                                     <textarea name="w3review"></textarea>
                                 </div>
                                 <div className="group-input">
-                                    <label className='font-weight-detailsform'><b>Any Other Comments</b></label>
+                                    <label><b>Any Other Comments</b></label>
                                     <textarea name="w3review"></textarea>
                                 </div>
                                 <div className="group-input">
-                                    <label className='font-weight-detailsform'><b>Supervisor Comments</b></label>
+                                    <label><b>Supervisor Comments</b></label>
                                     <textarea name="w3review"></textarea>
                                 </div>
                             </div>
@@ -347,7 +347,7 @@ function Changecontrolform() {
                         <div className='document-form'>
                             <div className='details-form-data'>
                                 <div className="group-input">
-                                    <label className='font-weight-detailsform'><b>Type of Change</b></label>
+                                    <label><b>Type of Change</b></label>
                                     <select name="type_change" value={typeOfChange} onChange={(e) => setTypeOfChange(e.target.value)}>
                                         <option value="0">-- Select --</option>
                                         <option value="minor">Minor</option>
@@ -356,11 +356,11 @@ function Changecontrolform() {
                                     </select>
                                 </div>
                                 <div className="group-input">
-                                    <label className='font-weight-detailsform'><b>QA Review Comments</b></label>
+                                    <label><b>QA Review Comments</b></label>
                                     <textarea name="w3review"></textarea>
                                 </div>
                                 <div className="group-input">
-                                    <label className='font-weight-detailsform'><b>Related Records</b></label>
+                                    <label><b>Related Records</b></label>
                                     <MultiSelect
                                         options={membership}
                                         value={selected}
@@ -381,7 +381,7 @@ function Changecontrolform() {
                                             Minor Change Justification
                                         </div>
                                         <div className="group-input">
-                                            <label className='font-weight-detailsform'><b>Minor Change Justification</b></label>
+                                            <label><b>Minor Change Justification</b></label>
                                             <textarea name="minor_justification"></textarea>
                                         </div>
                                     </> : ''
@@ -392,7 +392,7 @@ function Changecontrolform() {
                                             Major Change Justification
                                         </div>
                                         <div className="group-input">
-                                            <label className='font-weight-detailsform'><b>Major Change Justification</b></label>
+                                            <label><b>Major Change Justification</b></label>
                                             <textarea name="major_justification"></textarea>
                                         </div>
                                     </> : ''
@@ -403,7 +403,7 @@ function Changecontrolform() {
                                             Critical Change Justification
                                         </div>
                                         <div className="group-input">
-                                            <label className='font-weight-detailsform'><b>Critical Change Justification</b></label>
+                                            <label><b>Critical Change Justification</b></label>
                                             <textarea name="critical_justification"></textarea>
                                         </div>
                                     </> : ''
@@ -419,7 +419,7 @@ function Changecontrolform() {
                                 </div>
 
                                 <div className="group-input">
-                                    <label className='font-weight-detailsform'><b>QA Evaluation Comments</b></label>
+                                    <label><b>QA Evaluation Comments</b></label>
                                     <textarea></textarea>
                                 </div>
 
@@ -438,8 +438,8 @@ function Changecontrolform() {
                                 </div>
 
                                 <div className="group-input">
-                                    <label className='font-weight-detailsform'><b>Training Required</b></label>
-                                    <select name="type_chnage">
+                                    <label><b>Training Required</b></label>
+                                    <select name="type_change">
                                         <option value="0">-- Select --</option>
                                         <option value="major">No</option>
                                         <option value="minor">Yes</option>
@@ -447,7 +447,7 @@ function Changecontrolform() {
                                 </div>
 
                                 <div className="group-input">
-                                    <label className='font-weight-detailsform'><b>Training Comments</b></label>
+                                    <label><b>Training Comments</b></label>
                                     <textarea></textarea>
                                 </div>
 
@@ -464,7 +464,7 @@ function Changecontrolform() {
                                 <div className='form-flex'>
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>CFT Reviewer</b></label>
+                                        <label><b>CFT Reviewer</b></label>
                                         <select name="type_change">
                                             <option value="0">-- Select --</option>
                                             <option value="major">No</option>
@@ -474,9 +474,9 @@ function Changecontrolform() {
 
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>CFT Reviewer Person</b></label>
+                                        <label><b>CFT Reviewer Person</b></label>
                                         <MultiSelect
-                                            options={cftreviewer}
+                                            options={CFTReviewer}
                                             value={selected}
                                             onChange={setSelected}
                                             labelledBy="Select"
@@ -490,7 +490,7 @@ function Changecontrolform() {
                                 </div>
 
                                 <div className="group-input">
-                                    <label className='font-weight-detailsform'><b>Is Concerned Group Review Required?</b></label>
+                                    <label><b>Is Concerned Group Review Required?</b></label>
                                     <select name="type_change">
                                         <option value="0">-- Select --</option>
                                         <option value="major">No</option>
@@ -501,7 +501,7 @@ function Changecontrolform() {
                                 <div className='form-flex'>
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>Production</b></label>
+                                        <label><b>Production</b></label>
                                         <select name="type_change">
                                             <option value="0">-- Select --</option>
                                             <option value="major">No</option>
@@ -511,7 +511,7 @@ function Changecontrolform() {
 
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>Production Person</b></label>
+                                        <label><b>Production Person</b></label>
                                         <select name="Production_Person">
                                             <option value="0">-- Select --</option>
                                             <option value="1">Amit Guru</option>
@@ -526,7 +526,7 @@ function Changecontrolform() {
                                     </div>
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>Quality Approver</b></label>
+                                        <label><b>Quality Approver</b></label>
                                         <select name="type_change">
                                             <option value="0">-- Select --</option>
                                             <option value="major">No</option>
@@ -536,7 +536,7 @@ function Changecontrolform() {
 
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b> Quality Approver Person</b></label>
+                                        <label><b> Quality Approver Person</b></label>
                                         <select name="Production_Person">
                                             <option value="0">-- Select --</option>
                                             <option value="1">Amit Guru</option>
@@ -551,7 +551,7 @@ function Changecontrolform() {
                                     </div>
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>Others</b></label>
+                                        <label><b>Others</b></label>
                                         <select name="type_change">
                                             <option value="0">-- Select --</option>
                                             <option value="major">No</option>
@@ -561,7 +561,7 @@ function Changecontrolform() {
 
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>Others Person</b></label>
+                                        <label><b>Others Person</b></label>
                                         <select name="Production_Person">
                                             <option value="0">-- Select --</option>
                                             <option value="1">Amit Guru</option>
@@ -578,7 +578,7 @@ function Changecontrolform() {
                                 </div>
 
                                 <div className="group-input">
-                                    <label className='font-weight-detailsform'><b>QA Evaluation Comments</b></label>
+                                    <label><b>QA Evaluation Comments</b></label>
                                     <textarea></textarea>
                                 </div>
 
@@ -602,7 +602,7 @@ function Changecontrolform() {
                                 </div>
 
                                 <div className="group-input">
-                                    <label className='font-weight-detailsform'><b>QA Evaluation Comments</b></label>
+                                    <label><b>QA Evaluation Comments</b></label>
                                     <textarea></textarea>
                                 </div>
 
@@ -623,52 +623,52 @@ function Changecontrolform() {
                                 <div className='form-flex'>
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>QA Comments</b></label>
+                                        <label><b>QA Comments</b></label>
                                         <textarea></textarea>
 
                                     </div>
 
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>QA Head Designee Comments</b></label>
+                                        <label><b>QA Head Designee Comments</b></label>
                                         <textarea></textarea>
 
                                     </div>
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>Warehouse Comments</b></label>
+                                        <label><b>Warehouse Comments</b></label>
                                         <textarea></textarea>
 
                                     </div>
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>Engineering Comments</b></label>
+                                        <label><b>Engineering Comments</b></label>
                                         <textarea></textarea>
 
                                     </div>
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>Instrumentation Comments</b></label>
-                                        <textarea></textarea>
-
-                                    </div>
-
-
-                                    <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>Validation Comments</b></label>
-                                        <textarea></textarea>
-
-                                    </div>
-
-                                    <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>Others Comments</b></label>
+                                        <label><b>Instrumentation Comments</b></label>
                                         <textarea></textarea>
 
                                     </div>
 
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>Group Comments</b></label>
+                                        <label><b>Validation Comments</b></label>
+                                        <textarea></textarea>
+
+                                    </div>
+
+                                    <div className="group-input">
+                                        <label><b>Others Comments</b></label>
+                                        <textarea></textarea>
+
+                                    </div>
+
+
+                                    <div className="group-input">
+                                        <label><b>Group Comments</b></label>
                                         <textarea></textarea>
 
                                     </div>
@@ -686,14 +686,14 @@ function Changecontrolform() {
                                 </div>
 
                                 <div className="group-input">
-                                    <label className='font-weight-detailsform'><b>Risk Identification</b></label>
+                                    <label><b>Risk Identification</b></label>
                                     <textarea></textarea>
                                 </div>
 
                                 <div className='form-flex'>
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>Severity Rate</b></label>
+                                        <label><b>Severity Rate</b></label>
                                         <select name="severity" className='form-control'>
                                             <option value="">Enter Your Selection Here</option>
                                             <option value="1">Negligible</option>
@@ -705,7 +705,7 @@ function Changecontrolform() {
 
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>Occurrence</b></label>
+                                        <label><b>Occurrence</b></label>
                                         <select name="Occurrence" id="analysisP">
                                             <option value="">Enter Your Selection Here</option>
                                             <option value="5">Extremely Unlikely</option>
@@ -717,7 +717,7 @@ function Changecontrolform() {
                                     </div>
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>Detection</b></label>
+                                        <label><b>Detection</b></label>
                                         <select name="Detection" id="analysisN" >
                                             <option value="">Enter Your Selection Here</option>
                                             <option value="5">Impossible</option>
@@ -730,7 +730,7 @@ function Changecontrolform() {
 
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>RPN</b></label>
+                                        <label><b>RPN</b></label>
                                         <div className="instruction">Auto - Calculated</div>
                                         <input type='text' name='RPN' id='' disabled />
                                     </div>
@@ -738,12 +738,12 @@ function Changecontrolform() {
                                 </div>
 
                                 <div className="group-input">
-                                    <label className='font-weight-detailsform'><b>Risk Evaluation</b></label>
+                                    <label><b>Risk Evaluation</b></label>
                                     <textarea></textarea>
                                 </div>
 
                                 <div className="group-input">
-                                    <label className='font-weight-detailsform'><b>Migration Action</b></label>
+                                    <label><b>Migration Action</b></label>
                                     <textarea></textarea>
                                 </div>
                             </div>
@@ -753,13 +753,13 @@ function Changecontrolform() {
                             <div className='details-form-data'>
 
                                 <div className="group-input">
-                                    <label className='font-weight-detailsform'><b>QA Approval Comments</b></label>
+                                    <label><b>QA Approval Comments</b></label>
                                     <textarea></textarea>
                                 </div>
 
 
                                 <div className="group-input">
-                                    <label className='font-weight-detailsform'><b>Training Feedback</b></label>
+                                    <label><b>Training Feedback</b></label>
                                     <textarea></textarea>
                                 </div>
 
@@ -786,7 +786,7 @@ function Changecontrolform() {
                                 />
 
                                 <div className="group-input">
-                                    <label className='font-weight-detailsform'><b>QA Closure Comments </b></label>
+                                    <label><b>QA Closure Comments </b></label>
                                     <textarea name="w3review"></textarea>
                                 </div>
 
@@ -806,7 +806,7 @@ function Changecontrolform() {
                                 <div className='form-flex'>
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>Effectivess Check Required?</b></label>
+                                        <label><b>Effectiveness Check Required?</b></label>
                                         <select name="severity" className='form-control'>
                                             <option value="">Enter Your Selection Here</option>
                                             <option value="1">Yes</option>
@@ -817,14 +817,14 @@ function Changecontrolform() {
 
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>Effectiveness Check Creation Date</b></label>
+                                        <label><b>Effectiveness Check Creation Date</b></label>
                                         <input type='date' className='form-control' />
                                     </div>
 
                                 </div>
 
                                 <div className="group-input">
-                                    <label className='font-weight-detailsform'><b>Effectiveness Checker</b></label>
+                                    <label><b>Effectiveness Checker</b></label>
                                     <select name="Effectiveness_checker">
                                         <option value="">Enter Your Selection Here</option>
                                         <option value="1">Amit Guru</option>
@@ -839,7 +839,7 @@ function Changecontrolform() {
                                 </div>
 
                                 <div className="group-input">
-                                    <label className='font-weight-detailsform'><b>Effectiveness Check Plan</b></label>
+                                    <label><b>Effectiveness Check Plan</b></label>
                                     <textarea name="w3review"></textarea>
                                 </div>
 
@@ -848,7 +848,7 @@ function Changecontrolform() {
                                 </div>
 
                                 <div className="group-input">
-                                    <label className='font-weight-detailsform'><b>Due Date Extension Justification</b></label>
+                                    <label><b>Due Date Extension Justification</b></label>
                                     <div className="instruction">Please Mention justification if due date is crossed</div>
                                     <textarea name="w3review"></textarea>
                                 </div>
@@ -866,32 +866,32 @@ function Changecontrolform() {
                                 <div className='form-flex'>
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>Submitted By</b></label>
+                                        <label><b>Submitted By</b></label>
 
                                     </div>
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>Submitted On</b></label>
+                                        <label><b>Submitted On</b></label>
 
                                     </div>
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>Cancelled By</b></label>
+                                        <label><b>Cancelled By</b></label>
 
                                     </div>
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>Cancelled On</b></label>
+                                        <label><b>Cancelled On</b></label>
 
                                     </div>
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>More Information Required By</b></label>
+                                        <label><b>More Information Required By</b></label>
 
                                     </div>
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>More Information Required On</b></label>
+                                        <label><b>More Information Required On</b></label>
 
                                     </div>
 
@@ -912,4 +912,4 @@ function Changecontrolform() {
     )
 }
 
-export default Changecontrolform
+export default ChangeControlForm
