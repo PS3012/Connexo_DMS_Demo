@@ -2,29 +2,39 @@
     color: gray;
 }
 
+.sub-head {
+    color: #4274da;
+    border-bottom: 2px solid #4274da;
+    padding-bottom: 10px 20px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
 .TrainingManagementSystem-page .details-form {
     padding: 25px 20px;
 }
 
-.TrainingManagementSystem-page .details-form form {
+.TrainingManagementSystem-page .details-form .form-contain {
     background: white;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 10px;
+    padding: 10px 20px;
 }
 
 .TrainingManagementSystem-page .details-form .details-form-data {
     padding: 10px 20px;
 }
 
-.TrainingManagementSystem-page .details-form .details-form-heading {
+/* .TrainingManagementSystem-page .details-form .details-form-heading {
     background: #006fc0;
     ;
     border-radius: 10px 10px 0px 0px;
-    padding: 8px;
+    padding: 10px 20px;
     font-size: 20px;
     color: #ffff;
     font-weight: 600;
-}
+} */
 
 .TrainingManagementSystem-page .details-form-data .group-input-flex {
     display: grid;
@@ -38,3 +48,35 @@
     font-weight: bold;
     margin-bottom: 20px;
 }
+
+.TrainingManagementSystem-page .selecting-form-flex {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.TrainingManagementSystem-page .inner-block-content {
+    padding: 25px;
+}
+
+.TrainingManagementSystem-page .search-bar {
+    margin-bottom: 20px;
+    border: 1px solid grey;
+    display: grid;
+    grid-template-columns: auto 70px;
+}
+
+.TrainingManagementSystem-page .search-bar input {
+    border: 0;
+    outline: none;
+    font-size: medium;
+    font-size: 19px;
+}
+
+.TrainingManagementSystem-page .search-bar label {
+    background: #006fc0;
+    color: white;
+    display: grid;
+    place-items: center;
+}
+
