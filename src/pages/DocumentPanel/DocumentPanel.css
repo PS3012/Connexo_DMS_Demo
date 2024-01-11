@@ -1,8 +1,22 @@
 /*! =================================================================================*/
 /*! DOCUMENT PANEL CSS */
 /*! =================================================================================*/
-#document-panel {
+#document-panel .main-head-block {
+    background: var(--themeColor);
+    padding: 23px 20px;
+    color: white;
+}
+
+#document-panel .main-head-block .head {
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+}
+
+#document-panel .inner-block {
     padding: 20px;
+    display: grid;
+    gap: 20px;
 }
 
 #document-panel .workflow-bar {
@@ -36,25 +50,72 @@
     display: flex;
     border: 1px solid #808080d6;
     border-radius: 5px;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
-#document-panel .workflow-bar .progress-block div {
+#document-panel .workflow-bar .progress-block>div {
     flex: 1 1 auto;
     text-align: center;
     font-size: 0.9rem;
     padding: 5px;
     border-right: 1px solid #808080d6;
+    position: relative;
 }
 
-#document-panel .workflow-bar .progress-block div:nth-last-child(1) {
+#document-panel .workflow-bar .progress-block>div:nth-last-child(1) {
     border-right: 0;
 }
 
-#document-panel .workflow-bar .progress-block div.active {
+#document-panel .workflow-bar .progress-block>div.active {
     background: #00ff0073;
 }
 
-#document-panel .workflow-bar .progress-block div.active.closed {
+#document-panel .workflow-bar .progress-block>div.active.closed {
     background: #ff000073;
+}
+
+#document-panel .workflow-bar .progress-block>div .details {
+    position: absolute;
+    text-align: left;
+    font-size: 0.8rem;
+    padding: 10px;
+    background: #f9f9f9;
+    border-radius: 5px;
+    z-index: -5;
+    visibility: hidden;
+    opacity: 0;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    transform: translate(0, -20px);
+    transition: all 0.3s linear;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+#document-panel .workflow-bar .progress-block>div:hover .details {
+    opacity: 1;
+    z-index: 2;
+    transform: translate(0, 20px);
+    visibility: visible;
+}
+
+#document-panel .workflow-bar .progress-block>div .details::before {
+    bottom: 100%;
+    left: 0;
+    width: 100%;
+    background: transparent;
+    height: 20px;
+    content: '';
+    position: absolute;
+}
+
+#document-panel .workflow-bar .progress-block>div .details::after {
+    content: '';
+    width: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    transform: translate(15px, -13px) rotate(45deg);
+    background: #f9f9f9;
 }

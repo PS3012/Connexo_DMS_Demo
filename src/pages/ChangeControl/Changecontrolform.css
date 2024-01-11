@@ -2,7 +2,7 @@
 /*! DOCUMENT CSS */
 /*! ===================================================================== */
 #config-form-document-page {
-    padding: 0 0;
+    padding: 0 0 76px;
 }
 
 #config-form-document-page .top-block {
@@ -65,6 +65,10 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 20px;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
     width: 100%;
     box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px 10px;
 }
@@ -133,9 +137,10 @@
     opacity: 0;
 }
 
-#config-form-document-page .group-input table input, 
+#config-form-document-page .group-input table input,
 #config-form-document-page .group-input table select {
- border: 0;
- padding: 0;
- margin: 0;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
 }
