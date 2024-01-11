@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import HeaderTop from '../../components/Header/HeaderTop'
+import HeaderBottom from '../../components/Header/HeaderBottom'
 import ESignatureModal from '../../components/Modals/ESignatureModal/ESignatureModal';
 import './DocumentPanel.css'
 
@@ -55,7 +56,7 @@ function DocumentPanel() {
         <>
 
             <HeaderTop />
-
+            <HeaderBottom />
             <div id="document-panel">
 
                 <div className="main-head-block">
