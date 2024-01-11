@@ -1,39 +1,19 @@
-import { useState } from 'react'
+import { useState } from 'react';
+import HeaderTop from '../../components/Header/HeaderTop'
 import './Changecontrolform.css'
-import { MultiSelect } from 'react-multi-select-component';
-import HeaderTop from '../../components/Header/HeaderTop';
 
-
-function Changecontrolform() {
-
-
-    const membership = [
-        { label: "Grapes", value: "grapes" },
-        { label: "Mango", value: "mango", disabled: true },
-        { label: "Strawberry", value: "strawberry", },
-    ];
-
-    const cftreviewer = [
-        { label: "Anshul Patel", value: "1" },
-        { label: "Mango", value: "mango", disabled: true },
-        { label: "Amit", value: "2", },
-    ];
-
+function InternalAudit() {
     const [form, setForm] = useState("General Information");
-    const [selected, setSelected] = useState([]);
+  return (
+    <>
 
+    <HeaderTop />
 
-
-    return (
-        <>
-            
-            <HeaderTop />
-
-            <div id='config-form-document-page'>
+    <div id='config-form-document-page'>
                 <div className="top-block">
                     <div className="head">New Change Control</div>
                     <div className="content">
-                        Site-Division / Project : Jordan / Change Control
+                        Site-Division / Project : Jordan / Internal Audit
                     </div>
                 </div>
 
@@ -41,23 +21,17 @@ function Changecontrolform() {
                     <div className="document-tabs">
                         <div className={form === 'General Information' ? 'active' : ''} onClick={() => setForm('General Information')}>General Information</div>
 
-                        <div className={form === 'Change Details' ? 'active' : ''} onClick={() => setForm('Change Details')}>Change Details</div>
+                        <div className={form === 'Audit Planning' ? 'active' : ''} onClick={() => setForm('Audit Planning')}>Audit Planning</div>
 
-                        <div className={form === 'QA Review' ? 'active' : ''} onClick={() => setForm('QA Review')}>QA Review</div>
+                        <div className={form === 'Audit Preparation' ? 'active' : ''} onClick={() => setForm('Audit Preparation')}>Audit Preparation</div>
 
-                        <div className={form === 'Evaluation' ? 'active' : ''} onClick={() => setForm('Evaluation')}>Evaluation</div>
+                        <div className={form === 'Audit Execution' ? 'active' : ''} onClick={() => setForm('Audit Execution')}>Audit Execution</div>
 
-                        <div className={form === 'Additional Information' ? 'active' : ''} onClick={() => setForm('Additional Information')}>Additional Information</div>
-
-                        <div className={form === 'Group Comments' ? 'active' : ''} onClick={() => setForm('Group Comments')}>Group Comments</div>
-
-                        <div className={form === 'Risk Assessment' ? 'active' : ''} onClick={() => setForm('Risk Assessment')}>Risk Assessment</div>
-
-                        <div className={form === 'QA Approval Comments' ? 'active' : ''} onClick={() => setForm('QA Approval Comments')}>QA Approval Comments</div>
-
-                        <div className={form === 'Change Closure' ? 'active' : ''} onClick={() => setForm('Change Closure')}>Change Closure</div>
+                        <div className={form === 'Audit Responce & closure' ? 'active' : ''} onClick={() => setForm('Audit Responce & closure')}>Audit Responce & closure</div>
 
                         <div className={form === 'Activity Log' ? 'active' : ''} onClick={() => setForm('Activity Log')}>Activity Log</div>
+
+                    
                     </div>
 
                     {form === 'General Information' ? (
@@ -70,6 +44,10 @@ function Changecontrolform() {
                                 </div>
                                 <div className='form-flex'>
 
+                                <div className="group-input">
+                                        <label className='font-weight-detailsform'><b>Division code</b></label>
+                                        <input type="text" className="form-control" value="Amit Guru" disabled />
+                                    </div>
                                     <div className="group-input">
                                         <label className='font-weight-detailsform'><b>Initiator</b></label>
                                         <input type="text" className="form-control" value="Amit Guru" disabled />
@@ -96,7 +74,9 @@ function Changecontrolform() {
 
                                     <div className="group-input">
                                         <label className='font-weight-detailsform'><b>Initiator Group *</b></label>
-                                        <input type="date" className="form-control" placeholder="" />
+                                        <div className='instruction'>Please select related information</div>
+                                    
+                                        
                                     </div>
 
                                     <div className="group-input">
@@ -138,7 +118,23 @@ function Changecontrolform() {
                                     </div>
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>Repeat</b></label>
+                                        <label className='font-weight-detailsform'><b>Type Of Audit</b></label>
+                                        <div className='instruction'>Please select related information</div>
+                                        <select name="initiated_through" className='form-control'>
+                                            <option>Enter Your Selection Here</option>
+                                            <option value="recall">R&D</option>
+                                            <option value="return">GLP</option>
+                                            <option value="deviation">GMP</option>
+                                            <option value="complaint">GCP</option>
+                                            <option value="regulatory">Regulatory</option>
+                                            <option value="lab-incident">Lab Incident</option>
+                                            <option value="improvement">Improvement</option>
+                                            <option value="others">Others</option>
+                                        </select>
+                                    </div>
+
+                                    <div className="group-input">
+                                        <label className='font-weight-detailsform'><b>If Other</b></label>
                                         <div className='instruction'>Please select yes if it is has recurred in past six months</div>
                                         <select name="initiated_through" className='form-control'>
                                             <option>Enter Your Selection Here</option>
@@ -150,50 +146,19 @@ function Changecontrolform() {
 
 
                                     <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>Repeat Nature</b></label>
-                                        <textarea className="form-control" name="w3review" rows="3" cols="50"></textarea>
-                                    </div>
-
-                                    <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>Risk Level</b></label>
-                                        <select name="risk_level" className="form-control">
-                                            <option value="0">-- Select --</option>
-                                            <option value="minor">Minor</option>
-                                            <option value="major">Major</option>
-                                            <option value="critical">Critical</option>
+                                        <label className='font-weight-detailsform'><b>Initial Comments</b></label>
+                                        <div className='instruction'>Please select yes if it is has recurred in past six months</div>
+                                        <select name="initiated_through" className='form-control'>
+                                            <option>Enter Your Selection Here</option>
+                                            <option>Yes</option>
+                                            <option>No</option>
+                                            <option>NA</option>
                                         </select>
                                     </div>
 
-                                    <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>Division Code</b><span>*</span></label>
-                                        <select name="div_code" className="form-control">
-                                            <option value="0">-- Select --</option>
-                                            <option value="P1">P1</option>
-                                            <option value="P2">P2</option>
-                                            <option value="P3">P3</option>
-                                            <option value="P4A">P4A</option>
-                                            <option value="P4B">P4B</option>
-                                            <option value="P5">P5</option>
-                                            <option value="P6">P6</option>
-                                            <option value="P7">P7</option>
-                                            <option value="RLS">RLS</option>
-                                            <option value="CRS">CRS</option>
-                                        </select>
-                                    </div>
 
-                                    <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>Nature Of Change</b></label>
-                                        <select name="natureChange">
-                                            <option value="0">-- Select --</option>
-                                            <option value="Temporary">Temporary</option>
-                                            <option value="Permanent">Permanent</option>
-                                        </select>
-                                    </div>
-
-                                    <div className="group-input">
-                                        <label className='font-weight-detailsform'><b>If Others</b></label>
-                                        <textarea className="form-control" name="w3review" rows="3" cols="50"></textarea>
-                                    </div>
+                                   
+                                    
 
 
 
@@ -272,11 +237,12 @@ function Changecontrolform() {
                                 </div>
                                 <div className="group-input">
                                     <label className='font-weight-detailsform'><b>Related Records</b></label>
-                                    <MultiSelect
+                                    {/* <MultiSelect
                                         options={membership}
                                         value={selected}
                                         onChange={setSelected}
-                                        labelledBy="Select" />
+                                        labelledBy="Select" 
+                                    /> */}
                                 </div>
 
                                 <div className="group-input">
@@ -362,11 +328,13 @@ function Changecontrolform() {
 
                                     <div className="group-input">
                                         <label className='font-weight-detailsform'><b>CFT Reviewer Person</b></label>
-                                        <MultiSelect
+                                        {/* <MultiSelect
                                             options={cftreviewer}
                                             value={selected}
                                             onChange={setSelected}
-                                            labelledBy="Select" />                                            </div>
+                                            labelledBy="Select" 
+                                        />                                             */}
+                                        </div>
 
                                 </div>
 
@@ -584,8 +552,9 @@ function Changecontrolform() {
                     <button>Cancel</button>
                 </div>
             </div >
-        </>
-    )
+      
+    </>
+  )
 }
 
-export default Changecontrolform
+export default InternalAudit
