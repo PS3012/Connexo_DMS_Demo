@@ -3,6 +3,8 @@ import DocumentPanel from './pages/DocumentPanel/DocumentPanel'
 import TrainingManagementSystem from './pages/TMS/TrainingManagementSystem'
 import Question from './pages/Question/Question'
 import ChangeControlForm from './pages/ConfigForms/Changecontrolform'
+import InternalAudit from './pages/ConfigForms/InternalAudit'
+import ExternalAudit from './pages/ConfigForms/ExternalAudit'
 
 function App() {
   localStorage.setItem('username', 'amit.patel@connexo.io')
@@ -16,7 +18,9 @@ function App() {
           <Route path='/change-control-form' element={<ChangeControlForm />} />
           <Route path='/document-panel' element={<DocumentPanel />} />
           <Route path='/training-management-system' element={<TrainingManagementSystem />} />
-        </Routes>
+          <Route path='/internal-audit' element={<InternalAudit />} />
+          <Route path='/external-audit' element={<ExternalAudit />} />
+        </Routes> 
       </BrowserRouter>
 
     </>
