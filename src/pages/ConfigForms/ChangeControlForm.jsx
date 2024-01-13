@@ -10,6 +10,8 @@ function ChangeControlForm() {
     const [typeOfChange, setTypeOfChange] = useState(0)
     const [selected, setSelected] = useState([]);
     const [groupComment, setGroupComment] = useState(0)
+    const [initiatorGroup, setInitiatorGroup] = useState('')
+    
     const membership = [
         { label: "Grapes", value: "grapes" },
         { label: "Mango", value: "mango", disabled: true },
@@ -30,7 +32,8 @@ function ChangeControlForm() {
                 { id: '2.1.1.2', name: 'Attached File', type: 'File' },
                 { id: '2.1.1.3', name: 'Remark', type: 'text' },
             ]
-        }, {
+        },
+         {
             label: 'QA Attachments',
             instruction: 'Please Attach all relevant or supporting documents',
             required: true,
@@ -180,7 +183,8 @@ function ChangeControlForm() {
                                         <select id="select-state" className='form-control' placeholder="Select..." name="assign_to">
                                             <option value="">Select a value</option>
                                             <option value="2">Shaleen Mishra</option>
-                                        </select>                                    </div>
+                                        </select>
+                                    </div>
 
                                     <div className="group-input">
                                         <label><b>Due Date</b><span className="required">&nbsp;*</span></label>
@@ -190,12 +194,15 @@ function ChangeControlForm() {
 
                                     <div className="group-input">
                                         <label><b>Initiator Group <span className="required">&nbsp;*</span></b></label>
-                                        <input type="date" placeholder="" />
+                                        <select name="initiator_group" value={initiatorGroup} onChange={(e) => setInitiatorGroup(e.target.value)}>
+                                            <option value="">-- Select --</option>
+                                            <option value="QA">Quality Assurance</option>
+                                        </select>
                                     </div>
 
                                     <div className="group-input">
                                         <label><b>Initiator Group Code</b></label>
-                                        <input type="" value="" disabled />
+                                        <input type="text" value={initiatorGroup} disabled />
                                     </div>
                                 </div>
 
@@ -467,8 +474,8 @@ function ChangeControlForm() {
                                         <label><b>CFT Reviewer</b></label>
                                         <select name="type_change">
                                             <option value="0">-- Select --</option>
-                                            <option value="major">No</option>
-                                            <option value="minor">Yes</option>
+                                            <option value="major">Yes</option>
+                                            <option value="minor">No</option>
                                         </select>
                                     </div>
 

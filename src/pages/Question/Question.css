@@ -22,7 +22,7 @@
     display: grid;
     gap: 20px;
 }
-
+/* ---------grid------ */
 #add-question-page .main-block .option-grid>div {
     display: grid;
     grid-template-columns: 1fr  15px 20px;
