@@ -10,7 +10,7 @@ function ChangeControlForm() {
     const [selected, setSelected] = useState([]);
     const [groupComment, setGroupComment] = useState(0)
     const [initiatorGroup, setInitiatorGroup] = useState('')
-    
+
     const membership = [
         { label: "Grapes", value: "grapes" },
         { label: "Mango", value: "mango", disabled: true },
@@ -25,17 +25,17 @@ function ChangeControlForm() {
         {
             label: "Initial attachment",
             instruction: "Please Attach all relevant or supporting documents",
-            required: true,
+            required: false,
             columnList: [
                 { id: '2.1.1.1', name: 'Title of Document', type: 'text' },
                 { id: '2.1.1.2', name: 'Attached File', type: 'File' },
                 { id: '2.1.1.3', name: 'Remark', type: 'text' },
             ]
         },
-         {
+        {
             label: 'QA Attachments',
             instruction: 'Please Attach all relevant or supporting documents',
-            required: true,
+            required: false,
             columnList: [
                 { id: '2.1.1.1', name: 'Title of Document', type: 'text' },
                 { id: '2.1.1.2', name: 'Attached File', type: 'File' },
@@ -44,7 +44,7 @@ function ChangeControlForm() {
         }, {
             label: 'QA Attachments',
             instruction: 'Please Attach all relevant or supporting documents',
-            required: true,
+            required: false,
             columnList: [
                 { id: '2.1.1.1', name: 'Title of Document', type: 'text' },
                 { id: '2.1.1.2', name: 'Attached File', type: 'File' },
@@ -53,7 +53,7 @@ function ChangeControlForm() {
         }, {
             label: 'QA Attachments',
             instruction: 'Please Attach all relevant or supporting documents',
-            required: true,
+            required: false,
             columnList: [
                 { id: '2.1.1.1', name: 'Title of Document', type: 'text' },
                 { id: '2.1.1.2', name: 'Attached File', type: 'File' },
@@ -62,7 +62,7 @@ function ChangeControlForm() {
         }, {
             label: 'CFT Attachments',
             instruction: 'Please Attach all relevant or supporting documents',
-            required: true,
+            required: false,
             columnList: [
                 { id: '2.1.1.1', name: 'Title of Document', type: 'text' },
                 { id: '2.1.1.2', name: 'Attached File', type: 'File' },
@@ -71,7 +71,7 @@ function ChangeControlForm() {
         }, {
             label: 'Training Attachments',
             instruction: 'Please Attach all relevant or supporting documents',
-            required: true,
+            required: false,
             columnList: [
                 { id: '2.1.1.1', name: 'Title of Document', type: 'text' },
                 { id: '2.1.1.2', name: 'Attached File', type: 'File' },
@@ -80,7 +80,7 @@ function ChangeControlForm() {
         }, {
             label: 'List of Attachments',
             instruction: 'Please Attach all relevant or supporting documents',
-            required: true,
+            required: false,
             columnList: [
                 { id: '2.1.1.1', name: 'Title of Document', type: 'text' },
                 { id: '2.1.1.2', name: 'Attached File', type: 'File' },
@@ -90,7 +90,7 @@ function ChangeControlForm() {
         {
             label: "QA Attachments",
             instruction: "Please Attach all relevant or supporting documents",
-            required: true,
+            required: false,
             columnList: [
                 { id: "2.1.1.1", name: "Title of Document", type: "text" },
                 { id: "2.1.1.2", name: "Attached File", type: "File" },
@@ -100,7 +100,7 @@ function ChangeControlForm() {
         {
             label: "QA Attachments",
             instruction: "Please Attach all relevant or supporting documents",
-            required: true,
+            required: false,
             columnList: [
                 { id: "2.1.1.1", name: "Title of Document", type: "text" },
                 { id: "2.1.1.2", name: "Attached File", type: "File" },
@@ -110,7 +110,7 @@ function ChangeControlForm() {
         {
             label: "QA Attachments",
             instruction: "Please Attach all relevant or supporting documents",
-            required: true,
+            required: false,
             columnList: [
                 { id: "2.1.1.1", name: "Title of Document", type: "text" },
                 { id: "2.1.1.2", name: "Attached File", type: "File" },

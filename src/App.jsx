@@ -5,10 +5,6 @@ import Question from './pages/Question/Question'
 import ChangeControlForm from './pages/ConfigForms/ChangeControlForm'
 import DocumentForm from './pages/ConfigForms/DocumentForm'
 import LabIncident from './pages/ConfigForms/LabIncident'
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import DocumentPanel from './pages/DocumentPanel/DocumentPanel';
-import TrainingManagementSystem from './pages/TMS/TrainingManagementSystem';
-import Question from './pages/Question/Question';
 import AddQuestion from './pages/AddQuestion/AddQuestion';
 import ManageQuiz from './pages/ManageQuiz/ManageQuiz';
 import RiskAssesment from './pages/ConfigForms/RiskAssesment';

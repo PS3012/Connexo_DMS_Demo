@@ -14,6 +14,10 @@ function DocumentForm() {
     const [materials, setMaterials] = useState([{ id: 1, value: '' }]);
     const [reporting, setReporting] = useState([{ id: 1, value: '' }]);
     const [references, setReferences] = useState([{ id: 1, value: '' }]);
+    const [initiatorGroup, setInitiatorGroup] = useState('');
+    const [departmenttype, setDepartmenttype] = useState('');
+    const [language, setLanguage] = useState('');
+
 
     // ! ====================Responsibility=====================
     const handleAddResponsibility = () => {
@@ -87,8 +91,11 @@ function DocumentForm() {
 
 
     const referenceRecord = [
-        { label: "1", value: "" },
-        { label: "2", value: "" },
+        { label: "DMS-North America/STP/2024/SOP-00001", value: "1" },
+        { label: "DMS-North America/SOP/2024/SOP-00002", value: "2" },
+        { label: "DMS-North America/STP/2024/SOP-00003", value: "3" },
+        { label: "DMS-North America/SOP/2024/SOP-00006", value: "4" },
+        { label: "DMS-North America/SOP/2024/SOP-000010",value: "5" },
 
     ];
     const approvers = [
@@ -320,53 +327,54 @@ function DocumentForm() {
 
                                     <div className="group-input">
                                         <label><b>Department Name<span className="required">&nbsp;*</span></b></label>
-                                        <select name="department_id" id="depart-name" required="">
-                                            <option value="" selected="">-- Select --</option>
-                                            <option data-id="QA" value="1">Quality Assurance </option>
-                                            <option data-id="QC" value="2">Quality Control</option>
-                                            <option data-id="Prod" value="3">Production</option>
+                                        <select name="initiator_group" value={initiatorGroup} onChange={(e) => setInitiatorGroup(e.target.value)}>
+                                            <option value="Not selected">-- Select --</option>
+                                            <option value="QA">Quality Assurance </option>
+                                            <option value="QC">Quality Control</option>
+                                            <option value="Prod">Production</option>
                                         </select>
                                     </div>
 
                                     <div className="group-input">
                                         <label>Department Code</label>
-                                        <div className="default-name">Not selected</div>
+                                        <input type="text" value={initiatorGroup} disabled />
                                     </div>
 
                                     <div className="group-input">
                                         <label><b>Department Type<span className="required">&nbsp;*</span></b></label>
-                                        <select name="document_type_id" id="doc-type" required="">
-                                            <option value="" selected="">-- Select --</option>
-                                            <option data-id="STP" value="1">Standard Test Procedure </option>
-                                            <option data-id="SOP" value="2">Standard Operating Procedure</option>
-                                            <option data-id="WI" value="3"> Work Instruction</option>
-                                            <option data-id="Spec" value="4">Specification </option>
-                                            <option data-id="VP" value="5">Validation Protocol  </option>
-                                            <option data-id="PFD" value="6">Process Flow Diagram   </option>
-                                            <option data-id="QP" value="7">Qualification Protocol   </option>
+                                        <select name="initiator_group" value={departmenttype} onChange={(e) => setDepartmenttype(e.target.value)}>
+                                            <option value="Not selected">Enter your Selection</option>
+                                            <option value="STP">Standard Test Procedure </option>
+                                            <option value="SOP">Standard Operating Procedure</option>
+                                            <option value="WI">Work Instruction</option>
+                                            <option value="Spec">Specification </option>
+                                            <option value="VP">Validation Protocol  </option>
+                                            <option value="PFD">Process Flow Diagram   </option>
+                                            <option value="QP">Qualification Protocol   </option>
                                         </select>
                                     </div>
 
                                     <div className="group-input">
                                         <label>Document Type Code</label>
-                                        <div className="default-name">Not selected</div>
+                                        <input type="text" value={departmenttype} disabled />
                                     </div>
 
                                     <div className="group-input">
                                         <label><b>Department Name<span className="required">&nbsp;*</span></b></label>
-                                        <select name="" id="lang-name" required="">
-                                            <option value="" selected="">-- Select --</option>
-                                            <option data-id="EN" value="1">English</option>
-                                            <option data-id="KN" value="2">Korean</option>
+                                        <select name="" id="lang-name" value={language} onChange={(e) => setLanguage(e.target.value)}>
+                                            <option value="Not selected">-- Select --</option>
+                                            <option value="EN">English</option>
+                                            <option value="KN">Korean</option>
                                         </select>
                                     </div>
 
                                     <div className="group-input">
                                         <label>Document Language Code</label>
-                                        <div className="default-name">Not selected</div>
+                                        <input type="text" value={language} disabled />
                                     </div>
 
                                     <div className="group-input" id="add-keyword">
+                                        <div>Keyword</div>
                                         <input type="text" id="sourceField" />
                                         <button id="addButton" className="themeBtn" type="button">Add</button>
                                     </div>
@@ -444,7 +452,7 @@ function DocumentForm() {
                                     </div>
 
                                     <div className="group-input">
-                                        <label>Reviewers Group<span className="required">&nbsp;*</span></label>
+                                        <label>Reviewers Group</label>
                                         <MultiSelect
                                             options={reviewersGroup}
                                             value={selected}
@@ -453,7 +461,7 @@ function DocumentForm() {
                                     </div>
 
                                     <div className="group-input">
-                                        <label>Approvers Group<span className="required">&nbsp;*</span></label>
+                                        <label>Approvers Group</label>
                                         <MultiSelect
                                             options={approversGroup}
                                             value={selected}
