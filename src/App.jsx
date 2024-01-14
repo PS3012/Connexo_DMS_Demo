@@ -9,6 +9,8 @@ import AddQuestion from './pages/AddQuestion/AddQuestion';
 import ManageQuiz from './pages/ManageQuiz/ManageQuiz';
 import RiskAssesment from './pages/ConfigForms/RiskAssesment';
 // import TTS from './pages/TTS/TTS';
+import InternalAudit from './pages/ConfigForms/InternalAudit'
+import ExternalAudit from './pages/ConfigForms/ExternalAudit'
 
 function App() {
   return (
@@ -26,6 +28,9 @@ function App() {
           <Route path='/document-form' element={<DocumentForm />} />
           <Route path='/lab-incident-form' element={<LabIncident />} />
         </Routes>
+          <Route path='/internal-audit' element={<InternalAudit />} />
+          <Route path='/external-audit' element={<ExternalAudit />} />
+        </Routes> 
       </BrowserRouter>
 
     </>

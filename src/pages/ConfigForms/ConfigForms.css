@@ -170,3 +170,28 @@
 #config-form-document-page .details-form-data .text-Annexure{
     padding: 10px;
 }
+#config-form-document-page .adddocument-file{
+    display: grid;
+    grid-template-columns: 1fr 150px;
+    gap: 20px;
+}
+#config-form-document-page .add-button{
+    position: relative;
+}
+
+#config-form-document-page .add-button .add-file{
+    background: #002bff;
+    color: white;
+    border-radius: 5px;
+    text-align: center;
+    padding: 5px;
+}
+
+#config-form-document-page .add-button input{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+    opacity: 0;
+}
