@@ -875,7 +875,7 @@ function RiskAssesment() {
                                 </div>
                             </div>
 
-                            <div className="why-why-container">
+                            {/* <div className="why-why-container">
                                 <label>
                                     <b>
                                         Why-Why Chart
@@ -900,7 +900,7 @@ function RiskAssesment() {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
 
                             <div className="table-wrapper">
                                 <label>
