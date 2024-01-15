@@ -88,8 +88,6 @@ function DocumentForm() {
         );
     };
     //!======================References-end=======================
-
-
     const referenceRecord = [
         { label: "DMS-North America/STP/2024/SOP-00001", value: "1" },
         { label: "DMS-North America/SOP/2024/SOP-00002", value: "2" },
