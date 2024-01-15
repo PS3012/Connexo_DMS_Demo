@@ -4,14 +4,12 @@ import HeaderTop from "../../components/Header/HeaderTop";
 import "./ConfigForms.css";
 import { MultiSelect } from "react-multi-select-component";
 import Grid from "../../components/DataFields/Grid";
-// import Speech from 'react-speech';
 
 
 function RiskAssesment() {
     const [form, setForm] = useState("Risk Assesment");
     const [groupComment, setGroupComment] = useState(0);
     const [selected, setSelected] = useState([]);
-
 
     const records = [
         { label: "Select Department", value: "Select Department" },
@@ -20,6 +18,16 @@ function RiskAssesment() {
         { label: "R&D", value: "R&D" },
         { label: "Manufacuring", value: "Manufacuring" },
         { label: "Warehouse", value: "Warehouse" },
+    ];
+
+    const refrenceRecord = [
+        // { label: "---Select---", value: "Select" },
+    ];
+    const rootCause = [
+        { label: "Why-Why Chart", value: "Why-Why Chart" },
+        { label: "Failure Mode and Efect Analysis", value: "Failure Mode and Efect Analysis" },
+        { label: "Fishbone or Ishikawa Diagram", value: "Fishbone or Ishikawa Diagram" },
+        { label: "Is/Is Not Analysis", value: "Is/Is Not Analysis" },
     ];
 
     const team = [
@@ -46,6 +54,32 @@ function RiskAssesment() {
         },
     ];
 
+    const FailureModenEffectAnalysis = [
+        {
+            label: "Failure Mode and Effect Analysis",
+            columnList: [
+                { id: "2.1.1.1", name: "Risk Factor", type: "text" },
+                {
+                    id: "2.1.1.2", name: "Risk Element", type: "text"
+                },
+                { id: "2.1.1.3", name: "Probable cause of risk element", type: "text" },
+                { id: "2.1.1.4", name: "Existing Risk Controls", type: "text" },
+                { id: "2.1.1.5", name: "Initial Severity- H(3)/M(2)/L(1)", type: "singleSelection", selectionValues: ["1", "2", "3"] },
+                { id: "2.1.1.6", name: "Initial Probability- H(3)/M(2)/L(1)", type: "singleSelection", selectionValues: ["1", "2", "3"] },
+                { id: "2.1.1.7", name: "Initial Detectability- H(1)/M(2)/L(3)", type: "singleSelection", selectionValues: ["1", "2", "3"] },
+                { id: "2.1.1.8", name: "Initial RPN", type: "text" },
+                { id: "2.1.1.9", name: "Risk Acceptance (Y/N)", type: "singleSelection", selectionValues: ["Y", "N"] },
+                { id: "2.1.1.10", name: "Proposed Additional Risk control measure (Mandatory for Risk elements having RPN > 4)", type: "text" },
+                { id: "2.1.1.11", name: "Residual Severity- H(3)/M(2)/L(1)", type: "singleSelection", selectionValues: ["1", "2", "3"] },
+                { id: "2.1.1.12", name: "Residual Probability- H(3)/M(2)/L(1)", type: "singleSelection", selectionValues: ["1", "2", "3"] },
+                { id: "2.1.1.13", name: "Residual Detectability- H(1)/M(2)/L(3)", type: "singleSelection", selectionValues: ["1", "2", "3"] },
+                { id: "2.1.1.14", name: "Risk Acceptance (Y/N)", type: "singleSelection", selectionValues: ["Y", "N"] },
+                { id: "2.1.1.15", name: "Mitigation proposal (Mention either CAPA reference number, IQ, OQ or PQ)", type: "text" },
+
+            ],
+        },
+    ];
+
     const attachment = [
         {
             label: "Initial attachment",
@@ -68,7 +102,7 @@ function RiskAssesment() {
             columnList: [
                 { id: "2.1.1.1", name: "Mitigation Steps", type: "text" },
                 { id: "2.1.1.2", name: "Deadline", type: "date" },
-                { id: "2.1.1.3", name: "Responsible Person", type: "singleSelection", selectionValues: ["Amit Guru", "Shaleen Mishra", "Shaleen Mishra", "Madhulika Mishra", "Jin Kim", "Akash Asthana", "Amit Patel"] },
+                { id: "2.1.1.3", name: "Responsible Person", type: "singleSelection", selectionValues: ["Amit Guru", "Shaleen Mishra", "Madhulika Mishra", "Jin Kim", "Akash Asthana", "Amit Patel"] },
                 { id: "2.1.1.4", name: "Status", type: "text" },
                 { id: "2.1.1.5", name: "Remark", type: "text" }
             ],
@@ -816,6 +850,232 @@ function RiskAssesment() {
                                 </div>
                             </div>
                         </div>
+                    ) : form === "Risk Analysis" ? (
+                        <div className="document-form">
+                            <div className="details-form-data">
+                                <div className="sub-head">RCA Results</div>
+                                <div className="group-input">
+                                    <label>
+                                        <b>Root Cause Methodology</b>
+                                    </label>
+                                    <MultiSelect
+                                        options={rootCause}
+                                        value={selected}
+                                        onChange={setSelected}
+                                        labelledBy="Select"
+                                    />
+                                </div>
+                                <div className="group-input">
+                                    <Grid
+                                        label={FailureModenEffectAnalysis[0].label}
+                                        required={FailureModenEffectAnalysis[0].required}
+                                        instruction={FailureModenEffectAnalysis[0].instruction}
+                                        columnList={FailureModenEffectAnalysis[0].columnList}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="why-why-container">
+                                <label>
+                                    <b>
+                                        Why-Why Chart
+                                    </b>
+                                </label>
+                                <div className="group-inpu">
+                                    <div className="thContainer" style={{ background: "yellow" }}>
+                                        <div className="lft">Problem Statement :</div>
+                                        <div className="right"></div>
+                                    </div>
+                                    <div className="input-container" style={{ display: "flex" }}>
+                                        <div className="ins-add" >
+                                            why
+                                            <span>
+                                                <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill="none" stroke="#" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 12h6m0 0h6m-6 0v6m0-6V6" />
+                                                </svg>
+                                            </span>
+                                        </div>
+                                        <div className="input-container">
+                                            <textarea cols="190" rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="table-wrapper">
+                                <label>
+                                    <b>
+                                        Is/Is Not Analysis
+                                    </b>
+                                </label>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Will be</th>
+                                            <th>Will Not be</th>
+                                            <th>Rationale</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th>What</th>
+                                            <td>
+                                                <textarea cols="60" rows="3"></textarea>
+                                                {/* <input type="text" /> */}
+                                            </td>
+                                            <td>
+                                                {/* <input type="text" /> */}
+                                                <textarea cols="60" rows="3"></textarea>
+                                            </td>
+                                            <td>
+                                                {/* <input type="text" /> */}
+                                                <textarea cols="60" rows="3"></textarea>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Where</th>
+                                            <td>
+                                                <textarea cols="60" rows="3"></textarea>
+                                                {/* <input type="text" /> */}
+                                            </td>
+                                            <td>
+                                                {/* <input type="text" /> */}
+                                                <textarea cols="60" rows="3"></textarea>
+                                            </td>
+                                            <td>
+                                                {/* <input type="text" /> */}
+                                                <textarea cols="60" rows="3"></textarea>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>When</th>
+                                            <td>
+                                                <textarea cols="60" rows="3"></textarea>
+                                                {/* <input type="text" /> */}
+                                            </td>
+                                            <td>
+                                                {/* <input type="text" /> */}
+                                                <textarea cols="60" rows="3"></textarea>
+                                            </td>
+                                            <td>
+                                                {/* <input type="text" /> */}
+                                                <textarea cols="60" rows="3"></textarea>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Coverage</th>
+                                            <td>
+                                                <textarea cols="60" rows="3"></textarea>
+                                                {/* <input type="text" /> */}
+                                            </td>
+                                            <td>
+                                                {/* <input type="text" /> */}
+                                                <textarea cols="60" rows="3"></textarea>
+                                            </td>
+                                            <td>
+                                                {/* <input type="text" /> */}
+                                                <textarea cols="60" rows="3"></textarea>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Who</th>
+                                            <td>
+                                                <textarea cols="60" rows="3"></textarea>
+                                                {/* <input type="text" /> */}
+                                            </td>
+                                            <td>
+                                                {/* <input type="text" /> */}
+                                                <textarea cols="60" rows="3"></textarea>
+                                            </td>
+                                            <td>
+                                                {/* <input type="text" /> */}
+                                                <textarea cols="60" rows="3"></textarea>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <br />
+                            <div className="sub-head">
+
+                            </div>
+                            <div className="group-input">
+                                <label><b>Root Cause Description</b></label>
+                                <textarea cols="30" rows="3"></textarea>
+                            </div>
+                            <div className="group-input">
+                                <label>
+                                    <b>
+                                        Investigation Summary
+                                    </b>
+                                </label>
+                                <textarea cols="30" rows="3"></textarea>
+                            </div>
+
+                            <div className="sub-head">
+                                Risk Analysis
+                            </div>
+
+                            <div className="dual-grid">
+                                <div className="group-input">
+                                    <label >
+                                        <b>
+                                            Severity Rate
+                                        </b>
+                                    </label>
+                                    <select name="severity_rate" id="analysisR">
+                                        <option value="">Enter Your Selection Here</option>
+                                        <option value="1">Negligible</option>
+                                        <option value="2">Moderate</option>
+                                        <option value="3">Major</option>
+                                        <option value="4">Fatal</option>
+                                    </select>
+                                </div>
+                                <div className="group-input">
+                                    <label >
+                                        <b>
+                                            Occurrence
+                                        </b>
+                                    </label>
+                                    <select name="occurrence" id="analysisP">
+                                        <option value="">Enter Your Selection Here</option>
+                                        <option value="5">Extremely Unlikely</option>
+                                        <option value="4">Rare</option>
+                                        <option value="3">Unlikely</option>
+                                        <option value="2">Likely</option>
+                                        <option value="1">Very Likely</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="dual-grid">
+                                <div className="group-input">
+                                    <label>
+                                        <b>
+                                            Detection
+                                        </b>
+                                    </label>
+                                    <select name="detection" id="analysisN">
+                                        <option value="">Enter Your Selection Here</option>
+                                        <option value="5">Impossible</option>
+                                        <option value="4">Rare</option>
+                                        <option value="3">Unlikely</option>
+                                        <option value="2">Likely</option>
+                                        <option value="1">Very Likely</option>
+                                    </select>
+                                </div>
+                                <div className="group-input">
+                                    <label>
+                                        <b>
+                                            Detection
+                                        </b>
+                                    </label>
+                                    <div className="instruction">Auto - Calculated</div>
+                                    <input type="text" disabled />
+                                </div>
+                            </div>
+                        </div>
                     ) : form === "Residual Risk" ? (
                         <div className="document-form">
                             <div className="details-form-data">
@@ -908,13 +1168,182 @@ function RiskAssesment() {
                                             <option value="2">No</option>
                                         </select>
                                     </div>
+                                    <div className="group-input">
+                                        <label>
+                                            <b>Mitigation Plan</b>
+                                        </label>
+                                        <textarea cols="30" rows="3"></textarea>
+                                    </div>
+                                    <div className="dual-grid">
+                                        <div className="group-input">
+                                            <label>
+                                                <b>
+                                                    Mitigation Due Date
+                                                </b>
+                                            </label>
+                                            <input type="date" />
+                                        </div>
+                                        <div className="group-input">
+                                            <label>
+                                                <b>
+                                                    Status of Mitigation
+                                                </b>
+                                            </label>
+                                            <select name="statusofmitigation" id="currency">
+                                                <option value="0">-- Select --</option>
+                                                <option value="green">Green Status</option>
+                                                <option value="amber">Amber Status</option>
+                                                <option value="red">Red Staus</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div className="group-input">
+                                        <label>
+                                            <b>
+                                                Mitigation Status Comments
+                                            </b>
+                                        </label>
+                                        <textarea cols="30" rows="3"></textarea>
+                                    </div>
+                                    <div className="sub-head">Overall Assessment</div>
+                                    <div className="dual-grid">
+                                        <div className="group-input">
+                                            <label>
+                                                <b>
+                                                    Impact
+                                                </b>
+                                            </label>
+                                            <input type="date" />
+                                        </div>
+                                        <div className="group-input">
+                                            <label>
+                                                <b>
+                                                    Critically
+                                                </b>
+                                            </label>
+                                            <select name="statusofmitigation" id="currency">
+                                                <option value="0">-- Select --</option>
+                                                <option value="high">High</option>
+                                                <option value="medium">Medium</option>
+                                                <option value="low">Low</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div className="group-input">
+                                        <label>
+                                            <b>
+                                                Impact Analysis
+                                            </b>
+                                        </label>
+                                        <textarea cols="30" rows="3"></textarea>
+                                    </div>
+                                    <div className="group-input">
+                                        <label>
+                                            <b>
+                                                Risk Analysis
+                                            </b>
+                                        </label>
+                                        <textarea cols="30" rows="3"></textarea>
+                                    </div>
+                                    <div className="group-input">
+                                        <label>
+                                            <b>Refrence Record</b>
+                                        </label>
+                                        <MultiSelect
+                                            options={refrenceRecord}
+                                            value={selected}
+                                            onChange={setSelected}
+                                            labelledBy="Select"
+                                        />
+                                    </div>
+                                    <div className="sub-head">Extension Justification</div>
+                                    <div className="group-input">
+                                        <label>
+                                            <b>Due Date Extension Justification</b>
+                                        </label>
+                                        <div className="instruction">Please Mention justification if due date is crossed</div>
+                                        <textarea cols="30" rows="3"></textarea>
+                                    </div>
                                 </div>
                             </div>
-                            {/* <div>
-                                <h2>Text-to-Speech</h2>
-                                <Speech text="Hello shrijit" />
-                            </div> */}
                         </>
+                    ) : form === "Signatures" ? (
+                        <div className="document-form">
+                            <div className="details-form-data">
+                                <div className="dual-grid">
+                                    <div className="group-input">
+                                        <label>
+                                            <b>
+                                                Submitted By..
+                                            </b>
+                                        </label>
+                                        <input type="text" />
+                                    </div>
+                                    <div className="group-input">
+                                        <label>
+                                            <b>
+                                                Submitted On
+                                            </b>
+                                        </label>
+                                        <input type="text" />
+                                    </div>
+                                </div>
+                                <div className="dual-grid">
+                                    <div className="group-input">
+                                        <label>
+                                            <b>
+                                                Evaluated By
+                                            </b>
+                                        </label>
+                                        <input type="text" />
+                                    </div>
+                                    <div className="group-input">
+                                        <label>
+                                            <b>
+                                                Evaluated On
+                                            </b>
+                                        </label>
+                                        <input type="text" />
+                                    </div>
+                                </div>
+                                <div className="dual-grid">
+                                    <div className="group-input">
+                                        <label>
+                                            <b>
+                                                Plan Approved By
+                                            </b>
+                                        </label>
+                                        <input type="text" />
+                                    </div>
+                                    <div className="group-input">
+                                        <label>
+                                            <b>
+                                                Plan Approved On
+                                            </b>
+                                        </label>
+                                        <input type="text" />
+                                    </div>
+                                </div>
+                                <div className="dual-grid">
+                                    <div className="group-input">
+                                        <label>
+                                            <b>
+                                                Risk Analysis Completed By
+                                            </b>
+                                        </label>
+                                        <input type="text" />
+                                    </div>
+                                    <div className="group-input">
+                                        <label>
+                                            <b>
+                                                Risk Analysis Completed On
+                                            </b>
+                                        </label>
+                                        <input type="text" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     ) : ""}
                 </div>
                 <div className="button-block">
