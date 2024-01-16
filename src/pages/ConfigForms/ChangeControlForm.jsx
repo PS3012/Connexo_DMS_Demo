@@ -1,13 +1,35 @@
-import { useState } from 'react'
+import { useReducer, useState } from 'react'
 import './ConfigForms.css'
 import { MultiSelect } from 'react-multi-select-component';
 import HeaderTop from '../../components/Header/HeaderTop';
 import Grid from '../../components/DataFields/Grid';
-
+import InputDate from '../../components/DataFields/InputDate';
+import { CurrentDate } from '../../components/DateReturners';
+import FlexField from '../../components/DataFields/FlexField';
 
 function ChangeControlForm() {
+    const [changeControl, setChangeControl] = useReducer((prev, next) => ({
+        ...prev, ...next
+    }), {
+        shortDescription: '',
+        initiatorGroup: '',
+        initiatedThrough: '',
+        repeat: '',
+        trainingRequired: '',
+        typeOfChange: 0,
+        severityRate: 0,
+        occurrence: 0,
+        detection: 0,
+        CFTReviewers: 0,
+        groupReviewRequired: 0,
+        production: 0,
+        productionPerson: 0,
+        qualityApprover: 0,
+        qualityApproverPerson: 0,
+        others: 0,
+        othersPerson: 0
+    })
     const [form, setForm] = useState("General Information");
-    const [typeOfChange, setTypeOfChange] = useState(0)
     const [selected, setSelected] = useState([]);
     const [groupComment, setGroupComment] = useState(0)
     const membership = [
@@ -124,7 +146,7 @@ function ChangeControlForm() {
                 <div className="top-block">
                     <div className="head">New Change Control</div>
                     <div className="content">
-                        Site / Project : Jordan / Change Control
+                        Site / Process : Jordan / Change Control
                     </div>
                 </div>
 
@@ -157,61 +179,79 @@ function ChangeControlForm() {
                     {form === 'General Information' ? (
                         <div className='document-form'>
                             <div className='details-form-data'>
-
                                 <div className="group-input">
-                                    <label><b>Record Number</b></label>
+                                    <label>Record Number</label>
                                     <input type="text" value="Jordan/EA/2024/00000001" disabled />
                                 </div>
                                 <div className='form-flex'>
-
                                     <div className="group-input">
-                                        <label><b>Initiator</b></label>
+                                        <label>Initiator</label>
                                         <input type="text" value="Amit Guru" disabled />
                                     </div>
-
-
                                     <div className="group-input">
-                                        <label><b>Date of Initiation</b></label>
-                                        <input type="" value="10-Jan-2024" disabled />
+                                        <label>Date of Initiation</label>
+                                        <input type="" value={CurrentDate()} disabled />
                                     </div>
-
                                     <div className="group-input">
-                                        <label><b>Assigned To</b><span className="required">&nbsp;*</span></label>
-                                        <select id="select-state" className='form-control' placeholder="Select..." name="assign_to">
+                                        <label>
+                                            <div className="required"></div>
+                                            Assigned To
+                                        </label>
+                                        <select name="assign_to">
                                             <option value="">Select a value</option>
                                             <option value="2">Shaleen Mishra</option>
-                                        </select>                                    </div>
-
-                                    <div className="group-input">
-                                        <label><b>Due Date</b><span className="required">&nbsp;*</span></label>
-                                        <div className='instruction'>Please mention expected date of completion</div>
-                                        <input type="date" placeholder="" />
+                                        </select>
                                     </div>
-
+                                    <InputDate
+                                        label="Due Date"
+                                        instruction="Please mention expected date of completion."
+                                        isRequired="true"
+                                        enableDate="future"
+                                    />
                                     <div className="group-input">
-                                        <label><b>Initiator Group <span className="required">&nbsp;*</span></b></label>
-                                        <input type="date" placeholder="" />
+                                        <label htmlFor="initiatorGroup">
+                                            <div className="required"></div>
+                                            Initiator Group
+                                        </label>
+                                        <select name="initiatorGroup" value={changeControl.initiatorGroup} onChange={(e) => setChangeControl({ initiatorGroup: e.target.value })}>
+                                            <option value="">-- Select --</option>
+                                            <option value="CQA">Corporate Quality Assurance</option>
+                                            <option value="QAB">Quality Assurance Bio-Pharma</option>
+                                            <option value="CQC">Central Quality Control</option>
+                                            <option value="Manu">Manufacturing</option>
+                                            <option value="PSG">Plasma Sourcing Group</option>
+                                            <option value="CS" >Central Stores</option>
+                                            <option value="ITG">Information Technology Group</option>
+                                            <option value="MM" >Molecular Medicine</option>
+                                            <option value="CL" >Central Laboratory</option>
+                                            <option value="TT" >Tech team</option>
+                                            <option value="QA" > Quality Assurance</option>
+                                            <option value="QM" >Quality Management</option>
+                                            <option value="IA" >IT Administration</option>
+                                            <option value="ACC">Accounting</option>
+                                            <option value="LOG">Logistics</option>
+                                            <option value="SM" >Senior Management</option>
+                                            <option value="BA" >Business Administration</option>
+                                        </select>
                                     </div>
-
                                     <div className="group-input">
-                                        <label><b>Initiator Group Code</b></label>
-                                        <input type="" value="" disabled />
+                                        <label>Initiator Group Code</label>
+                                        <input type="text" value={changeControl.initiatorGroup} disabled />
                                     </div>
                                 </div>
-
                                 <div className="group-input">
-                                    <label><b>Short Description <span className="required">&nbsp;*</span></b></label>
-                                    <div className='instruction'>Please mention brief summary</div>
-                                    <textarea name="w3review" rows="4" cols="50"></textarea>
+                                    <label>
+                                        <div className="require"></div>
+                                        Short Description
+                                    </label>
+                                    <input type="text" />
                                 </div>
-
                                 <div className='form-flex'>
-
                                     <div className="group-input">
-                                        <label><b>Initiated Through</b></label>
+                                        <label>Initiated Through</label>
                                         <div className='instruction'>Please select related information</div>
-                                        <select name="initiated_through" className='form-control'>
-                                            <option>Enter Your Selection Here</option>
+                                        <select name="initiated_through" value={changeControl.initiatedThrough} onChange={(e) => setChangeControl({ initiatedThrough: e.target.value })}>
+                                            <option value="">-- Select --</option>
                                             <option value="recall">Recall</option>
                                             <option value="return">Return</option>
                                             <option value="deviation">Deviation</option>
@@ -222,33 +262,32 @@ function ChangeControlForm() {
                                             <option value="others">Others</option>
                                         </select>
                                     </div>
-
-
                                     <div className="group-input">
-                                        <label><b>Other</b></label>
-                                        <div className='instruction'>Please select yes if it is has recurred in past six months</div>
-                                        <textarea name="w3review"></textarea>
+                                        <label>
+                                            {changeControl.initiatedThrough === 'others' && <div className="required"></div>}
+                                            Other
+                                        </label>
+                                        <textarea name="w3review" required={changeControl.initiatedThrough === 'others'}></textarea>
                                     </div>
-
                                     <div className="group-input">
-                                        <label><b>Repeat</b></label>
+                                        <label>Repeat</label>
                                         <div className='instruction'>Please select yes if it is has recurred in past six months</div>
-                                        <select name="initiated_through" className='form-control'>
+                                        <select name="repeat" value={changeControl.repeat} onChange={(e) => setChangeControl({ repeat: e.target.value })}>
                                             <option>Enter Your Selection Here</option>
-                                            <option>Yes</option>
-                                            <option>No</option>
-                                            <option>NA</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                            <option value="NA">NA</option>
                                         </select>
                                     </div>
-
-
                                     <div className="group-input">
-                                        <label><b>Repeat Nature</b></label>
-                                        <textarea name="w3review"></textarea>
+                                        <label>
+                                            {changeControl.repeat === 'Yes' && <div className="required"></div>}
+                                            Repeat Nature
+                                        </label>
+                                        <textarea name="w3review" required={changeControl.repeat === 'Yes'}></textarea>
                                     </div>
-
                                     <div className="group-input">
-                                        <label><b>Risk Level</b></label>
+                                        <label>Risk Level</label>
                                         <select name="risk_level">
                                             <option value="0">-- Select --</option>
                                             <option value="minor">Minor</option>
@@ -256,9 +295,11 @@ function ChangeControlForm() {
                                             <option value="critical">Critical</option>
                                         </select>
                                     </div>
-
                                     <div className="group-input">
-                                        <label><b>Division Code</b><span>*</span></label>
+                                        <label>
+                                            <div className="required"></div>
+                                            Division Code
+                                        </label>
                                         <select name="div_code">
                                             <option value="0">-- Select --</option>
                                             <option value="P1">P1</option>
@@ -273,22 +314,23 @@ function ChangeControlForm() {
                                             <option value="CRS">CRS</option>
                                         </select>
                                     </div>
-
                                     <div className="group-input">
-                                        <label><b>Nature Of Change</b></label>
-                                        <select name="natureChange">
+                                        <label>Nature Of Change</label>
+                                        <select name="natureChange" value={changeControl.natureOfChange} onChange={(e) => setChangeControl({ natureOfChange: e.target.value })}>
                                             <option value="0">-- Select --</option>
                                             <option value="Temporary">Temporary</option>
                                             <option value="Permanent">Permanent</option>
+                                            <option value="Others">Others</option>
                                         </select>
                                     </div>
-
                                     <div className="group-input">
-                                        <label><b>If Others</b></label>
-                                        <textarea name="w3review"></textarea>
+                                        <label>
+                                            {changeControl.natureOfChange === 'Others' && <div className="required"></div>}
+                                            If Others
+                                        </label>
+                                        <textarea name="w3review" required={changeControl.natureOfChange === 'Others'}></textarea>
                                     </div>
                                 </div>
-
                                 <div className="group-input">
                                     <Grid
                                         label={docFile[0].label}
@@ -297,7 +339,6 @@ function ChangeControlForm() {
                                         columnList={docFile[0].columnList}
                                     />
                                 </div>
-
                                 <div className="group-input">
                                     <label htmlFor="group_comment_required">Group Comment Required</label>
                                     <select name="group_comment_required" value={groupComment} onChange={(e) => setGroupComment(e.target.value)}>
@@ -306,7 +347,6 @@ function ChangeControlForm() {
                                         <option value="no">No</option>
                                     </select>
                                 </div>
-
                             </div>
                         </div>
                     ) : form === 'Change Details' ? (
@@ -322,23 +362,23 @@ function ChangeControlForm() {
                                     Change Details
                                 </div>
                                 <div className="group-input">
-                                    <label><b>Current Practice </b></label>
+                                    <label>Current Practice </label>
                                     <textarea name="w3review"></textarea>
                                 </div>
                                 <div className="group-input">
-                                    <label><b>Proposed Change</b></label>
+                                    <label>Proposed Change</label>
                                     <textarea name="w3review"></textarea>
                                 </div>
                                 <div className="group-input">
-                                    <label><b>Reason for Change</b></label>
+                                    <label>Reason for Change</label>
                                     <textarea name="w3review"></textarea>
                                 </div>
                                 <div className="group-input">
-                                    <label><b>Any Other Comments</b></label>
+                                    <label>Any Other Comments</label>
                                     <textarea name="w3review"></textarea>
                                 </div>
                                 <div className="group-input">
-                                    <label><b>Supervisor Comments</b></label>
+                                    <label>Supervisor Comments</label>
                                     <textarea name="w3review"></textarea>
                                 </div>
                             </div>
@@ -347,8 +387,8 @@ function ChangeControlForm() {
                         <div className='document-form'>
                             <div className='details-form-data'>
                                 <div className="group-input">
-                                    <label><b>Type of Change</b></label>
-                                    <select name="type_change" value={typeOfChange} onChange={(e) => setTypeOfChange(e.target.value)}>
+                                    <label>Type of Change</label>
+                                    <select name="type_change" value={changeControl.typeOfChange} onChange={(e) => setChangeControl({ typeOfChange: e.target.value })}>
                                         <option value="0">-- Select --</option>
                                         <option value="minor">Minor</option>
                                         <option value="major">Major</option>
@@ -356,16 +396,17 @@ function ChangeControlForm() {
                                     </select>
                                 </div>
                                 <div className="group-input">
-                                    <label><b>QA Review Comments</b></label>
+                                    <label>QA Review Comments</label>
                                     <textarea name="w3review"></textarea>
                                 </div>
                                 <div className="group-input">
-                                    <label><b>Related Records</b></label>
+                                    <label>Related Records</label>
                                     <MultiSelect
                                         options={membership}
                                         value={selected}
                                         onChange={setSelected}
-                                        labelledBy="Select" />
+                                        labelledBy="Select"
+                                    />
                                 </div>
                                 <div className="group-input">
                                     <Grid
@@ -375,35 +416,44 @@ function ChangeControlForm() {
                                         columnList={docFile[1].columnList}
                                     />
                                 </div>
-                                {typeOfChange === 'minor' ?
+                                {changeControl.typeOfChange === 'minor' ?
                                     <>
                                         <div className="sub-head">
                                             Minor Change Justification
                                         </div>
                                         <div className="group-input">
-                                            <label><b>Minor Change Justification</b></label>
+                                            <label>
+                                                <div className="required"></div>
+                                                Minor Change Justification
+                                            </label>
                                             <textarea name="minor_justification"></textarea>
                                         </div>
                                     </> : ''
                                 }
-                                {typeOfChange === 'major' ?
+                                {changeControl.typeOfChange === 'major' ?
                                     <>
                                         <div className="sub-head">
                                             Major Change Justification
                                         </div>
                                         <div className="group-input">
-                                            <label><b>Major Change Justification</b></label>
+                                            <label>
+                                                <div className="required"></div>
+                                                Major Change Justification
+                                            </label>
                                             <textarea name="major_justification"></textarea>
                                         </div>
                                     </> : ''
                                 }
-                                {typeOfChange === 'critical' ?
+                                {changeControl.typeOfChange === 'critical' ?
                                     <>
                                         <div className="sub-head">
                                             Critical Change Justification
                                         </div>
                                         <div className="group-input">
-                                            <label><b>Critical Change Justification</b></label>
+                                            <label>
+                                                <div className="required"></div>
+                                                Critical Change Justification
+                                            </label>
                                             <textarea name="critical_justification"></textarea>
                                         </div>
                                     </> : ''
@@ -419,7 +469,7 @@ function ChangeControlForm() {
                                 </div>
 
                                 <div className="group-input">
-                                    <label><b>QA Evaluation Comments</b></label>
+                                    <label>QA Evaluation Comments</label>
                                     <textarea></textarea>
                                 </div>
 
@@ -438,81 +488,127 @@ function ChangeControlForm() {
                                 </div>
 
                                 <div className="group-input">
-                                    <label><b>Training Required</b></label>
-                                    <select name="type_change">
-                                        <option value="0">-- Select --</option>
-                                        <option value="major">No</option>
-                                        <option value="minor">Yes</option>
+                                    <label>Training Required</label>
+                                    <select name="training_required" value={changeControl.trainingRequired} onChange={(e) => setChangeControl({ trainingRequired: e.target.value })}>
+                                        <option value="">-- Select --</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
                                     </select>
                                 </div>
 
-                                <div className="group-input">
-                                    <label><b>Training Comments</b></label>
-                                    <textarea></textarea>
-                                </div>
+                                {changeControl.trainingRequired === 'Yes' &&
+                                    <div className="group-input">
+                                        <label>
+                                            <div className="required"></div>
+                                            Training Comments
+                                        </label>
+                                        <textarea name='training_comments' required></textarea>
+                                    </div>
+                                }
 
                             </div>
                         </div>
                     ) : form === 'Additional Information' ? (
                         <div className='document-form'>
                             <div className='details-form-data'>
-
                                 <div className="sub-head">
                                     CFT Information
                                 </div>
-
                                 <div className='form-flex'>
-
                                     <div className="group-input">
-                                        <label><b>CFT Reviewer</b></label>
-                                        <select name="type_change">
+                                        <label>CFT Reviewer</label>
+                                        <select name="type_change" value={changeControl.CFTReviewers} onChange={(e) => setChangeControl({ CFTReviewers: e.target.value })}>
                                             <option value="0">-- Select --</option>
-                                            <option value="major">No</option>
-                                            <option value="minor">Yes</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
                                         </select>
                                     </div>
-
-
                                     <div className="group-input">
-                                        <label><b>CFT Reviewer Person</b></label>
+                                        <label>
+                                            {changeControl.CFTReviewers === "Yes" && <div className="required"></div>}
+                                            CFT Reviewer Person
+                                        </label>
                                         <MultiSelect
                                             options={CFTReviewer}
                                             value={selected}
                                             onChange={setSelected}
                                             labelledBy="Select"
+                                            required={changeControl.CFTReviewers === "Yes"}
+                                            disabled={!changeControl.CFTReviewers === "Yes"}
                                         />
                                     </div>
-
                                 </div>
-
                                 <div className="sub-head">
                                     Concerned Information
                                 </div>
-
                                 <div className="group-input">
-                                    <label><b>Is Concerned Group Review Required?</b></label>
-                                    <select name="type_change">
+                                    <label>Is Concerned Group Review Required?</label>
+                                    <select name="type_change" value={changeControl.groupReviewRequired} onChange={(e) => setChangeControl({ groupReviewRequired: e.target.value })}>
                                         <option value="0">-- Select --</option>
-                                        <option value="major">No</option>
-                                        <option value="minor">Yes</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
                                     </select>
                                 </div>
-
                                 <div className='form-flex'>
-
                                     <div className="group-input">
-                                        <label><b>Production</b></label>
-                                        <select name="type_change">
+                                        <label>Production</label>
+                                        <select
+                                            name="type_change"
+                                            value={changeControl.production}
+                                            disabled={changeControl.groupReviewRequired !== 'Yes'}
+                                            onChange={(e) => setChangeControl({ production: e.target.value })}
+                                        >
                                             <option value="0">-- Select --</option>
-                                            <option value="major">No</option>
-                                            <option value="minor">Yes</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
                                         </select>
                                     </div>
-
-
                                     <div className="group-input">
-                                        <label><b>Production Person</b></label>
-                                        <select name="Production_Person">
+                                        <label>
+                                            {changeControl.production === 'Yes' && <div className="required"></div>}
+                                            Production Person
+                                        </label>
+                                        <select
+                                            name="Production_Person"
+                                            value={changeControl.productionPerson}
+                                            disabled={changeControl.production !== 'Yes' || changeControl.groupReviewRequired !== 'Yes'}
+                                            onChange={(e) => setChangeControl({ productionPerson: e.target.value })}
+                                        >
+                                            <option value="0">-- Select --</option>
+                                            <option value="1">Amit Guru</option>
+                                            <option value="2">Shaleen Mishra</option>
+                                            <option value="3">Vikas Prajapati</option>
+                                            <option value="4">Anshul Patel</option>
+                                            <option value="5">Amit Patel</option>
+                                            <option value="6">Madhulika Mishra</option>
+                                            <option value="7">Jin Kim</option>
+                                            <option value="8">Akash Asthana</option>
+                                        </select>
+                                    </div>
+                                    <div className="group-input">
+                                        <label>Quality Approver</label>
+                                        <select
+                                            name="Quality_Approver"
+                                            value={changeControl.qualityApprover}
+                                            disabled={changeControl.groupReviewRequired !== 'Yes'}
+                                            onChange={(e) => setChangeControl({ qualityApprover: e.target.value })}
+                                        >
+                                            <option value="0">-- Select --</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                        </select>
+                                    </div>
+                                    <div className="group-input">
+                                        <label>
+                                            {changeControl.qualityApprover === 'Yes' && <div className="required"></div>}
+                                            Quality Approver Person
+                                        </label>
+                                        <select
+                                            name="Quality_Approver_Person"
+                                            value={changeControl.qualityApproverPerson}
+                                            disabled={changeControl.qualityApprover !== 'Yes' || changeControl.groupReviewRequired !== 'Yes'}
+                                            onChange={(e) => setChangeControl({ qualityApproverPerson: e.target.value })}
+                                        >
                                             <option value="0">-- Select --</option>
                                             <option value="1">Amit Guru</option>
                                             <option value="2">Shaleen Mishra</option>
@@ -526,43 +622,33 @@ function ChangeControlForm() {
                                     </div>
 
                                     <div className="group-input">
-                                        <label><b>Quality Approver</b></label>
-                                        <select name="type_change">
+                                        <label>
+                                            Others
+                                        </label>
+                                        <select
+                                            name="type_change"
+                                            value={changeControl.others}
+                                            disabled={changeControl.groupReviewRequired !== 'Yes'}
+                                            onChange={(e) => setChangeControl({ others: e.target.value })}
+                                        >
                                             <option value="0">-- Select --</option>
-                                            <option value="major">No</option>
-                                            <option value="minor">Yes</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
                                         </select>
                                     </div>
 
 
                                     <div className="group-input">
-                                        <label><b> Quality Approver Person</b></label>
-                                        <select name="Production_Person">
-                                            <option value="0">-- Select --</option>
-                                            <option value="1">Amit Guru</option>
-                                            <option value="2">Shaleen Mishra</option>
-                                            <option value="3">Vikas Prajapati</option>
-                                            <option value="4">Anshul Patel</option>
-                                            <option value="5">Amit Patel</option>
-                                            <option value="6">Madhulika Mishra</option>
-                                            <option value="7">Jin Kim</option>
-                                            <option value="8">Akash Asthana</option>
-                                        </select>
-                                    </div>
-
-                                    <div className="group-input">
-                                        <label><b>Others</b></label>
-                                        <select name="type_change">
-                                            <option value="0">-- Select --</option>
-                                            <option value="major">No</option>
-                                            <option value="minor">Yes</option>
-                                        </select>
-                                    </div>
-
-
-                                    <div className="group-input">
-                                        <label><b>Others Person</b></label>
-                                        <select name="Production_Person">
+                                        <label>
+                                            {changeControl.others === 'Yes' && <div className="required"></div>}
+                                            Others Person
+                                        </label>
+                                        <select
+                                            name="Production_Person"
+                                            value={changeControl.othersPerson}
+                                            disabled={changeControl.others !== 'Yes' || changeControl.groupReviewRequired !== 'Yes'}
+                                            onChange={(e) => setChangeControl({ othersPerson: e.target.value })}
+                                        >
                                             <option value="0">-- Select --</option>
                                             <option value="1">Amit Guru</option>
                                             <option value="2">Shaleen Mishra</option>
@@ -578,7 +664,7 @@ function ChangeControlForm() {
                                 </div>
 
                                 <div className="group-input">
-                                    <label><b>QA Evaluation Comments</b></label>
+                                    <label>QA Evaluation Comments</label>
                                     <textarea></textarea>
                                 </div>
 
@@ -602,7 +688,7 @@ function ChangeControlForm() {
                                 </div>
 
                                 <div className="group-input">
-                                    <label><b>QA Evaluation Comments</b></label>
+                                    <label>QA Evaluation Comments</label>
                                     <textarea></textarea>
                                 </div>
 
@@ -623,52 +709,52 @@ function ChangeControlForm() {
                                 <div className='form-flex'>
 
                                     <div className="group-input">
-                                        <label><b>QA Comments</b></label>
+                                        <label>QA Comments</label>
                                         <textarea></textarea>
 
                                     </div>
 
 
                                     <div className="group-input">
-                                        <label><b>QA Head Designee Comments</b></label>
+                                        <label>QA Head Designee Comments</label>
                                         <textarea></textarea>
 
                                     </div>
 
                                     <div className="group-input">
-                                        <label><b>Warehouse Comments</b></label>
+                                        <label>Warehouse Comments</label>
                                         <textarea></textarea>
 
                                     </div>
 
                                     <div className="group-input">
-                                        <label><b>Engineering Comments</b></label>
+                                        <label>Engineering Comments</label>
                                         <textarea></textarea>
 
                                     </div>
 
                                     <div className="group-input">
-                                        <label><b>Instrumentation Comments</b></label>
-                                        <textarea></textarea>
-
-                                    </div>
-
-
-                                    <div className="group-input">
-                                        <label><b>Validation Comments</b></label>
-                                        <textarea></textarea>
-
-                                    </div>
-
-                                    <div className="group-input">
-                                        <label><b>Others Comments</b></label>
+                                        <label>Instrumentation Comments</label>
                                         <textarea></textarea>
 
                                     </div>
 
 
                                     <div className="group-input">
-                                        <label><b>Group Comments</b></label>
+                                        <label>Validation Comments</label>
+                                        <textarea></textarea>
+
+                                    </div>
+
+                                    <div className="group-input">
+                                        <label>Others Comments</label>
+                                        <textarea></textarea>
+
+                                    </div>
+
+
+                                    <div className="group-input">
+                                        <label>Group Comments</label>
                                         <textarea></textarea>
 
                                     </div>
@@ -686,64 +772,58 @@ function ChangeControlForm() {
                                 </div>
 
                                 <div className="group-input">
-                                    <label><b>Risk Identification</b></label>
+                                    <label>Risk Identification</label>
                                     <textarea></textarea>
                                 </div>
 
                                 <div className='form-flex'>
 
                                     <div className="group-input">
-                                        <label><b>Severity Rate</b></label>
-                                        <select name="severity" className='form-control'>
-                                            <option value="">Enter Your Selection Here</option>
-                                            <option value="1">Negligible</option>
-                                            <option value="2">Moderate</option>
-                                            <option value="3">Major</option>
-                                            <option value="4">Fatal</option>
+                                        <label>Severity Rate</label>
+                                        <select name="severity" value={changeControl.severityRate} onChange={(e) => setChangeControl({ severityRate: e.target.value })}>
+                                            <option value="0">-- Select --</option>
+                                            <option value="1">Low</option>
+                                            <option value="2">Medium</option>
+                                            <option value="3">High</option>
+                                        </select>
+                                    </div>
+
+                                    <div className="group-input">
+                                        <label>Occurrence</label>
+                                        <select name="Occurrence" value={changeControl.occurrence} onChange={(e) => setChangeControl({ occurrence: e.target.value })}>
+                                            <option value="0">-- Select --</option>
+                                            <option value="1">Low</option>
+                                            <option value="2">Medium</option>
+                                            <option value="3">High</option>
+                                        </select>
+                                    </div>
+
+                                    <div className="group-input">
+                                        <label>Detection</label>
+                                        <select name="Detection" value={changeControl.detection} onChange={(e) => setChangeControl({ detection: e.target.value })}>
+                                            <option value="0">-- Select --</option>
+                                            <option value="1">Low</option>
+                                            <option value="2">Medium</option>
+                                            <option value="3">High</option>
                                         </select>
                                     </div>
 
 
                                     <div className="group-input">
-                                        <label><b>Occurrence</b></label>
-                                        <select name="Occurrence" id="analysisP">
-                                            <option value="">Enter Your Selection Here</option>
-                                            <option value="5">Extremely Unlikely</option>
-                                            <option value="4">Rare</option>
-                                            <option value="3">Unlikely</option>
-                                            <option value="2">Likely</option>
-                                            <option value="1">Very Likely</option>
-                                        </select>
-                                    </div>
-
-                                    <div className="group-input">
-                                        <label><b>Detection</b></label>
-                                        <select name="Detection" id="analysisN" >
-                                            <option value="">Enter Your Selection Here</option>
-                                            <option value="5">Impossible</option>
-                                            <option value="4">Rare</option>
-                                            <option value="3">Unlikely</option>
-                                            <option value="2">Likely</option>
-                                            <option value="1">Very Likely</option>
-                                        </select>
-                                    </div>
-
-
-                                    <div className="group-input">
-                                        <label><b>RPN</b></label>
+                                        <label>RPN</label>
                                         <div className="instruction">Auto - Calculated</div>
-                                        <input type='text' name='RPN' id='' disabled />
+                                        <input type='text' name='RPN' value={changeControl.severityRate * changeControl.occurrence * changeControl.detection} disabled />
                                     </div>
 
                                 </div>
 
                                 <div className="group-input">
-                                    <label><b>Risk Evaluation</b></label>
+                                    <label>Risk Evaluation</label>
                                     <textarea></textarea>
                                 </div>
 
                                 <div className="group-input">
-                                    <label><b>Migration Action</b></label>
+                                    <label>Migration Action</label>
                                     <textarea></textarea>
                                 </div>
                             </div>
@@ -753,13 +833,12 @@ function ChangeControlForm() {
                             <div className='details-form-data'>
 
                                 <div className="group-input">
-                                    <label><b>QA Approval Comments</b></label>
+                                    <label>QA Approval Comments</label>
                                     <textarea></textarea>
                                 </div>
 
-
                                 <div className="group-input">
-                                    <label><b>Training Feedback</b></label>
+                                    <label>Training Feedback</label>
                                     <textarea></textarea>
                                 </div>
 
@@ -786,7 +865,7 @@ function ChangeControlForm() {
                                 />
 
                                 <div className="group-input">
-                                    <label><b>QA Closure Comments </b></label>
+                                    <label>QA Closure Comments </label>
                                     <textarea name="w3review"></textarea>
                                 </div>
 
@@ -804,28 +883,29 @@ function ChangeControlForm() {
                                 </div>
 
                                 <div className='form-flex'>
-
                                     <div className="group-input">
-                                        <label><b>Effectiveness Check Required?</b></label>
-                                        <select name="severity" className='form-control'>
-                                            <option value="">Enter Your Selection Here</option>
-                                            <option value="1">Yes</option>
-                                            <option value="2">No</option>
-
+                                        <label>Effectiveness Check Required?</label>
+                                        <select name="effectivenessCheckRequired" value={changeControl.effectivenessCheckRequired} onChange={(e) => setChangeControl({ effectivenessCheckRequired: e.target.value })}>
+                                            <option value="">-- Select --</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
                                         </select>
                                     </div>
-
-
-                                    <div className="group-input">
-                                        <label><b>Effectiveness Check Creation Date</b></label>
-                                        <input type='date' className='form-control' />
-                                    </div>
-
+                                    <InputDate
+                                        label="Effectiveness Check Creation Date"
+                                        instruction=""
+                                        isRequired={changeControl.effectivenessCheckRequired === 'Yes'}
+                                        isDisabled={changeControl.effectivenessCheckRequired !== 'Yes'}
+                                        enableDate="future"
+                                    />
                                 </div>
 
                                 <div className="group-input">
-                                    <label><b>Effectiveness Checker</b></label>
-                                    <select name="Effectiveness_checker">
+                                    <label>
+                                        {changeControl.effectivenessCheckRequired === 'Yes' && <div className="required"></div>}
+                                        Effectiveness Checker
+                                    </label>
+                                    <select name="Effectiveness_checker" required={changeControl.effectivenessCheckRequired === 'Yes'} disabled={changeControl.effectivenessCheckRequired !== 'Yes'}>
                                         <option value="">Enter Your Selection Here</option>
                                         <option value="1">Amit Guru</option>
                                         <option value="2">Shaleen Mishra</option>
@@ -839,8 +919,11 @@ function ChangeControlForm() {
                                 </div>
 
                                 <div className="group-input">
-                                    <label><b>Effectiveness Check Plan</b></label>
-                                    <textarea name="w3review"></textarea>
+                                    <label>
+                                        {changeControl.effectivenessCheckRequired === 'Yes' && <div className="required"></div>}
+                                        Effectiveness Check Plan
+                                    </label>
+                                    <textarea name="w3review" required={changeControl.effectivenessCheckRequired === 'Yes'} disabled={changeControl.effectivenessCheckRequired !== 'Yes'}></textarea>
                                 </div>
 
                                 <div className="sub-head">
@@ -848,7 +931,7 @@ function ChangeControlForm() {
                                 </div>
 
                                 <div className="group-input">
-                                    <label><b>Due Date Extension Justification</b></label>
+                                    <label>Due Date Extension Justification</label>
                                     <div className="instruction">Please Mention justification if due date is crossed</div>
                                     <textarea name="w3review"></textarea>
                                 </div>
@@ -866,33 +949,33 @@ function ChangeControlForm() {
                                 <div className='form-flex'>
 
                                     <div className="group-input">
-                                        <label><b>Submitted By</b></label>
-
+                                        <label>Submitted By</label>
+                                        <input type="text" name="submitted_by" disabled />
                                     </div>
 
                                     <div className="group-input">
-                                        <label><b>Submitted On</b></label>
-
+                                        <label>Submitted On</label>
+                                        <input type="text" name="submitted_on" disabled />
                                     </div>
 
                                     <div className="group-input">
-                                        <label><b>Cancelled By</b></label>
-
+                                        <label>Cancelled By</label>
+                                        <input type="text" name="cancelled_by" disabled />
                                     </div>
 
                                     <div className="group-input">
-                                        <label><b>Cancelled On</b></label>
-
+                                        <label>Cancelled On</label>
+                                        <input type="text" name="cancelled_on" disabled />
                                     </div>
 
                                     <div className="group-input">
-                                        <label><b>More Information Required By</b></label>
-
+                                        <label>More Information Required By</label>
+                                        <input type="text" name="more_info_req_by" disabled />
                                     </div>
 
                                     <div className="group-input">
-                                        <label><b>More Information Required On</b></label>
-
+                                        <label>More Information Required On</label>
+                                        <input type="text" name="more_info_req_on" disabled />
                                     </div>
 
                                 </div>

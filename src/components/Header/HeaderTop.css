@@ -1,16 +1,3 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html,
-body {
-    height: 100%;
-    width: 100vw;
-}
-
-
 .Header_Top {
     position: relative;
     height: 82px;
@@ -137,7 +124,7 @@ body {
 .Header_Top .header_inner .right .bellLeft i {
     font-size: 20px;
     font-weight: 900;
-    color: #d87320;
+    color: var(--themeColor);
 }
 
 .Header_Top .header_inner .right .profileRight {

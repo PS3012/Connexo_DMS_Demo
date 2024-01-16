@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import DocumentPanel from './pages/DocumentPanel/DocumentPanel'
 import TrainingManagementSystem from './pages/TMS/TrainingManagementSystem'
 import Question from './pages/Question/Question'
-import ChangeControlForm from './pages/ConfigForms/Changecontrolform'
+import ChangeControlForm from './pages/ConfigForms/ChangeControlForm'
 import InternalAudit from './pages/ConfigForms/InternalAudit'
 import ExternalAudit from './pages/ConfigForms/ExternalAudit'
 

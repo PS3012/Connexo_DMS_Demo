@@ -71,20 +71,20 @@ table {
 th,
 td {
     padding: 6px;
-    text-align: center;
     font-size: 0.85rem;
 }
 
 table,
 td,
 th {
-    border: 1px solid gray;
+    border: 2px solid #808080;
     border-collapse: collapse;
-    text-align: center;
+    text-align: left;
 }
 
 th {
-    background-color: #006fc04d;
+    background-color: var(--themeColor);
+    color: white;
 }
 
 .group-input {
@@ -97,9 +97,6 @@ th {
     display: block;
     width: 100%;
     font-weight: bold;
-}
-
-.group-input label.flex-label {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -111,14 +108,15 @@ th {
 }
 
 .group-input label .required {
-    color: red;
+    width: 5px;
+    height: 5px;
+    background: #ff0000;
 }
 
-.group-input input,
+.group-input input:not([type="radio"]):not([type="checkbox"]),
 .group-input select,
 .group-input textarea {
-    border: 1px solid grey;
-    border-radius: 5px;
+    border-bottom: 1px solid grey;
     padding: 5px 15px;
     display: block;
     width: 100%;
@@ -144,7 +142,7 @@ th {
     font-weight: bold;
 }
 
-.group-input-2 input,
+.group-input-2 input:not([type="radio"]):not([type="checkbox"]),
 .group-input-2 select,
 .group-input-2 textarea {
     padding: 0 0 0 15px;
