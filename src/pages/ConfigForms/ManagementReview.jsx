@@ -1,5 +1,3 @@
-// import React from 'react'
-
 import { useState } from "react";
 import HeaderTop from "../../components/Header/HeaderTop"
 import Grid from "../../components/DataFields/Grid";
@@ -25,9 +23,6 @@ function ManagementReview() {
 
     const oneMonthLater = new Date(currentDate);
     oneMonthLater.setMonth(currentDate.getMonth() + 1);
-
-    // Convert the date one month later to the desired format
-    // const formattedDateOneMonthLater = oneMonthLater.toLocaleDateString('en-GB', dateFormatOptions).replace(/ /g, '-');
 
     const Agenda = [
         {
@@ -429,12 +424,7 @@ function ManagementReview() {
                                     {modal === "Operations" ? (
                                         < OperationModal closeModal={() => { setModal(" ") }} />
                                     ) : ""}
-                                    {/* <div className="group-input">
-                                    <label><b>Operations</b>
-                                        <span onClick={() => setModal("Operations")} className="instruction">(Launch Instruction)</span>
-                                    </label>
-                                    <textarea cols="30" rows="3"></textarea>
-                                </div> */}
+                                    
                                     <FlexField
                                         label="Operations"
                                         instruction="(Launch Instruction)"
@@ -444,12 +434,7 @@ function ManagementReview() {
                                     {modal === "Requirements for Products and Services" ? (
                                         < RequirementsforProductModal closeModal={() => { setModal(" ") }} />
                                     ) : ""}
-                                    {/* <div className="group-input">
-                                    <label><b>Requirements for Products and Services</b>
-                                        <span onClick={() => setModal("Requirements for Products and Services")} className="instruction">(Launch Instruction)</span>
-                                    </label>
-                                    <textarea cols="30" rows="3"></textarea>
-                                </div> */}
+                                    
                                     <FlexField
                                         label="Requirements for Products and Services"
                                         instruction=""
@@ -459,12 +444,7 @@ function ManagementReview() {
                                     {modal === "Design and Development of Products and Services" ? (
                                         < DesignnDevelopment closeModal={() => { setModal(" ") }} />
                                     ) : ""}
-                                    {/* <div className="group-input">
-                                    <label><b>Design and Development of Products and Services</b>
-                                        <span onClick={() => setModal("Design and Development of Products and Services")} className="instruction">(Launch Instruction)</span>
-                                    </label>
-                                    <textarea cols="30" rows="3"></textarea>
-                                </div> */}
+                                    
                                     <FlexField
                                         label="Design and Development of Products and Services"
                                         instruction=""
@@ -473,12 +453,7 @@ function ManagementReview() {
                                     {modal === "Control of Externally Provided Processes, Products and Services" ? (
                                         < ControlofExternally closeModal={() => { setModal(" ") }} />
                                     ) : ""}
-                                    {/* <div className="group-input">
-                                    <label><b>Control of Externally Provided Processes, Products and Services</b>
-                                        <span onClick={() => setModal("Control of Externally Provided Processes, Products and Services")} className="instruction">(Launch Instruction)</span>
-                                    </label>
-                                    <textarea cols="30" rows="3"></textarea>
-                                </div> */}
+                                    
                                     <FlexField
                                         label="Control of Externally Provided Processes, Products and Services"
                                         instruction=""
@@ -487,12 +462,7 @@ function ManagementReview() {
                                     {modal === "Production and Service Provision" ? (
                                         < ProductionnService closeModal={() => { setModal(" ") }} />
                                     ) : ""}
-                                    {/* <div className="group-input">
-                                    <label><b>Production and Service Provision</b>
-                                        <span onClick={() => setModal("Production and Service Provision")} className="instruction">(Launch Instruction)</span>
-                                    </label>
-                                    <textarea cols="30" rows="3"></textarea>
-                                </div> */}
+                                    
                                     <FlexField
                                         label="Production and Service Provision"
                                         instruction=""
@@ -502,12 +472,7 @@ function ManagementReview() {
                                     {modal === "Release of Products and Services" ? (
                                         < ReleaseOfProduct closeModal={() => { setModal(" ") }} />
                                     ) : ""}
-                                    {/* <div className="group-input">
-                                    <label><b>Release of Products and Services</b>
-                                        <span onClick={() => setModal("Release of Products and Services")} className="instruction">(Launch Instruction)</span>
-                                    </label>
-                                    <textarea cols="30" rows="3"></textarea>
-                                </div> */}
+                                    
                                     <FlexField
                                         label="Release of Products and Services"
                                         instruction=""
@@ -516,12 +481,7 @@ function ManagementReview() {
                                     {modal === "Control of Non-conforming Outputs" ? (
                                         < ControlofNonConforming closeModal={() => { setModal(" ") }} />
                                     ) : ""}
-                                    {/* <div className="group-input">
-                                    <label><b>Control of Non-conforming Outputs</b>
-                                        <span onClick={() => setModal("Control of Non-conforming Outputs")} className="instruction">(Launch Instruction)</span>
-                                    </label>
-                                    <textarea cols="30" rows="3"></textarea>
-                                </div> */}
+                                    
                                     <FlexField
                                         label="Control of Non-conforming Outputs"
                                         instruction=""
