@@ -19,7 +19,7 @@ function ESignatureModal(_props) {
         <>
 
             <div className="custom-modal" id="e-signature-modal">
-                <div className="modal-container">
+                <div className="modal-container" >
 
                     <div className="modal-top">
                         <div className="head">

@@ -67,14 +67,45 @@ function ManagementReview() {
         },
     ];
 
+    const actionItem = [
+        {
+            label: "Action Item Details",
+            columnList: [
+                { id: "2.1.1.1", name: "Short Description", type: "text" },
+                { id: "2.1.1.2", name: "Due Date", type: "date" },
+                { id: "2.1.1.3", name: "Site / Division", type: "text" },
+                { id: "2.1.1.4", name: "Person Responsible", type: "singleSelection", selectionValues: ["Amit Guru", "Shaleen Mishra", "Shaleen Mishra", "Madhulika Mishra", "Jin Kim", "Akash Asthana"] },
+                { id: "2.1.1.5", name: "Current Status", type: "text" },
+                { id: "2.1.1.6", name: "Date Closed", type: "date" },
+                { id: "2.1.1.7", name: "Remarks", type: "text" },
+            ],
+        },
+    ];
+
     const performanceEvaluation = [
         {
-            label: "Initial attachment",
+            label: "Performance Evaluation",
             columnList: [
                 { id: "2.1.1.1", name: "Monitoring", type: "text" },
                 { id: "2.1.1.2", name: "Measurement", type: "text" },
                 { id: "2.1.1.3", name: "Analysis", type: "text" },
                 { id: "2.1.1.4", name: "Evalutaion", type: "text" },
+            ],
+        },
+    ];
+
+    const capaDetails = [
+        {
+            label: "Performance Evaluation",
+            columnList: [
+                { id: "2.1.1.1", name: "CAPA Details", type: "text" },
+                { id: "2.1.1.2", name: "CAPA Type", type: "singleSelection", selectionValues: ["Corrective Action", "Preventive Action", "Corrective &  Preventive Action"] },
+                { id: "2.1.1.3", name: "Site / Division", type: "text" },
+                { id: "2.1.1.4", name: "Person Responsible", type: "singleSelection", selectionValues: ["Amit Guru", "Shaleen Mishra", "Shaleen Mishra", "Madhulika Mishra", "Jin Kim", "Akash Asthana"] },
+                { id: "2.1.1.3", name: "Current Status", type: "text" },
+                { id: "2.1.1.3", name: "Date Closed", type: "date" },
+                { id: "2.1.1.3", name: "Remarks", type: "text" },
+
             ],
         },
     ];
@@ -410,7 +441,184 @@ function ManagementReview() {
                                 </div>
                             </div>
                         </div>
+                    ) : form === "Meetings and summary" ? (
+                        <div className="document-form">
+                            <div className="details-form-data">
+                                <div className="group-input">
+                                    <label>
+                                        <b>
+                                            Risk & Opportunities
+                                        </b>
+                                    </label>
+                                    <textarea cols="30" rows="3"></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label>
+                                        <b>
+                                            External Supplier Performance
+                                        </b>
+                                    </label>
+                                    <textarea cols="30" rows="3"></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label>
+                                        <b>
+                                            Customer Satisfaction Level
+                                        </b>
+                                    </label>
+                                    <textarea cols="30" rows="3"></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label>
+                                        <b>
+                                            Budget Estimates
+                                        </b>
+                                    </label>
+                                    <textarea cols="30" rows="3"></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label>
+                                        <b>
+                                            Completion of Previous Tasks
+                                        </b>
+                                    </label>
+                                    <textarea cols="30" rows="3"></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label>
+                                        <b>
+                                            Production
+                                        </b>
+                                    </label>
+                                    <textarea cols="30" rows="3"></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label>
+                                        <b>
+                                            Plans
+                                        </b>
+                                    </label>
+                                    <textarea cols="30" rows="3"></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label>
+                                        <b>
+                                            Forecast
+                                        </b>
+                                    </label>
+                                    <textarea cols="30" rows="3"></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label>
+                                        <b>
+                                            Any Additional Support Required
+                                        </b>
+                                    </label>
+                                    <textarea cols="30" rows="3"></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <Grid
+                                        label={attachment[0].label}
+                                        required={attachment[0].required}
+                                        instruction={attachment[0].instruction}
+                                        columnList={attachment[0].columnList}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    ) : form === "Closure" ? (
+                        <div className="document-form">
+                            <div className="details-form-data">
+                                <div className="group-input">
+                                    <Grid
+                                        label={actionItem[0].label}
+                                        required={actionItem[0].required}
+                                        instruction={actionItem[0].instruction}
+                                        columnList={actionItem[0].columnList}
+                                    />
+                                </div>
+                                <div className="group-input">
+                                    <Grid
+                                        label={capaDetails[0].label}
+                                        required={capaDetails[0].required}
+                                        instruction={capaDetails[0].instruction}
+                                        columnList={capaDetails[0].columnList}
+                                    />
+                                </div>
+                                <div className="group-input">
+                                    <label>
+                                        <b>
+                                            Next Management Review Date
+                                        </b>
+                                    </label>
+                                    <input type="text" disabled value="DD-MMM-YYYY" />
+                                </div>
+                                <div className="group-input">
+                                    <label>
+                                        <b>
+                                            Summary & Recommendation
+                                        </b>
+                                    </label>
+                                    <textarea cols="30" rows="3"></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label>
+                                        <b>
+                                            Conclusion
+                                        </b>
+                                    </label>
+                                    <textarea cols="30" rows="3"></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <Grid
+                                        label={attachment[0].label}
+                                        required={attachment[0].required}
+                                        instruction={attachment[0].instruction}
+                                        columnList={attachment[0].columnList}
+                                    />
+                                </div>
+                                <div className="sub-head">Extension Justification</div>
+                                <div className="group-input">
+                                    <label>
+                                        <b>
+                                            Due Date Extension Justification
+                                        </b>
+                                    </label>
+                                    <div className="instruction">Please Mention justification if due date is crossed</div>
+                                    <textarea cols="30" rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    ) : form === "Signatures" ? (
+                        <div className="document-form">
+                            <div className="details-form-data">
+                                <div className="dual-grid">
+                                    <div className="group-input">
+                                        <label>
+                                            <b>
+                                                Completed By
+                                            </b>
+                                        </label>
+                                        <input type="text" />
+                                    </div>
+                                    <div className="group-input">
+                                        <label>
+                                            <b>
+                                                Completed On
+                                            </b>
+                                        </label>
+                                        <input type="text" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     ) : ""}
+                </div>
+                <div className="button-block">
+                    <button className="themeBtn">Save</button>
+                    <button className="themeBtn">Back</button>
+                    <button className="themeBtn">Next</button>
+                    <button className="themeBtn">Exit</button>
                 </div>
             </div>
         </>
