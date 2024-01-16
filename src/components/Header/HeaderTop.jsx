@@ -16,7 +16,6 @@ function HeaderTop() {
                         <div className="inputContainer">
                             <div className="inputInnerLeft">
                                 <i className="ri-search-line"></i>
-                                {/* <img src="./search-line.png" alt="" /> */}
                             </div>
                             <div className="inputInnerRight">
                                 <input type="search" />

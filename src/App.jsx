@@ -7,6 +7,8 @@ import AddQuestion from './pages/AddQuestion/AddQuestion';
 import ManageQuiz from './pages/ManageQuiz/ManageQuiz';
 import RiskAssesment from './pages/ConfigForms/RiskAssesment';
 import ManagementReview from './pages/ConfigForms/ManagementReview';
+import InternalAudit from './pages/ConfigForms/InternalAudit'
+import ExternalAudit from './pages/ConfigForms/ExternalAudit'
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
           <Route path='/change-control-form' element={<ChangeControlForm />} />
           <Route path='/document-panel' element={<DocumentPanel />} />
           <Route path='/training-management-system' element={<TrainingManagementSystem />} />
+          <Route path='/internal-audit' element={<InternalAudit />} />
+          <Route path='/external-audit' element={<ExternalAudit />} />
         </Routes>
       </BrowserRouter>
 

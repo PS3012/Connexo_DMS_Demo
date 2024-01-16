@@ -1,20 +1,123 @@
 /*! ===================================================================== */
 /*! DOCUMENT CSS */
 /*! ===================================================================== */
+#main-form-container .aside-container {
+    position: fixed;
+    left: 0;
+    width: 300px;
+    height: 100vh;
+}
+
+#main-form-container .aside-container .head {
+    background: var(--themeColor);
+    color: white;
+    font-size: 1.4rem;
+    text-align: center;
+    padding: 10px;
+    height: 78px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#main-form-container .aside-container .head>div:nth-child(1) {
+    display: inline-block;
+    border-bottom: 1px solid #ffffff;
+    margin-bottom: 7px;
+}
+
+#main-form-container .aside-container .head>div:nth-child(2) {
+    font-size: 0.9rem;
+    border-bottom: 1px solid #ffffff;
+    width: 100%;
+}
+
+#main-form-container .aside-container .content {
+    padding: 20px;
+    max-height: calc(100vh - 78px);
+    overflow-y: auto;
+    display: grid;
+    gap: 30px;
+}
+
+#main-form-container .aside-container .workflow>div {
+    text-align: center;
+    padding: 7px 15px;
+    border-radius: 35px;
+    font-weight: bold;
+    background: #006fc026;
+    position: relative;
+}
+
+#main-form-container .aside-container .workflow>div.green-state {
+    background: #00ff0026;
+}
+
+#main-form-container .aside-container .workflow>div.red-state {
+    background: #ff000026;
+}
+#main-form-container .aside-container .workflow>div img {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: rotate(90deg) translate(-12%, 23px);
+    width: 46px;
+    height: 42px;
+}
+
+#main-form-container .aside-container .family-list div {
+    background: #006fc026;
+    padding: 7px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#main-form-container .sticky-buttons {
+    position: fixed;
+    top: 50%;
+    left: 0;
+    transform: translate(0, -50%);
+    display: grid;
+    gap: 10px;
+    z-index: 5;
+}
+
+#main-form-container .sticky-buttons div {
+    background: var(--themeColor);
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: 0 5px 5px 0;
+}
+
 #config-form-document-page {
     padding: 0 0 76px;
+    border-left: 1px solid #808080;
 }
 
 #config-form-document-page .top-block {
     background: var(--themeColor);
-    padding: 23px 20px;
     color: white;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
 }
 
-#config-form-document-page .top-block .head {
-    font-weight: bold;
-    font-size: 1.5rem;
-    margin-bottom: 5px;
+#config-form-document-page .top-block div {
+    padding: 10px 20px;
+    border-right: 1px dashed #ffffff;
+    font-size: 0.9rem;
+}
+
+#config-form-document-page .top-block div:nth-last-child(1) {
+    border-right: 0;
+}
+
+#config-form-document-page .state-bar {
+    display: flex;
+    font-size: 0.85rem;
+    gap: 20px;
 }
 
 #config-form-document-page .document-block {
@@ -33,7 +136,8 @@
 
 #config-form-document-page .document-tabs div {
     padding: 7px 15px;
-    border-radius: 5px;
+    border-radius: 35px;
+    font-weight: bold;
     background: #006fc026;
     cursor: pointer;
 }
@@ -41,6 +145,7 @@
 #config-form-document-page .document-tabs div.active {
     background: var(--themeColor);
     color: white;
+    font-weight: 400;
 }
 
 #config-form-document-page .document-form {
@@ -55,7 +160,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: start;
-    gap: 20px;
+    gap: 0 20px;
 }
 
 #config-form-document-page .button-block {
@@ -66,11 +171,11 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 20px;
-    width: 100%;
+    border-left: 1px solid #808080;
     position: fixed;
     bottom: 0;
-    left: 0;
-    width: 100%;
+    right: 0;
+    z-index: 2;
     box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px 10px;
 }
 
@@ -144,4 +249,55 @@
     padding: 0;
     margin: 0;
     border-radius: 0;
+}
+
+#config-form-document-page .adddocument-file {
+    display: grid;
+    grid-template-columns: 1fr 150px;
+    gap: 20px;
+}
+
+#config-form-document-page .add-button {
+    position: relative;
+}
+
+#config-form-document-page .add-button .add-file {
+    background: #002bff;
+    color: white;
+    border-radius: 5px;
+    text-align: center;
+    padding: 5px;
+}
+
+#config-form-document-page .add-button input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+    opacity: 0;
+}
+
+#config-form-document-page .activity-log-field {
+    margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 1px dashed #808080;
+    font-size: 0.85rem;
+}
+
+#config-form-document-page .activity-log-field:nth-child(2n) {
+    background: #006fc00f;
+}
+
+#config-form-document-page .activity-log-field div {
+    padding: 7px 15px;
+}
+
+#config-form-document-page .activity-log-field div:nth-child(1) {
+    border-right: 1px dashed #808080;
+}
+
+#config-form-document-page .activity-log-field:nth-last-child(1) {
+    margin-bottom: 0;
 }
