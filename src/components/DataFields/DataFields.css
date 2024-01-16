@@ -32,9 +32,9 @@
     border: 1px dashed grey;
 }
 
-.grid-input-field .instruction{
- color: #353535;
-}  
+.grid-input-field .instruction {
+    color: #006fc0;
+}
 
 .grid-input-field tr:nth-child(2n) {
     background: #006fc026;
@@ -46,7 +46,7 @@
     background: transparent !important;
 }
 
-.grid-input-field th div{
+.grid-input-field th div {
     display: flex;
     gap: 5px;
     align-items: center;

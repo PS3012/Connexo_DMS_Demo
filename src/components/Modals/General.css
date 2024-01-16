@@ -66,6 +66,8 @@
 
 .custom-modal .modal-container .modal-middle {
     padding: 20px;
+    max-height: 60vh;
+    overflow-y: auto;
 }
 
 .custom-modal .modal-container .modal-bottom {

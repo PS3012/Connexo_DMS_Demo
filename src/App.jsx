@@ -9,12 +9,14 @@ import RiskAssesment from './pages/ConfigForms/RiskAssesment';
 import ManagementReview from './pages/ConfigForms/ManagementReview';
 import InternalAudit from './pages/ConfigForms/InternalAudit'
 import ExternalAudit from './pages/ConfigForms/ExternalAudit'
+import Desktop from './pages/Desktop/Desktop';
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
+          <Route path='/desktop' element={<Desktop />} />
           <Route path='/question' element={<Question />} />
           <Route path='/addQuestion' element={<AddQuestion />} />
           <Route path='/manageQuiz' element={<ManageQuiz />} />
