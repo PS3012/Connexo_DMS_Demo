@@ -1,5 +1,5 @@
 .desktop-input-table-wrapper {
-    height: 85vh;
+    height: calc(100vh - 150px);
     width: 100%;
     padding: 20px 20px;
     box-shadow: 5px 10px 5px 5px #006fc0;
@@ -11,7 +11,6 @@
     grid-template-columns: 1fr 1fr 100px;
     border-radius: 10px;
     gap: 40px;
-    /* box-shadow: 5px 0px 5px 5px rgba(237, 233, 233, 0.674); */
     padding: 5px 0px;
     margin-bottom: 20px;
 }

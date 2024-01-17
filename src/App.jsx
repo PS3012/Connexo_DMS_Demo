@@ -10,13 +10,17 @@ import ManagementReview from './pages/ConfigForms/ManagementReview';
 import InternalAudit from './pages/ConfigForms/InternalAudit'
 import ExternalAudit from './pages/ConfigForms/ExternalAudit'
 import Desktop from './pages/Desktop/Desktop';
+import DivisionModal from './components/Modals/ProjectDivisionModal/DivisionModal';
+import Dashboard from './pages/Dashboard/Dashboard';
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
+          <Route path='/popup' element={<DivisionModal />} />
           <Route path='/desktop' element={<Desktop />} />
+          <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/question' element={<Question />} />
           <Route path='/addQuestion' element={<AddQuestion />} />
           <Route path='/manageQuiz' element={<ManageQuiz />} />

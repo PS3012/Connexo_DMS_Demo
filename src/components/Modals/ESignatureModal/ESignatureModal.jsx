@@ -17,7 +17,6 @@ function ESignatureModal(_props) {
     }
     return (
         <>
-
             <div className="custom-modal" id="e-signature-modal">
                 <div className="modal-container" >
 
@@ -41,10 +40,10 @@ function ESignatureModal(_props) {
                         </div>
                     </div>
 
-                    <div className="modal-bottom">
+                    {/* <div className="modal-bottom">
                         <div className="modal-btn btn-1" onClick={handleSubmit}>Submit</div>
                         <div className="modal-btn btn-2" onClick={_props.closeModal}>Cancel</div>
-                    </div>
+                    </div> */}
 
                 </div>
 

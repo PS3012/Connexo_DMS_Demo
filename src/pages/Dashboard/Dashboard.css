@@ -1,0 +1,57 @@
+/* Multitab css  */
+#multitab_header_tabs {
+    height: 10%;
+    width: 100%;
+    display: flex;
+    /* grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr ; */
+    padding: 15px 20px;
+    background-color: #ffffff;
+}
+
+
+#multitab_header_tabs .process_group {
+    cursor: pointer;
+    padding: 8px 10px;
+    margin-right: 10px;
+    border-radius: 10px;
+}
+
+#multitab_header_tabs>.active {
+    font-weight: 800;
+    color: #000;
+    background-color: #61a9dc;
+}
+
+
+#multitab_header_tabs>.inactive {
+    color: #fff;
+    background-color: #000;
+    transition: .5s all cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+
+#scope_table_container {
+    height: calc(100vh - (150px));
+}
+
+
+#scope_table_container .scope_bar {
+    /* height:13%; */
+    gap: 40px;
+    width: 98%;
+    display: grid;
+    margin: 0 auto;
+    padding: 20px 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    grid-template-columns: 1fr 100px;
+    box-shadow: 0px 5px 5px 0px #dadada;
+}
+
+#scope_table_container .table_block {
+    overflow-y: auto;
+    max-height: 75%;
+    width: 98%;
+    margin: 0 auto;
+}
+

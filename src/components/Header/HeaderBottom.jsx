@@ -1,36 +1,47 @@
-// import React from 'react'
+import { useState } from "react";
 import "./HeaderBottom.css";
+import { Link } from "react-router-dom";
 
 function HeaderBottom() {
+
     return (
-        <div className="Header_Bottom">
-            <div className="headerBottomInner">
-                <div className="headerBottomLft">
-                    <div className="navItem">
-                        <i className="ri-dashboard-line"></i>
-                        <h3>Dashboard</h3>
+        <>
+            <div className="Header_Bottom">
+                <div className="headerBottomInner">
+                    <div className="headerBottomLft">
+                        <Link to="#">
+                            <div className="navItem">
+                                <i class="ri-home-3-fill"></i>
+                                <h3>Desktop</h3>
+                            </div>
+                        </Link>
+                        <Link to="/dashboard">
+                            <div className="navItem">
+                                <i class="ri-dashboard-3-fill"></i>
+                                <h3>Dashboard</h3>
+                            </div>
+                        </Link>
+                        <Link to="#">
+                            <div className="navItem">
+                                <i class="ri-bar-chart-fill"></i>
+                                <h3>Analytics</h3>
+                            </div>
+                        </Link>
+                        <Link to="#">
+                            <div className="navItem">
+                                <i class="ri-file-marked-fill"></i>
+                                <h3>Standards</h3>
+                            </div>
+                        </Link>
                     </div>
-                    <div className="navItem">
-                        <h3>KPI&#39;s</h3>
+                    <div className="headerBottomRgt">
+                        <Link to='/popup'>
+                            <button >Initiate Record</button>
+                        </Link>
                     </div>
-                    <div className="navItem">
-                        <h3>Home Hub</h3>
-                    </div>
-                    <div className="navItem">
-                        <h3>DMS Dashboard</h3>
-                    </div>
-                    <div className="navItem">
-                        <h3>TMS Dashboard</h3>
-                    </div>
-                    <div className="navItem">
-                        <h3>QMS Dashboard</h3>
-                    </div>
-                </div>
-                <div className="headerBottomRgt">
-                    <button>Initiate Record</button>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
 

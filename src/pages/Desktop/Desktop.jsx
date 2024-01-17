@@ -1,11 +1,14 @@
 import React from 'react'
 import HeaderTop from '../../components/Header/HeaderTop';
+import HeaderBottom from '../../components/Header/HeaderBottom';
 import "./Desktop.css";
+
 
 function Desktop() {
     return (
         <>
             <HeaderTop />
+            <HeaderBottom />
             <div className="desktop-input-table-wrapper">
                 <div className="input-wrapper">
                     <div className="group-input-2">
