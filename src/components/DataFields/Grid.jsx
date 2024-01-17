@@ -59,7 +59,7 @@ function Grid(_props) {
                                             {index === 0 ? (
                                                 <input type="text" value={cell} readOnly />
                                             ) : (
-                                                _props.columnList[index - 1].type && _props.columnList[index - 1].type === 'singleSelection' ? (
+                                                _props.columnList[index - 1].type === 'singleSelection' ? (
                                                     <select
                                                         value={cell}
                                                         onChange={(e) => {

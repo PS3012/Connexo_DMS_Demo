@@ -6,41 +6,22 @@ import { MultiSelect } from "react-multi-select-component";
 import InputDate from "../../components/DataFields/InputDate";
 import FlexField from "../../components/DataFields/FlexField";
 import RelatedRecords from "../../components/DataFields/RelatedRecords";
+import { CurrentDate } from "../../components/DateReturners";
 import "./ConfigForms.css";
 
 function InternalAudit() {
-  const formList = [
-    "General Information",
-    "Audit Planning",
-    "Audit Preparation",
-    "Audit Execution",
-    "Audit Response & Closure",
-    "Activity Log",
-  ];
-  const [changeControl, setChangeControl] = useReducer(
-    (prev, next) => ({
-      ...prev,
-      ...next,
-    }),
-    {
-      initiatorGroup: "",
-      initiatedThrough: "",
-      typeOfAudit: "",
-    }
-  );
-  const [form, setForm] = useState("General Information");
+  const formList = ["General Information", "Audit Planning", "Audit Preparation", "Audit Execution", "Audit Response & Closure", "Activity Log"]
+  const [internalAudit, setInternalAudit] = useReducer((prev, next) => ({
+    ...prev, ...next
+  }), {
+    initiatorGroup: '',
+    initiatedThrough: '',
+    typeOfAudit: ''
+  })
+  const [form, setForm] = useState(formList[0]);
   const [selected, setSelected] = useState([]);
-  const [asideWorkFlow, setAsideWorkFlow] = useState(false);
-  const [asideFamilyTree, setAsideFamilyTree] = useState(false);
-  // const RelatedRecords = [
-  //   { label: "Plant 1", value: "Plant 1" },
-  //   { label: "QA", value: "QA" },
-  //   { label: "QC", value: "QC" },
-  //   { label: "MFG", value: "MFG" },
-  //   { label: "Corporate", value: "Corporate" },
-  //   { label: "Microbiology", value: "Microbiology" },
-  //   { label: "Others", value: "Others" },
-  // ];
+  const [asideWorkFlow, setAsideWorkFlow] = useState(false)
+  const [asideFamilyTree, setAsideFamilyTree] = useState(false)
   const FunctionName = [
     { label: "QA", value: "QA" },
     { label: "QC", value: "QC" },
@@ -56,14 +37,6 @@ function InternalAudit() {
     { label: "Madhulika Mishra", value: "Madhulika Mishra" },
     { label: "Shaleen Mishra", value: "Shaleen Mishra" },
   ];
-  // const ReferenceRecord = [
-  //   { label: "KSA/IA/2024/0003", value: "KSA/IA/2024/0003" },
-  //   { label: "KSA/IA/2024/0004", value: "KSA/IA/2024/0004" },
-  //   { label: "KSA/IA/2024/0005", value: "KSA/IA/2024/0005" },
-  //   { label: "KSA/IA/2024/0006", value: "KSA/IA/2024/0006" },
-  //   { label: "KSA/IA/2024/0007", value: "KSA/IA/2024/0007" },
-  //   { label: "KSA/IA/2024/0008", value: "KSA/IA/2024/0008" },
-  // ];
   const ObservationFields = [
     {
       label: "Observation Fields ",
@@ -332,14 +305,10 @@ function InternalAudit() {
                   <div className="form-flex">
                     <div className="group-input">
                       <label>Record Number</label>
-                      <input
-                        type="text"
-                        value="Jordan/EA/2024/00000001"
-                        disabled
-                      />
+                      <input type="text" value="Jordan/IA/2024/00000001" disabled />
                     </div>
                     <div className="group-input">
-                      <label>Division Code</label>
+                      <label>Division</label>
                       <input type="text" value="Jordan" disabled />
                     </div>
                     <div className="group-input">
@@ -348,7 +317,7 @@ function InternalAudit() {
                     </div>
                     <div className="group-input">
                       <label>Date of Initiation</label>
-                      <input type="" value="10-Jan-2024" disabled />
+                      <input type="" value={CurrentDate()} disabled />
                     </div>
                     <div className="group-input">
                       <label>
@@ -370,13 +339,7 @@ function InternalAudit() {
                         <div className="required"></div>
                         Initiator Group
                       </label>
-                      <select
-                        name="initiatorGroup"
-                        value={changeControl.initiatorGroup}
-                        onChange={(e) =>
-                          setChangeControl({ initiatorGroup: e.target.value })
-                        }
-                      >
+                      <select name="initiatorGroup" value={internalAudit.initiatorGroup} onChange={(e) => setInternalAudit({ initiatorGroup: e.target.value })}>
                         <option value="">-- Select --</option>
                         <option value="CQA">Corporate Quality Assurance</option>
                         <option value="QAB">
@@ -403,11 +366,7 @@ function InternalAudit() {
                     </div>
                     <div className="group-input">
                       <label>Initiator Group Code</label>
-                      <input
-                        type="text"
-                        value={changeControl.initiatorGroup}
-                        disabled
-                      />
+                      <input type="text" value={internalAudit.initiatorGroup} disabled />
                     </div>
                   </div>
                   <div className="group-input">
@@ -420,16 +379,8 @@ function InternalAudit() {
                   <div className="form-flex">
                     <div className="group-input">
                       <label>Initiated Through</label>
-                      <div className="instruction">
-                        Please select related information
-                      </div>
-                      <select
-                        name="initiated_through"
-                        value={changeControl.initiatedThrough}
-                        onChange={(e) =>
-                          setChangeControl({ initiatedThrough: e.target.value })
-                        }
-                      >
+                      <div className='instruction'>Please select related information</div>
+                      <select name="initiated_through" value={internalAudit.initiatedThrough} onChange={(e) => setInternalAudit({ initiatedThrough: e.target.value })}>
                         <option value="">-- Select --</option>
                         <option value="recall">Recall</option>
                         <option value="return">Return</option>
@@ -443,14 +394,10 @@ function InternalAudit() {
                     </div>
                     <div className="group-input">
                       <label>
-                        {changeControl.initiatedThrough === "others" && (
-                          <div className="required"></div>
-                        )}
+                        {internalAudit.initiatedThrough === 'others' && <div className="required"></div>}
                         Other
                       </label>
-                      <textarea
-                        required={changeControl.initiatedThrough === "others"}
-                      ></textarea>
+                      <textarea required={internalAudit.initiatedThrough === 'others'}></textarea>
                     </div>
                     <div className="group-input">
                       <label>Type of Audit</label>
@@ -458,12 +405,7 @@ function InternalAudit() {
                         Please select yes if it is has recurred in past six
                         months
                       </div>
-                      <select
-                        value={changeControl.typeOfAudit}
-                        onChange={(e) =>
-                          setChangeControl({ typeOfAudit: e.target.value })
-                        }
-                      >
+                      <select value={internalAudit.typeOfAudit} onChange={(e) => setInternalAudit({ typeOfAudit: e.target.value })} >
                         <option value="">-- Select --</option>
                         <option value="R&D">R&D</option>
                         <option value="GLP">GLP</option>
@@ -476,14 +418,10 @@ function InternalAudit() {
                     </div>
                     <div className="group-input">
                       <label>
-                        {changeControl.typeOfAudit === "Others" && (
-                          <div className="required"></div>
-                        )}
+                        {internalAudit.typeOfAudit === 'Others' && <div className="required"></div>}
                         If Other
                       </label>
-                      <textarea
-                        required={changeControl.typeOfAudit === "Others"}
-                      ></textarea>
+                      <textarea required={internalAudit.typeOfAudit === 'Others'}></textarea>
                     </div>
                   </div>
                   <FlexField
@@ -522,17 +460,9 @@ function InternalAudit() {
                     instruction={AuditAgenda.instruction}
                     columnList={AuditAgenda.columnList}
                   />
-                  {/* <div className="group-input">
-                    <label>
-                      Related Records
-                    </label>
-                    <MultiSelect
-                      options={RelatedRecords}
-                      value={selected}
-                      onChange={setSelected}
-                      labelledBy="Select"
-                    />
-                  </div> */}
+                  <RelatedRecords
+                    label="Related Records"
+                  />
                   <div className="group-input">
                     <label>Function Name</label>
                     <MultiSelect
