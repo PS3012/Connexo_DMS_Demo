@@ -1,24 +1,27 @@
-import React from "react";
+import React, { useReducer } from "react";
 import { useState } from "react";
-import "./ConfigForms.css";
 import HeaderTop from "../../components/Header/HeaderTop";
 import Grid from "../../components/DataFields/Grid";
 import { MultiSelect } from "react-multi-select-component";
-function InternalAudit() {
-  const [form, setForm] = useState("General Information");
-  const [typeOfChange, setTypeOfChange] = useState(0);
-  const [selected, setSelected] = useState([]);
-  const [groupComment, setGroupComment] = useState(0);
-  const RelatedRecords = [
-    { label: "Plant 1", value: "Plant 1" },
-    { label: "QA", value: "QA" },
-    { label: "QC", value: "QC" },
-    { label: "MFG", value: "MFG" },
-    { label: "Corporate", value: "Corporate" },
-    { label: "Microbiology", value: "Microbiology" },
-    { label: "Others", value: "Others" },
-  ];
+import InputDate from "../../components/DataFields/InputDate";
+import FlexField from "../../components/DataFields/FlexField";
+import RelatedRecords from "../../components/DataFields/RelatedRecords";
+import { CurrentDate } from "../../components/DateReturners";
+import "./ConfigForms.css";
 
+function InternalAudit() {
+  const formList = ["General Information", "Audit Planning", "Audit Preparation", "Audit Execution", "Audit Response & Closure", "Activity Log"]
+  const [internalAudit, setInternalAudit] = useReducer((prev, next) => ({
+    ...prev, ...next
+  }), {
+    initiatorGroup: '',
+    initiatedThrough: '',
+    typeOfAudit: ''
+  })
+  const [form, setForm] = useState(formList[0]);
+  const [selected, setSelected] = useState([]);
+  const [asideWorkFlow, setAsideWorkFlow] = useState(false)
+  const [asideFamilyTree, setAsideFamilyTree] = useState(false)
   const FunctionName = [
     { label: "QA", value: "QA" },
     { label: "QC", value: "QC" },
@@ -27,7 +30,6 @@ function InternalAudit() {
     { label: "RA", value: "RA" },
     { label: "R&D,", value: "R&D" },
   ];
-
   const AuditTeam = [
     { label: "Amit Guru", value: "Amit Guru" },
     { label: "Amit Patel", value: "Amit Patel" },
@@ -35,16 +37,6 @@ function InternalAudit() {
     { label: "Madhulika Mishra", value: "Madhulika Mishra" },
     { label: "Shaleen Mishra", value: "Shaleen Mishra" },
   ];
-
-  const ReferenceRecord = [
-    { label: "KSA/IA/2024/0003", value: "KSA/IA/2024/0003" },
-    { label: "KSA/IA/2024/0004", value: "KSA/IA/2024/0004" },
-    { label: "KSA/IA/2024/0005", value: "KSA/IA/2024/0005" },
-    { label: "KSA/IA/2024/0006", value: "KSA/IA/2024/0006" },
-    { label: "KSA/IA/2024/0007", value: "KSA/IA/2024/0007" },
-    { label: "KSA/IA/2024/0008", value: "KSA/IA/2024/0008" },
-  ];
-
   const ObservationFields = [
     {
       label: "Observation Fields ",
@@ -147,303 +139,332 @@ function InternalAudit() {
       { id: "2.1.1.7", name: "Remarks", type: "text" },
     ],
   };
-  const changeCloser = {
-    label: "Document Details",
-    instruction: <div></div>,
-    required: true,
-    columnList: [
-      { id: "2.1.1.1", name: "Affected Documents", type: "text" },
-      { id: "2.1.1.2", name: "Document Name", type: "number" },
-      { id: "2.1.1.3", name: "Document No.", type: "text" },
-      { id: "2.1.1.4", name: "Version No.", type: "number" },
-      { id: "2.1.1.5", name: "Implementation Date", type: "date" },
-      { id: "2.1.1.6", name: "New Document No.", type: "text" },
-      { id: "2.1.1.7", name: "New Version No.", type: "text" },
-      { id: "2.1.1.8", name: "Remarks", type: "text" },
-    ],
-  };
+  const docFile = [
+    {
+      label: "Initial attachment",
+      instruction: "Please Attach all relevant or supporting documents",
+      required: true,
+      columnList: [
+        { id: "2.1.1.1", name: "Title of Document", type: "text" },
+        { id: "2.1.1.2", name: "Attached File", type: "File" },
+        { id: "2.1.1.3", name: "Remark", type: "text" },
+      ],
+    },
+    {
+      label: "List of Attachment",
+      instruction: "Please Attach all relevant or supporting documents",
+      required: true,
+      columnList: [
+        { id: "2.1.1.1", name: "Title of Document", type: "text" },
+        { id: "2.1.1.2", name: "Attached File", type: "File" },
+        { id: "2.1.1.3", name: "Remark", type: "text" },
+      ],
+    },
+    {
+      label: "Guideline Attachment",
+      instruction: "Please Attach all relevant or supporting documents",
+      required: true,
+      columnList: [
+        { id: "2.1.1.1", name: "Title of Document", type: "text" },
+        { id: "2.1.1.2", name: "Attached File", type: "File" },
+        { id: "2.1.1.3", name: "Remark", type: "text" },
+      ],
+    },
+    {
+      label: "Audit Attachments",
+      instruction: "Please Attach all relevant or supporting documents",
+      required: true,
+      columnList: [
+        { id: "2.1.1.1", name: "Title of Document", type: "text" },
+        { id: "2.1.1.2", name: "Attached File", type: "File" },
+        { id: "2.1.1.3", name: "Remark", type: "text" },
+      ],
+    },
+    {
+      label: "Audit Attachments",
+      instruction: "Please Attach all relevant or supporting documents",
+      required: true,
+      columnList: [
+        { id: "2.1.1.1", name: "Title of Document", type: "text" },
+        { id: "2.1.1.2", name: "Attached File", type: "File" },
+        { id: "2.1.1.3", name: "Remark", type: "text" },
+      ],
+    },
+    {
+      label: "Report Attachments",
+      instruction: "Please Attach all relevant or supporting documents",
+      required: true,
+      columnList: [
+        { id: "2.1.1.1", name: "Title of Document", type: "text" },
+        { id: "2.1.1.2", name: "Attached File", type: "File" },
+        { id: "2.1.1.3", name: "Remark", type: "text" },
+      ],
+    },
+  ];
 
   return (
     <>
-      <HeaderTop />
-
-      <div id="config-form-document-page">
-        <div className="top-block">
-          {/* <div className="head">New Change Control</div> */}
-          <div className="content">
-            <b> Site Division/Project :</b> India / Internal Audit
-          </div>
-        </div>
-
-        <div className="document-block">
-          <div className="document-tabs">
-            <div
-              className={form === "General Information" ? "active" : ""}
-              onClick={() => setForm("General Information")}
-            >
-              General Information
+      <div
+        id="main-form-container"
+        style={
+          asideWorkFlow || asideFamilyTree ? { padding: "0 0 0 300px" } : {}
+        }
+      >
+        {asideWorkFlow && (
+          <div className="aside-container">
+            <div className="head">
+              <div>Workflow</div>
+              <div>Trust The Process</div>
             </div>
-
-            <div
-              className={form === " Audit Planning" ? "active" : ""}
-              onClick={() => setForm(" Audit Planning")}
-            >
-              Audit Planning
-            </div>
-
-            <div
-              className={form === "Audit Preparation" ? "active" : ""}
-              onClick={() => setForm("Audit Preparation")}
-            >
-              Audit Preparation
-            </div>
-
-            <div
-              className={form === "Audit Execution" ? "active" : ""}
-              onClick={() => setForm("Audit Execution")}
-            >
-              Audit Execution
-            </div>
-
-            <div
-              className={form === "Audit Response & Closure" ? "active" : ""}
-              onClick={() => setForm("Audit Response & Closure")}
-            >
-              Audit Response & Closure
-            </div>
-
-            <div
-              className={form === "Activity Log" ? "active" : ""}
-              onClick={() => setForm("Activity Log")}
-            >
-              Activity Log
+            <div className="content workflow">
+              <div className="green-state">
+                Opened
+                <img src="/down.gif" alt="..." />
+              </div>
+              <div>
+                Under HOD Review
+                <img src="/down.gif" alt="..." />
+              </div>
+              <div>
+                HOD Review Completed
+                <img src="/down.gif" alt="..." />
+              </div>
+              <div>
+                Under CFT Review
+                <img src="/down.gif" alt="..." />
+              </div>
+              <div>
+                Approved
+                <img src="/down.gif" alt="..." />
+              </div>
+              <div>
+                Implemented
+                <img src="/down.gif" alt="..." />
+              </div>
+              <div className="red-state">
+                Closed-Done
+                <img src="/down.gif" alt="..." />
+              </div>
+              <div className="red-state">Closed- Cancelled</div>
             </div>
           </div>
+        )}
 
-          {form === "General Information" ? (
-            <div className="document-form">
-              <div className="details-form-data">
-                <div className="form-flex">
-                  <div className="group-input">
-                    <label>
-                      <b>Record Number</b>
-                    </label>
-                    <input
-                      type="text"
-                      value="Jordan/EA/2024/00000001"
-                      disabled
+        {asideFamilyTree && (
+          <div className="aside-container">
+            <div className="head">
+              <div>Family Tree</div>
+              <div>Family of Precision</div>
+            </div>
+            <div className="content family-list">
+              <div>CAPA (1)</div>
+              <div>Audit Program (0)</div>
+              <div>Observation (3)</div>
+              <div>Extension (2)</div>
+              <div>Effectiveness Check (0)</div>
+              <div>Change Control (0)</div>
+              <div>Root Cause Analysis (0)</div>
+            </div>
+          </div>
+        )}
+
+        <div id="config-form-document-page">
+          <HeaderTop />
+
+          <div className="top-block">
+            <div>
+              <strong> Record Name:&nbsp;</strong>Internal Audit
+            </div>
+            <div>
+              <strong> Site:&nbsp;</strong>EHS-North America
+            </div>
+            <div>
+              <strong> Current Status:&nbsp;</strong>Under Initiation
+            </div>
+            <div>
+              <strong> Initiated By:&nbsp;</strong>Shaleen Mishra
+            </div>
+          </div>
+
+          <div className="document-block">
+            <div className="document-tabs">
+              {formList.map((item, index) => (
+                <div
+                  key={index}
+                  className={form === item ? "active" : ""}
+                  onClick={() => setForm(item)}
+                >
+                  {item}
+                </div>
+              ))}
+            </div>
+
+            {form === formList[0] ? (
+              <div className="document-form">
+                <div className="details-form-data">
+                  <div className="form-flex">
+                    <div className="group-input">
+                      <label>Record Number</label>
+                      <input type="text" value="Jordan/IA/2024/00000001" disabled />
+                    </div>
+                    <div className="group-input">
+                      <label>Division</label>
+                      <input type="text" value="Jordan" disabled />
+                    </div>
+                    <div className="group-input">
+                      <label>Initiator</label>
+                      <input type="text" value="Amit Guru" disabled />
+                    </div>
+                    <div className="group-input">
+                      <label>Date of Initiation</label>
+                      <input type="" value={CurrentDate()} disabled />
+                    </div>
+                    <div className="group-input">
+                      <label>
+                        <div className="required"></div>
+                        Assigned To
+                      </label>
+                      <select required>
+                        <option value="">Select a value</option>
+                        <option value="2">Shaleen Mishra</option>
+                      </select>
+                    </div>
+                    <InputDate
+                      label="Due Date"
+                      enableDate="future"
+                      isRequired="false"
                     />
-                  </div>
-                  <div className="group-input">
-                    <label>
-                      <b>Division Code</b>
-                    </label>
-                    <input type="text" value="Jordan" disabled />
-                  </div>
-
-                  <div className="group-input">
-                    <label>
-                      <b>Initiator</b>
-                    </label>
-                    <input type="text" value="Amit Guru" disabled />
-                  </div>
-
-                  <div className="group-input">
-                    <label>
-                      <b>Date of Initiation</b>
-                    </label>
-                    <input type="" value="10-Jan-2024" disabled />
-                  </div>
-
-                  <div className="group-input">
-                    <label>
-                      <b>Assigned To</b>
-                      <span className="required">&nbsp;*</span>
-                    </label>
-                    <select
-                      id="select-state"
-                      className="form-control"
-                      placeholder="Select..."
-                      name="assign_to"
-                    >
-                      <option value="">Select a value</option>
-                      <option value="2">Shaleen Mishra</option>
-                    </select>{" "}
-                  </div>
-
-                  <div className="group-input">
-                    <label>
-                      <b>Due Date</b>
-                      <span className="required">&nbsp;*</span>
-                    </label>
-                    <div className="instruction">
-                      Please mention expected date of completion
+                    <div className="group-input">
+                      <label htmlFor="initiatorGroup">
+                        <div className="required"></div>
+                        Initiator Group
+                      </label>
+                      <select name="initiatorGroup" value={internalAudit.initiatorGroup} onChange={(e) => setInternalAudit({ initiatorGroup: e.target.value })}>
+                        <option value="">-- Select --</option>
+                        <option value="CQA">Corporate Quality Assurance</option>
+                        <option value="QAB">
+                          Quality Assurance Bio-Pharma
+                        </option>
+                        <option value="CQC">Central Quality Control</option>
+                        <option value="Manu">Manufacturing</option>
+                        <option value="PSG">Plasma Sourcing Group</option>
+                        <option value="CS">Central Stores</option>
+                        <option value="ITG">
+                          Information Technology Group
+                        </option>
+                        <option value="MM">Molecular Medicine</option>
+                        <option value="CL">Central Laboratory</option>
+                        <option value="TT">Tech team</option>
+                        <option value="QA"> Quality Assurance</option>
+                        <option value="QM">Quality Management</option>
+                        <option value="IA">IT Administration</option>
+                        <option value="ACC">Accounting</option>
+                        <option value="LOG">Logistics</option>
+                        <option value="SM">Senior Management</option>
+                        <option value="BA">Business Administration</option>
+                      </select>
                     </div>
-                    <input type="date" placeholder="" />
-                  </div>
-
-                  <div className="group-input">
-                    <label>
-                      <b>
-                        Initiator Group{" "}
-                        <span className="required">&nbsp;*</span>
-                      </b>
-                    </label>
-                    <input type="date" placeholder="" />
-                  </div>
-
-                  <div className="group-input">
-                    <label>
-                      <b>Initiator Group Code</b>
-                    </label>
-                    <input type="" value="" disabled />
-                  </div>
-                </div>
-
-                <div className="group-input">
-                  <label>
-                    <b>
-                      Short Description{" "}
-                      <span className="required">&nbsp;*</span>
-                    </b>
-                  </label>
-                  <div className="instruction">
-                    Please mention brief summary
-                  </div>
-                  <textarea name="w3review" rows="4" cols="50"></textarea>
-                </div>
-
-                <div className="form-flex">
-                  <div className="group-input">
-                    <label>
-                      <b>Initiated Through</b>
-                    </label>
-                    <div className="instruction">
-                      Please select related information
+                    <div className="group-input">
+                      <label>Initiator Group Code</label>
+                      <input type="text" value={internalAudit.initiatorGroup} disabled />
                     </div>
-                    <select name="initiated_through" className="form-control">
-                      <option>Enter Your Selection Here</option>
-                      <option value="recall">Recall</option>
-                      <option value="return">Return</option>
-                      <option value="deviation">Deviation</option>
-                      <option value="complaint">Complaint</option>
-                      <option value="regulatory">Regulatory</option>
-                      <option value="lab-incident">Lab Incident</option>
-                      <option value="improvement">Improvement</option>
-                      <option value="others">Others</option>
-                    </select>
                   </div>
-
                   <div className="group-input">
                     <label>
-                      <b>Other</b>
+                      <div className="require"></div>
+                      Short Description
                     </label>
-                    <div className="instruction">
-                      Please select yes if it is has recurred in past six months
-                    </div>
-                    <textarea name="w3review"></textarea>
+                    <input type="text" />
                   </div>
-
+                  <div className="form-flex">
+                    <div className="group-input">
+                      <label>Initiated Through</label>
+                      <div className='instruction'>Please select related information</div>
+                      <select name="initiated_through" value={internalAudit.initiatedThrough} onChange={(e) => setInternalAudit({ initiatedThrough: e.target.value })}>
+                        <option value="">-- Select --</option>
+                        <option value="recall">Recall</option>
+                        <option value="return">Return</option>
+                        <option value="deviation">Deviation</option>
+                        <option value="complaint">Complaint</option>
+                        <option value="regulatory">Regulatory</option>
+                        <option value="lab-incident">Lab Incident</option>
+                        <option value="improvement">Improvement</option>
+                        <option value="others">Others</option>
+                      </select>
+                    </div>
+                    <div className="group-input">
+                      <label>
+                        {internalAudit.initiatedThrough === 'others' && <div className="required"></div>}
+                        Other
+                      </label>
+                      <textarea required={internalAudit.initiatedThrough === 'others'}></textarea>
+                    </div>
+                    <div className="group-input">
+                      <label>Type of Audit</label>
+                      <div className="instruction">
+                        Please select yes if it is has recurred in past six
+                        months
+                      </div>
+                      <select value={internalAudit.typeOfAudit} onChange={(e) => setInternalAudit({ typeOfAudit: e.target.value })} >
+                        <option value="">-- Select --</option>
+                        <option value="R&D">R&D</option>
+                        <option value="GLP">GLP</option>
+                        <option value="GCP">GCP</option>
+                        <option value="GCP">GDP</option>
+                        <option value="GEP">GEP</option>
+                        <option value="ISO17025">ISO 17025</option>
+                        <option value="Others">Others</option>
+                      </select>
+                    </div>
+                    <div className="group-input">
+                      <label>
+                        {internalAudit.typeOfAudit === 'Others' && <div className="required"></div>}
+                        If Other
+                      </label>
+                      <textarea required={internalAudit.typeOfAudit === 'Others'}></textarea>
+                    </div>
+                  </div>
+                  <FlexField
+                    label="Initial Comments"
+                    instruction=""
+                    isRequired="true"
+                  />
                   <div className="group-input">
-                    <label>
-                      <b>Type of Audit</b>
-                    </label>
-                    <div className="instruction">
-                      Please select yes if it is has recurred in past six months
-                    </div>
-                    <select name="initiated_through" className="form-control">
-                      <option>Enter Your Selection Here</option>
-                      <option>R&D</option>
-                      <option>GLP</option>
-                      <option>GCP</option>
-                      <option>GDP</option>
-                      <option>GEP</option>
-                      <option>ISO 17025</option>
-                      <option>Others</option>
-                    </select>
-                  </div>
-
-                  <div className="group-input">
-                    <label>
-                      <b>If Other</b>
-                    </label>
-                    <textarea name="w3review"></textarea>
-                  </div>
-                </div>
-                <div className="group-input">
-                  <label>
-                    <b>Initial Comments</b>
-                  </label>
-                  <textarea name="w3review"></textarea>
-                </div>
-
-                <div className="group-input">
-                  <label>
-                    <b>Initial Attachment</b>
-                  </label>
-                  <div className="instruction">
-                    Please Attach all relevant or supporting documents
-                  </div>
-
-                  <div className="adddocument-file">
-                    <div className="adddocument-area">
-                      <textarea name="w3review"></textarea>
-                    </div>
-                    <div className="add-button">
-                      <div className="add-file">Add</div>
-                      <input type="file" id="myFile" name="filename" />
-                    </div>
+                    <Grid
+                      label={docFile[0].label}
+                      required={docFile[0].required}
+                      instruction={docFile[0].instruction}
+                      columnList={docFile[0].columnList}
+                    />
                   </div>
                 </div>
               </div>
-            </div>
-          ) : form === " Audit Planning" ? (
-            <div className="document-form">
-              <div className="details-form-data">
-                <div className="form-flex">
-                  <div className="group-input">
-                    <label>
-                      <b>
-                        Audit Schedule Start Date
-                        <span className="required">&nbsp;*</span>
-                      </b>
-                    </label>
-                    <input type="date" placeholder="" />
-                  </div>
-
-                  <div className="group-input">
-                    <label>
-                      <b>
-                        Audit Schedule End Date
-                        <span className="required">&nbsp;*</span>
-                      </b>
-                    </label>
-                    <input type="date" placeholder="" />
-                  </div>
-                </div>
-                <Grid
-                  label={AuditAgenda.label}
-                  required={AuditAgenda.required}
-                  instruction={AuditAgenda.instruction}
-                  columnList={AuditAgenda.columnList}
-                />
-                <div className="form-flex">
-                  <div className="group-input">
-                    <label>
-                      <b>Related Records</b>
-                    </label>
-                    <MultiSelect
-                      options={RelatedRecords}
-                      value={selected}
-                      onChange={setSelected}
-                      labelledBy="Select"
+            ) : form === formList[1] ? (
+              <div className="document-form">
+                <div className="details-form-data">
+                  <div className="form-flex">
+                    <InputDate
+                      label="Audit Schedule Start Date"
+                      isRequired="true"
+                      enableDate="future"
+                    />
+                    <InputDate
+                      label="Audit Schedule End Date"
+                      isRequired="true"
+                      enableDate="future"
                     />
                   </div>
-
+                  <Grid
+                    label={AuditAgenda.label}
+                    required={AuditAgenda.required}
+                    instruction={AuditAgenda.instruction}
+                    columnList={AuditAgenda.columnList}
+                  />
+                  <RelatedRecords
+                    label="Related Records"
+                  />
                   <div className="group-input">
-                    <label>
-                      <b>Function Name</b>
-                    </label>
+                    <label>Function Name</label>
                     <MultiSelect
                       options={FunctionName}
                       value={selected}
@@ -451,411 +472,319 @@ function InternalAudit() {
                       labelledBy="Select"
                     />
                   </div>
-                </div>
-                <div className="group-input">
-                  <label>
-                    <b>
-                      Product/Material Name
-                      <span className="required">&nbsp;*</span>
-                    </b>
-                  </label>
-                  <input type="text" placeholder="" />
-                </div>
-                <div className="group-input">
-                  <label>
-                    <b>
-                      Comments(If Any)
-                      <span className="required">&nbsp;*</span>
-                    </b>
-                  </label>
-                  <textarea name="w3review"></textarea>
+                  <FlexField
+                    label="Comments (if any)"
+                    instruction=""
+                    isRequired="false"
+                  />
                 </div>
               </div>
-            </div>
-          ) : form === "Audit Preparation" ? (
-            <div className="document-form">
-              <div className="details-form-data">
-                <div className="group-input">
-                  <label>
-                    <b>Lead Auditor</b>
-                  </label>
-
-                  <select name="initiated_through" className="form-control">
-                    <option>Enter Your Selection Here</option>
-                    <option>Amit Guru</option>
-                    <option>Amit Patel</option>
-                    <option>Akash Asthana</option>
-                    <option>Madhulika Mishra</option>
-                    <option>Shaleen Mishra</option>
-                  </select>
-                </div>
-
-                <div className="group-input">
-                  <label>
-                    <b>File Attachment</b>
-                  </label>
-                  <div className="instruction">
-                    Please Attach all relevant or supporting documents
+            ) : form === formList[2] ? (
+              <div className="document-form">
+                <div className="details-form-data">
+                  <div className="group-input">
+                    <label>Lead Auditor</label>
+                    <select name="initiated_through">
+                      <option value="">-- Select --</option>
+                      <option value="amit_guru">Amit Guru</option>
+                      <option value="amit_patel">Amit Patel</option>
+                      <option value="akash_asthana">Akash Asthana</option>
+                      <option value="madhulika_mishra">Madhulika Mishra</option>
+                      <option value="shaleen_mishra">Shaleen Mishra</option>
+                    </select>
                   </div>
-
-                  <div className="adddocument-file">
-                    <div className="adddocument-area">
-                      <textarea name="w3review"></textarea>
-                    </div>
-                    <div className="add-button">
-                      <div className="add-file">Add</div>
-                      <input type="file" id="myFile" name="filename" />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="group-input">
                   <Grid
-                    label={ObservationFields[0].label}
-                    required={ObservationFields[0].required}
-                    instruction={ObservationFields[0].instruction}
-                    columnList={ObservationFields[0].columnList}
+                    label={docFile[1].label}
+                    required={docFile[1].required}
+                    instruction={docFile[1].instruction}
+                    columnList={docFile[1].columnList}
                   />
-                </div>
-                <div className="form-flex">
                   <div className="group-input">
-                    <label>
-                      <b>Audit Team</b>
-                    </label>
-                    <MultiSelect
-                      options={AuditTeam}
-                      value={selected}
-                      onChange={setSelected}
-                      labelledBy="Select"
+                    <Grid
+                      label={ObservationFields[0].label}
+                      required={ObservationFields[0].required}
+                      instruction={ObservationFields[0].instruction}
+                      columnList={ObservationFields[0].columnList}
                     />
                   </div>
+                  <div className="form-flex">
+                    <div className="group-input">
+                      <label>Audit Team</label>
+                      <MultiSelect
+                        options={AuditTeam}
+                        value={selected}
+                        onChange={setSelected}
+                        labelledBy="Select"
+                      />
+                    </div>
+                    <div className="group-input">
+                      <label>Auditee</label>
+                      <MultiSelect
+                        options={AuditTeam}
+                        value={selected}
+                        onChange={setSelected}
+                        labelledBy="Select"
+                      />
+                    </div>
+                  </div>
+                  <FlexField
+                    label="External Auditor Details"
+                    instruction=""
+                    isRequired="false"
+                  />
+                  <FlexField
+                    label="External Auditing Agency"
+                    instruction=""
+                    isRequired="false"
+                  />
+                  <FlexField
+                    label="Relevant Guidelines / Industry Standards"
+                    instruction=""
+                    isRequired="false"
+                  />
+                  <FlexField
+                    label="QA Comments"
+                    instruction=""
+                    isRequired="false"
+                  />
+                  <Grid
+                    label={docFile[2].label}
+                    required={docFile[2].required}
+                    instruction={docFile[2].instruction}
+                    columnList={docFile[2].columnList}
+                  />
                   <div className="group-input">
-                    <label>
-                      <b>Auditee</b>
-                    </label>
-                    <MultiSelect
-                      options={AuditTeam}
-                      value={selected}
-                      onChange={setSelected}
-                      labelledBy="Select"
-                    />
+                    <label>Audit Category</label>
+                    <select name="initiated_through">
+                      <option>Enter Your Selection Here</option>
+                      <option>Internal Audit/Self Inspection</option>
+                      <option>Supplier Audit</option>
+                      <option>Regulatory Audit</option>
+                      <option>Consultant Audit</option>
+                    </select>
                   </div>
-                </div>
-                <div className="group-input">
-                  <label>
-                    <b>External Auditor Details</b>
-                  </label>
-                  <textarea name="w3review"></textarea>
-                </div>
-
-                <div className="group-input">
-                  <label>
-                    <b>External Auditing Agency</b>
-                  </label>
-                  <textarea name="w3review"></textarea>
-                </div>
-
-                <div className="group-input">
-                  <label>
-                    <b>Relevant Guidelines / Industry Standards</b>
-                  </label>
-                  <textarea name="w3review"></textarea>
-                </div>
-                <div className="group-input">
-                  <label>
-                    <b>QA Comments</b>
-                  </label>
-                  <textarea name="w3review"></textarea>
-                </div>
-                <div className="group-input">
-                  <label>
-                    <b>Guideline Attachment</b>
-                  </label>
-                  <div className="instruction">
-                    Please Attach all relevant or supporting documents
-                  </div>
-                  <div className="adddocument-file">
-                    <div className="adddocument-area">
-                      <textarea name="w3review"></textarea>
-                    </div>
-                    <div className="add-button">
-                      <div className="add-file">Add</div>
-                      <input type="file" id="myFile" name="filename" />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="group-input">
-                  <label>
-                    <b>Audit Category</b>
-                  </label>
-                  <select name="initiated_through" className="form-control">
-                    <option>Enter Your Selection Here</option>
-                    <option>Internal Audit/Self Inspection</option>
-                    <option>Supplier Audit</option>
-                    <option>Regulatory Audit</option>
-                    <option>Consultant Audit</option>
-                  </select>
-                </div>
-
-                <div className="group-input">
-                  <label>
-                    <b>Supplier/Vendor/Manufacturer Details</b>
-                  </label>
-                  <input type="text" />
-                </div>
-
-                <div className="group-input">
-                  <label>
-                    <b>Supplier/Vendor/Manufacturer Site</b>
-                  </label>
-                  <input type="text" />
-                </div>
-                <div className="group-input">
-                  <label>
-                    <b>Comments</b>
-                  </label>
-                  <textarea name="w3review"></textarea>
-                </div>
-              </div>
-            </div>
-          ) : form === "Audit Execution" ? (
-            <div className="document-form">
-              <div className="details-form-data">
-                <div className="sub-head">Audit Response</div>
-                <div className="form-flex">
                   <div className="group-input">
-                    <label>
-                      <b>Audit Start Date</b>
-                    </label>
-                    <input type="date" placeholder="" />
+                    <label>Supplier/Vendor/Manufacturer Details</label>
+                    <input type="text" />
                   </div>
-
                   <div className="group-input">
-                    <label>
-                      <b>Audit End Date</b>
-                    </label>
-                    <input type="date" placeholder="" />
+                    <label>Supplier/Vendor/Manufacturer Site</label>
+                    <input type="text" />
                   </div>
-                </div>
-
-                <div className="group-input">
-                  <label>
-                    <b>Audit Attachments</b>
-                  </label>
-                  <div className="instruction">
-                    Please Attach all relevant or supporting documents
-                  </div>
-                  <div className="adddocument-file">
-                    <div className="adddocument-area">
-                      <textarea name="w3review"></textarea>
-                    </div>
-                    <div className="add-button">
-                      <div className="add-file">Add</div>
-                      <input type="file" id="myFile" name="filename" />
-                    </div>
-                  </div>
-                </div>
-                <div className="group-input">
-                  <label>
-                    <b>
-                      Audit Comments
-                      <span className="required">&nbsp;*</span>
-                    </b>
-                  </label>
-                  <textarea name="w3review"></textarea>
-                </div>
-              </div>
-            </div>
-          ) : form === "Audit Response & Closure" ? (
-            <div className="document-form">
-              <div className="details-form-data">
-                <div className="sub-head">Audit Response & Closure</div>
-
-                <div className="group-input">
-                  <label>
-                    <b>Remarks</b>
-                  </label>
-                  <textarea name="w3review"></textarea>
-                </div>
-
-                <div className="group-input">
-                  <label>
-                    <b>Reference Record</b>
-                  </label>
-                  <MultiSelect
-                    options={ReferenceRecord}
-                    value={selected}
-                    onChange={setSelected}
-                    labelledBy="Select"
+                  <FlexField
+                    label="Comments"
+                    instruction=""
+                    isRequired="false"
                   />
                 </div>
-                <div className="group-input">
-                  <label>
-                    <b>Report Attachments</b>
-                  </label>
-                  <div className="instruction">
-                    Please Attach all relevant or supporting documents
+              </div>
+            ) : form === formList[3] ? (
+              <div className="document-form">
+                <div className="details-form-data">
+                  <div className="sub-head">Audit Response</div>
+                  <div className="form-flex">
+                    <InputDate
+                      label="Audit Start Date"
+                      isRequired="true"
+                      enableDate="future"
+                    />
+                    <InputDate
+                      label="Audit End Date"
+                      isRequired="true"
+                      enableDate="future"
+                    />
                   </div>
-                  <div className="adddocument-file">
-                    <div className="adddocument-area">
-                      <textarea name="w3review"></textarea>
-                    </div>
-                    <div className="add-button">
-                      <div className="add-file">Add</div>
-                      <input type="file" id="myFile" name="filename" />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="group-input">
-                  <label>
-                    <b>Audit Attachments</b>
-                  </label>
-                  <div className="instruction">
-                    Please Attach all relevant or supporting documents
-                  </div>
-                  <div className="adddocument-file">
-                    <div className="adddocument-area">
-                      <textarea name="w3review"></textarea>
-                    </div>
-                    <div className="add-button">
-                      <div className="add-file">Add</div>
-                      <input type="file" id="myFile" name="filename" />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="group-input">
-                  <label>
-                    <b>Audit Comments</b>
-                  </label>
-                  <textarea></textarea>
-                </div>
-
-                <div className="group-input">
-                  <label>
-                    <b>Due Date Extension Justification</b>
-                  </label>
-                  <div className="instruction">
-                    Please Mention justification if due date is crossed
-                  </div>
-                  <textarea name="w3review"></textarea>
+                  <Grid
+                    label={docFile[3].label}
+                    required={docFile[3].required}
+                    instruction={docFile[3].instruction}
+                    columnList={docFile[3].columnList}
+                  />
+                  <FlexField
+                    label="Audit Comments"
+                    instruction=""
+                    isRequired="false"
+                  />
                 </div>
               </div>
-            </div>
-          ) : form === "Activity Log" ? (
-            <div className="document-form">
-              <div className="details-form-data">
-               
-
-                <div className="form-flex">
-                  <div className="group-input">
-                    <label>
-                      <b>Audit Schedule By</b>
-                    </label>
-                  </div>
-
-                  <div className="group-input">
-                    <label>
-                      <b>
-Audit Schedule On</b>
-                    </label>
-                  </div>
-
-                  <div className="group-input">
-                    <label>
-                      <b>Cancelled By</b>
-                    </label>
-                  </div>
-
-                  <div className="group-input">
-                    <label>
-                      <b>Cancelled On</b>
-                    </label>
-                  </div>
-
-                  <div className="group-input">
-                    <label>
-                      <b>Audit Preparation Completed By</b>
-                    </label>
-                  </div>
-
-                  <div className="group-input">
-                    <label>
-                      <b>Audit Preparation Completed On</b>
-                    </label>
-                  </div>
-
-                  <div className="group-input">
-                    <label>
-                      <b>Audit Mgr.more Info Reqd By</b>
-                    </label>
-                  </div>
-
-                  <div className="group-input">
-                    <label>
-                      <b>Audit Mgr.more Info Reqd On</b>
-                    </label>
-                  </div>
-                  <div className="group-input">
-                    <label>
-                      <b>Audit Observation Submitted By</b>
-                    </label>
-                  </div>
-
-                  <div className="group-input">
-                    <label>
-                      <b>Audit Observation Submitted On</b>
-                    </label>
-                  </div>
-
-                  <div className="group-input">
-                    <label>
-                      <b>Audit Lead More Info Reqd By</b>
-                    </label>
-                  </div>
-
-                  <div className="group-input">
-                    <label>
-                      <b>Audit Lead More Info Reqd On</b>
-                    </label>
-                  </div>
-                  <div className="group-input">
-                    <label>
-                      <b>Audit Response Completed By</b>
-                    </label>
-                  </div>
-
-                  <div className="group-input">
-                    <label>
-                      <b>Audit Response Completed On</b>
-                    </label>
-                  </div>
-                  <div className="group-input">
-                    <label>
-                      <b>Response Feedback VerifiedBy</b>
-                    </label>
-                  </div>
-
-                  <div className="group-input">
-                    <label>
-                      <b>Response Feedback VerifiedOn</b>
-                    </label>
-                  </div>
-
+            ) : form === formList[4] ? (
+              <div className="document-form">
+                <div className="details-form-data">
+                  <div className="sub-head">Audit Response & Closure</div>
+                  <FlexField
+                    label="Remarks"
+                    instruction=""
+                    isRequired="false"
+                  />
+                  <RelatedRecords label="Reference Records" />
+                  <Grid
+                    label={docFile[4].label}
+                    required={docFile[4].required}
+                    instruction={docFile[4].instruction}
+                    columnList={docFile[4].columnList}
+                  />
+                  <Grid
+                    label={docFile[5].label}
+                    required={docFile[5].required}
+                    instruction={docFile[5].instruction}
+                    columnList={docFile[5].columnList}
+                  />
+                  <FlexField
+                    label="Audit Comments"
+                    instruction=""
+                    isRequired="false"
+                  />
+                  <div className="sub-head">Extension Details</div>
+                  <FlexField
+                    label="Due Date Extension Justification"
+                    instruction=""
+                    isRequired="false"
+                  />
                 </div>
               </div>
-            </div>
-          ) : (
-            ""
-          )}
+            ) : form === formList[5] ? (
+              <div className="document-form">
+                <div className="details-form-data">
+                  <div className="activity-log-field">
+                    <div>
+                      <strong>Audit Scheduled By:&nbsp;</strong>Shaleen Mishra
+                    </div>
+                    <div>
+                      <strong>Audit Scheduled On:&nbsp;</strong>15 Jan, 2023
+                      11:00 PM
+                    </div>
+                  </div>
+                  <div className="activity-log-field">
+                    <div>
+                      <strong>Cancelled By:&nbsp;</strong>Shaleen Mishra
+                    </div>
+                    <div>
+                      <strong>Cancelled On:&nbsp;</strong>15 Jan, 2023 11:00 PM
+                    </div>
+                  </div>
+                  <div className="activity-log-field">
+                    <div>
+                      <strong>Audit Preparation Completed By:&nbsp;</strong>
+                      Shaleen Mishra
+                    </div>
+                    <div>
+                      <strong>Audit Preparation Completed On:&nbsp;</strong>15
+                      Jan, 2023 11:00 PM
+                    </div>
+                  </div>
+                  <div className="activity-log-field">
+                    <div>
+                      <strong>
+                        Audit Migration More Info Required By:&nbsp;
+                      </strong>
+                      Shaleen Mishra
+                    </div>
+                    <div>
+                      <strong>
+                        Audit Migration More Info Required On:&nbsp;
+                      </strong>
+                      15 Jan, 2023 11:00 PM
+                    </div>
+                  </div>
+                  <div className="activity-log-field">
+                    <div>
+                      <strong>Audit Observation Submitted By:&nbsp;</strong>
+                      Shaleen Mishra
+                    </div>
+                    <div>
+                      <strong>Audit Observation Submitted On:&nbsp;</strong>15
+                      Jan, 2023 11:00 PM
+                    </div>
+                  </div>
+                  <div className="activity-log-field">
+                    <div>
+                      <strong>Audit Lead More Info Required By:&nbsp;</strong>
+                      Shaleen Mishra
+                    </div>
+                    <div>
+                      <strong>Audit Lead More Info Required On:&nbsp;</strong>15
+                      Jan, 2023 11:00 PM
+                    </div>
+                  </div>
+                  <div className="activity-log-field">
+                    <div>
+                      <strong>Audit Response Completed By:&nbsp;</strong>Shaleen
+                      Mishra
+                    </div>
+                    <div>
+                      <strong>Audit Response Completed On:&nbsp;</strong>15 Jan,
+                      2023 11:00 PM
+                    </div>
+                  </div>
+                  <div className="activity-log-field">
+                    <div>
+                      <strong>Response Feedback Verified By:&nbsp;</strong>
+                      Shaleen Mishra
+                    </div>
+                    <div>
+                      <strong>Response Feedback Verified On:&nbsp;</strong>15
+                      Jan, 2023 11:00 PM
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
+
+          <div
+            className="button-block"
+            style={
+              asideWorkFlow || asideFamilyTree
+                ? { width: "calc(100% - 300px)" }
+                : { width: "100%" }
+            }
+          >
+            <button className="themeBtn">Save</button>
+            <button className="themeBtn">Back</button>
+            <button className="themeBtn">Next</button>
+            <button className="themeBtn">Exit</button>
+          </div>
         </div>
-        <div className="button-block">
-          <button className="themeBtn">Save</button>
-          <button className="themeBtn">Back</button>
-          <button className="themeBtn">Next</button>
-          <button className="themeBtn">Exit</button>
+
+        <div className="sticky-buttons">
+          <div
+            onClick={() => {
+              setAsideWorkFlow(!asideWorkFlow);
+              setAsideFamilyTree(false);
+            }}
+          >
+            <svg
+              width="18"
+              height="24"
+              viewBox="0 0 384 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill="#ffffff"
+                d="M369.9 97.9L286 14C277 5 264.8-.1 252.1-.1H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48V131.9c0-12.7-5.1-25-14.1-34M332.1 128H256V51.9zM48 464V48h160v104c0 13.3 10.7 24 24 24h104v288zm220.1-208c-5.7 0-10.6 4-11.7 9.5c-20.6 97.7-20.4 95.4-21 103.5c-.2-1.2-.4-2.6-.7-4.3c-.8-5.1.3.2-23.6-99.5c-1.3-5.4-6.1-9.2-11.7-9.2h-13.3c-5.5 0-10.3 3.8-11.7 9.1c-24.4 99-24 96.2-24.8 103.7c-.1-1.1-.2-2.5-.5-4.2c-.7-5.2-14.1-73.3-19.1-99c-1.1-5.6-6-9.7-11.8-9.7h-16.8c-7.8 0-13.5 7.3-11.7 14.8c8 32.6 26.7 109.5 33.2 136c1.3 5.4 6.1 9.1 11.7 9.1h25.2c5.5 0 10.3-3.7 11.6-9.1l17.9-71.4c1.5-6.2 2.5-12 3-17.3l2.9 17.3c.1.4 12.6 50.5 17.9 71.4c1.3 5.3 6.1 9.1 11.6 9.1h24.7c5.5 0 10.3-3.7 11.6-9.1c20.8-81.9 30.2-119 34.5-136c1.9-7.6-3.8-14.9-11.6-14.9h-15.8z"
+              />
+            </svg>
+          </div>
+          <div
+            onClick={() => {
+              setAsideFamilyTree(!asideFamilyTree);
+              setAsideWorkFlow(false);
+            }}
+          >
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 512 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill="#ffffff"
+                d="M25.01 49v46H103V49zM153 49v46h78V49zm128 0v46h78V49zm128 0v46h78V49zM55.01 113v64H119v46h18v-46h64v-64h-18v46H73.01v-46zM311 113v64h64v46h18v-46h64v-64h-18v46H329v-46zM89.01 241v46H167v-46zM345 241v46h78v-46zm-226 64v48h128v46h18v-46h128v-48h-18v30H137v-30zm98 112v46h78v-46z"
+              />
+            </svg>
+          </div>
         </div>
       </div>
     </>

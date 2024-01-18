@@ -124,7 +124,7 @@
 .Header_Top .header_inner .right .bellLeft i {
     font-size: 20px;
     font-weight: 900;
-    color: #d87320;
+    color: var(--themeColor);
 }
 
 .Header_Top .header_inner .right .profileRight {

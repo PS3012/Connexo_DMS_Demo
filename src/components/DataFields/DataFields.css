@@ -1,0 +1,53 @@
+/*! ===================================================================== */
+/*! DATA FIELDS CSS */
+/*! ===================================================================== */
+.group-input .input-date {
+    position: relative;
+}
+
+.group-input .input-date input.hide-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
+
+.group-input .input-date input[type="date"]::-webkit-calendar-picker-indicator {
+    width: 100%;
+}
+
+.group-input .table-responsive {
+    overflow-x: hidden;
+    width: 100%;
+}
+
+.group-input table th {
+    width: 80px;
+    background-color: var(--themeColor);
+    color: #ffffff;
+}
+
+.grid-input-field label {
+    padding: 7px 15px;
+    border: 1px dashed grey;
+}
+
+.grid-input-field .instruction{
+ color: #353535;
+}  
+
+.grid-input-field tr:nth-child(2n) {
+    background: #006fc026;
+}
+
+.grid-input-field tr:nth-child(2n) input,
+.grid-input-field tr:nth-child(2n) select,
+.grid-input-field tr:nth-child(2n) textarea {
+    background: transparent !important;
+}
+
+.grid-input-field th div{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}

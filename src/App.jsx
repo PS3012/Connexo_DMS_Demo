@@ -12,6 +12,10 @@ import RiskAssesment from './pages/ConfigForms/RiskAssesment';
 import InternalAudit from './pages/ConfigForms/InternalAudit'
 import ExternalAudit from './pages/ConfigForms/ExternalAudit'
 import RootCauseAnalysis from './pages/ConfigForms/RootCauseAnalysis'
+import InternalAudit from './pages/ConfigForms/InternalAudit'
+import ExternalAudit from './pages/ConfigForms/ExternalAudit'
+import Capa from './pages/ConfigForms/Capa'
+import Audit_Program from './pages/ConfigForms/Audit_Program'
 
 function App() {
   return (
@@ -32,10 +36,13 @@ function App() {
           <Route path='/external-audit' element={<ExternalAudit />} />
           <Route path='/root-cause-analysis' element={<RootCauseAnalysis  />} />
         </Routes>
+          <Route path='/capa' element={<Capa/>} />
+          <Route path='/audit-program' element={<Audit_Program/>} />
+        </Routes> 
       </BrowserRouter>
 
     </>
   )
 }
 
-export default App
+export default App;
