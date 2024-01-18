@@ -1,6 +1,7 @@
+import './Dashboard.css';
 import React, { useState } from 'react'
 import HeaderTop from '../../components/Header/HeaderTop';
-import './Dashboard.css';
+import HeaderBottom from '../../components/Header/HeaderBottom';
 
 function Dashboard() {
     const [form, setForm] = useState("Internal Audit");
@@ -8,6 +9,7 @@ function Dashboard() {
     return (
         <>
             <HeaderTop />
+            <HeaderBottom />
             <>
                 <div id='multitab_header_tabs'>
                     <div
