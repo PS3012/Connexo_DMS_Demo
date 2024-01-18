@@ -1,34 +1,35 @@
 .Header_Bottom {
-    position: relative;
-    padding: 10px 25px;
-    height: 50px;
     width: 100%;
-    background-color: rgb(238, 232, 232);
+    height: 50px;
+    padding: 10px 25px;
+    position: relative;
+    background-color: rgb(82 82 82 / 7%);
+    /* rgb(238, 232, 232);*/
 }
 
 
 .Header_Bottom .headerBottomInner {
-    position: relative;
+    height: 100%;
     display: flex;
+    position: relative;
     align-items: center;
     justify-content: space-between;
-    height: 100%;
 }
 
 
 .Header_Bottom .headerBottomInner .headerBottomLft {
+    width: 30%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 100%;
-    width: 30%;
 }
 
 
 
 .Header_Bottom .headerBottomInner .headerBottomLft .navItem {
-    width: auto;
     gap: 2px;
+    width: auto;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -45,24 +46,23 @@
 .Header_Bottom .headerBottomInner .headerBottomLft .navItem i {
     padding: 5px;
     font-size: 1.2rem;
-    /* border: 1px solid black ; */
 }
 
 
 .Header_Bottom .headerBottomInner .headerBottomRgt {
+    width: 30%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    height: 100%;
-    width: 30%;
 }
 
 
 .Header_Bottom .headerBottomInner .headerBottomRgt button {
-    padding: 8px 15px;
     border: none;
-    box-shadow: 1px 2px 2px 0px #c6adad;
-    font-size: 15px;
-    border-radius: 5px;
     cursor: pointer;
+    font-size: 15px;
+    padding: 8px 15px;
+    border-radius: 5px;
+    box-shadow: 1px 2px 2px 0px #c6adad;
 }

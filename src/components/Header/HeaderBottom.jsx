@@ -9,27 +9,27 @@ function HeaderBottom() {
             <div className="Header_Bottom">
                 <div className="headerBottomInner">
                     <div className="headerBottomLft">
-                        <Link to="#">
+                        <Link to="/desktop">
                             <div className="navItem">
-                                <i class="ri-home-3-fill"></i>
+                                <i className="ri-home-3-fill"></i>
                                 <h3>Desktop</h3>
                             </div>
                         </Link>
                         <Link to="/dashboard">
                             <div className="navItem">
-                                <i class="ri-dashboard-3-fill"></i>
+                                <i className="ri-dashboard-3-fill"></i>
                                 <h3>Dashboard</h3>
                             </div>
                         </Link>
                         <Link to="#">
                             <div className="navItem">
-                                <i class="ri-bar-chart-fill"></i>
+                                <i className="ri-bar-chart-fill"></i>
                                 <h3>Analytics</h3>
                             </div>
                         </Link>
                         <Link to="#">
                             <div className="navItem">
-                                <i class="ri-file-marked-fill"></i>
+                                <i className="ri-file-marked-fill"></i>
                                 <h3>Standards</h3>
                             </div>
                         </Link>
