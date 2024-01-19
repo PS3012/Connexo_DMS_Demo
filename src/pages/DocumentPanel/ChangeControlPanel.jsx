@@ -7,6 +7,7 @@ import InputDate from '../../components/DataFields/InputDate';
 import { CurrentDate } from '../../components/DateReturners';
 import FlexField from '../../components/DataFields/FlexField';
 import RelatedRecords from '../../components/DataFields/RelatedRecords';
+import HeaderBottom from '../../components/Header/HeaderBottom';
 
 function ChangeControlPanel() {
     const formList = ["General Information", "Change Details", "QA Review", "Evaluation", "Additional Information", "Group Comments", "Risk Assessment", "QA Approval Comments", "Change Closure", "Activity Log"]
@@ -195,8 +196,8 @@ function ChangeControlPanel() {
             { id: "2.1.1.8", name: "Remarks", type: "text" },
         ],
     };
-    // -------------------------------
 
+    // ------------------Record Workflow-------------
     const progressItems = [
         { id: 1, name: 'Opened', details: 'Document is opened at 10 Jan, 2023 11:12PM' },
         { id: 2, name: 'HOD Review', details: 'Action Item child can be created at this stage.' },
@@ -244,75 +245,74 @@ function ChangeControlPanel() {
     function removeProgress(removeEle) {
         setProgressArray(progressArray.filter((item) => !removeEle.includes(item)));
     }
+
     return (
         <>
-            <div id="config-form-document-page">
+            <HeaderTop />
+            <HeaderBottom />
+            <div id="document-panel">
 
-                <HeaderTop />
 
                 <div className="top-block">
-                    <div><strong> Record Name:&nbsp;</strong>Change Control</div>
+                    <div><strong> Record Name:&nbsp;</strong>Change Control Panel</div>
                     <div><strong> Site:&nbsp;</strong>Jordan</div>
                     <div><strong> Current Status:&nbsp;</strong>Under Initiation</div>
                     <div><strong> Initiated By:&nbsp;</strong>Shaleen Mishra</div>
                 </div>
 
-                <div id="document-panel">
-                    <div className="inner-block">
+                <div className="inner-block">
 
-                        <div className="workflow-bar">
-                            <div className="workflow-top-block">
-                                <div className="head">Record Workflow</div>
-                                <div className="btn-bar">
-                                    <button className="themeBtn">Audit Trail</button>
-                                    <button className="themeBtn">Print</button>
-                                    {progressArray.length === 1 &&
-                                        <>
-                                            <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[1].name])}>Submit</button>
-                                            <button className="themeBtn" onClick={() => handleESignature('closed', [])}>Cancel</button>
-                                        </>
-                                    }
-                                    {progressArray.length === 2 &&
-                                        <>
-                                            <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[2].name])}>HOD Review Complete</button>
-                                            <button className="themeBtn" onClick={() => handleESignature('remove', [progressItems[1].name])}>More Information Required</button>
-                                        </>
-                                    }
-                                    {progressArray.length === 3 &&
-                                        <>
-                                            <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[3].name])}>Send to CFT Reviewers</button>
-                                            <button className="themeBtn" onClick={() => handleESignature('remove', [progressItems[2].name])}>More Information Required</button>
-                                            <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[3].name, progressItems[4].name])}>CFT Review Not Required</button>
-                                        </>
-                                    }
-                                    {progressArray.length === 4 &&
-                                        <>
-                                            <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[4].name])}>Review Complete</button>
-                                            <button className="themeBtn" onClick={() => handleESignature('remove', [progressItems[2].name, progressItems[3].name])}>Request More Info</button>
-                                        </>
-                                    }
-                                    {progressArray.length === 5 &&
-                                        <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[5].name])}>Implemented</button>
-                                    }
-                                    <button className="themeBtn">Exit</button>
-                                </div>
-                            </div>
-                            <div className="progress-block">
-                                {(progressArray === 'Closed-Cancelled') ?
+                    <div className="workflow-bar">
+                        <div className="workflow-top-block">
+                            <div className="head">Record Workflow</div>
+                            <div className="btn-bar">
+                                <button className="themeBtn">Audit Trail</button>
+                                <button className="themeBtn">Print</button>
+                                {progressArray.length === 1 &&
                                     <>
-                                        <div className="active">Opened</div>
-                                        <div className="active closed">Closed-Cancelled</div>
+                                        <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[1].name])}>Submit</button>
+                                        <button className="themeBtn" onClick={() => handleESignature('closed', [])}>Cancel</button>
                                     </>
-                                    : progressItems.map((item) => (
-                                        <div key={item.id} className={progressArray.includes(item.name) ? 'active' : ''}>
-                                            {item.name}
-                                            {item.details && <div className="details">{item.details}</div>}
-                                        </div>
-                                    ))
                                 }
+                                {progressArray.length === 2 &&
+                                    <>
+                                        <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[2].name])}>HOD Review Complete</button>
+                                        <button className="themeBtn" onClick={() => handleESignature('remove', [progressItems[1].name])}>More Information Required</button>
+                                    </>
+                                }
+                                {progressArray.length === 3 &&
+                                    <>
+                                        <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[3].name])}>Send to CFT Reviewers</button>
+                                        <button className="themeBtn" onClick={() => handleESignature('remove', [progressItems[2].name])}>More Information Required</button>
+                                        <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[3].name, progressItems[4].name])}>CFT Review Not Required</button>
+                                    </>
+                                }
+                                {progressArray.length === 4 &&
+                                    <>
+                                        <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[4].name])}>Review Complete</button>
+                                        <button className="themeBtn" onClick={() => handleESignature('remove', [progressItems[2].name, progressItems[3].name])}>Request More Info</button>
+                                    </>
+                                }
+                                {progressArray.length === 5 &&
+                                    <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[5].name])}>Implemented</button>
+                                }
+                                <button className="themeBtn">Exit</button>
                             </div>
                         </div>
-
+                        <div className="progress-block">
+                            {(progressArray === 'Closed-Cancelled') ?
+                                <>
+                                    <div className="active">Opened</div>
+                                    <div className="active closed">Closed-Cancelled</div>
+                                </>
+                                : progressItems.map((item) => (
+                                    <div key={item.id} className={progressArray.includes(item.name) ? 'active' : ''}>
+                                        {item.name}
+                                        {item.details && <div className="details">{item.details}</div>}
+                                    </div>
+                                ))
+                            }
+                        </div>
                     </div>
 
                 </div>
@@ -1086,6 +1086,7 @@ function ChangeControlPanel() {
                 </div>
 
             </div>
+
         </>
     )
 }

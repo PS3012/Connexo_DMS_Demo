@@ -19,6 +19,12 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import ManagementReview from './pages/ConfigForms/ManagementReview';
 import ChildExtension from './pages/ConfigForms/ChildExtension'
 import ChangeControlPanel from './pages/DocumentPanel/ChangeControlPanel'
+import DeviationPanel from './pages/DocumentPanel/DeviationPanel'
+import LabIncidentPanel from './pages/DocumentPanel/LabIncidentPanel'
+import RootCauseAnalysisPanel from './pages/DocumentPanel/RootCauseAnalysisPanel'
+import RiskAssesmentPanel from './pages/DocumentPanel/RiskAssesmentPanel'
+import ManagementReviewPanel from './pages/DocumentPanel/ManagementReviewPanel'
+import ChildExtentionPanel from './pages/DocumentPanel/ChildExtentionPanel'
 
 function App() {
   return (
@@ -45,6 +51,12 @@ function App() {
           <Route path='/change-control-form' element={<ChangeControlForm />} />
           <Route path='/child-extention' element={<ChildExtension />} />
           <Route path='/ChangeControl-panel' element={<ChangeControlPanel />} />
+          <Route path='/deviation-panel' element={<DeviationPanel />} />
+          <Route path='/labincident-panel' element={<LabIncidentPanel />} />
+          <Route path='/root-cause-analysis-panel' element={<RootCauseAnalysisPanel />} />
+          <Route path='/riskassesment-panel' element={<RiskAssesmentPanel />} />
+          <Route path='/managementReview-panel' element={<ManagementReviewPanel />} />
+          <Route path='/childextention-panel' element={<ChildExtentionPanel />} />
         </Routes>
       </BrowserRouter>
 
