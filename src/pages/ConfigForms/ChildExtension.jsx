@@ -58,32 +58,7 @@ function ChildExtention() {
   //   { label: "KSA/IA/2024/0008", value: "KSA/IA/2024/0008" },
   // ];
   const ObservationFields = [
-    {
-      label: "Observation Fields ",
-      instruction: "Please Attach all relevant or supporting documents",
-      required: true,
-      columnList: [
-        { id: "2.1.1.1", name: "Observation ID", type: "text" },
-        { id: "2.1.1.2", name: "Date", type: "date" },
-        { id: "2.1.1.3", name: "Auditor", type: "select" },
-        { id: "2.1.1.4", name: "Auditee", type: "select" },
-        { id: "2.1.1.5", name: "Observation Description", type: "text" },
-        { id: "2.1.1.6", name: "Severity Level", type: "text" },
-        { id: "2.1.1.7", name: "Area/process", type: "text" },
-        { id: "2.1.1.8", name: "Observation Category", type: "text" },
-        { id: "2.1.1.9", name: "CAPA Required", type: "select" },
-        { id: "2.1.1.10", name: "Auditee Response", type: "text" },
-        { id: "2.1.1.11", name: "Auditor Review on Response", type: "text" },
-        { id: "2.1.1.12", name: "QA Comments", type: "text" },
-        { id: "2.1.1.13", name: "CAPA Details", type: "text" },
-        { id: "2.1.1.14", name: "CAPA Due Date", type: "date" },
-        { id: "2.1.1.15", name: "CAPA Owner", type: "select" },
-        { id: "2.1.1.16", name: "Action Taken", type: "text" },
-        { id: "2.1.1.17", name: "	CAPA Completion Date", type: "date" },
-        { id: "2.1.1.18", name: "Status", type: "text" },
-        { id: "2.1.1.19", name: "Remarks", type: "text" },
-      ],
-    },
+    
     {
       label: "QA Attachments",
       instruction: "Please Attach all relevant or supporting documents",
