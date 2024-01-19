@@ -312,7 +312,7 @@ function ChangeControlForm() {
                                         </div>
                                         <div className="group-input">
                                             <label>Date of Initiation</label>
-                                            <input type="" value={CurrentDate()} disabled />
+                                            <input type="text" value={CurrentDate()} disabled />
                                         </div>
                                         <div className="group-input">
                                             <label>

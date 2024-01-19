@@ -7,22 +7,19 @@ import DocumentForm from './pages/ConfigForms/DocumentForm'
 import LabIncident from './pages/ConfigForms/LabIncident'
 import AddQuestion from './pages/AddQuestion/AddQuestion';
 import ManageQuiz from './pages/ManageQuiz/ManageQuiz';
-import RiskAssesment from './pages/ConfigForms/RiskAssesment';
-// import TTS from './pages/TTS/TTS';
-import InternalAudit from './pages/ConfigForms/InternalAudit'
-import ExternalAudit from './pages/ConfigForms/ExternalAudit'
+import RiskAssesment from './pages/ConfigForms/RiskAssesment'
 import RootCauseAnalysis from './pages/ConfigForms/RootCauseAnalysis'
 import InternalAudit from './pages/ConfigForms/InternalAudit'
 import ExternalAudit from './pages/ConfigForms/ExternalAudit'
 import Capa from './pages/ConfigForms/Capa'
 import Audit_Program from './pages/ConfigForms/Audit_Program'
+import Deviation from './pages/ConfigForms/Deviation'
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
-          {/* <Route path='/test' element={<TTS />} /> */}
           <Route path='/question' element={<Question />} />
           <Route path='/addQuestion' element={<AddQuestion />} />
           <Route path='/manageQuiz' element={<ManageQuiz />} />
@@ -35,9 +32,9 @@ function App() {
           <Route path='/internal-audit' element={<InternalAudit />} />
           <Route path='/external-audit' element={<ExternalAudit />} />
           <Route path='/root-cause-analysis' element={<RootCauseAnalysis  />} />
-        </Routes>
           <Route path='/capa' element={<Capa/>} />
           <Route path='/audit-program' element={<Audit_Program/>} />
+          <Route path='/deviation' element={<Deviation/>} />
         </Routes> 
       </BrowserRouter>
 

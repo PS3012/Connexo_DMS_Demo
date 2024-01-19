@@ -275,7 +275,7 @@
 #config-form-document-page .details-form-data .text-Annexure{
     padding: 10px;
 }
-#config-form-document-page .adddocument-file{
+#config-form-document-page .adddocument-file,
 #config-form-document-page .adddocument-file {
     display: grid;
     grid-template-columns: 1fr 150px;
