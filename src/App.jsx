@@ -7,6 +7,9 @@ import InternalAudit from './pages/ConfigForms/InternalAudit'
 import ExternalAudit from './pages/ConfigForms/ExternalAudit'
 import Capa from './pages/ConfigForms/Capa'
 import Audit_Program from './pages/ConfigForms/Audit_Program'
+import ActionItems from './pages/ConfigForms/ActionItems'
+import Observation from './pages/ConfigForms/Observation'
+import EffectivenessCheck from './pages/ConfigForms/EffectivenessCheck'
 
 function App() {
   localStorage.setItem('username', 'amit.patel@connexo.io')
@@ -24,6 +27,9 @@ function App() {
           <Route path='/external-audit' element={<ExternalAudit />} />
           <Route path='/capa' element={<Capa/>} />
           <Route path='/audit-program' element={<Audit_Program/>} />
+          <Route path='/action-items' element={<ActionItems/>} />
+          <Route path='/observation' element={<Observation/>} />
+          <Route path='/effectiveness' element={<EffectivenessCheck/>} />
         </Routes> 
       </BrowserRouter>
 

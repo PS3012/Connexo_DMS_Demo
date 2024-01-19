@@ -685,21 +685,21 @@ function Capa() {
                                   </div>
                                 </div>
 
-                                {selectedForm === 'corrective_action' || selectedForm === 'corrective_preventive_action' ? (
+                                {(selectedForm === 'corrective_action' || selectedForm === 'corrective_preventive_action') && (
                                 <FlexField
                                   label="Corrective Action"
                                   instruction=""
                                   isRequired="false"
                                 />
-                                ) : ''}
+                                )}
 
-                               {selectedForm === 'preventive_action' || selectedForm === 'corrective_preventive_action' ? (
+                               {(selectedForm === 'preventive_action' || selectedForm === 'corrective_preventive_action') && (
                                 <FlexField
                                   label="Preventive Action"
                                   instruction=""
                                   isRequired="false"
                                 />
-                               ) : ''}
+                               )}
 
                               
                                 <FlexField
