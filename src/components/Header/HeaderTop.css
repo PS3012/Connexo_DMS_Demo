@@ -97,7 +97,7 @@
 
 .Header_Top .header_inner .center input:focus {
     outline: none;
-    border: 2px solid #207ec6;
+    /* border: 2px solid #207ec6; */
     transition: 1s all cubic-bezier(0.19, 1, 0.22, 1);
 }
 
