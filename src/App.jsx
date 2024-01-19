@@ -18,6 +18,7 @@ import Desktop from './pages/Desktop/Desktop';
 import Dashboard from './pages/Dashboard/Dashboard';
 import ManagementReview from './pages/ConfigForms/ManagementReview';
 import ChildExtension from './pages/ConfigForms/ChildExtension'
+import ChangeControlPanel from './pages/DocumentPanel/ChangeControlPanel'
 
 function App() {
   return (
@@ -36,14 +37,15 @@ function App() {
           <Route path='/lab-incident-form' element={<LabIncident />} />
           <Route path='/internal-audit' element={<InternalAudit />} />
           <Route path='/external-audit' element={<ExternalAudit />} />
-          <Route path='/root-cause-analysis' element={<RootCauseAnalysis  />} />
-          <Route path='/capa' element={<Capa/>} />
-          <Route path='/audit-program' element={<Audit_Program/>} />
-          <Route path='/deviation' element={<Deviation/>} />
+          <Route path='/root-cause-analysis' element={<RootCauseAnalysis />} />
+          <Route path='/capa' element={<Capa />} />
+          <Route path='/audit-program' element={<Audit_Program />} />
+          <Route path='/deviation' element={<Deviation />} />
           <Route path='/management-review' element={<ManagementReview />} />
           <Route path='/change-control-form' element={<ChangeControlForm />} />
           <Route path='/child-extention' element={<ChildExtension />} />
-        </Routes> 
+          <Route path='/ChangeControl-panel' element={<ChangeControlPanel />} />
+        </Routes>
       </BrowserRouter>
 
     </>
