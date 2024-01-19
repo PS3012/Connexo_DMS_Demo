@@ -1,0 +1,24 @@
+.modal-middle .bullets{
+    padding-left: 30px;
+}
+
+
+.modal-middle .bullets>ul{
+    padding-left: 10px;
+    list-style-type: disc;
+}
+
+.modal-middle .bullets>ul>li{
+    padding-left: 10px;
+    margin-bottom: 5px;
+}
+
+.modal-middle .bullets>ul>li>ol{
+    padding-top: 10px;
+    padding-left: 10px;
+
+}
+
+.modal-middle .bullets>ul>li>ol>li{
+    margin-bottom: 5px;
+}
