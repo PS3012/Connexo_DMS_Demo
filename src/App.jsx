@@ -5,6 +5,7 @@ import Question from './pages/Question/Question'
 import ChangeControlForm from './pages/ConfigForms/ChangeControlForm'
 import InternalAudit from './pages/ConfigForms/InternalAudit'
 import ExternalAudit from './pages/ConfigForms/ExternalAudit'
+import ChildExtension from './pages/ConfigForms/ChildExtension'
 
 function App() {
   localStorage.setItem('username', 'amit.patel@connexo.io')
@@ -20,6 +21,7 @@ function App() {
           <Route path='/training-management-system' element={<TrainingManagementSystem />} />
           <Route path='/internal-audit' element={<InternalAudit />} />
           <Route path='/external-audit' element={<ExternalAudit />} />
+          <Route path='/child-extention' element={<ChildExtension />} />
         </Routes> 
       </BrowserRouter>
 
