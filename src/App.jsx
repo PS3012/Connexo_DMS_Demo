@@ -17,6 +17,7 @@ import Deviation from './pages/ConfigForms/Deviation'
 import Desktop from './pages/Desktop/Desktop';
 import Dashboard from './pages/Dashboard/Dashboard';
 import ManagementReview from './pages/ConfigForms/ManagementReview';
+import ChildExtension from './pages/ConfigForms/ChildExtension'
 
 function App() {
   return (
@@ -41,7 +42,8 @@ function App() {
           <Route path='/deviation' element={<Deviation/>} />
           <Route path='/management-review' element={<ManagementReview />} />
           <Route path='/change-control-form' element={<ChangeControlForm />} />
-        </Routes>
+          <Route path='/child-extention' element={<ChildExtension />} />
+        </Routes> 
       </BrowserRouter>
 
     </>
