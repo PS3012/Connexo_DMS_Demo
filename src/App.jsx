@@ -21,6 +21,12 @@ import Desktop from './pages/Desktop/Desktop';
 import Dashboard from './pages/Dashboard/Dashboard';
 import ManagementReview from './pages/ConfigForms/ManagementReview';
 import ChildExtension from './pages/ConfigForms/ChildExtension'
+import ActionItemsPanel from './pages/DocumentPanel/ActionItemsPanel'
+import AuditProgramPanel from './pages/DocumentPanel/AuditProgramPanel'
+import CapaPanel from './pages/DocumentPanel/CapaPanel'
+import EffectivenessCheckPanel from './pages/DocumentPanel/EffectivenessCheckPanel'
+import ObservationPanel from './pages/DocumentPanel/ObservationPanel'
+import Analytics from './pages/Analytics/Analytics'
 
 function App() {
   return (
@@ -29,6 +35,7 @@ function App() {
         <Routes>
           <Route path='/desktop' element={<Desktop />} />
           <Route path='/dashboard' element={<Dashboard />} />
+          <Route path='/analytics' element={<Analytics/>} />
           <Route path='/question' element={<Question />} />
           <Route path='/manageQuiz' element={<ManageQuiz />} />
           <Route path='/addQuestion' element={<AddQuestion />} />
@@ -49,6 +56,12 @@ function App() {
           <Route path='/management-review' element={<ManagementReview />} />
           <Route path='/change-control-form' element={<ChangeControlForm />} />
           <Route path='/child-extention' element={<ChildExtension />} />
+          <Route path='/actionItems-Panel' element={<ActionItemsPanel/>} />
+          <Route path='/auditProgram-Panel' element={<AuditProgramPanel/>} />
+          <Route path='/capa-Panel' element={<CapaPanel/>} />
+          <Route path='/effectivenessCheckPanel' element={<EffectivenessCheckPanel/>} />
+          <Route path='/observationPanel' element={<ObservationPanel/>} />
+     
         </Routes> 
       </BrowserRouter>
 

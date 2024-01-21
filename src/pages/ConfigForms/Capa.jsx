@@ -1,6 +1,5 @@
 import { useState, useReducer } from "react";
 import "./ConfigForms.css";
-import { MultiSelect } from "react-multi-select-component";
 import HeaderTop from "../../components/Header/HeaderTop";
 import Grid from "../../components/DataFields/Grid";
 import InputDate from "../../components/DataFields/InputDate";
@@ -9,9 +8,7 @@ import RelatedRecords from "../../components/DataFields/RelatedRecords";
 
 function Capa() {
   const [form, setForm] = useState("General Information");
-  const [typeOfChange, setTypeOfChange] = useState(0);
   const [code, setCode] = useState("");
-  const [selected, setSelected] = useState([]);
   const [asideWorkFlow, setAsideWorkFlow] = useState(false);
   const [asideFamilyTree, setAsideFamilyTree] = useState(false);
   const [groupComment, setGroupComment] = useState(0);

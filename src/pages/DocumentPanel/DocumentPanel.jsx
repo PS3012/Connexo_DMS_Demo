@@ -69,7 +69,7 @@ function DocumentPanel() {
                 <div className="inner-block">
 
                     <div className="workflow-bar">
-                        <div className="top-block">
+                        <div className="workflow-top-block">
                             <div className="head">Record Workflow</div>
                             <div className="btn-bar">
                                 <button className="themeBtn">Audit Trail</button>

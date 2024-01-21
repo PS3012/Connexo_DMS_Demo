@@ -21,7 +21,7 @@ function HeaderBottom() {
                                 <h3>Dashboard</h3>
                             </div>
                         </Link>
-                        <Link to="#">
+                        <Link to="/analytics">
                             <div className="navItem">
                                 <i className="ri-bar-chart-fill"></i>
                                 <h3>Analytics</h3>
