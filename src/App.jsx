@@ -27,32 +27,21 @@ import RootCauseAnalysisPanel from './pages/DocumentPanel/RootCauseAnalysisPanel
 import RiskAssesmentPanel from './pages/DocumentPanel/RiskAssesmentPanel'
 import ManagementReviewPanel from './pages/DocumentPanel/ManagementReviewPanel'
 import ChildExtentionPanel from './pages/DocumentPanel/ChildExtentionPanel'
+import ActionItems from './pages/ConfigForms/ActionItems'
+import Observation from './pages/ConfigForms/Observation'
+import EffectivenessCheck from './pages/ConfigForms/EffectivenessCheck'
+import ActionItemsPanel from './pages/DocumentPanel/ActionItemsPanel'
+import AuditProgramPanel from './pages/DocumentPanel/AuditProgramPanel'
+import CapaPanel from './pages/DocumentPanel/CapaPanel'
+import EffectivenessCheckPanel from './pages/DocumentPanel/EffectivenessCheckPanel'
+import ObservationPanel from './pages/DocumentPanel/ObservationPanel'
+import Analytics from './pages/Analytics/Analytics'
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/desktop" element={<Desktop />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/question" element={<Question />} />
-          <Route path="/manageQuiz" element={<ManageQuiz />} />
-          <Route path="/addQuestion" element={<AddQuestion />} />
-          <Route path="/risk-assesment" element={<RiskAssesment />} />
-          <Route path="/document-panel" element={<DocumentPanel />} />
-          <Route path="/training-management-system" element={<TrainingManagementSystem />} />
-          <Route path="/document-form" element={<DocumentForm />} />
-          <Route path="/lab-incident-form" element={<LabIncident />} />
-          <Route path="/internal-audit" element={<InternalAudit />} />
-          <Route path="/external-audit" element={<ExternalAudit />} />
-          <Route path="/root-cause-analysis" element={<RootCauseAnalysis />} />
-          <Route path="/capa" element={<Capa />} />
-          <Route path="/audit-program" element={<Audit_Program />} />
-          <Route path="/deviation" element={<Deviation />} />
-          <Route path="/management-review" element={<ManagementReview />} />
-          <Route path="/change-control-form" element={<ChangeControlForm />} />
-          <Route path="/child-extention" element={<ChildExtension />} />
-          <Route path="/ChangeControl-panel" element={<ChangeControlPanel />} />
           <Route path="/InternAudit-panel" element={<InternalAuditPanel />} />
           <Route path="ExternalAudit-panel" element={<ExternalAuditPanel />} />
           <Route path='/ChangeControl-panel' element={<ChangeControlPanel />} />
@@ -62,6 +51,35 @@ function App() {
           <Route path='/riskassesment-panel' element={<RiskAssesmentPanel />} />
           <Route path='/managementReview-panel' element={<ManagementReviewPanel />} />
           <Route path='/childextention-panel' element={<ChildExtentionPanel />} />
+          <Route path='/desktop' element={<Desktop />} />
+          <Route path='/dashboard' element={<Dashboard />} />
+          <Route path='/analytics' element={<Analytics />} />
+          <Route path='/question' element={<Question />} />
+          <Route path='/manageQuiz' element={<ManageQuiz />} />
+          <Route path='/addQuestion' element={<AddQuestion />} />
+          <Route path='/risk-assesment' element={<RiskAssesment />} />
+          <Route path='/document-panel' element={<DocumentPanel />} />
+          <Route path='/training-management-system' element={<TrainingManagementSystem />} />
+          <Route path='/document-form' element={<DocumentForm />} />
+          <Route path='/lab-incident-form' element={<LabIncident />} />
+          <Route path='/internal-audit' element={<InternalAudit />} />
+          <Route path='/external-audit' element={<ExternalAudit />} />
+          <Route path='/root-cause-analysis' element={<RootCauseAnalysis />} />
+          <Route path='/capa' element={<Capa />} />
+          <Route path='/audit-program' element={<Audit_Program />} />
+          <Route path='/action-items' element={<ActionItems />} />
+          <Route path='/observation' element={<Observation />} />
+          <Route path='/effectiveness' element={<EffectivenessCheck />} />
+          <Route path='/deviation' element={<Deviation />} />
+          <Route path='/management-review' element={<ManagementReview />} />
+          <Route path='/change-control-form' element={<ChangeControlForm />} />
+          <Route path='/child-extention' element={<ChildExtension />} />
+          <Route path='/actionItems-Panel' element={<ActionItemsPanel />} />
+          <Route path='/auditProgram-Panel' element={<AuditProgramPanel />} />
+          <Route path='/capa-Panel' element={<CapaPanel />} />
+          <Route path='/effectivenessCheckPanel' element={<EffectivenessCheckPanel />} />
+          <Route path='/observationPanel' element={<ObservationPanel />} />
+
         </Routes>
       </BrowserRouter>
     </>
