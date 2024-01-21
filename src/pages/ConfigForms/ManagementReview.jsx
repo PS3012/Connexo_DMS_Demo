@@ -10,6 +10,7 @@ import ReleaseOfProduct from "../../components/Modals/InstructionModal/ReleaseOf
 import ControlofNonConforming from "../../components/Modals/InstructionModal/ControlofNonConforming";
 import InputDate from "../../components/DataFields/InputDate";
 import FlexField from "../../components/DataFields/FlexField";
+import PrintPDF from "../../components/PrintPDF";
 
 function ManagementReview() {
     const [form, setForm] = useState("General Information");
@@ -111,7 +112,6 @@ function ManagementReview() {
             ],
         },
     ];
-
 
 
     return (
@@ -230,6 +230,7 @@ function ManagementReview() {
                                                 </b>
                                             </label>
                                             <input type="text" />
+                                            {/* <PrintPDF /> */}
                                         </div>
                                         <div className="group-input">
                                             <label>
@@ -424,7 +425,7 @@ function ManagementReview() {
                                     {modal === "Operations" ? (
                                         < OperationModal closeModal={() => { setModal(" ") }} />
                                     ) : ""}
-                                    
+
                                     <FlexField
                                         label="Operations"
                                         instruction="(Launch Instruction)"
@@ -434,58 +435,63 @@ function ManagementReview() {
                                     {modal === "Requirements for Products and Services" ? (
                                         < RequirementsforProductModal closeModal={() => { setModal(" ") }} />
                                     ) : ""}
-                                    
+
                                     <FlexField
                                         label="Requirements for Products and Services"
-                                        instruction=""
+                                        instruction="(Launch Instruction)"
                                         isRequired="false"
                                         modal="Requirements for Products and Services"
                                     />
                                     {modal === "Design and Development of Products and Services" ? (
                                         < DesignnDevelopment closeModal={() => { setModal(" ") }} />
                                     ) : ""}
-                                    
+
                                     <FlexField
                                         label="Design and Development of Products and Services"
-                                        instruction=""
+                                        instruction="(Launch Instruction)"
                                         isRequired="false"
+                                        modal="Design and Development of Products and Services"
                                     />
                                     {modal === "Control of Externally Provided Processes, Products and Services" ? (
                                         < ControlofExternally closeModal={() => { setModal(" ") }} />
                                     ) : ""}
-                                    
+
                                     <FlexField
                                         label="Control of Externally Provided Processes, Products and Services"
-                                        instruction=""
+                                        instruction="(Launch Instruction)"
                                         isRequired="false"
+                                        modal="Control of Externally Provided Processes, Products and Services"
                                     />
                                     {modal === "Production and Service Provision" ? (
                                         < ProductionnService closeModal={() => { setModal(" ") }} />
                                     ) : ""}
-                                    
+
                                     <FlexField
                                         label="Production and Service Provision"
-                                        instruction=""
+                                        instruction="(Launch Instruction)"
                                         isRequired="false"
+                                        modal="Production and Service Provision"
                                     />
 
                                     {modal === "Release of Products and Services" ? (
                                         < ReleaseOfProduct closeModal={() => { setModal(" ") }} />
                                     ) : ""}
-                                    
+
                                     <FlexField
                                         label="Release of Products and Services"
-                                        instruction=""
+                                        instruction="(Launch Instruction)"
                                         isRequired="false"
+                                        modal="Release of Products and Services"
                                     />
                                     {modal === "Control of Non-conforming Outputs" ? (
                                         < ControlofNonConforming closeModal={() => { setModal(" ") }} />
                                     ) : ""}
-                                    
+
                                     <FlexField
                                         label="Control of Non-conforming Outputs"
-                                        instruction=""
+                                        instruction="(Launch Instruction)"
                                         isRequired="false"
+                                        modal="Control of Non-conforming Outputs"
                                     />
                                     <div className="group-input">
                                         <Grid
