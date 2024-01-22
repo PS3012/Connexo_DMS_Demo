@@ -10,6 +10,9 @@ import "./ConfigForms.css";
 
 function ExternalAudit() {
   const formList = ["General Information", "Audit Planning", "Audit Preparation", "Audit Execution", "Audit Response & Closure", "Activity Log"]
+  const site = localStorage.getItem("site")
+  const currentDate = new Date()
+  const currentYear = currentDate.getFullYear()
   const [externalAudit, setExternalAudit] = useReducer((prev, next) => ({
     ...prev, ...next
   }), {
@@ -207,7 +210,7 @@ function ExternalAudit() {
 
           <div className="top-block">
             <div><strong> Record Name:&nbsp;</strong>External Audit</div>
-            <div><strong> Site:&nbsp;</strong>EHS-North America</div>
+            <div><strong> Site:&nbsp;</strong>{site}</div>
             <div><strong> Current Status:&nbsp;</strong>Under Initiation</div>
             <div><strong> Initiated By:&nbsp;</strong>Shaleen Mishra</div>
           </div>
@@ -225,7 +228,7 @@ function ExternalAudit() {
                   <div className="form-flex">
                     <div className="group-input">
                       <label>Record Number</label>
-                      <input type="text" value="Jordan/EA/2024/00000001" disabled />
+                      <input type="text" value={`${site}/IA/${currentYear}/00000001`} disabled />
                     </div>
                     <div className="group-input">
                       <label>Division</label>

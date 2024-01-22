@@ -6,37 +6,30 @@ import InputDate from "../../components/DataFields/InputDate";
 import FlexField from "../../components/DataFields/FlexField";
 import RelatedRecords from "../../components/DataFields/RelatedRecords";
 
-function Capa() {
+function CAPA() {
   const [form, setForm] = useState("General Information");
   const [code, setCode] = useState("");
   const [asideWorkFlow, setAsideWorkFlow] = useState(false);
   const [asideFamilyTree, setAsideFamilyTree] = useState(false);
   const [groupComment, setGroupComment] = useState(0);
-
   const [changeControl, setChangeControl] = useReducer(
     (prev, next) => ({
       ...prev,
       ...next,
-    }),
-    {
+    }), {
       initiatorGroup: "",
       initiatedThrough: "",
       typeOfAudit: "",
     }
   );
-
-  const [option, setOption] = useState(""); // State to track the selected option
-
+  const [option, setOption] = useState("");
   const handleOptionChange = (event) => {
-    setOption(event.target.value); // Update the state when the option is changed
+    setOption(event.target.value);
   };
-
-  const [selectedForm, setSelectedForm] = useState(''); // State to track the selected form
-
+  const [selectedForm, setSelectedForm] = useState(''); 
   const handleFormChange = (event) => {
-    setSelectedForm(event.target.value); // Update the state when the form is changed
+    setSelectedForm(event.target.value);
   };
-
   const docFile = [
     {
       label: "CAPA Attachments",
@@ -59,7 +52,6 @@ function Capa() {
       ],
     },
   ];
-
   const docDetails = {
     label: "Product Details",
     instruction: <div></div>,
@@ -102,7 +94,6 @@ function Capa() {
       },
     ],
   };
-
   const matDetails = {
     label: "Materials Details",
     instruction: <div></div>,
@@ -145,7 +136,6 @@ function Capa() {
       },
     ],
   };
-
   const equiDetails = {
     label: "Equipment/Instruments Details",
     instruction: <div></div>,
@@ -964,4 +954,4 @@ function Capa() {
   );
 }
 
-export default Capa;
+export default CAPA;

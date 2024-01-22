@@ -1,39 +1,32 @@
-import { useReducer, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import HeaderTop from '../../components/Header/HeaderTop'
 import HeaderBottom from '../../components/Header/HeaderBottom'
 import ESignatureModal from '../../components/Modals/ESignatureModal/ESignatureModal';
 import { MultiSelect } from "react-multi-select-component";
 import Grid from "../../components/DataFields/Grid";
-import { Editor } from "@tinymce/tinymce-react";
-import { CurrentDate } from "../../components/DateReturners";
+import { CurrentDate, convertDateFormat } from "../../components/DateReturners";
 import InputDate from "../../components/DataFields/InputDate";
 import './DocumentPanel.css'
+import FlexField from "../../components/DataFields/FlexField";
 
 function DocumentPanel() {
-    const formList = ["Document Information", "Training Information", "Document Content", "Annexure", "Distribution & Retrieval", "Print & Download Control", "Signature"]
-    const [changeControl, setChangeControl] = useReducer((prev, next) => ({
+    const formList = ["Document Information", "Chemistry SOP", "Instrument SOP", "Instrumental Chemistry SOP", "Microbiology SOP", "Good Laboratory Practices", "Wet Chemistry", "If Others", "Training Information", "Distribution & Retrieval", "Print & Download Control", "Activity Log"]
+    const [newDocument, setNewDocument] = useReducer((prev, next) => ({
         ...prev, ...next
     }), {
-        shortDescription: '',
-        initiatorGroup: '',
-        initiatedThrough: '',
-        repeat: '',
+        recordNumber: 'Jordan/SOP/2024/0001',
+        site: 'Jordan',
+        initiator: 'Amit Guru',
+        sopType: '',
+        departmentName: '',
+        documentType: '',
+        documentSubType: '',
+        language: '',
         trainingRequired: '',
-        typeOfChange: 0,
-        severityRate: 0,
-        occurrence: 0,
-        detection: 0,
-        CFTReviewers: 0,
-        groupReviewRequired: 0,
-        production: 0,
-        productionPerson: 0,
-        qualityApprover: 0,
-        qualityApproverPerson: 0,
-        others: 0,
-        othersPerson: 0,
-
+        effectiveDate: '',
+        reviewPeriod: '',
+        nextReviewDate: ''
     })
-
     const NotifyTo = [
         { label: "Amit Guru (Originator)", value: "1" },
         { label: "Shaleen Mishra (HOD)", value: "mango", },
@@ -43,105 +36,52 @@ function DocumentPanel() {
     ];
     const [form, setForm] = useState(formList[0]);
     const [selected, setSelected] = useState([]);
-    const [options, setOptions] = useState([{ id: 1, value: '' }]);
-    const [responsibilities, setResponsibilities] = useState([{ id: 1, value: '' }]);
-    const [definition, setDefinition] = useState([{ id: 1, value: '' }]);
-    const [materials, setMaterials] = useState([{ id: 1, value: '' }]);
-    const [reporting, setReporting] = useState([{ id: 1, value: '' }]);
-    const [references, setReferences] = useState([{ id: 1, value: '' }]);
-    const [initiatorGroup, setInitiatorGroup] = useState('');
-    const [departmenttype, setDepartmenttype] = useState('');
-    const [departmentsubtype, setDepartmentsubtype] = useState('');
-    const [language, setLanguage] = useState('');
-    const [asideWorkFlow, setAsideWorkFlow] = useState(false)
-    const [asideFamilyTree, setAsideFamilyTree] = useState(false)
-
-
-    // ! ====================Responsibility=====================
-    const handleAddResponsibility = () => {
-        const newId = Math.max(...responsibilities.map(responsibility => responsibility.id), 0) + 1;
-        setResponsibilities([...responsibilities, { id: newId, value: '' }]);
-    };
-
-    const handleDeleteResponsibility = (id) => {
-        setResponsibilities((prevResponsibilities) =>
-            prevResponsibilities.filter(responsibility => responsibility.id !== id)
-        );
-    };
-    // ! ====================Responsibility-end =================
-    // ! ====================Definition =========================
-    const handleAddDefinition = () => {
-        const newId = Math.max(...definition.map(definition => definition.id), 0) + 1;
-        setDefinition([...definition, { id: newId, value: '' }]);
-    };
-    const handleDeleteDefinition = (id) => {
-        setDefinition((prevDefinition) =>
-            prevDefinition.filter(definition => definition.id !== id)
-        );
-    };
-    // ! ====================Definition end======================
-    // ! ====================Materials and Equipments Grid=======
-    const handleAddMaterials = () => {
-        const newId = Math.max(...materials.map(materials => materials.id), 0) + 1;
-        setMaterials([...materials, { id: newId, value: '' }]);
-    };
-
-    const handleDeleteMaterials = (id) => {
-        setMaterials((prevMaterials) =>
-            prevMaterials.filter(materials => materials.id !== id)
-        );
-    };
-    // ! ===============Materials and Equipments Grid end =======
-    // ! ==================Abbreviation==========================
-    const handleAddButton = () => {
-        const newId = Math.max(...options.map(option => option.id), 0) + 1;
-        setOptions([...options, { id: newId, value: '' }]);
-    };
-
-    const handleDeleteOption = (id) => {
-        setOptions((prev) => prev.filter(option => option.id !== id));
-    };
-    //!======================Abbreviation-end====================
-    //!======================Reporting===========================
-    const handleAddReporting = () => {
-        const newId = Math.max(...reporting.map(reporting => reporting.id), 0) + 1;
-        setReporting([...reporting, { id: newId, value: '' }]);
-    };
-
-    const handleDeleteReporting = (id) => {
-        setReporting((prevReporting) =>
-            prevReporting.filter(reporting => reporting.id !== id)
-        );
-    };
-    //!======================Reporting-end=======================
-    //!======================References===========================
-    const handleAddReferences = () => {
-        const newId = Math.max(...references.map(references => references.id), 0) + 1;
-        setReferences([...references, { id: newId, value: '' }]);
-    };
-
-    const handleDeleteReferences = (id) => {
-        setReferences((prevReferences) =>
-            prevReferences.filter(references => references.id !== id)
-        );
-    };
-    //!======================References-end=======================
-    const referenceRecord = [
-        { label: "DMS-North America/STP/2024/SOP-00001", value: "1" },
-        { label: "DMS-North America/SOP/2024/SOP-00002", value: "2" },
-        { label: "DMS-North America/STP/2024/SOP-00003", value: "3" },
-        { label: "DMS-North America/SOP/2024/SOP-00006", value: "4" },
-        { label: "DMS-North America/SOP/2024/SOP-000010", value: "5" },
-
-    ];
+    const [effectiveDateProper, setEffectiveProper] = useState('')
+    const interpretationOfResult = {
+        label: '8.0 Interpretation of Result',
+        instruction: '',
+        required: false,
+        coloredLabel: true,
+        columnList: [
+            { id: '1', name: 'Result', type: 'text' },
+            { id: '2', name: 'Interpretation', type: 'text' },
+            { id: '3', name: 'Time Restriction (Date)', type: 'date' },
+            { id: '4', name: 'Time Restriction (Time)', type: 'time' },
+            { id: '5', name: 'Precaution/Notes (If any)', type: 'text' },
+        ]
+    }
+    const criticalSteps = {
+        label: '8.0 Critical Steps',
+        instruction: '',
+        required: false,
+        coloredLabel: true,
+        columnList: [
+            { id: '1', name: 'Step', type: 'text' },
+            { id: '2', name: 'Reasons', type: 'text' },
+            { id: '3', name: 'Expected Tests Outcomes', type: 'text' },
+            { id: '4', name: 'Acceptable values, if any', type: 'text' },
+            { id: '5', name: 'Attachment, if any', type: 'file' },
+            { id: '6', name: 'Remarks', type: 'text' },
+        ]
+    }
+    const referenceProcedures = {
+        label: '9.0 Reference Procedures/Forms',
+        instruction: "Related SOP's, QPS Forms etc.",
+        required: false,
+        coloredLabel: true,
+        columnList: [
+            { id: '2.1.1.1', name: 'Title of Document', type: 'text' },
+            { id: '2.1.1.2', name: 'Attached File', type: 'File' },
+            { id: '2.1.1.3', name: 'Remark', type: 'text' },
+        ]
+    }
     const approvers = [
         { label: "Amit", value: "" },
     ];
     const reviewers = [
         { label: "Vikash", value: "" },
-
     ];
-    const testdata = {
+    const testData = {
         label: 'Test(0)',
         instruction: <div></div>,
         required: true,
@@ -151,28 +91,6 @@ function DocumentPanel() {
             { id: '2.1.3', name: 'Result', type: 'text' },
             { id: '2.1.4', name: 'Comment', type: 'text' },
             { id: '2.1.5', name: 'Remarks', type: 'text' },
-        ]
-    }
-    const annexure = {
-        label: 'Annexure',
-        instruction: <div></div>,
-        required: true,
-        columnList: [
-            { id: '2.1.1', name: 'Annexure No.', type: 'text' },
-            { id: '2.1.2', name: 'Title of Annexure', type: 'text' },
-
-        ]
-    }
-    const revisionhistory = {
-        label: 'Revisionhistory',
-        instruction: <div></div>,
-        required: true,
-        columnList: [
-            { id: '1.1', name: 'SOP  Revision No.', type: 'Number' },
-            { id: '2.2', name: 'Change Control No./ DCRF No.', type: 'Number' },
-            { id: '2.2', name: 'Changes', type: 'text' },
-
-
         ]
     }
     const Survey = {
@@ -187,13 +105,6 @@ function DocumentPanel() {
             { id: '2.1.5', name: 'Remarks', type: 'text' },
         ]
     }
-    const approversGroup = [
-        { label: "Sahleen", value: "" },
-    ];
-    const reviewersGroup = [
-        { label: "Amit Guru", value: "" },
-
-    ];
     const docFormFile = [
         {
             label: 'Attach Draft document',
@@ -214,43 +125,41 @@ function DocumentPanel() {
                 { id: '2.1.1.2', name: 'Attached File', type: 'File' },
                 { id: '2.1.1.3', name: 'Remark', type: 'text' },
             ]
-        },
+        }, {
+            label: 'File Attachment',
+            instruction: 'Add relevant attachments, if any.',
+            coloredLabel: true,
+            required: false,
+            columnList: [
+                { id: '2.1.1.1', name: 'Title of Document', type: 'text' },
+                { id: '2.1.1.2', name: 'Attached File', type: 'File' },
+                { id: '2.1.1.3', name: 'Remark', type: 'text' },
+            ]
+        }
     ];
     const docDetails = {
         label: 'Distribution & Retrieval ',
         instruction: <div></div>,
         required: true,
         columnList: [
-            { id: '2.1.1.1', name: 'Document Title', type: 'text' },
-            { id: '2.1.1.2', name: 'Document Number', type: 'text' },
-            { id: '2.1.1.3', name: 'Document Printed By', type: 'text' },
-            { id: '2.1.1.4', name: 'Document Printed on', type: 'text' },
-            { id: '2.1.1.5', name: 'Number of Print Copies', type: 'text' },
-            { id: '2.1.1.5', name: 'Issuance Date', type: 'date' },
-            { id: '2.1.1.5', name: 'Department/Location', type: 'text' },
-            { id: '2.1.1.5', name: 'Number of Issued Copies	', type: 'text' },
-            { id: '2.1.1.5', name: 'Reason for Issuance', type: 'text' },
-            { id: '2.1.1.5', name: 'Retrieval Date', type: 'date' },
-            { id: '2.1.1.5', name: 'Retrieved By', type: 'text' },
-            { id: '2.1.1.5', name: 'Retrieved Person Department', type: 'text' },
-            { id: '2.1.1.5', name: 'Number of Retrieved Copies', type: 'number' },
-            { id: '2.1.1.5', name: 'Reason for Retrieval', type: 'text' },
-            { id: '2.1.1.5', name: 'Remarks', type: 'text' },
+            { id: '1', name: 'Document Title', type: 'text' },
+            { id: '2', name: 'Document Number', type: 'text' },
+            { id: '3', name: 'Document Printed By', type: 'text' },
+            { id: '4', name: 'Document Printed on', type: 'text' },
+            { id: '5', name: 'Number of Print Copies', type: 'text' },
+            { id: '6', name: 'Issuance Date', type: 'date' },
+            { id: '7', name: 'Department/Location', type: 'text' },
+            { id: '8', name: 'Number of Issued Copies	', type: 'text' },
+            { id: '9', name: 'Reason for Issuance', type: 'text' },
+            { id: '10', name: 'Retrieval Date', type: 'date' },
+            { id: '11', name: 'Retrieved By', type: 'text' },
+            { id: '12', name: 'Retrieved Person Department', type: 'text' },
+            { id: '13', name: 'Number of Retrieved Copies', type: 'number' },
+            { id: '14', name: 'Reason for Retrieval', type: 'text' },
+            { id: '15', name: 'Remarks', type: 'text' },
         ]
     };
     const PersonPrintPermission = [
-        { label: "Anshul Patel", value: "1" },
-        { label: "Shaleen", value: "shaleen", },
-        { label: "Amit", value: "2", },
-        { label: "Piyush", value: "Piyush", },
-    ];
-    const GroupDownloadPermission = [
-        { label: "Anshul Patel", value: "1" },
-        { label: "Shaleen", value: "shaleen", },
-        { label: "Amit", value: "2", },
-        { label: "Piyush", value: "Piyush", },
-    ];
-    const GroupPrintPermission = [
         { label: "Anshul Patel", value: "1" },
         { label: "Shaleen", value: "shaleen", },
         { label: "Amit", value: "2", },
@@ -262,6 +171,18 @@ function DocumentPanel() {
         { label: "Amit", value: "2", },
         { label: "Piyush", value: "Piyush", },
     ];
+    function returnEffectiveDate(date) {
+        setEffectiveProper(date)
+    }
+    useEffect(() => {
+        if (effectiveDateProper && newDocument.reviewPeriod !== null) {
+            const year = parseInt(effectiveDateProper.substring(0, 4), 10);
+            const newYear = year + Number(newDocument.reviewPeriod);
+            const effectiveDateObject = new Date(effectiveDateProper);
+            const updatedDate = new Date(newYear, effectiveDateObject.getMonth(), effectiveDateObject.getDate() + 1);
+            setNewDocument({ nextReviewDate: convertDateFormat(updatedDate.toISOString().slice(0, 10)) });
+        }
+    }, [effectiveDateProper, newDocument.reviewPeriod]);
 
     // -------------work flow-------
     const progressItems = [
@@ -317,15 +238,13 @@ function DocumentPanel() {
             <HeaderTop />
             <HeaderBottom />
 
-
-
             <div id="document-panel">
 
                 <div className="top-block">
                     <div><strong> Record Name:&nbsp;</strong>Document-Panel</div>
-                    <div><strong> Site:&nbsp;</strong>Jordan</div>
-                    <div><strong> Current Status:&nbsp;</strong>Under Initiation</div>
-                    <div><strong> Initiated By:&nbsp;</strong>Shaleen Mishra</div>
+                    <div><strong> Site:&nbsp;</strong>{newDocument.site}</div>
+                    <div><strong> Current Status:&nbsp;</strong>{progressArray[progressArray.length - 1]}</div>
+                    <div><strong> Initiated By:&nbsp;</strong>{newDocument.initiator}</div>
                 </div>
 
                 <div className="inner-block">
@@ -389,176 +308,164 @@ function DocumentPanel() {
 
                     <div className="document-tabs">
                         <div className={form === formList[0] ? 'active' : ''} onClick={() => setForm(formList[0])}>{formList[0]}</div>
-
-                        <div className={form === formList[1] ? 'active' : ''} onClick={() => setForm(formList[1])}>{formList[1]}</div>
-
-                        <div className={form === formList[2] ? 'active' : ''} onClick={() => setForm(formList[2])}>{formList[2]}</div>
-
-                        <div className={form === formList[3] ? 'active' : ''} onClick={() => setForm(formList[3])}>{formList[3]}</div>
-
-                        <div className={form === formList[4] ? 'active' : ''} onClick={() => setForm(formList[4])}>{formList[4]}</div>
-
-                        <div className={form === formList[5] ? 'active' : ''} onClick={() => setForm(formList[5])}>{formList[5]}</div>
-
-                        <div className={form === formList[6] ? 'active' : ''} onClick={() => setForm(formList[6])}>{formList[6]}</div>
+                        {newDocument.sopType === "chemistry_sop" &&
+                            <div className={form === formList[1] ? 'active' : ''} onClick={() => setForm(formList[1])}>{formList[1]}</div>
+                        }
+                        {newDocument.sopType === "instrument_sop" &&
+                            <div className={form === formList[2] ? 'active' : ''} onClick={() => setForm(formList[2])}>{formList[2]}</div>
+                        }
+                        {newDocument.sopType === "instrumental_chemistry_sop" &&
+                            <div className={form === formList[3] ? 'active' : ''} onClick={() => setForm(formList[3])}>{formList[3]}</div>
+                        }
+                        {newDocument.sopType === "microbiology_sop" &&
+                            <div className={form === formList[4] ? 'active' : ''} onClick={() => setForm(formList[4])}>{formList[4]}</div>
+                        }
+                        {newDocument.sopType === "good_laboratory_practices" &&
+                            <div className={form === formList[5] ? 'active' : ''} onClick={() => setForm(formList[5])}>{formList[5]}</div>
+                        }
+                        {newDocument.sopType === "wet_chemistry" &&
+                            <div className={form === formList[6] ? 'active' : ''} onClick={() => setForm(formList[6])}>{formList[6]}</div>
+                        }
+                        {newDocument.sopType === "others" &&
+                            <div className={form === formList[7] ? 'active' : ''} onClick={() => setForm(formList[7])}>{formList[7]}</div>
+                        }
+                        <div className={form === formList[8] ? 'active' : ''} onClick={() => setForm(formList[8])}>{formList[8]}</div>
+                        <div className={form === formList[9] ? 'active' : ''} onClick={() => setForm(formList[9])}>{formList[9]}</div>
+                        <div className={form === formList[10] ? 'active' : ''} onClick={() => setForm(formList[10])}>{formList[10]}</div>
+                        <div className={form === formList[11] ? 'active' : ''} onClick={() => setForm(formList[11])}>{formList[11]}</div>
                     </div>
 
 
                     {form === formList[0] ? (
                         <div className='document-form'>
                             <div className='details-form-data'>
-
-                                <div className="form-flex-three">
-                                    <div className="group-input">
-                                        <label>Originator</label>
-                                        <input type="text" value="Amit Guru" disabled />
-
-                                    </div>
-                                    <div className="group-input">
-                                        <label>Date Opened</label>
-                                        <input type="" value={CurrentDate()} disabled />
-                                    </div>
+                                <div className="form-flex">
                                     <div className="group-input">
                                         <label>Record Number</label>
-                                        <input type="text" value="00009" disabled />
+                                        <div className="instruction">Document Number</div>
+                                        <input type="text" value={newDocument.recordNumber} disabled />
+                                    </div>
+                                    <div className="group-input">
+                                        <label>Site/Location</label>
+                                        <div className="instruction">&nbsp;</div>
+                                        <input type="text" value={newDocument.site} disabled />
+                                    </div>
+                                    <div className="group-input">
+                                        <label>Initiator</label>
+                                        <input type="text" value={newDocument.initiator} disabled />
+                                    </div>
+                                    <div className="group-input">
+                                        <label>Date of Initiation</label>
+                                        <input type="" value={CurrentDate()} disabled />
                                     </div>
                                 </div>
-
-                                <div className="group-input">
-                                    <label><div className="required"></div>
-                                        Document Name
-                                    </label>
-                                    <div className='instruction'>255 characters remaining</div>
-                                    <input id="docname" type="text" name="document_name" required=""></input>
-                                </div>
-
                                 <div className="group-input">
                                     <label>
                                         <div className="required"></div>
                                         Short Description
                                     </label>
+                                    <div className="instruction">Document Name</div>
                                     <input type="text" />
                                 </div>
-
                                 <div className='form-flex'>
-
                                     <InputDate
                                         label="Due Date"
                                         instruction="Please mention expected date of completion."
                                         isRequired="false"
                                         enableDate="future"
                                     />
-
-
                                     <div className="group-input">
-                                        <label><b>Notify To</b></label>
+                                        <label>Notify To</label>
                                         <MultiSelect
                                             options={NotifyTo}
                                             value={selected}
                                             onChange={setSelected}
                                             labelledBy="Select"
-                                            required={changeControl.CFTReviewers === "Yes"}
-                                            disabled={!changeControl.CFTReviewers === "Yes"}
+                                            required={newDocument.CFTReviewers === "Yes"}
+                                            disabled={!newDocument.CFTReviewers === "Yes"}
                                         />
                                     </div>
-
                                 </div>
-
+                                <FlexField
+                                    label="Description"
+                                />
                                 <div className="group-input">
-                                    <label><b>Description</b></label>
-                                    <textarea name="w3review"></textarea>
+                                    <label>SOP Type</label>
+                                    <select value={newDocument.sopType} onChange={(e) => setNewDocument({ sopType: e.target.value })}>
+                                        <option value="">-- Select --</option>
+                                        <option value="chemistry_sop">Chemistry SOP</option>
+                                        <option value="instrument_sop">Instrument SOP</option>
+                                        <option value="instrumental_chemistry_sop">Instrumental Chemistry SOP</option>
+                                        <option value="microbiology_sop">Microbiology SOP</option>
+                                        <option value="good_laboratory_practices">Good Laboratory Practices</option>
+                                        <option value="wet_chemistry">Wet Chemistry</option>
+                                        <option value="others">Others</option>
+                                    </select>
                                 </div>
-
                                 <div className="sub-head">
                                     Document Information
                                 </div>
-
                                 <div className='form-flex'>
-
-                                    <div className="group-input">
-                                        <label>Document Number</label>
-                                        <div className="default-name">Not available</div>
-                                    </div>
-
-                                    <div className="group-input">
-                                        <label>Document Number</label>
-                                        <MultiSelect
-                                            options={referenceRecord}
-                                            value={selected}
-                                            onChange={setSelected}
-                                            labelledBy="Select" />
-                                    </div>
-
                                     <div className="group-input">
                                         <label><div className="required"></div>Department Name</label>
-                                        <select name="initiator_group" value={changeControl.initiatorGroup} onChange={(e) => setChangeControl({ initiatorGroup: e.target.value })}>
-                                            <option value="Not selected">-- Select --</option>
+                                        <select value={newDocument.departmentName} onChange={(e) => setNewDocument({ departmentName: e.target.value })}>
+                                            <option value="">-- Select --</option>
                                             <option value="QA">Quality Assurance </option>
                                             <option value="QC">Quality Control</option>
                                             <option value="Prod">Production</option>
                                         </select>
                                     </div>
-
                                     <div className="group-input">
                                         <label>Department Code</label>
-                                        <input type="text" value={changeControl.initiatorGroup} disabled />
+                                        <input type="text" value={newDocument.departmentName} disabled />
                                     </div>
-
                                     <div className="group-input">
-                                        <label><div className="required"></div>Department Type</label>
-                                        <select name="initiator_group" value={departmenttype} onChange={(e) => setDepartmenttype(e.target.value)}>
-                                            <option value="Not selected">Enter your Selection</option>
+                                        <label><div className="required"></div>Document Type</label>
+                                        <select value={newDocument.documentType} onChange={(e) => setNewDocument({ documentType: e.target.value })}>
+                                            <option value="">-- Select --</option>
                                             <option value="STP">Standard Test Procedure </option>
                                             <option value="SOP">Standard Operating Procedure</option>
                                             <option value="WI">Work Instruction</option>
                                             <option value="Spec">Specification </option>
-                                            <option value="VP">Validation Protocol  </option>
-                                            <option value="PFD">Process Flow Diagram   </option>
-                                            <option value="QP">Qualification Protocol   </option>
+                                            <option value="VP">Validation Protocol</option>
+                                            <option value="PFD">Process Flow Diagram</option>
+                                            <option value="QP">Qualification Protocol</option>
                                         </select>
                                     </div>
-
                                     <div className="group-input">
                                         <label>Document Type Code</label>
-                                        <input type="text" value={departmenttype} disabled />
+                                        <input type="text" value={newDocument.documentType} disabled />
                                     </div>
                                     <div className="group-input">
-                                        <label><div className="required"></div>Document SubType Code</label>
-                                        <select name="initiator_group" value={departmentsubtype} onChange={(e) => setDepartmentsubtype(e.target.value)}>
+                                        <label><div className="required"></div>Document Sub Type Code</label>
+                                        <select value={newDocument.documentSubType} onChange={(e) => setNewDocument({ documentSubType: e.target.value })}>
+                                            <option value="">-- Select --</option>
+                                            <option value="STP">Standard Test Procedure </option>
+                                            <option value="SOP">Standard Operating Procedure</option>
+                                            <option value="WI">Work Instruction</option>
+                                            <option value="Spec">Specification </option>
+                                            <option value="VP">Validation Protocol</option>
+                                            <option value="PFD">Process Flow Diagram</option>
+                                            <option value="QP">Qualification Protocol</option>
                                         </select>
                                     </div>
-
                                     <div className="group-input">
-                                        <label>Document SubType Code</label>
-                                        <input type="text" value={departmentsubtype} disabled />
+                                        <label>Document Sub Type Code</label>
+                                        <input type="text" value={newDocument.documentSubType} disabled />
                                     </div>
-
                                     <div className="group-input">
                                         <label><div className="required"></div>Department Language</label>
-                                        <select name="" id="lang-name" value={language} onChange={(e) => setLanguage(e.target.value)}>
-                                            <option value="Not selected">-- Select --</option>
+                                        <select value={newDocument.language} onChange={(e) => setNewDocument({ language: e.target.value })}>
+                                            <option value="">-- Select --</option>
                                             <option value="EN">English</option>
                                             <option value="KN">Korean</option>
                                         </select>
                                     </div>
-
                                     <div className="group-input">
                                         <label>Document Language Code</label>
-                                        <input type="text" value={language} disabled />
+                                        <input type="text" value={newDocument.language} disabled />
                                     </div>
-
-                                    <div className="group-input" id="add-keyword">
-                                        <div>Keyword</div>
-                                        <input type="text" id="sourceField" />
-                                        <button id="addButton" className="themeBtn" type="button">Add</button>
-                                    </div>
-
                                 </div>
-
-                                <div className="group-input">
-                                    <input type="text" />
-                                </div>
-
                                 <div className='form-flex-three'>
                                     <div className="group-input">
                                         <InputDate
@@ -566,102 +473,603 @@ function DocumentPanel() {
                                             instruction="Please mention expected date of completion."
                                             isRequired="false"
                                             enableDate="future"
+                                            value={newDocument.effectiveDate}
+                                            returnDate={returnEffectiveDate}
                                         />
                                     </div>
-
                                     <div className="group-input">
                                         <label>Review Period</label>
                                         <div className="instruction">&nbsp;</div>
-                                        <input type="number" />
+                                        <input type="number" value={newDocument.reviewPeriod} onChange={(e) => setNewDocument({ reviewPeriod: e.target.value })} />
                                     </div>
-
                                     <div className="group-input">
-                                        <InputDate
-                                            label="Next Review Date"
-                                            instruction="Please mention expected date of completion."
-                                            isRequired="false"
-                                            enableDate="future"
+                                        <label>Next Review Date</label>
+                                        <div className="instruction">&nbsp;</div>
+                                        <input type="text" value={newDocument.nextReviewDate} placeholder="DD-MMM-YYYY" disabled />
+                                    </div>
+                                </div>
+                                <div className="group-input">
+                                    <div className="group-input">
+                                        <Grid
+                                            label={docFormFile[0].label}
+                                            required={docFormFile[0].required}
+                                            instruction={docFormFile[0].instruction}
+                                            columnList={docFormFile[0].columnList}
                                         />
                                     </div>
                                 </div>
-
-                                <div className="form-flex">
-
+                                <div className="group-input">
                                     <div className="group-input">
-                                        <div className="group-input">
-                                            <Grid
-                                                label={docFormFile[0].label}
-                                                required={docFormFile[0].required}
-                                                instruction={docFormFile[0].instruction}
-                                                columnList={docFormFile[0].columnList}
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div className="group-input">
-                                        <div className="group-input">
-                                            <Grid
-                                                label={docFormFile[1].label}
-                                                required={docFormFile[1].required}
-                                                instruction={docFormFile[1].instruction}
-                                                columnList={docFormFile[1].columnList}
-                                            />
-                                        </div>
+                                        <Grid
+                                            label={docFormFile[1].label}
+                                            required={docFormFile[1].required}
+                                            instruction={docFormFile[1].instruction}
+                                            columnList={docFormFile[1].columnList}
+                                        />
                                     </div>
                                 </div>
-
                                 <div className="sub-head">
                                     Other Information
                                 </div>
-
                                 <div className="form-flex">
-
                                     <div className="group-input">
                                         <label><div className="required"></div>Reviewers</label>
+                                        <div className="instruction">Even multiple reviewers can be added!</div>
                                         <MultiSelect
                                             options={reviewers}
                                             value={selected}
                                             onChange={setSelected}
-                                            labelledBy="Select" />
+                                            labelledBy="Select"
+                                        />
                                     </div>
-
                                     <div className="group-input">
                                         <label><div className="required"></div>Approvers</label>
+                                        <div className="instruction">Even multiple approvers can be added!</div>
                                         <MultiSelect
                                             options={approvers}
                                             value={selected}
                                             onChange={setSelected}
-                                            labelledBy="Select" />
-                                    </div>
-
-                                    <div className="group-input">
-                                        <label>Reviewers Group</label>
-                                        <MultiSelect
-                                            options={reviewersGroup}
-                                            value={selected}
-                                            onChange={setSelected}
-                                            labelledBy="Select" />
-                                    </div>
-
-                                    <div className="group-input">
-                                        <label>Approvers Group</label>
-                                        <MultiSelect
-                                            options={approversGroup}
-                                            value={selected}
-                                            onChange={setSelected}
-                                            labelledBy="Select" />
+                                            labelledBy="Select"
+                                        />
                                     </div>
                                 </div>
-
-                                <div className="group-input">
-                                    <label>Revision Summary</label>
-                                    <textarea name="w3review"></textarea>
-                                </div>
-
+                                <FlexField
+                                    label="Revision Summary"
+                                />
                             </div>
                         </div>
-
                     ) : form === formList[1] ? (
+                        <div className="document-form">
+                            <div className="details-form-data">
+                                <div className="sop-type-header">
+                                    <div className="logo">
+                                        <img src="/customer.png" alt="..." />
+                                    </div>
+                                    <div className="main-head">
+                                        <div>Standard Operating Procedure</div>
+                                        <div>Environmental Laboratory</div>
+                                    </div>
+                                </div>
+                                <div className="sub-head-2">Chemistry SOP</div>
+                                <div className="group-input">
+                                    <label className="color-label">1.0 Purpose</label>
+                                    <div className="instruction">To establish a plan for</div>
+                                    <textarea></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">2.0 Scope/Field of Application</label>
+                                    <div className="instruction">All test samples received at the laboratory plant and required</div>
+                                    <textarea></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">3.0 Responsibilities</label>
+                                    <div className="instruction">The performance of the tests should be done by</div>
+                                    {/* MultiSelection person data field */}
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">4.0 Materials/Chemical Required</label>
+                                    <textarea></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">5.0 Equipment/Instruments Used</label>
+                                    <textarea></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">6.0 Safety Precautions</label>
+                                    <div className="instruction"></div>
+                                    <textarea></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">7.0 Procedure</label>
+                                    <div className="instruction"></div>
+                                    <textarea></textarea>
+                                </div>
+                                <Grid
+                                    label={interpretationOfResult.label}
+                                    coloredLabel={interpretationOfResult.coloredLabel}
+                                    required={interpretationOfResult.required}
+                                    instruction={interpretationOfResult.instruction}
+                                    columnList={interpretationOfResult.columnList}
+                                />
+                                <Grid
+                                    label={referenceProcedures.label}
+                                    coloredLabel={referenceProcedures.coloredLabel}
+                                    required={referenceProcedures.required}
+                                    instruction={referenceProcedures.instruction}
+                                    columnList={referenceProcedures.columnList}
+                                />
+                                <div className="group-input">
+                                    <label className="color-label">10.0 References</label>
+                                    <div className="instruction"></div>
+                                    <textarea></textarea>
+                                </div>
+                                <RelatedRecords
+                                    label="11.0 Change Control"
+                                    coloredLabel={true}
+                                    instruction="Add referenced Change Control records"
+                                />
+                                <Grid
+                                    label={docFormFile[2].label}
+                                    coloredLabel={docFormFile[2].coloredLabel}
+                                    required={docFormFile[2].required}
+                                    instruction={docFormFile[2].instruction}
+                                    columnList={docFormFile[2].columnList}
+                                />
+                            </div>
+                        </div>
+                    ) : form === formList[2] ? (
+                        <div className="document-form">
+                            <div className="details-form-data">
+                                <div className="sop-type-header">
+                                    <div className="logo">
+                                        <img src="/customer.png" alt="..." />
+                                    </div>
+                                    <div className="main-head">
+                                        <div>Standard Operating Procedure</div>
+                                        <div>Environmental Laboratory</div>
+                                    </div>
+                                </div>
+                                <div className="sub-head-2">Instrument SOP</div>
+                                <div className="group-input">
+                                    <label className="color-label">1.0 Purpose</label>
+                                    <div className="instruction">To establish a plan for handling, operating, calibration and maintaining of instrumentation</div>
+                                    <textarea></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">2.0 Scope/Field of Application</label>
+                                    <textarea></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">3.0 Responsibilities</label>
+                                    {/* MultiSelection person data field */}
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">4.0 Materials Required</label>
+                                    <textarea></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">5.0 Procedure</label>
+                                    <textarea></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">6.0 Operations</label>
+                                    <div className="instruction"></div>
+                                    <textarea></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">7.0 Authorization Matrix</label>
+                                    <div className="instruction"></div>
+                                    <textarea></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">8.0 References</label>
+                                    <div className="instruction"></div>
+                                    <textarea></textarea>
+                                </div>
+                                <RelatedRecords
+                                    label="9.0 Change Control"
+                                    coloredLabel={true}
+                                    instruction="Add referenced Change Control records"
+                                />
+                                <Grid
+                                    label={docFormFile[2].label}
+                                    coloredLabel={docFormFile[2].coloredLabel}
+                                    required={docFormFile[2].required}
+                                    instruction={docFormFile[2].instruction}
+                                    columnList={docFormFile[2].columnList}
+                                />
+                            </div>
+                        </div>
+                    ) : form === formList[3] ? (
+                        <div className="document-form">
+                            <div className="details-form-data">
+                                <div className="sop-type-header">
+                                    <div className="logo">
+                                        <img src="/customer.png" alt="..." />
+                                    </div>
+                                    <div className="main-head">
+                                        <div>Standard Operating Procedure</div>
+                                        <div>Environmental Laboratory</div>
+                                    </div>
+                                </div>
+                                <div className="sub-head-2">Instrumental Chemistry SOP</div>
+                                <div className="group-input">
+                                    <label className="color-label">1.0 Purpose</label>
+                                    <div className="instruction">To establish a plan for</div>
+                                    <textarea></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">2.0 Scope/Field of Application</label>
+                                    <div className="instruction">All test samples received at the laboratory plant and required</div>
+                                    <textarea></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">3.0 Responsibilities</label>
+                                    <div className="instruction">The performance of the tests should be done by</div>
+                                    {/* MultiSelection person data field */}
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">4.0 Materials/Chemical Required</label>
+                                    <textarea></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">5.0 Equipment/Instruments Used</label>
+                                    <textarea></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">6.0 Safety Precautions</label>
+                                    <div className="instruction"></div>
+                                    <textarea></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">7.0 Procedure</label>
+                                    <div className="instruction"></div>
+                                    <textarea></textarea>
+                                </div>
+                                <Grid
+                                    label={criticalSteps.label}
+                                    coloredLabel={criticalSteps.coloredLabel}
+                                    required={criticalSteps.required}
+                                    instruction={criticalSteps.instruction}
+                                    columnList={criticalSteps.columnList}
+                                />
+                                <div className="group-input">
+                                    <label className="color-label">9.0 Software Processing Steps</label>
+                                    <div className="instruction"></div>
+                                    <textarea></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">10.0 Calculation</label>
+                                    <div className="instruction"></div>
+                                    <textarea></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">11.0 References</label>
+                                    <div className="instruction"></div>
+                                    <textarea></textarea>
+                                </div>
+                                <RelatedRecords
+                                    label="12.0 Change Control"
+                                    coloredLabel={true}
+                                    instruction="Add referenced Change Control records"
+                                />
+                                <Grid
+                                    label={docFormFile[2].label}
+                                    coloredLabel={docFormFile[2].coloredLabel}
+                                    required={docFormFile[2].required}
+                                    instruction={docFormFile[2].instruction}
+                                    columnList={docFormFile[2].columnList}
+                                />
+                            </div>
+                        </div>
+                    ) : form === formList[4] ? (
+                        <div className="document-form">
+                            <div className="details-form-data">
+                                <div className="sop-type-header">
+                                    <div className="logo">
+                                        <img src="/customer.png" alt="..." />
+                                    </div>
+                                    <div className="main-head">
+                                        <div>Standard Operating Procedure</div>
+                                        <div>Environmental Laboratory</div>
+                                    </div>
+                                </div>
+                                <div className="sub-head-2">Microbiology SOP</div>
+                                <div className="group-input">
+                                    <label className="color-label">1.0 Purpose</label>
+                                    <div className="instruction">To establish a plan for</div>
+                                    <textarea></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">2.0 Scope/Field of Application</label>
+                                    <div className="instruction">All test samples received at the laboratory plant and required</div>
+                                    <textarea></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">3.0 Responsibilities</label>
+                                    <div className="instruction">The performance of the tests should be done by</div>
+                                    {/* MultiSelection person data field */}
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">4.0 Materials/Chemical Required</label>
+                                    <textarea></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">5.0 Equipment/Instruments Used</label>
+                                    <textarea></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">6.0 Safety Precautions</label>
+                                    <div className="instruction"></div>
+                                    <textarea></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">7.0 Procedure</label>
+                                    <div className="instruction"></div>
+                                    <textarea></textarea>
+                                </div>
+                                <Grid
+                                    label={interpretationOfResult.label}
+                                    coloredLabel={interpretationOfResult.coloredLabel}
+                                    required={interpretationOfResult.required}
+                                    instruction={interpretationOfResult.instruction}
+                                    columnList={interpretationOfResult.columnList}
+                                />
+                                <div className="group-input">
+                                    <label className="color-label">9.0 References</label>
+                                    <div className="instruction"></div>
+                                    <textarea></textarea>
+                                </div>
+                                <RelatedRecords
+                                    label="10.0 Change Control"
+                                    coloredLabel={true}
+                                    instruction="Add referenced Change Control records"
+                                />
+                                <Grid
+                                    label={docFormFile[2].label}
+                                    coloredLabel={docFormFile[2].coloredLabel}
+                                    required={docFormFile[2].required}
+                                    instruction={docFormFile[2].instruction}
+                                    columnList={docFormFile[2].columnList}
+                                />
+                            </div>
+                        </div>
+                    ) : form === formList[5] ? (
+                        <div className="document-form">
+                            <div className="details-form-data">
+                                <div className="sop-type-header">
+                                    <div className="logo">
+                                        <img src="/customer.png" alt="..." />
+                                    </div>
+                                    <div className="main-head">
+                                        <div>Standard Operating Procedure</div>
+                                        <div>Environmental Laboratory</div>
+                                    </div>
+                                </div>
+                                <div className="sub-head-2">Good Laboratory Practices</div>
+                                <div className="group-input">
+                                    <label className="color-label">1.0 Purpose</label>
+                                    <div className="instruction">To establish a plan for</div>
+                                    <textarea></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">2.0 Scope/Field of Application</label>
+                                    <div className="instruction">All test samples received at the laboratory plant and required</div>
+                                    <textarea></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">3.0 Responsibilities</label>
+                                    <div className="instruction">The performance of the tests should be done by</div>
+                                    {/* MultiSelection person data field */}
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">4.0 Materials/Chemical Required</label>
+                                    <textarea></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">5.0 Equipment/Instruments Used</label>
+                                    <textarea></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">6.0 Safety Precautions</label>
+                                    <div className="instruction"></div>
+                                    <textarea></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">7.0 Procedure</label>
+                                    <div className="instruction"></div>
+                                    <textarea></textarea>
+                                </div>
+                                <Grid
+                                    label={interpretationOfResult.label}
+                                    coloredLabel={interpretationOfResult.coloredLabel}
+                                    required={interpretationOfResult.required}
+                                    instruction={interpretationOfResult.instruction}
+                                    columnList={interpretationOfResult.columnList}
+                                />
+                                <div className="group-input">
+                                    <label className="color-label">9.0 References</label>
+                                    <div className="instruction"></div>
+                                    <textarea></textarea>
+                                </div>
+                                <RelatedRecords
+                                    label="10.0 Change Control"
+                                    coloredLabel={true}
+                                    instruction="Add referenced Change Control records"
+                                />
+                                <Grid
+                                    label={docFormFile[2].label}
+                                    coloredLabel={docFormFile[2].coloredLabel}
+                                    required={docFormFile[2].required}
+                                    instruction={docFormFile[2].instruction}
+                                    columnList={docFormFile[2].columnList}
+                                />
+                            </div>
+                        </div>
+                    ) : form === formList[6] ? (
+                        <div className="document-form">
+                            <div className="details-form-data">
+                                <div className="sop-type-header">
+                                    <div className="logo">
+                                        <img src="/customer.png" alt="..." />
+                                    </div>
+                                    <div className="main-head">
+                                        <div>Standard Operating Procedure</div>
+                                        <div>Environmental Laboratory</div>
+                                    </div>
+                                </div>
+                                <div className="sub-head-2">Wet Chemistry</div>
+                                <div className="group-input">
+                                    <label className="color-label">1.0 Purpose</label>
+                                    <div className="instruction">To establish a plan for</div>
+                                    <textarea></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">2.0 Scope/Field of Application</label>
+                                    <div className="instruction">All test samples received at the laboratory plant and required</div>
+                                    <textarea></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">3.0 Responsibilities</label>
+                                    <div className="instruction">The performance of the tests should be done by</div>
+                                    {/* MultiSelection person data field */}
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">4.0 Materials/Chemical Required</label>
+                                    <textarea></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">5.0 Equipment/Instruments Used</label>
+                                    <textarea></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">6.0 Safety Precautions</label>
+                                    <div className="instruction"></div>
+                                    <textarea></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">7.0 Procedure</label>
+                                    <div className="instruction"></div>
+                                    <textarea></textarea>
+                                </div>
+                                <Grid
+                                    label={criticalSteps.label}
+                                    coloredLabel={criticalSteps.coloredLabel}
+                                    required={criticalSteps.required}
+                                    instruction={criticalSteps.instruction}
+                                    columnList={criticalSteps.columnList}
+                                />
+                                <div className="group-input">
+                                    <label className="color-label">9.0 Software Processing Steps</label>
+                                    <div className="instruction"></div>
+                                    <textarea></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">10.0 Calculation</label>
+                                    <div className="instruction"></div>
+                                    <textarea></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">11.0 References</label>
+                                    <div className="instruction"></div>
+                                    <textarea></textarea>
+                                </div>
+                                <RelatedRecords
+                                    label="12.0 Change Control"
+                                    coloredLabel={true}
+                                    instruction="Add referenced Change Control records"
+                                />
+                                <Grid
+                                    label={docFormFile[2].label}
+                                    coloredLabel={docFormFile[2].coloredLabel}
+                                    required={docFormFile[2].required}
+                                    instruction={docFormFile[2].instruction}
+                                    columnList={docFormFile[2].columnList}
+                                />
+                            </div>
+                        </div>
+                    ) : form === formList[7] ? (
+                        <div className="document-form">
+                            <div className="details-form-data">
+                                <div className="sop-type-header">
+                                    <div className="logo">
+                                        <img src="/customer.png" alt="..." />
+                                    </div>
+                                    <div className="main-head">
+                                        <div>Standard Operating Procedure</div>
+                                        <div>Environmental Laboratory</div>
+                                    </div>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">1.0 Purpose</label>
+                                    <div className="instruction">To establish a plan for</div>
+                                    <textarea></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">2.0 Scope/Field of Application</label>
+                                    <div className="instruction">All test samples received at the laboratory plant and required</div>
+                                    <textarea></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">3.0 Responsibilities</label>
+                                    <div className="instruction">The performance of the tests should be done by</div>
+                                    {/* MultiSelection person data field */}
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">4.0 Materials/Chemical Required</label>
+                                    <textarea></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">5.0 Equipment/Instruments Used</label>
+                                    <textarea></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">6.0 Safety Precautions</label>
+                                    <div className="instruction"></div>
+                                    <textarea></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">7.0 Procedure</label>
+                                    <div className="instruction"></div>
+                                    <textarea></textarea>
+                                </div>
+                                <Grid
+                                    label={criticalSteps.label}
+                                    coloredLabel={criticalSteps.coloredLabel}
+                                    required={criticalSteps.required}
+                                    instruction={criticalSteps.instruction}
+                                    columnList={criticalSteps.columnList}
+                                />
+                                <div className="group-input">
+                                    <label className="color-label">9.0 Software Processing Steps</label>
+                                    <div className="instruction"></div>
+                                    <textarea></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">10.0 Calculation</label>
+                                    <div className="instruction"></div>
+                                    <textarea></textarea>
+                                </div>
+                                <div className="group-input">
+                                    <label className="color-label">11.0 References</label>
+                                    <div className="instruction"></div>
+                                    <textarea></textarea>
+                                </div>
+                                <RelatedRecords
+                                    label="12.0 Change Control"
+                                    coloredLabel={true}
+                                    instruction="Add referenced Change Control records"
+                                />
+                                <Grid
+                                    label={docFormFile[2].label}
+                                    coloredLabel={docFormFile[2].coloredLabel}
+                                    required={docFormFile[2].required}
+                                    instruction={docFormFile[2].instruction}
+                                    columnList={docFormFile[2].columnList}
+                                />
+                            </div>
+                        </div>
+                    ) : form === formList[8] ? (
                         <div className='document-form'>
                             <div className='details-form-data'>
                                 <div className="sub-head">
@@ -669,33 +1077,29 @@ function DocumentPanel() {
                                 </div>
                                 <div className="form-flex">
                                     <div className="group-input">
-                                        <label><b>Training Required?</b></label>
-                                        <select name="" id="lang-name" required="">
-                                            <option value="" selected="">-- Select --</option>
-                                            <option value="1">Yes</option>
-                                            <option value="2">No</option>
+                                        <label>Training Required?</label>
+                                        <select value={newDocument.trainingRequired} onChange={(e) => setNewDocument({ trainingRequired: e.target.value })}>
+                                            <option value="">-- Select --</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
                                         </select>
                                     </div>
-
                                     <div className="group-input">
-                                        <label><b>Trainer</b></label>
-                                        <select name="trainer">
-                                            <option value="" selected="">- Select --</option>
+                                        <label>Trainer</label>
+                                        <select disabled={newDocument.trainingRequired !== "Yes"}>
+                                            <option value="">- Select --</option>
                                             <option value="">Madhulika Mishra</option>
                                         </select>
                                     </div>
-
                                 </div>
-
                                 <div className="group-input">
                                     <Grid
-                                        label={testdata.label}
-                                        required={testdata.required}
-                                        instruction={testdata.instruction}
-                                        columnList={testdata.columnList}
+                                        label={testData.label}
+                                        required={testData.required}
+                                        instruction={testData.instruction}
+                                        columnList={testData.columnList}
                                     />
                                 </div>
-
                                 <div className="group-input">
                                     <Grid
                                         label={Survey.label}
@@ -704,421 +1108,13 @@ function DocumentPanel() {
                                         columnList={Survey.columnList}
                                     />
                                 </div>
-
                                 <div className="group-input">
-                                    <label><b>Comments</b></label>
+                                    <label>Comments</label>
                                     <textarea name="w3review" rows="2" cols="50"></textarea>
                                 </div>
                             </div>
                         </div>
-
-                    ) : form === formList[2] ? (
-                        <div className='document-form'>
-                            <div className='details-form-data'>
-
-                                <div className="sub-head">
-                                    Document Information
-                                </div>
-
-                                <div className="group-input">
-                                    <label><b>Purpose</b></label>
-                                    <input id="docname" type="text" name="document_name"></input>
-                                </div>
-
-                                <div className="group-input">
-                                    <label><b>Scope</b></label>
-                                    <textarea id="w3review" name="w3review" rows="2 " cols="50" />
-                                </div>
-
-                                <div className="group-input">
-                                    <label id="icon-flex"><b>Responsibility</b>
-                                        <svg
-                                            onClick={handleAddResponsibility}
-                                            width="20"
-                                            height="20"
-                                            viewBox="0 0 24 24"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                            <path
-                                                fill="#000000"
-                                                d="M19.5 7.05h-7L9.87 3.87a1 1 0 0 0-.77-.37H4.5A2.47 2.47 0 0 0 2 5.93v12.14a2.47 2.47 0 0 0 2.5 2.43h15a2.47 2.47 0 0 0 2.5-2.43V9.48a2.47 2.47 0 0 0-2.5-2.43M14 15h-1v1a1 1 0 0 1-2 0v-1h-1a1 1 0 0 1 0-2h1v-1a1 1 0 0 1 2 0v1h1a1 1 0 0 1 0 2"
-                                            />
-                                        </svg>
-                                    </label>
-
-                                    <div className="option-grid">
-                                        {responsibilities.map((responsibility) => (
-                                            <div key={responsibility.id}>
-                                                <input type="text" name="responsibility" value={responsibility.value} />
-                                                <input type="radio" name="responsibility" />
-                                                <svg
-                                                    width="24"
-                                                    height="24"
-                                                    viewBox="0 0 72 72"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    onClick={() => handleDeleteResponsibility(responsibility.id)}
-                                                >
-                                                    <path
-                                                        fill="#FFF"
-                                                        d="M51.76 17H20.153v37.65c0 4.06 3.29 5.62 7.35 5.62H44.41c4.06 0 7.35-1.56 7.35-5.62zM31 16v-4h10v4"
-                                                    />
-                                                    <path fill="#9b9b9a" d="M51 37v20.621L48.3 60H33z" />
-                                                    <path fill="#FFF" d="M17 16h38v4H17z" />
-                                                    <path
-                                                        fill="none"
-                                                        stroke="#ff0000"
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        strokeMiterlimit="10"
-                                                        strokeWidth="2"
-                                                        d="M31 16v-4h10v4m10 9v31a4 4 0 0 1-4 4H25a4 4 0 0 1-4-4V25m-4-9h38v4H17zm24 12.25V55M31 28.25V55"
-                                                    />
-                                                </svg>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                <div className="group-input">
-                                    <label id="icon-flex"><b>Abbreviation</b>
-                                        <svg
-                                            onClick={handleAddButton}
-                                            width="20"
-                                            height="20"
-                                            viewBox="0 0 24 24"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                            <path
-                                                fill="#000000"
-                                                d="M19.5 7.05h-7L9.87 3.87a1 1 0 0 0-.77-.37H4.5A2.47 2.47 0 0 0 2 5.93v12.14a2.47 2.47 0 0 0 2.5 2.43h15a2.47 2.47 0 0 0 2.5-2.43V9.48a2.47 2.47 0 0 0-2.5-2.43M14 15h-1v1a1 1 0 0 1-2 0v-1h-1a1 1 0 0 1 0-2h1v-1a1 1 0 0 1 2 0v1h1a1 1 0 0 1 0 2"
-                                            />
-                                        </svg>
-                                    </label>
-
-                                    <div className="option-grid">
-                                        {options.map((option) => (
-                                            <div key={option.id}>
-                                                <input type="text" name="option" />
-                                                <input type="radio" name="option" />
-                                                <svg
-                                                    width="24"
-                                                    height="24"
-                                                    viewBox="0 0 72 72"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    onClick={() => handleDeleteOption(option.id)}
-                                                >
-                                                    <path
-                                                        fill="#FFF"
-                                                        d="M51.76 17H20.153v37.65c0 4.06 3.29 5.62 7.35 5.62H44.41c4.06 0 7.35-1.56 7.35-5.62zM31 16v-4h10v4"
-                                                    />
-                                                    <path fill="#9b9b9a" d="M51 37v20.621L48.3 60H33z" />
-                                                    <path fill="#FFF" d="M17 16h38v4H17z" />
-                                                    <path
-                                                        fill="none"
-                                                        stroke="#ff0000"
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        strokeMiterlimit="10"
-                                                        strokeWidth="2"
-                                                        d="M31 16v-4h10v4m10 9v31a4 4 0 0 1-4 4H25a4 4 0 0 1-4-4V25m-4-9h38v4H17zm24 12.25V55M31 28.25V55"
-                                                    />
-                                                </svg>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-
-
-                                <div className="group-input">
-                                    <label id="icon-flex"><b>Definition</b>
-                                        <svg
-                                            onClick={handleAddDefinition}
-                                            width="20"
-                                            height="20"
-                                            viewBox="0 0 24 24"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                            <path
-                                                fill="#000000"
-                                                d="M19.5 7.05h-7L9.87 3.87a1 1 0 0 0-.77-.37H4.5A2.47 2.47 0 0 0 2 5.93v12.14a2.47 2.47 0 0 0 2.5 2.43h15a2.47 2.47 0 0 0 2.5-2.43V9.48a2.47 2.47 0 0 0-2.5-2.43M14 15h-1v1a1 1 0 0 1-2 0v-1h-1a1 1 0 0 1 0-2h1v-1a1 1 0 0 1 2 0v1h1a1 1 0 0 1 0 2"
-                                            />
-                                        </svg>
-                                    </label>
-                                    <div className="option-grid">
-                                        {definition.map((definition) => (
-                                            <div key={definition.id}>
-                                                <input type="text" name="definition" value={definition.value} />
-                                                <input type="radio" name="definition" />
-                                                <svg
-                                                    width="24"
-                                                    height="24"
-                                                    viewBox="0 0 72 72"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    onClick={() => handleDeleteDefinition(definition.id)}
-                                                >
-                                                    <path
-                                                        fill="#FFF"
-                                                        d="M51.76 17H20.153v37.65c0 4.06 3.29 5.62 7.35 5.62H44.41c4.06 0 7.35-1.56 7.35-5.62zM31 16v-4h10v4"
-                                                    />
-                                                    <path fill="#9b9b9a" d="M51 37v20.621L48.3 60H33z" />
-                                                    <path fill="#FFF" d="M17 16h38v4H17z" />
-                                                    <path
-                                                        fill="none"
-                                                        stroke="#ff0000"
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        strokeMiterlimit="10"
-                                                        strokeWidth="2"
-                                                        d="M31 16v-4h10v4m10 9v31a4 4 0 0 1-4 4H25a4 4 0 0 1-4-4V25m-4-9h38v4H17zm24 12.25V55M31 28.25V55"
-                                                    />
-                                                </svg>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                <div className="group-input">
-                                    <label id="icon-flex"><b>Materials and Equipments</b>
-                                        <svg
-                                            onClick={handleAddMaterials}
-                                            width="20"
-                                            height="20"
-                                            viewBox="0 0 24 24"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                            <path
-                                                fill="#000000"
-                                                d="M19.5 7.05h-7L9.87 3.87a1 1 0 0 0-.77-.37H4.5A2.47 2.47 0 0 0 2 5.93v12.14a2.47 2.47 0 0 0 2.5 2.43h15a2.47 2.47 0 0 0 2.5-2.43V9.48a2.47 2.47 0 0 0-2.5-2.43M14 15h-1v1a1 1 0 0 1-2 0v-1h-1a1 1 0 0 1 0-2h1v-1a1 1 0 0 1 2 0v1h1a1 1 0 0 1 0 2"
-                                            />
-                                        </svg>
-                                    </label>
-
-                                    <div className="option-grid">
-                                        {materials.map((materials) => (
-                                            <div key={materials.id}>
-                                                <input type="text" name="materials" value={materials.value} />
-                                                <input type="radio" name="materials" />
-                                                <svg
-                                                    width="24"
-                                                    height="24"
-                                                    viewBox="0 0 72 72"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    onClick={() => handleDeleteMaterials(materials.id)}
-                                                >
-                                                    <path
-                                                        fill="#FFF"
-                                                        d="M51.76 17H20.153v37.65c0 4.06 3.29 5.62 7.35 5.62H44.41c4.06 0 7.35-1.56 7.35-5.62zM31 16v-4h10v4"
-                                                    />
-                                                    <path fill="#9b9b9a" d="M51 37v20.621L48.3 60H33z" />
-                                                    <path fill="#FFF" d="M17 16h38v4H17z" />
-                                                    <path
-                                                        fill="none"
-                                                        stroke="#ff0000"
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        strokeMiterlimit="10"
-                                                        strokeWidth="2"
-                                                        d="M31 16v-4h10v4m10 9v31a4 4 0 0 1-4 4H25a4 4 0 0 1-4-4V25m-4-9h38v4H17zm24 12.25V55M31 28.25V55"
-                                                    />
-                                                </svg>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                <div className="group-input">
-                                    <label><b>Procedure</b></label>
-                                    <div className="text-Annexure">
-                                        <Editor
-                                            apiKey='eg5xrowq8159t7p0vp3nchrbj2gkp5ahucpos8nl3o8lanf9'
-                                            init={{
-                                                height: 200,
-                                                width: '100%',
-                                                plugins: 'ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss',
-                                                toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-                                                tinycomments_mode: 'embedded',
-                                                tinycomments_author: 'Author name',
-                                                mergetags_list: [
-                                                    { value: 'First.Name', title: 'First Name' },
-                                                    { value: 'Email', title: 'Email' },
-                                                ],
-                                                ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
-                                            }}
-                                            initialValue="<b>Procedure Box:-</b1>"
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className="group-input">
-                                    <label id="icon-flex"><b>Reporting</b>
-                                        <svg
-                                            onClick={handleAddReporting}
-                                            width="20"
-                                            height="20"
-                                            viewBox="0 0 24 24"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                            <path
-                                                fill="#000000"
-                                                d="M19.5 7.05h-7L9.87 3.87a1 1 0 0 0-.77-.37H4.5A2.47 2.47 0 0 0 2 5.93v12.14a2.47 2.47 0 0 0 2.5 2.43h15a2.47 2.47 0 0 0 2.5-2.43V9.48a2.47 2.47 0 0 0-2.5-2.43M14 15h-1v1a1 1 0 0 1-2 0v-1h-1a1 1 0 0 1 0-2h1v-1a1 1 0 0 1 2 0v1h1a1 1 0 0 1 0 2"
-                                            />
-                                        </svg>
-                                    </label>
-
-                                    <div className="option-grid">
-                                        {reporting.map((reporting) => (
-                                            <div key={reporting.id}>
-                                                <input type="text" name="reporting" value={reporting.value} />
-                                                <input type="radio" name="reporting" />
-                                                <svg
-                                                    width="24"
-                                                    height="24"
-                                                    viewBox="0 0 72 72"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    onClick={() => handleDeleteReporting(reporting.id)}
-                                                >
-                                                    <path
-                                                        fill="#FFF"
-                                                        d="M51.76 17H20.153v37.65c0 4.06 3.29 5.62 7.35 5.62H44.41c4.06 0 7.35-1.56 7.35-5.62zM31 16v-4h10v4"
-                                                    />
-                                                    <path fill="#9b9b9a" d="M51 37v20.621L48.3 60H33z" />
-                                                    <path fill="#FFF" d="M17 16h38v4H17z" />
-                                                    <path
-                                                        fill="none"
-                                                        stroke="#ff0000"
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        strokeMiterlimit="10"
-                                                        strokeWidth="2"
-                                                        d="M31 16v-4h10v4m10 9v31a4 4 0 0 1-4 4H25a4 4 0 0 1-4-4V25m-4-9h38v4H17zm24 12.25V55M31 28.25V55"
-                                                    />
-                                                </svg>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                <div className="group-input">
-                                    <label id="icon-flex"><b>References</b>
-                                        <svg
-                                            onClick={handleAddReferences}
-                                            width="20"
-                                            height="20"
-                                            viewBox="0 0 24 24"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                            <path
-                                                fill="#000000"
-                                                d="M19.5 7.05h-7L9.87 3.87a1 1 0 0 0-.77-.37H4.5A2.47 2.47 0 0 0 2 5.93v12.14a2.47 2.47 0 0 0 2.5 2.43h15a2.47 2.47 0 0 0 2.5-2.43V9.48a2.47 2.47 0 0 0-2.5-2.43M14 15h-1v1a1 1 0 0 1-2 0v-1h-1a1 1 0 0 1 0-2h1v-1a1 1 0 0 1 2 0v1h1a1 1 0 0 1 0 2"
-                                            />
-                                        </svg>
-                                    </label>
-
-                                    <div className="option-grid">
-                                        {references.map((references) => (
-                                            <div key={references.id}>
-                                                <input type="text" name="references" value={references.value} />
-                                                <input type="radio" name="references" />
-                                                <svg
-                                                    width="24"
-                                                    height="24"
-                                                    viewBox="0 0 72 72"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    onClick={() => handleDeleteReferences(references.id)}
-                                                >
-                                                    <path
-                                                        fill="#FFF"
-                                                        d="M51.76 17H20.153v37.65c0 4.06 3.29 5.62 7.35 5.62H44.41c4.06 0 7.35-1.56 7.35-5.62zM31 16v-4h10v4"
-                                                    />
-                                                    <path fill="#9b9b9a" d="M51 37v20.621L48.3 60H33z" />
-                                                    <path fill="#FFF" d="M17 16h38v4H17z" />
-                                                    <path
-                                                        fill="none"
-                                                        stroke="#ff0000"
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        strokeMiterlimit="10"
-                                                        strokeWidth="2"
-                                                        d="M31 16v-4h10v4m10 9v31a4 4 0 0 1-4 4H25a4 4 0 0 1-4-4V25m-4-9h38v4H17zm24 12.25V55M31 28.25V55"
-                                                    />
-                                                </svg>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                <div className="group-input">
-                                    <Grid
-                                        label={annexure.label}
-                                        required={annexure.required}
-                                        instruction={annexure.instruction}
-                                        columnList={annexure.columnList}
-                                    />
-                                </div>
-
-                                <div>
-                                    <Grid
-                                        label={revisionhistory.label}
-                                        required={revisionhistory.required}
-                                        instruction={revisionhistory.instruction}
-                                        columnList={revisionhistory.columnList}
-                                    />
-                                </div>
-
-
-                            </div>
-                        </div>
-
-                    ) : form === formList[3] ? (
-                        <div className='document-form'>
-                            <div className='details-form-data'>
-                                <div className="sub-head">
-                                    Annexure
-                                </div>
-                                <div className="text-Annexure">
-                                    <Editor
-                                        apiKey='eg5xrowq8159t7p0vp3nchrbj2gkp5ahucpos8nl3o8lanf9'
-                                        init={{
-                                            height: 200,
-                                            width: '100%',
-                                            plugins: 'ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss',
-                                            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-                                            tinycomments_mode: 'embedded',
-                                            tinycomments_author: 'Author name',
-                                            mergetags_list: [
-                                                { value: 'First.Name', title: 'First Name' },
-                                                { value: 'Email', title: 'Email' },
-                                            ],
-                                            ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
-                                        }}
-                                        initialValue="<b>Welcome to Annexure !=> </b1>"
-                                    />
-                                </div>
-                                <div className="text-Annexure">
-                                    <Editor
-                                        apiKey='eg5xrowq8159t7p0vp3nchrbj2gkp5ahucpos8nl3o8lanf9'
-                                        init={{
-                                            height: 200,
-                                            width: '100%',
-                                            plugins: 'ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss',
-                                            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-                                            tinycomments_mode: 'embedded',
-                                            tinycomments_author: 'Author name',
-                                            mergetags_list: [
-                                                { value: 'First.Name', title: 'First Name' },
-                                                { value: 'Email', title: 'Email' },
-                                            ],
-                                            ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
-                                        }}
-                                        initialValue="<b>Welcome to Annexure !=> </b1>"
-                                    />
-                                </div>
-
-
-                            </div>
-                        </div>
-
-                    ) : form === formList[4] ? (
+                    ) : form === formList[9] ? (
                         <div className='document-form'>
                             <div className='details-form-data'>
                                 <div className="sub-head">
@@ -1134,16 +1130,14 @@ function DocumentPanel() {
                                 </div>
                             </div>
                         </div>
-
-                    ) : form === formList[5] ? (
+                    ) : form === formList[10] ? (
                         <div className='document-form'>
                             <div className='details-form-data'>
                                 <div className="sub-head">
                                     Print Permissions
                                 </div>
-
                                 <div className="group-input">
-                                    <label><b>Person Print Permission</b></label>
+                                    <label>Person Print Permission</label>
                                     <MultiSelect
                                         options={PersonPrintPermission}
                                         value={selected}
@@ -1151,7 +1145,6 @@ function DocumentPanel() {
                                         labelledBy="Select"
                                     />
                                 </div>
-
                                 <div className="group-input">
                                     <table className="table-bordered table">
                                         <thead>
@@ -1176,48 +1169,11 @@ function DocumentPanel() {
                                         </tbody>
                                     </table>
                                 </div>
-
-                                <div className="group-input">
-                                    <label><b>Group Print Permission</b></label>
-                                    <MultiSelect
-                                        options={GroupPrintPermission}
-                                        value={selected}
-                                        onChange={setSelected}
-                                        labelledBy="Select"
-                                    />
-                                </div>
-
-                                <div className="group-input">
-                                    <table className="table-bordered table">
-                                        <thead>
-                                            <tr>
-                                                <th className="person">Group</th>
-                                                <th className="permission">Daily</th>
-                                                <th className="permission">Weekly</th>
-                                                <th className="permission">Monthly</th>
-                                                <th className="permission">Quarterly</th>
-                                                <th className="permission">Annually</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td className="person">QA</td>
-                                                <td className="permission">1</td>
-                                                <td className="permission">54</td>
-                                                <td className="permission">654</td>
-                                                <td className="permission">765</td>
-                                                <td className="permission">654</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-
                                 <div className="sub-head">
                                     Download Permissions
                                 </div>
-
                                 <div className="group-input">
-                                    <label><b>Person Download Permission</b></label>
+                                    <label>Person Download Permission</label>
                                     <MultiSelect
                                         options={PersonDownloadPermission}
                                         value={selected}
@@ -1225,7 +1181,6 @@ function DocumentPanel() {
                                         labelledBy="Select"
                                     />
                                 </div>
-
                                 <div className="group-input">
                                     <table className="table-bordered table">
                                         <thead>
@@ -1250,49 +1205,11 @@ function DocumentPanel() {
                                         </tbody>
                                     </table>
                                 </div>
-
-                                <div className="group-input">
-                                    <label><b>Group Download Permission</b></label>
-                                    <MultiSelect
-                                        options={GroupDownloadPermission}
-                                        value={selected}
-                                        onChange={setSelected}
-                                        labelledBy="Select"
-                                    />
-                                </div>
-
-                                <div className="group-input">
-                                    <table className="table-bordered table">
-                                        <thead>
-                                            <tr>
-                                                <th className="person">Group</th>
-                                                <th className="permission">Daily</th>
-                                                <th className="permission">Weekly</th>
-                                                <th className="permission">Monthly</th>
-                                                <th className="permission">Quarterly</th>
-                                                <th className="permission">Annually</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td className="person">QA</td>
-                                                <td className="permission">1</td>
-                                                <td className="permission">54</td>
-                                                <td className="permission">654</td>
-                                                <td className="permission">765</td>
-                                                <td className="permission">654</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
                             </div>
                         </div>
-
-                    ) : form === formList[6] ? (
+                    ) : form === formList[11] ? (
                         <div className='document-form'>
                             <div className='details-form-data'>
-
-
                                 <div className="activity-log-field">
                                     <div>
                                         <strong> Review Proposed By:&nbsp;</strong>Shaleen Mishra
@@ -1301,16 +1218,14 @@ function DocumentPanel() {
                                         <strong> Review Proposed On:&nbsp;</strong>15 Jan, 2023 11:00 PM
                                     </div>
                                 </div>
-
                                 <div className="activity-log-field">
                                     <div>
-                                        <strong> Document Reuqest Approved By:&nbsp;</strong>Amit Patel
+                                        <strong> Document Request Approved By:&nbsp;</strong>Amit Patel
                                     </div>
                                     <div>
-                                        <strong>Document Reuqest Approved On:&nbsp;</strong>15 Jan, 2023 11:00 PM
+                                        <strong>Document Request Approved On:&nbsp;</strong>15 Jan, 2023 11:00 PM
                                     </div>
                                 </div>
-
                                 <div className="activity-log-field">
                                     <div>
                                         <strong>Document Writing Completed By:&nbsp;</strong> Amit Guru
@@ -1319,16 +1234,14 @@ function DocumentPanel() {
                                         <strong>Document Writing Completed On:&nbsp;</strong>15 Jan, 2023 11:00 PM
                                     </div>
                                 </div>
-
                                 <div className="activity-log-field">
                                     <div>
-                                        <strong>Reviewd By:&nbsp;</strong> Amit Guru
+                                        <strong>Reviewed By:&nbsp;</strong> Amit Guru
                                     </div>
                                     <div>
-                                        <strong>Reviewd On:&nbsp;</strong>15 Jan, 2023 11:00 PM
+                                        <strong>Reviewed On:&nbsp;</strong>15 Jan, 2023 11:00 PM
                                     </div>
                                 </div>
-
                                 <div className="activity-log-field">
                                     <div>
                                         <strong>Approved By:&nbsp;</strong> Shaleen Mishra
@@ -1337,14 +1250,12 @@ function DocumentPanel() {
                                         <strong>Approved On:&nbsp;</strong>15 Jan, 2023 11:00 PM
                                     </div>
                                 </div>
-
                             </div>
-
                         </div>
                     ) : ''}
                 </div>
 
-                <div className="button-block" style={asideWorkFlow || asideFamilyTree ? { 'width': 'calc(100% - 300px)' } : { 'width': '100%' }}>
+                <div className="button-block">
                     <button className='themeBtn'>Save</button>
                     <button className='themeBtn'>Back</button>
                     <button className='themeBtn'>Next</button>

@@ -1,9 +1,11 @@
 import { useState } from "react";
 import "./HeaderBottom.css";
 import { Link } from "react-router-dom";
+import CreateRecordModal from "../Modals/CreateRecordModal/CreateRecordModal";
 
 function HeaderBottom() {
-
+    const [recordModal, setRecordModal] = useState(false)
+    const closeRecordModal = () =>  setRecordModal(false)
     return (
         <>
             <div className="Header_Bottom">
@@ -35,12 +37,12 @@ function HeaderBottom() {
                         </Link>
                     </div>
                     <div className="headerBottomRgt">
-                        <Link to='/popup'>
-                            <button >Initiate Record</button>
-                        </Link>
+                        <div className="themeBtn" onClick={() => setRecordModal(true)}>Initiate Record</div>
                     </div>
                 </div>
             </div>
+
+            {recordModal && <CreateRecordModal closeModal={closeRecordModal} />}
         </>
     )
 }

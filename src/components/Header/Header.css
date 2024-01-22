@@ -112,6 +112,11 @@ tr:nth-child(2n) textarea {
     gap: 10px;
 }
 
+.group-input label.color-label {
+    background: #80808045;
+    padding: 7px 15px;
+}
+
 .group-input .instruction {
     font-size: 0.8rem;
     color: #006fc0;

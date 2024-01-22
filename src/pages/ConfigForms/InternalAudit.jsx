@@ -11,6 +11,9 @@ import "./ConfigForms.css";
 
 function InternalAudit() {
   const formList = ["General Information", "Audit Planning", "Audit Preparation", "Audit Execution", "Audit Response & Closure", "Activity Log"]
+  const site = localStorage.getItem("site")
+  const currentDate = new Date()
+  const currentYear = currentDate.getFullYear()
   const [internalAudit, setInternalAudit] = useReducer((prev, next) => ({
     ...prev, ...next
   }), {
@@ -276,7 +279,7 @@ function InternalAudit() {
               <strong> Record Name:&nbsp;</strong>Internal Audit
             </div>
             <div>
-              <strong> Site:&nbsp;</strong>EHS-North America
+              <strong> Site:&nbsp;</strong>{site}
             </div>
             <div>
               <strong> Current Status:&nbsp;</strong>Under Initiation
@@ -305,11 +308,11 @@ function InternalAudit() {
                   <div className="form-flex">
                     <div className="group-input">
                       <label>Record Number</label>
-                      <input type="text" value="Jordan/IA/2024/00000001" disabled />
+                      <input type="text" value={`${site}/IA/${currentYear}/00000001`} disabled />
                     </div>
                     <div className="group-input">
                       <label>Division</label>
-                      <input type="text" value="Jordan" disabled />
+                      <input type="text" value={site} disabled />
                     </div>
                     <div className="group-input">
                       <label>Initiator</label>

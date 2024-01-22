@@ -1,13 +1,11 @@
-import './ConfigForms.css'
-import HeaderTop from "../../components/Header/HeaderTop";
-import { useState } from 'react';
-import Grid from '../../components/DataFields/Grid';
-import InputDate from '../../components/DataFields/InputDate';
+import HeaderTop from "../../../components/Header/HeaderTop";
+import { useReducer, useState } from 'react';
+import Grid from '../../../components/DataFields/Grid';
+import InputDate from '../../../components/DataFields/InputDate';
+import { formList } from './LabIncidentFunctions';
+import '../ConfigForms.css'
 
 function LabIncident() {
-    const formList = ["Document Information", "Incident Details", "Investigation Details", "CAPA", "QA Review", "QA Head/Designee Approval", "Activity Log"]
-
-
     const [form, setForm] = useState(formList[0]);
     const [initiatorGroup, setInitiatorGroup] = useState('');
     const [asideWorkFlow, setAsideWorkFlow] = useState(false);
@@ -64,6 +62,11 @@ function LabIncident() {
             ]
         },
     ]
+    const [documentInformation, setDocumentInformation] = useReducer((prev, next) => ({
+        ...prev, ...next
+    }), {
+        initiatorGroup: ''
+    })
 
     return (
         <>
@@ -493,7 +496,7 @@ function LabIncident() {
 
                                     <div className='activity-log-field'>
                                         <div>
-                                            <strong> QA Review Completed By:&nbsp;</strong>Gopal 
+                                            <strong> QA Review Completed By:&nbsp;</strong>Gopal
                                         </div>
                                         <div>
                                             <strong>QA Review Completed On:&nbsp;</strong>15 Jan, 2023 11:00 PM
@@ -502,7 +505,7 @@ function LabIncident() {
 
                                     <div className='activity-log-field'>
                                         <div>
-                                            <strong>QA Head Approval Completed By:&nbsp;</strong>Amit Patel 
+                                            <strong>QA Head Approval Completed By:&nbsp;</strong>Amit Patel
                                         </div>
                                         <div>
                                             <strong>QA Head Approval Completed On:&nbsp;</strong>15 Jan, 2023 11:00 PM
@@ -513,7 +516,7 @@ function LabIncident() {
 
                                     <div className='activity-log-field'>
                                         <div>
-                                            <strong>Cancelled By:&nbsp;</strong>Amit Guru 
+                                            <strong>Cancelled By:&nbsp;</strong>Amit Guru
                                         </div>
                                         <div>
                                             <strong>Cancelled On:&nbsp;</strong>15 Jan, 2023 11:00 PM

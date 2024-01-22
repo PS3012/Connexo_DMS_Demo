@@ -7,13 +7,12 @@ import FlexField from "../../components/DataFields/FlexField";
 import RelatedRecords from "../../components/DataFields/RelatedRecords";
 import HeaderBottom from "../../components/Header/HeaderBottom";
 
-function RiskAssesmentPanel() {
+function RiskAssessmentPanel() {
     const [form, setForm] = useState("Risk Assesment");
     const [groupComment, setGroupComment] = useState(0);
     const [selected, setSelected] = useState([]);
     const [asideWorkFlow, setAsideWorkFlow] = useState(false)
     const [asideFamilyTree, setAsideFamilyTree] = useState(false)
-
     const records = [
         { label: "Select Department", value: "Select Department" },
         { label: "QA", value: "QA" },
@@ -22,17 +21,12 @@ function RiskAssesmentPanel() {
         { label: "Manufacuring", value: "Manufacuring" },
         { label: "Warehouse", value: "Warehouse" },
     ];
-
-    const refrenceRecord = [
-        // { label: "---Select---", value: "Select" },
-    ];
     const rootCause = [
         { label: "Why-Why Chart", value: "Why-Why Chart" },
         { label: "Failure Mode and Efect Analysis", value: "Failure Mode and Efect Analysis" },
         { label: "Fishbone or Ishikawa Diagram", value: "Fishbone or Ishikawa Diagram" },
         { label: "Is/Is Not Analysis", value: "Is/Is Not Analysis" },
     ];
-
     const team = [
         { label: "Select Team Member", value: "Select Team Member" },
         { label: "Amit Guru", value: "Amit Guru" },
@@ -42,7 +36,6 @@ function RiskAssesmentPanel() {
         { label: "Shaleen Mishra", value: "Shaleen Mishra" },
         { label: "Madhulika Mishra", value: "Madhulika Mishra" },
     ];
-
     const docFile = [
         {
             label: "Action Plan",
@@ -56,7 +49,6 @@ function RiskAssesmentPanel() {
             ],
         },
     ];
-
     const FailureModenEffectAnalysis = [
         {
             label: "Failure Mode and Effect Analysis",
@@ -82,7 +74,6 @@ function RiskAssesmentPanel() {
             ],
         },
     ];
-
     const attachment = [
         {
             label: "Initial attachment",
@@ -95,8 +86,6 @@ function RiskAssesmentPanel() {
             ],
         },
     ];
-
-
     const Mitigation = [
         {
             label: "Mitigation Plan Details",
@@ -111,8 +100,6 @@ function RiskAssesmentPanel() {
             ],
         },
     ];
-
-    // ------------------Record Workflow-------------
     const progressItems = [
         { id: 1, name: 'Opened', details: 'Document is opened at 10 Jan, 2023 11:12PM' },
         { id: 2, name: 'HOD Review', details: 'Action Item child can be created at this stage.' },
@@ -1351,4 +1338,4 @@ function RiskAssesmentPanel() {
     )
 }
 
-export default RiskAssesmentPanel
+export default RiskAssessmentPanel
