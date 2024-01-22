@@ -263,15 +263,7 @@ function LabIncident() {
                                                 <option value="Others">Others</option>
                                             </select>
                                         </div>
-                                        <div className='group-input'>
-                                            <label>Invocation Type</label>
-                                            <select name="Invocation_Type">
-                                                <option value="">Enter Your Selection Here</option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                            </select>
-                                        </div>
+                                       
                                     </div>
                                     <div className="group-input">
                                         <Grid
@@ -326,7 +318,6 @@ function LabIncident() {
                         ) : form === formList[2] ? (
                             <div className='document-form'>
                                 <div className='details-form-data'>
-                                    <div className="sub-head">Questionnaire</div>
 
                                     <div className='group-input'>
                                         <Grid

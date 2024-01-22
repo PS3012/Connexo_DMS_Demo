@@ -59,7 +59,6 @@ function InternalAuditPanel() {
         { id: "2.1.1.3", name: "Auditor", type: "select" },
         { id: "2.1.1.4", name: "Auditee", type: "select" },
         { id: "2.1.1.5", name: "Observation Description", type: "text" },
-        { id: "2.1.1.6", name: "Severity Level", type: "text" },
         { id: "2.1.1.7", name: "Area/process", type: "text" },
         { id: "2.1.1.8", name: "Observation Category", type: "text" },
         { id: "2.1.1.9", name: "CAPA Required", type: "select" },
@@ -525,7 +524,7 @@ function InternalAuditPanel() {
                       />
                     </div>
                     <div className="group-input">
-                      <label>Division</label>
+                      <label>Site/Location Code</label>
                       <input type="text" value="Jordan" disabled />
                     </div>
                     <div className="group-input">
@@ -598,10 +597,19 @@ function InternalAuditPanel() {
                   </div>
                   <div className="group-input">
                     <label>
-                      <div className="require"></div>
                       Short Description
                     </label>
-                    <input type="text" />
+                    <textarea type="text" rows="2" />
+                  </div>
+
+                  <div className="group-input">
+                    <label>Severity Level</label>
+                    <select>
+                      <option value="">-- Select --</option>
+                      <option value="">Major</option>
+                      <option value="">Minor</option>
+                      <option value="">Critical</option>
+                    </select>
                   </div>
                   <div className="form-flex">
                     <div className="group-input">
@@ -745,14 +753,7 @@ function InternalAuditPanel() {
                     instruction={docFile[1].instruction}
                     columnList={docFile[1].columnList}
                   />
-                  <div className="group-input">
-                    <Grid
-                      label={ObservationFields[0].label}
-                      required={ObservationFields[0].required}
-                      instruction={ObservationFields[0].instruction}
-                      columnList={ObservationFields[0].columnList}
-                    />
-                  </div>
+
                   <div className="form-flex">
                     <div className="group-input">
                       <label>Audit Team</label>
@@ -838,6 +839,14 @@ function InternalAuditPanel() {
                       label="Audit End Date"
                       isRequired="true"
                       enableDate="future"
+                    />
+                  </div>
+                  <div className="group-input">
+                    <Grid
+                      label={ObservationFields[0].label}
+                      required={ObservationFields[0].required}
+                      instruction={ObservationFields[0].instruction}
+                      columnList={ObservationFields[0].columnList}
                     />
                   </div>
                   <Grid

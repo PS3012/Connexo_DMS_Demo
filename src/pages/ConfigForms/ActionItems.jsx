@@ -52,7 +52,7 @@ function ActionItems() {
         { id: "2.1.1.3", name: "Remark", type: "text" },
       ],
     },
-   
+
   ];
 
   return (
@@ -166,7 +166,7 @@ function ActionItems() {
                       />
                     </div>
                     <div className="group-input">
-                      <label>Division Code</label>
+                      <label>Site/Location Code</label>
                       <input type="text" value="Jordan" disabled />
                     </div>
                     <div className="group-input">
@@ -203,16 +203,25 @@ function ActionItems() {
                   </div>
                   <div className="group-input">
                     <label>
-                      <div className="required"></div>
                       Short Description
                     </label>
-                    <input type="text" />
+                    <textarea type="text" rows="2" />
+                  </div>
+
+                  <div className="group-input">
+                    <label>Severity Level</label>
+                    <select>
+                      <option value="">-- Select --</option>
+                      <option value="">Major</option>
+                      <option value="">Minor</option>
+                      <option value="">Critical</option>
+                    </select>
                   </div>
                   <RelatedRecords label="Action Item Related Records" />
                   <div className="group-input">
                     <label>HOD Persons</label>
                     <MultiSelect
-                     
+
                       options={FunctionName}
                       value={selected}
                       onChange={setSelected}
@@ -322,9 +331,9 @@ function ActionItems() {
                         type="text"
                         required={internalAudit.initiatedThrough === "others"}
                       ></input>
-                    </div>                  
+                    </div>
                   </div>
-                 
+
                   <div className="group-input">
                     <Grid
                       label={docFile[0].label}
@@ -338,13 +347,13 @@ function ActionItems() {
             ) : form === formList[1] ? (
               <div className="document-form">
                 <div className="details-form-data">
-                 <div className="sub-head">Post Completion</div>
+                  <div className="sub-head">Post Completion</div>
                   <FlexField
                     label="Action Taken"
                     instruction=""
                     isRequired="false"
                   />
-                   <div className="form-flex">
+                  <div className="form-flex">
                     <InputDate
                       label="Actual Start Date"
                       isRequired="false"
@@ -366,8 +375,8 @@ function ActionItems() {
             ) : form === formList[2] ? (
               <div className="document-form">
                 <div className="details-form-data">
-                 <div className="sub-head">Action Approval</div>
-                 <FlexField
+                  <div className="sub-head">Action Approval</div>
+                  <FlexField
                     label="QA Review Comments"
                     instruction=""
                     isRequired="false"
@@ -378,8 +387,8 @@ function ActionItems() {
                     instruction=""
                     isRequired="false"
                   />
-                    
-                   
+
+
                 </div>
               </div>
             ) : form === formList[3] ? (
@@ -413,8 +422,8 @@ function ActionItems() {
                       11:00 PM
                     </div>
                   </div>
-                 
-                  
+
+
                 </div>
               </div>
             ) : (

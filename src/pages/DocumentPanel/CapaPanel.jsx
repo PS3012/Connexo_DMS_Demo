@@ -422,7 +422,7 @@ function CAPAPanel() {
 
                     <div className="group-input">
                       <label>
-                        <b>Division Code</b>
+                        <b>Site/Location Code</b>
                       </label>
                       <input type="text" value="KSA" disabled />
                     </div>
@@ -511,10 +511,19 @@ function CAPAPanel() {
 
                   <div className="group-input">
                     <label>
-                      <div className="required"></div>
                       Short Description
                     </label>
-                    <input type="text" />
+                    <textarea type="text" rows="2" />
+                  </div>
+
+                  <div className="group-input">
+                    <label>Severity Level</label>
+                    <select>
+                      <option value="">-- Select --</option>
+                      <option value="">Major</option>
+                      <option value="">Minor</option>
+                      <option value="">Critical</option>
+                    </select>
                   </div>
 
                   <div className="form-flex">

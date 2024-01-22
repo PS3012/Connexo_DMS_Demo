@@ -248,7 +248,7 @@ function Deviation() {
                                         </div>
 
                                         <div className='group-input'>
-                                            <label>Division Code</label>
+                                            <label>Site/Location Code</label>
                                         </div>
 
                                         <div className='group-input'>
@@ -303,13 +303,24 @@ function Deviation() {
                                             <input type="text" value={changeControl.initiatorGroup} disabled />
                                         </div>
 
+
                                     </div>
+
                                     <div className="group-input">
                                         <label>
-                                            <div className="require"></div>
                                             Short Description
                                         </label>
                                         <textarea type="text" rows="2" />
+                                    </div>
+
+                                    <div className="group-input">
+                                        <label>Severity Level</label>
+                                        <select>
+                                            <option value="">-- Select --</option>
+                                            <option value="">Major</option>
+                                            <option value="">Minor</option>
+                                            <option value="">Critical</option>
+                                        </select>
                                     </div>
 
                                     <div className="tripple-grid">
@@ -1542,7 +1553,7 @@ function Deviation() {
                                             <strong> Submitted On:&nbsp;</strong>15 Jan, 2023 11:00 PM
                                         </div>
                                     </div>
-                                    
+
                                     <div className="activity-log-field">
                                         <div>
                                             <strong>Review Completed By:&nbsp;</strong>Amit Guru
@@ -1551,7 +1562,7 @@ function Deviation() {
                                             <strong>Review Completed On:&nbsp;</strong>16 Jan, 2023 11:00 PM
                                         </div>
                                     </div>
-                                    
+
                                     <div className="activity-log-field">
                                         <div>
                                             <strong>QA More Info Required By:&nbsp;</strong>Shaleen Mishra
@@ -1560,7 +1571,7 @@ function Deviation() {
                                             <strong>QA More Info Required On:&nbsp;</strong>17 Jan, 2023 11:00 PM
                                         </div>
                                     </div>
-                                    
+
                                     <div className="activity-log-field">
                                         <div>
                                             <strong>QA Review Completed By:&nbsp;</strong>Shrijit Pandey
@@ -1569,7 +1580,7 @@ function Deviation() {
                                             <strong>QA Review Completed On:&nbsp;</strong>18 Jan, 2023 11:00 PM
                                         </div>
                                     </div>
-                                    
+
                                     <div className="activity-log-field">
                                         <div>
                                             <strong>Cancelled By:&nbsp;</strong>Madhulikha Mishra
@@ -1578,7 +1589,7 @@ function Deviation() {
                                             <strong>Cancelled On:&nbsp;</strong>19 Jan, 2023 11:00 PM
                                         </div>
                                     </div>
-                                    
+
                                     <div className="activity-log-field">
                                         <div>
                                             <strong>Group Feedback By:&nbsp;</strong>Amit Patel
@@ -1587,7 +1598,7 @@ function Deviation() {
                                             <strong>Group Feedback On:&nbsp;</strong>19 Jan, 2023 11:00 PM
                                         </div>
                                     </div>
-                                    
+
                                     <div className="activity-log-field">
                                         <div>
                                             <strong>Evaluation Completed By:&nbsp;</strong>Shaleen Mishra
@@ -1596,7 +1607,7 @@ function Deviation() {
                                             <strong>Evaluation Completed On:&nbsp;</strong>20 Jan, 2023 11:00 PM
                                         </div>
                                     </div>
-                                    
+
                                     <div className="activity-log-field">
                                         <div>
                                             <strong>Additional Groups Requested By:&nbsp;</strong>Manish Khatriya
@@ -1605,7 +1616,7 @@ function Deviation() {
                                             <strong>Additional Groups Requested On:&nbsp;</strong>21 Jan, 2023 11:00 PM
                                         </div>
                                     </div>
-                                    
+
                                     <div className="activity-log-field">
                                         <div>
                                             <strong>Additional Groups Selected By:&nbsp;</strong>Shiavam Patel
@@ -1614,7 +1625,7 @@ function Deviation() {
                                             <strong>Additional Groups Selected On:&nbsp;</strong>22 Jan, 2023 11:00 PM
                                         </div>
                                     </div>
-                                    
+
                                     <div className="activity-log-field">
                                         <div>
                                             <strong>Inv. Assessment Submitted By:&nbsp;</strong>Manish Malviya
@@ -1623,7 +1634,7 @@ function Deviation() {
                                             <strong>Inv. Assessment Submitted On:&nbsp;</strong>23 Jan, 2023 11:00 PM
                                         </div>
                                     </div>
-                                    
+
                                     <div className="activity-log-field">
                                         <div>
                                             <strong>Impact Assessed By:&nbsp;</strong>Harsh Mishra
@@ -1632,7 +1643,7 @@ function Deviation() {
                                             <strong>Impact Assessed On:&nbsp;</strong>24 Jan, 2023 11:00 PM
                                         </div>
                                     </div>
-                                    
+
                                     <div className="activity-log-field">
                                         <div>
                                             <strong>CAPA Submitted By:&nbsp;</strong>Amit Guru
@@ -1641,7 +1652,7 @@ function Deviation() {
                                             <strong>CAPA Submitted On:&nbsp;</strong>25 Jan, 2023 11:00 PM
                                         </div>
                                     </div>
-                                    
+
                                     <div className="activity-log-field">
                                         <div>
                                             <strong>Approved By:&nbsp;</strong>Piyush Sahu
@@ -1650,7 +1661,7 @@ function Deviation() {
                                             <strong>Approved On:&nbsp;</strong>26 Jan, 2023 11:00 PM
                                         </div>
                                     </div>
-                                    
+
                                     <div className="activity-log-field">
                                         <div>
                                             <strong>Rejected By:&nbsp;</strong>Shaleen Mishra
@@ -1659,7 +1670,7 @@ function Deviation() {
                                             <strong>Rejected On:&nbsp;</strong>27 Jan, 2023 11:00 PM
                                         </div>
                                     </div>
-                                    
+
                                     <div className="activity-log-field">
                                         <div>
                                             <strong>QA Review Closed By:&nbsp;</strong>Amit Patel

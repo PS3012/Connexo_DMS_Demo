@@ -298,7 +298,7 @@ function DocumentPanel() {
                     />
                   </div>
                   <div className="group-input">
-                    <label>Division Code</label>
+                    <label>Site/Location Code</label>
                     <input type="text" value="Jordan" disabled />
                   </div>
                   <div className="group-input">
@@ -335,10 +335,19 @@ function DocumentPanel() {
                 </div>
                 <div className="group-input">
                   <label>
-                    <div className="required"></div>
                     Short Description
                   </label>
-                  <input type="text" />
+                  <textarea type="text" rows="2" />
+                </div>
+
+                <div className="group-input">
+                  <label>Severity Level</label>
+                  <select>
+                    <option value="">-- Select --</option>
+                    <option value="">Major</option>
+                    <option value="">Minor</option>
+                    <option value="">Critical</option>
+                  </select>
                 </div>
                 <RelatedRecords label="Action Item Related Records" />
                 <div className="group-input">
@@ -541,11 +550,11 @@ function DocumentPanel() {
           )}
         </div>
         <div className="button-block" style={{ width: "100%" }}>
-            <button className="themeBtn">Save</button>
-            <button className="themeBtn">Back</button>
-            <button className="themeBtn">Next</button>
-            <button className="themeBtn">Exit</button>
-          </div>
+          <button className="themeBtn">Save</button>
+          <button className="themeBtn">Back</button>
+          <button className="themeBtn">Next</button>
+          <button className="themeBtn">Exit</button>
+        </div>
       </div>
 
       {signatureModal && (

@@ -5,34 +5,120 @@ import Grid from "../../components/DataFields/Grid";
 import InputDate from "../../components/DataFields/InputDate";
 import FlexField from "../../components/DataFields/FlexField";
 import RelatedRecords from "../../components/DataFields/RelatedRecords";
+import { MultiSelect } from 'react-multi-select-component';
+
 
 function CAPA() {
   const [form, setForm] = useState("General Information");
+  const [selected, setSelected] = useState([]);
+
   const [code, setCode] = useState("");
   const [asideWorkFlow, setAsideWorkFlow] = useState(false);
   const [asideFamilyTree, setAsideFamilyTree] = useState(false);
   const [groupComment, setGroupComment] = useState(0);
-  const [changeControl, setChangeControl] = useReducer(
-    (prev, next) => ({
-      ...prev,
-      ...next,
-    }), {
-      initiatorGroup: "",
-      initiatedThrough: "",
-      typeOfAudit: "",
-    }
-  );
+
   const [option, setOption] = useState("");
   const handleOptionChange = (event) => {
     setOption(event.target.value);
   };
-  const [selectedForm, setSelectedForm] = useState(''); 
+  const [selectedForm, setSelectedForm] = useState('');
   const handleFormChange = (event) => {
     setSelectedForm(event.target.value);
   };
+  const CFTReviewer = [
+    { label: "Anshul Patel", value: "1" },
+    { label: "Mango", value: "mango", disabled: true },
+    { label: "Amit", value: "2" },
+  ];
+  const [changeControl, setChangeControl] = useReducer((prev, next) => ({
+    ...prev, ...next
+  }), {
+    shortDescription: '',
+    initiatorGroup: '',
+    initiatedThrough: '',
+    repeat: '',
+    trainingRequired: '',
+    typeOfChange: 0,
+    severityRate: 0,
+    occurrence: 0,
+    detection: 0,
+    CFTReviewers: 0,
+    groupReviewRequired: 0,
+    production: 0,
+    productionPerson: 0,
+    qualityApprover: 0,
+    qualityApproverPerson: 0,
+    others: 0,
+    othersPerson: 0
+  })
   const docFile = [
     {
-      label: "CAPA Attachments",
+      label: "Initial attachment",
+      instruction: "Please Attach all relevant or supporting documents",
+      required: false,
+      columnList: [
+        { id: '2.1.1.1', name: 'Title of Document', type: 'text' },
+        { id: '2.1.1.2', name: 'Attached File', type: 'File' },
+        { id: '2.1.1.3', name: 'Remark', type: 'text' },
+      ]
+    },
+    {
+      label: 'QA Attachments',
+      instruction: 'Please Attach all relevant or supporting documents',
+      required: false,
+      columnList: [
+        { id: '2.1.1.1', name: 'Title of Document', type: 'text' },
+        { id: '2.1.1.2', name: 'Attached File', type: 'File' },
+        { id: '2.1.1.3', name: 'Remark', type: 'text' },
+      ]
+    }, {
+      label: 'QA Attachments',
+      instruction: 'Please Attach all relevant or supporting documents',
+      required: false,
+      columnList: [
+        { id: '2.1.1.1', name: 'Title of Document', type: 'text' },
+        { id: '2.1.1.2', name: 'Attached File', type: 'File' },
+        { id: '2.1.1.3', name: 'Remark', type: 'text' },
+      ]
+    }, {
+      label: 'QA Attachments',
+      instruction: 'Please Attach all relevant or supporting documents',
+      required: false,
+      columnList: [
+        { id: '2.1.1.1', name: 'Title of Document', type: 'text' },
+        { id: '2.1.1.2', name: 'Attached File', type: 'File' },
+        { id: '2.1.1.3', name: 'Remark', type: 'text' },
+      ]
+    }, {
+      label: 'CFT Attachments',
+      instruction: 'Please Attach all relevant or supporting documents',
+      required: false,
+      columnList: [
+        { id: '2.1.1.1', name: 'Title of Document', type: 'text' },
+        { id: '2.1.1.2', name: 'Attached File', type: 'File' },
+        { id: '2.1.1.3', name: 'Remark', type: 'text' },
+      ]
+    }, {
+      label: 'Training Attachments',
+      instruction: 'Please Attach all relevant or supporting documents',
+      required: false,
+      columnList: [
+        { id: '2.1.1.1', name: 'Title of Document', type: 'text' },
+        { id: '2.1.1.2', name: 'Attached File', type: 'File' },
+        { id: '2.1.1.3', name: 'Remark', type: 'text' },
+      ]
+    }, {
+      label: 'List of Attachments',
+      instruction: 'Please Attach all relevant or supporting documents',
+      required: false,
+      columnList: [
+        { id: '2.1.1.1', name: 'Title of Document', type: 'text' },
+        { id: '2.1.1.2', name: 'Attached File', type: 'File' },
+        { id: '2.1.1.3', name: 'Remark', type: 'text' },
+      ]
+    },
+    {
+      label: "QA Attachments",
       instruction: "Please Attach all relevant or supporting documents",
       required: false,
       columnList: [
@@ -42,7 +128,47 @@ function CAPA() {
       ],
     },
     {
-      label: "Closure Attachment",
+      label: "QA Attachments",
+      instruction: "Please Attach all relevant or supporting documents",
+      required: false,
+      columnList: [
+        { id: "2.1.1.1", name: "Title of Document", type: "text" },
+        { id: "2.1.1.2", name: "Attached File", type: "File" },
+        { id: "2.1.1.3", name: "Remark", type: "text" },
+      ],
+    },
+    {
+      label: "QA Attachments",
+      instruction: "Please Attach all relevant or supporting documents",
+      required: false,
+      columnList: [
+        { id: "2.1.1.1", name: "Title of Document", type: "text" },
+        { id: "2.1.1.2", name: "Attached File", type: "File" },
+        { id: "2.1.1.3", name: "Remark", type: "text" },
+      ],
+    },
+    {
+      label: "CFT Attachments",
+      instruction: "Please Attach all relevant or supporting documents",
+      required: true,
+      columnList: [
+        { id: "2.1.1.1", name: "Title of Document", type: "text" },
+        { id: "2.1.1.2", name: "Attached File", type: "File" },
+        { id: "2.1.1.3", name: "Remark", type: "text" },
+      ],
+    },
+    {
+      label: "Training Attachments",
+      instruction: "Please Attach all relevant or supporting documents",
+      required: true,
+      columnList: [
+        { id: "2.1.1.1", name: "Title of Document", type: "text" },
+        { id: "2.1.1.2", name: "Attached File", type: "File" },
+        { id: "2.1.1.3", name: "Remark", type: "text" },
+      ],
+    },
+    {
+      label: "List of Attachments",
       instruction: "Please Attach all relevant or supporting documents",
       required: true,
       columnList: [
@@ -240,21 +366,9 @@ function CAPA() {
                     <div className="container-fluid">
                       <div className="document-block">
                         <div className="document-tabs">
-                          <div
-                            className={
-                              form === "General Information" ? "active" : ""
-                            }
-                            onClick={() => setForm("General Information")}
-                          >
-                            General Information
-                          </div>
+                          <div className={form === "General Information" ? "active" : ""} onClick={() => ("General Information")}>General Information</div>
 
-                          <div
-                            className={
-                              form === "Product Information" ? "active" : ""
-                            }
-                            onClick={() => setForm("Product Information")}
-                          >
+                          <div className={form === "Product Information" ? "active" : ""} onClick={() => setForm("Product Information")}>
                             Product Information
                           </div>
 
@@ -263,6 +377,19 @@ function CAPA() {
                             onClick={() => setForm("CAPA Details")}
                           >
                             CAPA Details
+                          </div>
+
+                          <div
+                            className={form === "Additional Information" ? "active" : ""}
+                            onClick={() => setForm("Additional Information")}
+                          >
+                            Additional Information
+                          </div>
+                          <div
+                            className={form === "Group Comments" ? "active" : ""}
+                            onClick={() => setForm("Group Comments")}
+                          >
+                            Group Comments
                           </div>
 
                           <div
@@ -308,7 +435,7 @@ function CAPA() {
 
                                 <div className="group-input">
                                   <label>
-                                    <b>Division Code</b>
+                                    <b>Site/Location Code</b>
                                   </label>
                                   <input type="text" value="KSA" disabled />
                                 </div>
@@ -436,12 +563,20 @@ function CAPA() {
 
                               <div className="group-input">
                                 <label>
-                                  <div className="required"></div>
                                   Short Description
                                 </label>
-                                <input type="text" />
+                                <textarea type="text" rows="2" />
                               </div>
 
+                              <div className="group-input">
+                                <label>Severity Level</label>
+                                <select>
+                                  <option value="">-- Select --</option>
+                                  <option value="">Major</option>
+                                  <option value="">Minor</option>
+                                  <option value="">Critical</option>
+                                </select>
+                              </div>
                               <div className="form-flex">
                                 <div className="group-input">
                                   <label>
@@ -484,11 +619,10 @@ function CAPA() {
                                   <label>
                                     {changeControl.initiatedThrough ===
                                       "others" && (
-                                      <div className="required"></div>
-                                    )}
+                                        <div className="required"></div>
+                                      )}
                                     <b>Others</b>
                                   </label>
-                                  {/* <div className='instruction'></div> */}
                                   <textarea name="initiated_through_req"></textarea>
                                 </div>
                               </div>
@@ -526,35 +660,17 @@ function CAPA() {
 
                               <div className="col-12">
                                 <div className="group-input">
-                                  <label htmlFor="CAPA Team">CAPA Team</label>
-                                  <select
-                                    id="select-state"
-                                    placeholder="Select..."
-                                    name="capa_team"
-                                  >
-                                    <option value="Select a value">
-                                      Select a value
-                                    </option>
+                                  <label htmlFor="CAPA Team">Multi Person</label>
+                                  <select id="select-state" placeholder="Select..." name="capa_team">
+                                    <option value="Select a value">Select a value</option>
                                     <option value="Amit Guru">Amit Guru</option>
-                                    <option value="Shaleen Mishra">
-                                      Shaleen Mishra
-                                    </option>
-                                    <option value="Vikas Prajapati">
-                                      Vikas Prajapati
-                                    </option>
-                                    <option value="Anshul Patel">
-                                      Anshul Patel
-                                    </option>
-                                    <option value="Amit Patel">
-                                      Amit Patel
-                                    </option>
-                                    <option value="Madhulika Mishra">
-                                      Madhulika Mishra
-                                    </option>
+                                    <option value="Shaleen Mishra">Shaleen Mishra</option>
+                                    <option value="Vikas Prajapati">Vikas Prajapati</option>
+                                    <option value="Anshul Patel">Anshul Patel</option>
+                                    <option value="Amit Patel">Amit Patel</option>
+                                    <option value="Madhulika Mishra">Madhulika Mishra</option>
                                     <option value="Jin Kim">Jin Kim</option>
-                                    <option value="Akash Asthana">
-                                      Akash Asthana
-                                    </option>
+                                    <option value="Akash Asthana">Akash Asthana</option>
                                   </select>
                                 </div>
                               </div>
@@ -655,7 +771,7 @@ function CAPA() {
                                       <span className="text-danger"></span>
                                     </label>
                                     <select
-                                      value={selectedForm} 
+                                      value={selectedForm}
                                       onChange={handleFormChange}
                                     >
                                       <option value="">Select a value</option>
@@ -673,28 +789,28 @@ function CAPA() {
                                 </div>
 
                                 {(selectedForm === 'corrective_action' || selectedForm === 'corrective_preventive_action') && (
-                                <FlexField
-                                  label="Corrective Action"
-                                  instruction=""
-                                  isRequired="false"
-                                />
+                                  <FlexField
+                                    label="Corrective Action"
+                                    instruction=""
+                                    isRequired="false"
+                                  />
                                 )}
 
-                               {(selectedForm === 'preventive_action' || selectedForm === 'corrective_preventive_action') && (
-                                <FlexField
-                                  label="Preventive Action"
-                                  instruction=""
-                                  isRequired="false"
-                                />
-                               )}
+                                {(selectedForm === 'preventive_action' || selectedForm === 'corrective_preventive_action') && (
+                                  <FlexField
+                                    label="Preventive Action"
+                                    instruction=""
+                                    isRequired="false"
+                                  />
+                                )}
 
-                              
+
                                 <FlexField
                                   label="Supervisor Review Comments"
                                   instruction=""
                                   isRequired="false"
                                 />
-                            
+
                               </div>
                             </div>
                           </div>
@@ -801,6 +917,237 @@ function CAPA() {
                                   label="Due Date Extension Justification"
                                   instruction="Please Mention justification if due date
                                     is crossed"
+                                  isRequired="false"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        ) : form === "Additional Information" ? (
+                          <div className='document-form'>
+                            <div className='details-form-data'>
+                              <div className="sub-head">
+                                CFT Information
+                              </div>
+                              <div className='form-flex'>
+                                <div className="group-input">
+                                  <label>CFT Reviewer</label>
+                                  <select name="type_change" value={changeControl.CFTReviewers} onChange={(e) => setChangeControl({ CFTReviewers: e.target.value })}>
+                                    <option value="0">-- Select --</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                  </select>
+                                </div>
+                                <div className="group-input">
+                                  <label>
+                                    {changeControl.CFTReviewers === "Yes" && <div className="required"></div>}
+                                    CFT Reviewer Person
+                                  </label>
+                                  <MultiSelect
+                                    options={CFTReviewer}
+                                    value={selected}
+                                    onChange={setSelected}
+                                    labelledBy="Select"
+                                    required={changeControl.CFTReviewers === "Yes"}
+                                    disabled={!changeControl.CFTReviewers === "Yes"}
+                                  />
+                                </div>
+                              </div>
+                              <div className="sub-head">
+                                Concerned Information
+                              </div>
+                              <div className="group-input">
+                                <label>Is Concerned Group Review Required?</label>
+                                <select name="type_change" value={changeControl.groupReviewRequired} onChange={(e) => setChangeControl({ groupReviewRequired: e.target.value })}>
+                                  <option value="0">-- Select --</option>
+                                  <option value="Yes">Yes</option>
+                                  <option value="No">No</option>
+                                </select>
+                              </div>
+                              <div className='form-flex'>
+                                <div className="group-input">
+                                  <label>Production</label>
+                                  <select
+                                    name="type_change"
+                                    value={changeControl.production}
+                                    disabled={changeControl.groupReviewRequired !== 'Yes'}
+                                    onChange={(e) => setChangeControl({ production: e.target.value })}
+                                  >
+                                    <option value="0">-- Select --</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                  </select>
+                                </div>
+                                <div className="group-input">
+                                  <label>
+                                    {changeControl.production === 'Yes' && <div className="required"></div>}
+                                    Production Person
+                                  </label>
+                                  <select
+                                    name="Production_Person"
+                                    value={changeControl.productionPerson}
+                                    disabled={changeControl.production !== 'Yes' || changeControl.groupReviewRequired !== 'Yes'}
+                                    onChange={(e) => setChangeControl({ productionPerson: e.target.value })}
+                                  >
+                                    <option value="0">-- Select --</option>
+                                    <option value="1">Amit Guru</option>
+                                    <option value="2">Shaleen Mishra</option>
+                                    <option value="3">Vikas Prajapati</option>
+                                    <option value="4">Anshul Patel</option>
+                                    <option value="5">Amit Patel</option>
+                                    <option value="6">Madhulika Mishra</option>
+                                    <option value="7">Jin Kim</option>
+                                    <option value="8">Akash Asthana</option>
+                                  </select>
+                                </div>
+                                <div className="group-input">
+                                  <label>Quality Approver</label>
+                                  <select
+                                    name="Quality_Approver"
+                                    value={changeControl.qualityApprover}
+                                    disabled={changeControl.groupReviewRequired !== 'Yes'}
+                                    onChange={(e) => setChangeControl({ qualityApprover: e.target.value })}
+                                  >
+                                    <option value="0">-- Select --</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                  </select>
+                                </div>
+                                <div className="group-input">
+                                  <label>
+                                    {changeControl.qualityApprover === 'Yes' && <div className="required"></div>}
+                                    Quality Approver Person
+                                  </label>
+                                  <select
+                                    name="Quality_Approver_Person"
+                                    value={changeControl.qualityApproverPerson}
+                                    disabled={changeControl.qualityApprover !== 'Yes' || changeControl.groupReviewRequired !== 'Yes'}
+                                    onChange={(e) => setChangeControl({ qualityApproverPerson: e.target.value })}
+                                  >
+                                    <option value="0">-- Select --</option>
+                                    <option value="1">Amit Guru</option>
+                                    <option value="2">Shaleen Mishra</option>
+                                    <option value="3">Vikas Prajapati</option>
+                                    <option value="4">Anshul Patel</option>
+                                    <option value="5">Amit Patel</option>
+                                    <option value="6">Madhulika Mishra</option>
+                                    <option value="7">Jin Kim</option>
+                                    <option value="8">Akash Asthana</option>
+                                  </select>
+                                </div>
+                                <div className="group-input">
+                                  <label>
+                                    Others
+                                  </label>
+                                  <select
+                                    name="type_change"
+                                    value={changeControl.others}
+                                    disabled={changeControl.groupReviewRequired !== 'Yes'}
+                                    onChange={(e) => setChangeControl({ others: e.target.value })}
+                                  >
+                                    <option value="0">-- Select --</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                  </select>
+                                </div>
+                                <div className="group-input">
+                                  <label>
+                                    {changeControl.others === 'Yes' && <div className="required"></div>}
+                                    Others Person
+                                  </label>
+                                  <select
+                                    name="Production_Person"
+                                    value={changeControl.othersPerson}
+                                    disabled={changeControl.others !== 'Yes' || changeControl.groupReviewRequired !== 'Yes'}
+                                    onChange={(e) => setChangeControl({ othersPerson: e.target.value })}
+                                  >
+                                    <option value="0">-- Select --</option>
+                                    <option value="1">Amit Guru</option>
+                                    <option value="2">Shaleen Mishra</option>
+                                    <option value="3">Vikas Prajapati</option>
+                                    <option value="4">Anshul Patel</option>
+                                    <option value="5">Amit Patel</option>
+                                    <option value="6">Madhulika Mishra</option>
+                                    <option value="7">Jin Kim</option>
+                                    <option value="8">Akash Asthana</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <FlexField
+                                label="QA Evaluation Comments"
+                                instruction=""
+                                isRequired="false"
+                              />
+                              <div className="group-input">
+                                <Grid
+                                  label={docFile[3].label}
+                                  required={docFile[3].required}
+                                  instruction={docFile[3].instruction}
+                                  columnList={docFile[3].columnList}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        ) : form === "Group Comments" ? (
+                          <div className='document-form'>
+                            <div className='details-form-data'>
+                              <div className='details-form-data'>
+                                <div className="sub-head">
+                                  CFT Feedback
+                                </div>
+                                <FlexField
+                                  label="QA Evaluation Comments"
+                                  instruction=""
+                                  isRequired="false"
+                                />
+                                <div className="group-input">
+                                  <Grid
+                                    label={docFile[4].label}
+                                    required={docFile[4].required}
+                                    instruction={docFile[4].instruction}
+                                    columnList={docFile[4].columnList}
+                                  />
+                                </div>
+                                <div className="sub-head">
+                                  Concerned Group Feedback
+                                </div>
+                                <FlexField
+                                  label="QA Comments"
+                                  instruction=""
+                                  isRequired="false"
+                                />
+                                <FlexField
+                                  label="QA Head Designee Comments"
+                                  instruction=""
+                                  isRequired="false"
+                                />
+                                <FlexField
+                                  label="Warehouse Comments"
+                                  instruction=""
+                                  isRequired="false"
+                                />
+                                <FlexField
+                                  label="Engineering Comments"
+                                  instruction=""
+                                  isRequired="false"
+                                />
+                                <FlexField
+                                  label="Instrumentation Comments"
+                                  instruction=""
+                                  isRequired="false"
+                                />
+                                <FlexField
+                                  label="Validation Comments"
+                                  instruction=""
+                                  isRequired="false"
+                                />
+                                <FlexField
+                                  label="Others Comments"
+                                  instruction=""
+                                  isRequired="false"
+                                />
+                                <FlexField
+                                  label="Group Comments"
+                                  instruction=""
                                   isRequired="false"
                                 />
                               </div>

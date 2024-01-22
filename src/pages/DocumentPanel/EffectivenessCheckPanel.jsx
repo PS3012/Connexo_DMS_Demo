@@ -3,7 +3,7 @@ import HeaderTop from '../../components/Header/HeaderTop'
 import HeaderBottom from '../../components/Header/HeaderBottom'
 import ESignatureModal from '../../components/Modals/ESignatureModal/ESignatureModal';
 import './DocumentPanel.css'
-import React  from "react";
+import React from "react";
 import Grid from "../../components/DataFields/Grid";
 import InputDate from "../../components/DataFields/InputDate";
 import FlexField from "../../components/DataFields/FlexField";
@@ -13,175 +13,175 @@ import { CurrentDate } from "../../components/DateReturners";
 
 function EffectivenessCheckPanel() {
 
-    const formList = [
-        "General Information",
-        "Effectiveness Check Results",
-        "Reference Info/Comments",
-        "Activity History",
-      ];
-    
-      const [form, setForm] = useState(formList[0]);
-      
-    
-      const docFile = [
-        {
-          label: "Effectiveness check Attachment",
-          instruction: "Please Attach all relevant or supporting documents",
-          required: true,
-          columnList: [
-            { id: "2.1.1.1", name: "Title of Document", type: "text" },
-            { id: "2.1.1.2", name: "Attached File", type: "File" },
-            { id: "2.1.1.3", name: "Remark", type: "text" },
-          ],
-        },
-    
-        {
-          label: "Addendum Attachment",
-          instruction: "Please Attach all relevant or supporting documents",
-          required: true,
-          columnList: [
-            { id: "2.1.1.1", name: "Title of Document", type: "text" },
-            { id: "2.1.1.2", name: "Attached File", type: "File" },
-            { id: "2.1.1.3", name: "Remark", type: "text" },
-          ],
-        },
-        {
-          label: "Attachment",
-          instruction: "Please Attach all relevant or supporting documents",
-          required: true,
-          columnList: [
-            { id: "2.1.1.1", name: "Title of Document", type: "text" },
-            { id: "2.1.1.2", name: "Attached File", type: "File" },
-            { id: "2.1.1.3", name: "Remark", type: "text" },
-          ],
-        },
-      ];
+  const formList = [
+    "General Information",
+    "Effectiveness Check Results",
+    "Reference Info/Comments",
+    "Activity History",
+  ];
 
-    const progressItems = [
-        { id: 1, name: 'Opened', details: 'Document is opened at 10 Jan, 2023 11:12PM' },
-        { id: 2, name: 'HOD Review', details: 'Action Item child can be created at this stage.' },
-        { id: 3, name: 'Pending QA Review', details: '' },
-        { id: 4, name: 'CFT/SME Review', details: '' },
-        { id: 5, name: 'Pending Change Implementation', details: 'New Document child can be created at this stage.' },
-        { id: 6, name: 'Closed - Done', details: '' },
-    ]
-    const [progressArray, setProgressArray] = useState([progressItems[0].name])
-    const [signatureModal, setSignatureModal] = useState(false)
-    const [keyword, setKeyword] = useState('')
-    const [keywordElements, setKeywordElements] = useState([])
-    const closeSignatureModal = () => setSignatureModal(false);
-    function handleESignature(key, elements) {
-        setKeyword(key)
-        setKeywordElements(elements)
-        for (let ele of elements) {
-            let updatedItemIndex = progressItems.findIndex((item) => item.name === ele);
-            if (updatedItemIndex !== -1) {
-                progressItems[updatedItemIndex].details = 'Updated';
-            } else {
-                console.error('Item with name "Opened" not found.');
-            }
-        }
-        setSignatureModal(true)
-    }
-    function signatureValue(key) {
-        if (key) {
-            if (keyword === 'add') {
-                addProgress(keywordElements)
-            } else if (keyword === 'remove') {
-                removeProgress(keywordElements)
-            } else {
-                setProgressArray('Closed-Cancelled')
-            }
-        } else {
-            alert('E-Signature Not Matched.')
-        }
-    }
-    function addProgress(addEle) {
-        for (let ele of addEle) {
-            setProgressArray((prevArray) => [...prevArray, ele])
-        }
-    }
-    function removeProgress(removeEle) {
-        setProgressArray(progressArray.filter((item) => !removeEle.includes(item)));
-    }
-    return (
-        <>
+  const [form, setForm] = useState(formList[0]);
 
-            <HeaderTop />
-            <HeaderBottom />
-            <div id="document-panel">
 
-            <div className="top-block">
-            <div>
-              <strong> Record Name:&nbsp;</strong>EffectivenessCheckPanel
+  const docFile = [
+    {
+      label: "Effectiveness check Attachment",
+      instruction: "Please Attach all relevant or supporting documents",
+      required: true,
+      columnList: [
+        { id: "2.1.1.1", name: "Title of Document", type: "text" },
+        { id: "2.1.1.2", name: "Attached File", type: "File" },
+        { id: "2.1.1.3", name: "Remark", type: "text" },
+      ],
+    },
+
+    {
+      label: "Addendum Attachment",
+      instruction: "Please Attach all relevant or supporting documents",
+      required: true,
+      columnList: [
+        { id: "2.1.1.1", name: "Title of Document", type: "text" },
+        { id: "2.1.1.2", name: "Attached File", type: "File" },
+        { id: "2.1.1.3", name: "Remark", type: "text" },
+      ],
+    },
+    {
+      label: "Attachment",
+      instruction: "Please Attach all relevant or supporting documents",
+      required: true,
+      columnList: [
+        { id: "2.1.1.1", name: "Title of Document", type: "text" },
+        { id: "2.1.1.2", name: "Attached File", type: "File" },
+        { id: "2.1.1.3", name: "Remark", type: "text" },
+      ],
+    },
+  ];
+
+  const progressItems = [
+    { id: 1, name: 'Opened', details: 'Document is opened at 10 Jan, 2023 11:12PM' },
+    { id: 2, name: 'HOD Review', details: 'Action Item child can be created at this stage.' },
+    { id: 3, name: 'Pending QA Review', details: '' },
+    { id: 4, name: 'CFT/SME Review', details: '' },
+    { id: 5, name: 'Pending Change Implementation', details: 'New Document child can be created at this stage.' },
+    { id: 6, name: 'Closed - Done', details: '' },
+  ]
+  const [progressArray, setProgressArray] = useState([progressItems[0].name])
+  const [signatureModal, setSignatureModal] = useState(false)
+  const [keyword, setKeyword] = useState('')
+  const [keywordElements, setKeywordElements] = useState([])
+  const closeSignatureModal = () => setSignatureModal(false);
+  function handleESignature(key, elements) {
+    setKeyword(key)
+    setKeywordElements(elements)
+    for (let ele of elements) {
+      let updatedItemIndex = progressItems.findIndex((item) => item.name === ele);
+      if (updatedItemIndex !== -1) {
+        progressItems[updatedItemIndex].details = 'Updated';
+      } else {
+        console.error('Item with name "Opened" not found.');
+      }
+    }
+    setSignatureModal(true)
+  }
+  function signatureValue(key) {
+    if (key) {
+      if (keyword === 'add') {
+        addProgress(keywordElements)
+      } else if (keyword === 'remove') {
+        removeProgress(keywordElements)
+      } else {
+        setProgressArray('Closed-Cancelled')
+      }
+    } else {
+      alert('E-Signature Not Matched.')
+    }
+  }
+  function addProgress(addEle) {
+    for (let ele of addEle) {
+      setProgressArray((prevArray) => [...prevArray, ele])
+    }
+  }
+  function removeProgress(removeEle) {
+    setProgressArray(progressArray.filter((item) => !removeEle.includes(item)));
+  }
+  return (
+    <>
+
+      <HeaderTop />
+      <HeaderBottom />
+      <div id="document-panel">
+
+        <div className="top-block">
+          <div>
+            <strong> Record Name:&nbsp;</strong>EffectivenessCheckPanel
+          </div>
+          <div>
+            <strong> Site:&nbsp;</strong>EHS-North America
+          </div>
+          <div>
+            <strong> Current Status:&nbsp;</strong>Under Initiation
+          </div>
+          <div>
+            <strong> Initiated By:&nbsp;</strong>Shaleen Mishra
+          </div>
+        </div>
+
+        <div className="inner-block">
+
+          <div className="workflow-bar">
+            <div className="workflow-top-block">
+              <div className="head">Record Workflow</div>
+              <div className="btn-bar">
+                <button className="themeBtn">Audit Trail</button>
+                <button className="themeBtn">Print</button>
+                {progressArray.length === 1 &&
+                  <>
+                    <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[1].name])}>Submit</button>
+                    <button className="themeBtn" onClick={() => handleESignature('closed', [])}>Cancel</button>
+                  </>
+                }
+                {progressArray.length === 2 &&
+                  <>
+                    <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[2].name])}>HOD Review Complete</button>
+                    <button className="themeBtn" onClick={() => handleESignature('remove', [progressItems[1].name])}>More Information Required</button>
+                  </>
+                }
+                {progressArray.length === 3 &&
+                  <>
+                    <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[3].name])}>Send to CFT Reviewers</button>
+                    <button className="themeBtn" onClick={() => handleESignature('remove', [progressItems[2].name])}>More Information Required</button>
+                    <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[3].name, progressItems[4].name])}>CFT Review Not Required</button>
+                  </>
+                }
+                {progressArray.length === 4 &&
+                  <>
+                    <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[4].name])}>Review Complete</button>
+                    <button className="themeBtn" onClick={() => handleESignature('remove', [progressItems[2].name, progressItems[3].name])}>Request More Info</button>
+                  </>
+                }
+                {progressArray.length === 5 &&
+                  <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[5].name])}>Implemented</button>
+                }
+                <button className="themeBtn">Exit</button>
+              </div>
             </div>
-            <div>
-              <strong> Site:&nbsp;</strong>EHS-North America
-            </div>
-            <div>
-              <strong> Current Status:&nbsp;</strong>Under Initiation
-            </div>
-            <div>
-              <strong> Initiated By:&nbsp;</strong>Shaleen Mishra
+            <div className="progress-block">
+              {(progressArray === 'Closed-Cancelled') ?
+                <>
+                  <div className="active">Opened</div>
+                  <div className="active closed">Closed-Cancelled</div>
+                </>
+                : progressItems.map((item) => (
+                  <div key={item.id} className={progressArray.includes(item.name) ? 'active' : ''}>
+                    {item.name}
+                    {item.details && <div className="details">{item.details}</div>}
+                  </div>
+                ))
+              }
             </div>
           </div>
 
-                <div className="inner-block">
-
-                    <div className="workflow-bar">
-                        <div className="workflow-top-block">
-                            <div className="head">Record Workflow</div>
-                            <div className="btn-bar">
-                                <button className="themeBtn">Audit Trail</button>
-                                <button className="themeBtn">Print</button>
-                                {progressArray.length === 1 &&
-                                    <>
-                                        <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[1].name])}>Submit</button>
-                                        <button className="themeBtn" onClick={() => handleESignature('closed', [])}>Cancel</button>
-                                    </>
-                                }
-                                {progressArray.length === 2 &&
-                                    <>
-                                        <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[2].name])}>HOD Review Complete</button>
-                                        <button className="themeBtn" onClick={() => handleESignature('remove', [progressItems[1].name])}>More Information Required</button>
-                                    </>
-                                }
-                                {progressArray.length === 3 &&
-                                    <>
-                                        <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[3].name])}>Send to CFT Reviewers</button>
-                                        <button className="themeBtn" onClick={() => handleESignature('remove', [progressItems[2].name])}>More Information Required</button>
-                                        <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[3].name, progressItems[4].name])}>CFT Review Not Required</button>
-                                    </>
-                                }
-                                {progressArray.length === 4 &&
-                                    <>
-                                        <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[4].name])}>Review Complete</button>
-                                        <button className="themeBtn" onClick={() => handleESignature('remove', [progressItems[2].name, progressItems[3].name])}>Request More Info</button>
-                                    </>
-                                }
-                                {progressArray.length === 5 &&
-                                    <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[5].name])}>Implemented</button>
-                                }
-                                <button className="themeBtn">Exit</button>
-                            </div>
-                        </div>
-                        <div className="progress-block">
-                            {(progressArray === 'Closed-Cancelled') ?
-                                <>
-                                    <div className="active">Opened</div>
-                                    <div className="active closed">Closed-Cancelled</div>
-                                </>
-                                : progressItems.map((item) => (
-                                    <div key={item.id} className={progressArray.includes(item.name) ? 'active' : ''}>
-                                        {item.name}
-                                        {item.details && <div className="details">{item.details}</div>}
-                                    </div>
-                                ))
-                            }
-                        </div>
-                    </div>
-
-                    <div className="document-block">
+          <div className="document-block">
             <div className="document-tabs">
               {formList.map((item, index) => (
                 <div
@@ -208,7 +208,7 @@ function EffectivenessCheckPanel() {
                       />
                     </div>
                     <div className="group-input">
-                      <label>Division Code</label>
+                      <label>Site/Location Code</label>
                       <input type="text" value="Jordan" disabled />
                     </div>
                     <div className="group-input">
@@ -262,11 +262,22 @@ function EffectivenessCheckPanel() {
                       </select>
                     </div>
                   </div>
+                  
                   <div className="group-input">
                     <label>
                       Short Description
                     </label>
-                    <input type="text" />
+                    <textarea type="text" rows="2" />
+                  </div>
+
+                  <div className="group-input">
+                    <label>Severity Level</label>
+                    <select>
+                      <option value="">-- Select --</option>
+                      <option value="">Major</option>
+                      <option value="">Minor</option>
+                      <option value="">Critical</option>
+                    </select>
                   </div>
 
                   <div className="sub-head">
@@ -277,7 +288,7 @@ function EffectivenessCheckPanel() {
                     <input type="text" />
                   </div>
 
-                
+
                 </div>
               </div>
             ) : form === formList[1] ? (
@@ -421,30 +432,30 @@ function EffectivenessCheckPanel() {
                   </div>
                   <div className="sub-head">Cancellation Details</div>
                   <div className="form-flex">
-                  <div className="group-input">
-                    <label>Cancellation Category</label>
-                    <select>
-                      <option value="">Enter Your Selection Here</option>
-                      <option value="Duplicate Entry">Duplicate Entry</option>
-                      <option value="Entered in Error">Entered in Error</option>
-                      <option value="No Longer Necessary">
-                        No Longer Necessary
-                      </option>
-                      <option value="Parent Record Closed">
-                        Parent Record Closed
-                      </option>
-                    </select>
-                  </div>
+                    <div className="group-input">
+                      <label>Cancellation Category</label>
+                      <select>
+                        <option value="">Enter Your Selection Here</option>
+                        <option value="Duplicate Entry">Duplicate Entry</option>
+                        <option value="Entered in Error">Entered in Error</option>
+                        <option value="No Longer Necessary">
+                          No Longer Necessary
+                        </option>
+                        <option value="Parent Record Closed">
+                          Parent Record Closed
+                        </option>
+                      </select>
+                    </div>
 
-                  <div className="group-input">
-                    <label>TrackWise Record Type</label>
-                    <select>
-                      <option>Enter Your Selection Here</option>
-                      <option value="Effectiveness Check">
-                        Effectiveness Check
-                      </option>
-                    </select>
-                  </div>
+                    <div className="group-input">
+                      <label>TrackWise Record Type</label>
+                      <select>
+                        <option>Enter Your Selection Here</option>
+                        <option value="Effectiveness Check">
+                          Effectiveness Check
+                        </option>
+                      </select>
+                    </div>
                   </div>
                   <FlexField
                     label="Cancellation Justification"
@@ -464,14 +475,14 @@ function EffectivenessCheckPanel() {
             <button className="themeBtn">Exit</button>
           </div>
 
-                </div>
+        </div>
 
-            </div>
+      </div>
 
-            {signatureModal && <ESignatureModal closeModal={closeSignatureModal} returnSignature={signatureValue} />}
+      {signatureModal && <ESignatureModal closeModal={closeSignatureModal} returnSignature={signatureValue} />}
 
-        </>
-    )
+    </>
+  )
 }
 
 export default EffectivenessCheckPanel;

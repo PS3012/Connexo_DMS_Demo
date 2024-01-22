@@ -20,18 +20,18 @@ function Observation() {
 
   const [asideWorkFlow, setAsideWorkFlow] = useState(false);
   const [asideFamilyTree, setAsideFamilyTree] = useState(false);
-  
+
   const [changeControl, setChangeControl] = useReducer((prev, next) => ({
     ...prev, ...next
-}), {
+  }), {
 
     severityRate: 0,
     occurrence: 0,
     detection: 0,
-   
-})
- 
- 
+
+  })
+
+
   const actionPlan = {
     label: "Action Plan",
     instruction: <div></div>,
@@ -188,7 +188,7 @@ function Observation() {
                       />
                     </div>
                     <div className="group-input">
-                      <label>Division Code</label>
+                      <label>Site/Location Code</label>
                       <input type="text" value="Jordan" disabled />
                     </div>
                     <div className="group-input">
@@ -225,10 +225,19 @@ function Observation() {
                   </div>
                   <div className="group-input">
                     <label>
-                      <div className="required"></div>
                       Short Description
                     </label>
-                    <input type="text" />
+                    <textarea type="text" rows="2" />
+                  </div>
+
+                  <div className="group-input">
+                    <label>Severity Level</label>
+                    <select>
+                      <option value="">-- Select --</option>
+                      <option value="">Major</option>
+                      <option value="">Minor</option>
+                      <option value="">Critical</option>
+                    </select>
                   </div>
                   <div className="sub-head">Observation Details</div>
 
@@ -362,21 +371,21 @@ function Observation() {
 
                   <div className="sub-head">Further Information</div>
 
-                
-                    <div className="group-input">
-                      <Grid
-                        label={docFile[0].label}
-                        required={docFile[0].required}
-                        instruction={docFile[0].instruction}
-                        columnList={docFile[0].columnList}
-                      />
-                    </div>
-                    <InputDate
-                      label="Recomendation Date Due for CAPA"
-                      enableDate="future"
-                      isRequired="false"
+
+                  <div className="group-input">
+                    <Grid
+                      label={docFile[0].label}
+                      required={docFile[0].required}
+                      instruction={docFile[0].instruction}
+                      columnList={docFile[0].columnList}
                     />
-                 
+                  </div>
+                  <InputDate
+                    label="Recomendation Date Due for CAPA"
+                    enableDate="future"
+                    isRequired="false"
+                  />
+
 
                   <FlexField
                     label="Non Compliance"
@@ -490,48 +499,48 @@ function Observation() {
                   <div className="sub-head">Risk Analysis</div>
 
                   <div className='form-flex'>
-                                        <div className="group-input">
-                                            <label>Severity Rate</label>
-                                            <select name="severity" value={changeControl.severityRate} onChange={(e) => setChangeControl({ severityRate: e.target.value })}>
-                                                <option value="0">-- Select --</option>
-                                                <option value="1">Low</option>
-                                                <option value="2">Medium</option>
-                                                <option value="3">High</option>
-                                            </select>
-                                        </div>
-                                        <div className="group-input">
-                                            <label>Occurrence</label>
-                                            <select name="Occurrence" value={changeControl.occurrence} onChange={(e) => setChangeControl({ occurrence: e.target.value })}>
-                                                <option value="0">-- Select --</option>
-                                                <option value="1">Low</option>
-                                                <option value="2">Medium</option>
-                                                <option value="3">High</option>
-                                            </select>
-                                        </div>
-                                        <div className="group-input">
-                                            <label>Detection</label>
-                                            <select name="Detection" value={changeControl.detection} onChange={(e) => setChangeControl({ detection: e.target.value })}>
-                                                <option value="0">-- Select --</option>
-                                                <option value="1">Low</option>
-                                                <option value="2">Medium</option>
-                                                <option value="3">High</option>
-                                            </select>
-                                        </div>
-                                        <div className="group-input">
-                                            <label>RPN</label>
-                                            <div className="instruction">Auto - Calculated</div>
-                                            <input type='text' name='RPN' value={changeControl.severityRate * changeControl.occurrence * changeControl.detection} disabled />
-                                        </div>
-                                        </div>
+                    <div className="group-input">
+                      <label>Severity Rate</label>
+                      <select name="severity" value={changeControl.severityRate} onChange={(e) => setChangeControl({ severityRate: e.target.value })}>
+                        <option value="0">-- Select --</option>
+                        <option value="1">Low</option>
+                        <option value="2">Medium</option>
+                        <option value="3">High</option>
+                      </select>
+                    </div>
+                    <div className="group-input">
+                      <label>Occurrence</label>
+                      <select name="Occurrence" value={changeControl.occurrence} onChange={(e) => setChangeControl({ occurrence: e.target.value })}>
+                        <option value="0">-- Select --</option>
+                        <option value="1">Low</option>
+                        <option value="2">Medium</option>
+                        <option value="3">High</option>
+                      </select>
+                    </div>
+                    <div className="group-input">
+                      <label>Detection</label>
+                      <select name="Detection" value={changeControl.detection} onChange={(e) => setChangeControl({ detection: e.target.value })}>
+                        <option value="0">-- Select --</option>
+                        <option value="1">Low</option>
+                        <option value="2">Medium</option>
+                        <option value="3">High</option>
+                      </select>
+                    </div>
+                    <div className="group-input">
+                      <label>RPN</label>
+                      <div className="instruction">Auto - Calculated</div>
+                      <input type='text' name='RPN' value={changeControl.severityRate * changeControl.occurrence * changeControl.detection} disabled />
+                    </div>
+                  </div>
                 </div>
               </div>
-           
-             ) : form === formList[3] ? (
+
+            ) : form === formList[3] ? (
               <div className="document-form">
                 <div className="details-form-data">
                   <div className="sub-head">Action Summary</div>
                   <div className="form-flex">
-                  <InputDate
+                    <InputDate
                       label="Actual Start Date"
                       isRequired="false"
                       enableDate="future"
@@ -541,15 +550,15 @@ function Observation() {
                       isRequired="false"
                       enableDate="future"
                     />
-                     </div>
-                    <FlexField
+                  </div>
+                  <FlexField
                     label="Action Taken"
                     instruction=""
                     isRequired="false"
-                  /> 
-                 
-                  
-                  
+                  />
+
+
+
                   {/* <Grid
                     label={docFile[4].label}
                     required={docFile[4].required}
@@ -569,7 +578,7 @@ function Observation() {
                   /> */}
                   <div className="sub-head">Response Summary</div>
                   <div className="form-flex">
-                  <InputDate
+                    <InputDate
                       label="Date Rsponse Due"
                       isRequired="false"
                       enableDate="future"
@@ -579,31 +588,31 @@ function Observation() {
                       isRequired="false"
                       enableDate="future"
                     />
-                    </div>
-                     <div className="group-input">
+                  </div>
+                  <div className="group-input">
                     <Grid
                       label={docFile[2].label}
                       required={docFile[2].required}
                       instruction={docFile[2].instruction}
                       columnList={docFile[2].columnList}
                     />
-                    </div>
-                    <div className="group-input">
+                  </div>
+                  <div className="group-input">
                     <label>Related URL</label>
                     <input type="text" />
                   </div>
-                 
+
 
                   <FlexField
                     label="Response Summary"
                     instruction=""
                     isRequired="false"
                   />
-                 
+
 
                 </div>
               </div>
-           ): form === formList[4] ? (
+            ) : form === formList[4] ? (
               <div className="document-form">
                 <div className="details-form-data">
                   <div className="sub-head">Electronic Signatures</div>

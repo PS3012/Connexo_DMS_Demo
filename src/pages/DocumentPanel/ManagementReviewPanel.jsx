@@ -278,7 +278,7 @@ function ManagementReviewPanel() {
                                     <div className="group-input">
                                         <label>
                                             <b>
-                                                Division Code
+                                                Site/Location Code
                                             </b>
                                         </label>
                                         <input type="text" />
@@ -373,11 +373,19 @@ function ManagementReviewPanel() {
                                 </div>
                                 <div className="group-input">
                                     <label>
-                                        <div className="required"></div>
-                                        <b>Short Description</b>
+                                        Short Description
                                     </label>
-                                    <div className="instruction">Please mention brief summary</div>
-                                    <textarea cols="30" rows="3"></textarea>
+                                    <textarea type="text" rows="2" />
+                                </div>
+
+                                <div className="group-input">
+                                    <label>Severity Level</label>
+                                    <select>
+                                        <option value="">-- Select --</option>
+                                        <option value="">Major</option>
+                                        <option value="">Minor</option>
+                                        <option value="">Critical</option>
+                                    </select>
                                 </div>
                                 <div className="dual-grid">
                                     <div className="group-input">

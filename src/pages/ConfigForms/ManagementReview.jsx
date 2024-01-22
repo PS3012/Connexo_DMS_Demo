@@ -234,7 +234,7 @@ function ManagementReview() {
                                         <div className="group-input">
                                             <label>
                                                 <b>
-                                                    Division Code
+                                                    Site/Location Code
                                                 </b>
                                             </label>
                                             <input type="text" />
@@ -249,14 +249,7 @@ function ManagementReview() {
                                             </label>
                                             <input type="text" value="Amit Guru" readOnly />
                                         </div>
-                                        {/* <div className="group-input">
-                                        <label>
-                                            <b>
-                                                Date of Initiation
-                                            </b>
-                                        </label>
-                                        <input type="text" value={formattedDate} readOnly />
-                                    </div> */}
+
                                         <InputDate label="Date of Initiation" enableDate="past" required="false" />
                                     </div>
                                     <div className="dual-grid">
@@ -275,15 +268,7 @@ function ManagementReview() {
                                                 <option value="8">Akash Asthana</option>
                                             </select>
                                         </div>
-                                        {/* <div className="group-input">
-                                        <label>
-                                            <b>
-                                                Due Date
-                                            </b>
-                                        </label>
-                                        <div className="instruction">Please mention expected date of completion</div>
-                                        <input type="text" value={formattedDateOneMonthLater} readOnly />
-                                    </div> */}
+
                                         <InputDate label="Due Date" enableDate="future" required="false" />
 
                                     </div>
@@ -344,11 +329,19 @@ function ManagementReview() {
                                     </div>
                                     <div className="group-input">
                                         <label>
-                                            <div className="required"></div>
-                                            <b>Short Description</b>
+                                            Short Description
                                         </label>
-                                        <div className="instruction">Please mention brief summary</div>
-                                        <textarea cols="30" rows="3"></textarea>
+                                        <textarea type="text" rows="2" />
+                                    </div>
+
+                                    <div className="group-input">
+                                        <label>Severity Level</label>
+                                        <select>
+                                            <option value="">-- Select --</option>
+                                            <option value="">Major</option>
+                                            <option value="">Minor</option>
+                                            <option value="">Critical</option>
+                                        </select>
                                     </div>
                                     <div className="dual-grid">
                                         <div className="group-input">
@@ -424,7 +417,7 @@ function ManagementReview() {
                                     {modal === "Operations" ? (
                                         < OperationModal closeModal={() => { setModal(" ") }} />
                                     ) : ""}
-                                    
+
                                     <FlexField
                                         label="Operations"
                                         instruction="(Launch Instruction)"
@@ -434,7 +427,7 @@ function ManagementReview() {
                                     {modal === "Requirements for Products and Services" ? (
                                         < RequirementsforProductModal closeModal={() => { setModal(" ") }} />
                                     ) : ""}
-                                    
+
                                     <FlexField
                                         label="Requirements for Products and Services"
                                         instruction=""
@@ -444,7 +437,7 @@ function ManagementReview() {
                                     {modal === "Design and Development of Products and Services" ? (
                                         < DesignnDevelopment closeModal={() => { setModal(" ") }} />
                                     ) : ""}
-                                    
+
                                     <FlexField
                                         label="Design and Development of Products and Services"
                                         instruction=""
@@ -453,7 +446,7 @@ function ManagementReview() {
                                     {modal === "Control of Externally Provided Processes, Products and Services" ? (
                                         < ControlofExternally closeModal={() => { setModal(" ") }} />
                                     ) : ""}
-                                    
+
                                     <FlexField
                                         label="Control of Externally Provided Processes, Products and Services"
                                         instruction=""
@@ -462,7 +455,7 @@ function ManagementReview() {
                                     {modal === "Production and Service Provision" ? (
                                         < ProductionnService closeModal={() => { setModal(" ") }} />
                                     ) : ""}
-                                    
+
                                     <FlexField
                                         label="Production and Service Provision"
                                         instruction=""
@@ -472,7 +465,7 @@ function ManagementReview() {
                                     {modal === "Release of Products and Services" ? (
                                         < ReleaseOfProduct closeModal={() => { setModal(" ") }} />
                                     ) : ""}
-                                    
+
                                     <FlexField
                                         label="Release of Products and Services"
                                         instruction=""
@@ -481,7 +474,7 @@ function ManagementReview() {
                                     {modal === "Control of Non-conforming Outputs" ? (
                                         < ControlofNonConforming closeModal={() => { setModal(" ") }} />
                                     ) : ""}
-                                    
+
                                     <FlexField
                                         label="Control of Non-conforming Outputs"
                                         instruction=""

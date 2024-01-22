@@ -36,7 +36,7 @@ function CreateRecordModal(_props) {
                     name: "Lab Incident",
                     link: "/lab-incident"
                 }, {
-                    name: "Risk Assessment",
+                    name: "Risk/Opportunity",
                     link: "/risk-assessment"
                 }, {
                     name: "Root Cause Analysis",
@@ -73,7 +73,7 @@ function CreateRecordModal(_props) {
                     name: "Lab Incident",
                     link: "/lab-incident"
                 }, {
-                    name: "Risk Assessment",
+                    name: "Risk/Opportunity",
                     link: "/risk-assessment"
                 }, {
                     name: "Root Cause Analysis",
@@ -110,7 +110,7 @@ function CreateRecordModal(_props) {
                     name: "Lab Incident",
                     link: "/lab-incident"
                 }, {
-                    name: "Risk Assessment",
+                    name: "Risk/Opportunity",
                     link: "/risk-assessment"
                 }, {
                     name: "Root Cause Analysis",
@@ -147,7 +147,7 @@ function CreateRecordModal(_props) {
                     name: "Lab Incident",
                     link: "/lab-incident"
                 }, {
-                    name: "Risk Assessment",
+                    name: "Risk/Opportunity",
                     link: "/risk-assessment"
                 }, {
                     name: "Root Cause Analysis",

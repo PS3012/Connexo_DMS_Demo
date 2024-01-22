@@ -1,4 +1,4 @@
-import React  from "react";
+import React from "react";
 import { useState } from "react";
 import HeaderTop from "../../components/Header/HeaderTop";
 import Grid from "../../components/DataFields/Grid";
@@ -19,7 +19,7 @@ function EffectivenessCheck() {
 
   const [asideWorkFlow, setAsideWorkFlow] = useState(false);
   const [asideFamilyTree, setAsideFamilyTree] = useState(false);
-  
+
 
   const docFile = [
     {
@@ -166,7 +166,7 @@ function EffectivenessCheck() {
                       />
                     </div>
                     <div className="group-input">
-                      <label>Division Code</label>
+                      <label>Site/Location Code</label>
                       <input type="text" value="Jordan" disabled />
                     </div>
                     <div className="group-input">
@@ -223,7 +223,17 @@ function EffectivenessCheck() {
                     <label>
                       Short Description
                     </label>
-                    <input type="text" />
+                    <textarea type="text" rows="2" />
+                  </div>
+
+                  <div className="group-input">
+                    <label>Severity Level</label>
+                    <select>
+                      <option value="">-- Select --</option>
+                      <option value="">Major</option>
+                      <option value="">Minor</option>
+                      <option value="">Critical</option>
+                    </select>
                   </div>
 
                   <div className="sub-head">
@@ -234,7 +244,7 @@ function EffectivenessCheck() {
                     <input type="text" />
                   </div>
 
-                
+
                 </div>
               </div>
             ) : form === formList[1] ? (
@@ -356,30 +366,30 @@ function EffectivenessCheck() {
                   </div>
                   <div className="sub-head">Cancellation Details</div>
                   <div className="form-flex">
-                  <div className="group-input">
-                    <label>Cancellation Category</label>
-                    <select>
-                      <option value="">Enter Your Selection Here</option>
-                      <option value="Duplicate Entry">Duplicate Entry</option>
-                      <option value="Entered in Error">Entered in Error</option>
-                      <option value="No Longer Necessary">
-                        No Longer Necessary
-                      </option>
-                      <option value="Parent Record Closed">
-                        Parent Record Closed
-                      </option>
-                    </select>
-                  </div>
+                    <div className="group-input">
+                      <label>Cancellation Category</label>
+                      <select>
+                        <option value="">Enter Your Selection Here</option>
+                        <option value="Duplicate Entry">Duplicate Entry</option>
+                        <option value="Entered in Error">Entered in Error</option>
+                        <option value="No Longer Necessary">
+                          No Longer Necessary
+                        </option>
+                        <option value="Parent Record Closed">
+                          Parent Record Closed
+                        </option>
+                      </select>
+                    </div>
 
-                  <div className="group-input">
-                    <label>TrackWise Record Type</label>
-                    <select>
-                      <option>Enter Your Selection Here</option>
-                      <option value="Effectiveness Check">
-                        Effectiveness Check
-                      </option>
-                    </select>
-                  </div>
+                    <div className="group-input">
+                      <label>TrackWise Record Type</label>
+                      <select>
+                        <option>Enter Your Selection Here</option>
+                        <option value="Effectiveness Check">
+                          Effectiveness Check
+                        </option>
+                      </select>
+                    </div>
                   </div>
                   <FlexField
                     label="Cancellation Justification"

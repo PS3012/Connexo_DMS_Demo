@@ -216,7 +216,7 @@ function Audit_Program() {
 
                                 <div className="group-input">
                                   <label>
-                                    <b>Division Code</b>
+                                    <b>Site/Location Code</b>
                                   </label>
                                   <input type="text" value="KSA" disabled />
                                 </div>
@@ -347,13 +347,22 @@ function Audit_Program() {
 
                               <div className="group-input">
                                 <label>
-                                  <div className="required"></div>
                                   Short Description
                                 </label>
                                 <div className="instruction">
                                   Please mention brief summary
                                 </div>
-                                <input type="text" />
+                                <textarea type="text" rows="2" />
+                              </div>
+
+                              <div className="group-input">
+                                <label>Severity Level</label>
+                                <select>
+                                  <option value="">-- Select --</option>
+                                  <option value="">Major</option>
+                                  <option value="">Minor</option>
+                                  <option value="">Critical</option>
+                                </select>
                               </div>
 
                               <div className="form-flex">
@@ -397,8 +406,8 @@ function Audit_Program() {
                                   <label>
                                     {changeControl.initiatedThrough ===
                                       "others" && (
-                                      <div className="required"></div>
-                                    )}
+                                        <div className="required"></div>
+                                      )}
                                     <b>Others</b>
                                   </label>
                                   {/* <div className='instruction'></div> */}
@@ -427,26 +436,24 @@ function Audit_Program() {
                                     <label htmlFor="Year">Year</label>
                                     <select name="year">
                                       <option value="">-- Select --</option>
-                                      <option value="2001">2001</option>
-                                      <option value="2002">2002</option>
-                                      <option value="2003">2003</option>
-                                      <option value="2004">2004</option>
-                                      <option value="2005">2005</option>
-                                      <option value="2006">2006</option>
-                                      <option value="2007">2007</option>
-                                      <option value="2008">2008</option>
-                                      <option value="2009">2009</option>
-                                      <option value="2010">2010</option>
-                                      <option value="2011">2011</option>
-                                      <option value="2012">2012</option>
-                                      <option value="2013">2013</option>
-                                      <option value="2014">2014</option>
-                                      <option value="2015">2015</option>
-                                      <option value="2016">2016</option>
-                                      <option value="2017">2017</option>
-                                      <option value="2018">2018</option>
-                                      <option value="2019">2019</option>
-                                      <option value="2020">2020</option>
+                                      <option>2024</option>
+                                      <option>2025</option>
+                                      <option>2026</option>
+                                      <option>2027</option>
+                                      <option>2028</option>
+                                      <option>2029</option>
+                                      <option>2030</option>
+                                      <option>2031</option>
+                                      <option>2032</option>
+                                      <option>2033</option>
+                                      <option>2034</option>
+                                      <option>2035</option>
+                                      <option>2036</option>
+                                      <option>2037</option>
+                                      <option>2038</option>
+                                      <option>2039</option>
+                                      <option>2040</option>
+
                                     </select>
                                   </div>
                                 </div>
@@ -519,15 +526,6 @@ function Audit_Program() {
                                     id="url_description"
                                   />
                                 </div>
-                              </div>
-                            </div>
-
-                            <div className="col-12">
-                              <div className="group-input">
-                                <label htmlFor="suggested_audit">
-                                  Suggested Audits
-                                </label>
-                                <input type="text" name="suggested_audits" />
                               </div>
                             </div>
 
@@ -1535,6 +1533,7 @@ function Audit_Program() {
                                   15 Jan, 2023 11:00 PM
                                 </div>
                               </div>
+
                               <div className="activity-log-field">
                                 <div>
                                   <strong>Plan Approved By:&nbsp;</strong>
@@ -1545,6 +1544,29 @@ function Audit_Program() {
                                   Jan, 2023 11:00 PM
                                 </div>
                               </div>
+
+                              <div className="activity-log-field">
+                                <div>
+                                  <strong>Completed By:&nbsp;</strong>
+                                  Shaleen Mishra
+                                </div>
+                                <div>
+                                  <strong>Completed On:&nbsp;</strong>
+                                  15 Jan, 2023 11:00 PM
+                                </div>
+                              </div>
+                              
+                              <div className="activity-log-field">
+                                <div>
+                                  <strong>Cancelled  By:&nbsp;</strong>
+                                  Shaleen Mishra
+                                </div>
+                                <div>
+                                  <strong>Cancelled  On:&nbsp;</strong>
+                                  15 Jan, 2023 11:00 PM
+                                </div>
+                              </div>
+
                             </div>
                           </div>
                         ) : (

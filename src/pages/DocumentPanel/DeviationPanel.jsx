@@ -296,7 +296,7 @@ function DeviationPanel() {
                                     </div>
 
                                     <div className='group-input'>
-                                        <label>Division Code</label>
+                                        <label>Site/Location Code</label>
                                     </div>
 
                                     <div className='group-input'>
@@ -354,10 +354,19 @@ function DeviationPanel() {
                                 </div>
                                 <div className="group-input">
                                     <label>
-                                        <div className="require"></div>
                                         Short Description
                                     </label>
                                     <textarea type="text" rows="2" />
+                                </div>
+
+                                <div className="group-input">
+                                    <label>Severity Level</label>
+                                    <select>
+                                        <option value="">-- Select --</option>
+                                        <option value="">Major</option>
+                                        <option value="">Minor</option>
+                                        <option value="">Critical</option>
+                                    </select>
                                 </div>
 
                                 <div className="tripple-grid">
