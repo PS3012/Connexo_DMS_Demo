@@ -36,6 +36,11 @@ import CAPAPanel from './pages/DocumentPanel/CAPAPanel'
 import EffectivenessCheckPanel from './pages/DocumentPanel/EffectivenessCheckPanel'
 import ObservationPanel from './pages/DocumentPanel/ObservationPanel'
 import Login from "./pages/Login/Login";
+import QuestionPage from "./pages/Tms/TrainingPage/QuestionPage";
+import ManageQuestionPage from "./pages/Tms/TrainingPage/ManageQuestionPage";
+import ManageQuestionBank from "./pages/Tms/TrainingPage/ManageQuestionBank";
+import ManageQuizzes from "./pages/Tms/TrainingPage/ManageQuizzes";
+import ManageTrainingPlan from "./pages/Tms/TrainingPage/ManageTrainingPlan";
 
 function App() {
   localStorage.setItem("username", "amit.guru@connexo.io")
@@ -82,8 +87,13 @@ function App() {
           <Route path='/effectiveness-check-panel' element={<EffectivenessCheckPanel />} />
           <Route path='/observation-panel' element={<ObservationPanel />} />
           <Route path='/*' element={<Navigate to="/" />} />
+          <Route path='/questionpage' element={<QuestionPage />} />
+          <Route path='/manage-question' element={<ManageQuestionPage />} />
+          <Route path='/manage-question-bank' element={<ManageQuestionBank />} />
+          <Route path='/manage-quizzes' element={<ManageQuizzes />} />
+          <Route path='/manage-training-plan' element={<ManageTrainingPlan />} />
         </Routes>
-      </BrowserRouter>
+      </BrowserRouter >
     </>
   );
 }

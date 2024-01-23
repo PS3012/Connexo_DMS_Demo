@@ -1,0 +1,30 @@
+#TrainingManagementPage .training-items{
+    padding: 20px 25px;
+}
+
+#TrainingManagementPage .training-search-grid{
+    display: grid;
+    grid-template-columns: 5fr 5fr 100px 100px;
+    gap: 30px;
+    margin-bottom: 20px;
+}
+
+#TrainingManagementPage .training-search-grid .search-input {
+    grid-template-columns: 50px 1fr;
+}
+
+#TrainingManagementPage .training-search-grid .search-input label {
+    display: grid;
+    place-items: center;
+    padding: 3px 0;
+}
+
+#TrainingManagementPage .training-search-grid .search-input input {
+    border-left: 0;
+}
+
+#TrainingManagementPage .Add-print-btn{
+    display: flex;
+    gap: 20px;
+    height: 38px;
+}
