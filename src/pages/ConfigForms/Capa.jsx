@@ -1,10 +1,11 @@
-import { useState, useReducer } from "react";
+import { useState, useReducer, useEffect } from "react";
 import "./ConfigForms.css";
 import HeaderTop from "../../components/Header/HeaderTop";
 import Grid from "../../components/DataFields/Grid";
 import InputDate from "../../components/DataFields/InputDate";
 import FlexField from "../../components/DataFields/FlexField";
 import RelatedRecords from "../../components/DataFields/RelatedRecords";
+import axios from "axios";
 
 function CAPA() {
   const [form, setForm] = useState("General Information");
@@ -146,6 +147,17 @@ function CAPA() {
       { id: "2.1.1.3", name: "Equipment/Instruments Comments", type: "text" },
     ],
   };
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+            const response = await axios.get('http://103.167.99.37/LIMS_EL/WebServices.Query.MaterialsQuery.lims');
+            console.log(response.data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+    fetchData();
+}, []);
 
   return (
     <>

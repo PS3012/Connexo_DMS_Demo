@@ -1,11 +1,12 @@
 import HeaderTop from "../../../components/Header/HeaderTop";
-import { useReducer, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import Grid from '../../../components/DataFields/Grid';
 import InputDate from '../../../components/DataFields/InputDate';
 import { currentYear, formList, labFile, site, workFlow } from './LabIncidentFunctions';
 import { CurrentDate } from "../../../components/DateReturners";
 import RelatedRecords from "../../../components/DataFields/RelatedRecords";
 import '../ConfigForms.css'
+import axios from "axios";
 
 function LabIncident() {
     const [form, setForm] = useState(formList[0]);
@@ -72,6 +73,99 @@ function LabIncident() {
     const handleChange = (updatedData) => {
         setDocumentInformation({ initialAttachment: updatedData })
     };
+    const body = {
+        "labincident": {
+            "name": "generalInformation",
+            "generalInformation": [
+                {
+                    "recordNumber": documentInformation.recordNumber,
+                    "divisionCode": documentInformation.site,
+                    "initiator": documentInformation.initiator,
+                    "assignedTo": documentInformation.assignedTo,
+                    "dueDate": "2024-01-22",
+                    "initiatorGroup": documentInformation.initiatorGroup,
+                    "shortDescription": documentInformation.shortDescription,
+                    "incidentCategory": documentInformation.incidentCategory,
+                    "invocationType": documentInformation.invocationType,
+                    "initialAttachments": [{
+                        "titleOfDocument": "Image",
+                        "attachedFile": "abc",
+                        "remark": "imageAbc"
+                    }]
+                }
+            ],
+            "incidentDetails": [
+                {
+                    "IncidentDetails": "abc",
+                    "documentDetails": "abc",
+                    "instruntDetails": "abc",
+                    "involvedPersonnel": "abc",
+                    "productDetails": "abc",
+                    "supervisorReviewComments": "abc",
+                    "incidentAttach": [{
+                        "titleOfDocument": "Image",
+                        "attachedFile": "abc",
+                        "remark": "imageAbc"
+                    }]
+                }
+
+            ],
+            "investigationDetails": [
+                {
+                    "investigationDetails": "xyz",
+                    "actionTaken": "xyz",
+                    "rootCause": "xyz",
+                    "invAttachments": [{
+                        "titleOfDocument": "Image",
+                        "attachedFile": "xyz",
+                        "remark": "imageAbc"
+                    }]
+                }
+            ],
+            "capa": [
+                {
+                    "investigationDetail": "yyyy",
+                    "actionTaken": "yyy",
+                    "capaAttachment": [{
+                        "titleOfDocument": "Image",
+                        "attachedFile": "yyy",
+                        "remark": "imageAbc"
+                    }]
+                }
+            ],
+            "qaReviews": [
+                {
+                    "qaReviewComments": "zzzz",
+                    "qaHeadAttachments": [{
+                        "titleOfDocument": "Image",
+                        "attachedFile": "zzzz",
+                        "remark": "imageAbc"
+                    }]
+                }
+            ],
+            "qaHeadDesigneApprovel": [
+                {
+                    "investigationDetails": "aaaaa",
+                    "effectivenessCheckrequired": "aaaaa",
+                    "effectivenessCheckCreationDate": "aaaa",
+                    "effectivnessChecker": "aaaa",
+                    "conclusion": "aaaaa",
+                    "dueDateExtentionJustification": "aaaa"
+                }
+            ]
+        }
+    }
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        axios.post('http://195.35.6.197:9091/LabIncident/api/create', body)
+            .then(response => {
+                console.log("Response " + response)
+                console.log("Hit")
+            })
+            .catch(error => {
+                console.error(error)
+            })
+    }
 
     return (
         <>
@@ -471,7 +565,7 @@ function LabIncident() {
                     </div>
 
                     <div className="button-block" style={asideWorkFlow || asideFamilyTree ? { 'width': 'calc(100% - 300px)' } : { 'width': '100%' }}>
-                        <button className='themeBtn'>Save</button>
+                        <button className='themeBtn' onClick={(e) => handleSubmit(e)}>Save</button>
                         <button className='themeBtn'>Back</button>
                         <button className='themeBtn'>Next</button>
                         <button className='themeBtn'>Exit</button>
