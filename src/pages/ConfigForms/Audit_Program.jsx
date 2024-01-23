@@ -1,6 +1,5 @@
 import { useState, useReducer } from "react";
 import "./ConfigForms.css";
-// import { MultiSelect } from "react-multi-select-component";
 import HeaderTop from "../../components/Header/HeaderTop";
 import Grid from "../../components/DataFields/Grid";
 import InputDate from "../../components/DataFields/InputDate";

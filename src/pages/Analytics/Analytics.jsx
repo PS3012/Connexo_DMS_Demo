@@ -1,353 +1,269 @@
-import React from 'react'
-import HeaderTop from '../../components/Header/HeaderTop';
-import HeaderBottom from '../../components/Header/HeaderBottom';
-import ApexCharts from 'apexcharts'
-import { ReactDOM } from 'react';
+import React from "react";
+import { useState } from "react";
+import HeaderTop from "../../components/Header/HeaderTop";
+import HeaderBottom from "../../components/Header/HeaderBottom";
+import Chart from "react-apexcharts";
 import "./Analytics.css";
 
-
 function Analytics() {
+  const initialChart = {
+    options: {
+      colors: ["#00CED1", "#DDA0DD", "#00FA9A", "#F08080", "#DC143C", "#FF1493", "#FF7F50", "#FF4500", "#FFFF00", "#4682B4"],
+      chart: {
+        id: "bar-chart",
+      },
+      xaxis: {
+        categories: [
+          "Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec",
+        ],
+      },
+    },
+    series: [
+      {
+        name: "CAPA",
+        data: [30, 40, 45, 50, 49, 60, 70, 91, 30, 40, 45],
+      },
+      {
+        name: "changecontrol",
+        data: [24, 60, 35, 80, 29, 70, 50, 51, 34, 50, 45],
+      },
+      {
+        name: "actionitems",
+        data: [34, 50, 45, 50, 19, 85, 21, 87, 24, 60, 35,],
+      },
+      {
+        name: "internalaudit",
+        data: [44, 65, 45, 30, 29, 95, 31, 97,34, 50, 45,],
+      },
+      {
+        name: "externalaudit",
+        data: [34, 85, 55, 50, 79, 71, 21, 87, 44, 65, 45,],
+      },
+      {
+        name: "labincident",
+        data: [55, 65, 75, 85, 95, 85, 75, 65,34, 85, 55,],
+      },
+      {
+        name: "riskassessment",
+        data: [34, 65, 45, 50, 29, 75, 21, 87,55, 65, 75,],
+      },
+      {
+        name: "rootcauseanalysis",
+        data: [20, 30, 40, 50, 60, 70, 80, 90,34, 65, 100,],
+      },
+      {
+        name: "managementreview",
+        data: [10, 15, 45, 50, 29, 75, 21, 100, 20, 30, 40,],
+      },
+    ],
+  };
 
-    const graph = {
-          
-        series: [{
-          name: 'Income',
-          type: 'column',
-          data: [1.4, 2, 2.5, 1.5, 2.5, 2.8, 3.8, 4.6]
-        }, {
-          name: 'Cashflow',
-          type: 'column',
-          data: [1.1, 3, 3.1, 4, 4.1, 4.9, 6.5, 8.5]
-        }, {
-          name: 'Revenue',
-          type: 'line',
-          data: [20, 29, 37, 36, 44, 45, 50, 58]
-        }],
-        options: {
-          chart: {
-            height: 350,
-            type: 'line',
-            stacked: false
-          },
-          dataLabels: {
-            enabled: false
-          },
-          stroke: {
-            width: [1, 1, 4]
-          },
-          title: {
-            text: 'XYZ - Stock Analysis (2009 - 2016)',
-            align: 'left',
-            offsetX: 110
-          },
-          xaxis: {
-            categories: [2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016],
-          },
-          yaxis: [
-            {
-              axisTicks: {
-                show: true,
-              },
-              axisBorder: {
-                show: true,
-                color: '#008FFB'
-              },
-              labels: {
-                style: {
-                  colors: '#008FFB',
-                }
-              },
-              title: {
-                text: "Income (thousand crores)",
-                style: {
-                  color: '#008FFB',
-                }
-              },
-              tooltip: {
-                enabled: true
-              }
-            },
-            {
-              seriesName: 'Income',
-              opposite: true,
-              axisTicks: {
-                show: true,
-              },
-              axisBorder: {
-                show: true,
-                color: '#00E396'
-              },
-              labels: {
-                style: {
-                  colors: '#00E396',
-                }
-              },
-              title: {
-                text: "Operating Cashflow (thousand crores)",
-                style: {
-                  color: '#00E396',
-                }
-              },
-            },
-            {
-              seriesName: 'Revenue',
-              opposite: true,
-              axisTicks: {
-                show: true,
-              },
-              axisBorder: {
-                show: true,
-                color: '#FEB019'
-              },
-              labels: {
-                style: {
-                  colors: '#FEB019',
-                },
-              },
-              title: {
-                text: "Revenue (thousand crores)",
-                style: {
-                  color: '#FEB019',
-                }
-              }
-            },
-          ],
-          tooltip: {
-            fixed: {
-              enabled: true,
-              position: 'topLeft', // topRight, topLeft, bottomRight, bottomLeft
-              offsetY: 30,
-              offsetX: 60
-            },
-          },
-          legend: {
-            horizontalAlign: 'left',
-            offsetX: 40
-          }
-        },
+
+  const [barChart, setBarChart] = useState(initialChart);
+  const [selectedProcess, setSelectedProcess] = useState('all_records');
+
+  const handleProcessChange = (selectedProcess) => {
+    setSelectedProcess(selectedProcess);
+  
+    if (selectedProcess === 'all_records') {
+      setBarChart(initialChart);
+    } else {
+      const updatedSeries = initialChart.series.filter(item =>
+        item.name.toLowerCase() === selectedProcess.toLowerCase()
+      );
+      setBarChart((prevChart) => ({
+        ...prevChart,
+        series: updatedSeries,
+      }));
     }
-    return (
-        <>
-            <HeaderTop />
-            <HeaderBottom />
-            <div className="desktop-input-table-wrapper">
-                <div className="input-wrapper">
-                    <div className="group-input-2">
-                        <label>Process</label>
-                        <select>
-                            <option value="all_records">All Records</option>
-                            <option value="internal_audit">Internal Audit</option>
-                            <option value="external_audit">External Audit</option>
-                            <option value="capa">Capa</option>
-                            <option value="lab_incident">Lab Incident</option>
-                            <option value="risk_assement">Risk Assesment</option>
-                            <option value="root_cause_analysis">Root Cause Analysis</option>
-                            <option value="management_review">Management Review</option>
-                        </select>
-                    </div>
-                    <div className="group-input-2">
-                        <label>Criteria</label>
-                        <select>
-                            <option value="all_records">All Records</option>
-                            <option value="1">Closed Records</option>
-                            <option value="2">Opened Records</option>
-                            <option value="3">Cancelled Records</option>
-                            <option value="4">Overdue Records</option>
-                            <option value="5">Assigned To Me</option>
-                            <option value="6">Records Created Today</option>
-                        </select>
-                    </div>
-                    <button className='btn'>Print</button>
-                </div>
-                <div className="table-wrapper">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Record</th>
-                                <th>Division</th>
-                                <th>Process</th>
-                                <th>Short Description</th>
-                                <th>Short Description</th>
-                                <th>Date Opened</th>
-                                <th>Assigned To</th>
-                                <th>Due Date</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div>
-              <div id="chart">
-                <ReactApexChart options={this.state.options} series={this.state.series} type="line" height={350} />
-              </div>
-              <div id="html-dist"></div>
-            </div>
-            </div>
-        </>
-    )
+  };
+  
+  return (
+    <>
+      <HeaderTop />
+      <HeaderBottom />
+      <div className="desktop-input-table-wrapper">
+        <div className="input-wrapper">
+        <div className="group-input-2">
+        <label>Process</label>
+        <select value={selectedProcess} onChange={(e) => handleProcessChange(e.target.value)}>
+          <option value="all_records">All Records</option>
+          <option value="capa">CAPA</option>
+          <option value="changecontrol">Change Control</option>
+          <option value="actionitems">Action Items</option>
+          <option value="internalaudit">Internal Audit</option>
+          <option value="externalaudit">External Audit</option>
+          <option value="labincident">Lab Incident</option>
+          <option value="riskassessment">Risk Assessment</option>
+          <option value="rootcauseanalysis">Root Cause Analysis</option>
+          <option value="managementreview">Management Review</option>
+        </select>
+      </div>
+          <div className="group-input-2">
+            <label>Criteria</label>
+            <select>
+              <option value="all_records">All Records</option>
+              <option value="1">Closed Records</option>
+              <option value="2">Opened Records</option>
+              <option value="3">Cancelled Records</option>
+              <option value="4">Overdue Records</option>
+              <option value="5">Assigned To Me</option>
+              <option value="6">Records Created Today</option>
+              <option value="6">Sevierty Level</option>
+            </select>
+          </div>
+          <button className="btn">Print</button>
+        </div>
+        <div className="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Record</th>
+                <th>Division</th>
+                <th>Process</th>
+                <th>Short Description</th>
+                <th>Date Opened</th>
+                <th>Assigned To</th>
+                <th>Due Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-4">
+          <Chart
+            options={barChart.options}
+            series={barChart.series}
+            type="bar"
+            width="1300"
+          />
+        </div>
+        <div className="col-4">
+          <Chart
+            options={barChart.options}
+            series={barChart.series}
+            type="line"
+            width="1000"
+          />
+        </div>
+      </div>
+     
+    </>
+  );
 }
 
 export default Analytics;
-
-class ApexChart extends React.Component {
-    constructor(props) {
-      super(props);
-
-      this.state = {
-      
-        series: [{
-          name: 'Income',
-          type: 'column',
-          data: [1.4, 2, 2.5, 1.5, 2.5, 2.8, 3.8, 4.6]
-        }, {
-          name: 'Cashflow',
-          type: 'column',
-          data: [1.1, 3, 3.1, 4, 4.1, 4.9, 6.5, 8.5]
-        }, {
-          name: 'Revenue',
-          type: 'line',
-          data: [20, 29, 37, 36, 44, 45, 50, 58]
-        }],
-        options: {
-          chart: {
-            height: 350,
-            type: 'line',
-            stacked: false
-          },
-          dataLabels: {
-            enabled: false
-          },
-          stroke: {
-            width: [1, 1, 4]
-          },
-          title: {
-            text: 'XYZ - Stock Analysis (2009 - 2016)',
-            align: 'left',
-            offsetX: 110
-          },
-          xaxis: {
-            categories: [2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016],
-          },
-          yaxis: [
-            {
-              axisTicks: {
-                show: true,
-              },
-              axisBorder: {
-                show: true,
-                color: '#008FFB'
-              },
-              labels: {
-                style: {
-                  colors: '#008FFB',
-                }
-              },
-              title: {
-                text: "Income (thousand crores)",
-                style: {
-                  color: '#008FFB',
-                }
-              },
-              tooltip: {
-                enabled: true
-              }
-            },
-            {
-              seriesName: 'Income',
-              opposite: true,
-              axisTicks: {
-                show: true,
-              },
-              axisBorder: {
-                show: true,
-                color: '#00E396'
-              },
-              labels: {
-                style: {
-                  colors: '#00E396',
-                }
-              },
-              title: {
-                text: "Operating Cashflow (thousand crores)",
-                style: {
-                  color: '#00E396',
-                }
-              },
-            },
-            {
-              seriesName: 'Revenue',
-              opposite: true,
-              axisTicks: {
-                show: true,
-              },
-              axisBorder: {
-                show: true,
-                color: '#FEB019'
-              },
-              labels: {
-                style: {
-                  colors: '#FEB019',
-                },
-              },
-              title: {
-                text: "Revenue (thousand crores)",
-                style: {
-                  color: '#FEB019',
-                }
-              }
-            },
-          ],
-          tooltip: {
-            fixed: {
-              enabled: true,
-              position: 'topLeft', // topRight, topLeft, bottomRight, bottomLeft
-              offsetY: 30,
-              offsetX: 60
-            },
-          },
-          legend: {
-            horizontalAlign: 'left',
-            offsetX: 40
-          }
-        },
-      
-      
-      };
-    }
-
-  
-
-    render() {
-      return (
-        <div>
-          <div id="chart">
-            <ReactApexChart options={graph.options} series={graph.series} type="line" height={350} />
-          </div>
-          <div id="html-dist"></div>
-        </div>
-      );
-    }
-  }
-
-  const domContainer = document.querySelector('#app');
-  ReactDOM.render(React.createElement(ApexChart), domContainer);
-
-
-ApexCharts 
-// Stay Updated
-// Get the latest news, updates and what's coming next! Sign up for our Newsletter here.
-
