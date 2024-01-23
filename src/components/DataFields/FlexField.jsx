@@ -25,14 +25,6 @@ function FlexField(_props) {
                     {_props.label}
                     <div className='instruction' onClick={handleInstructionClick}>{_props.instruction}</div>
                 </label>
-                {/* <Editor
-                    apiKey='nlsiabbt295w89cjmcocv6qjdg3k7ozef0q9meowv2nkwyd3'
-                    init={{
-                        plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
-                        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
-                    }}
-                    initialValue=""
-                /> */}
                 <textarea></textarea>
             </div>
         </>

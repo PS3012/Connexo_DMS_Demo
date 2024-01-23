@@ -2,7 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import DocumentPanel from "./pages/DocumentPanel/DocumentPanel";
 import TrainingManagementSystem from "./pages/TMS/TrainingManagementSystem";
 import Question from "./pages/Question/Question";
-import ChangeControlForm from "./pages/ConfigForms/ChangeControlForm";
+import ChangeControlForm from "./pages/ConfigForms/ChangeControl/ChangeControl";
 import DocumentForm from "./pages/ConfigForms/DocumentForm";
 import LabIncident from "./pages/ConfigForms/LabIncident/LabIncident";
 import AddQuestion from "./pages/AddQuestion/AddQuestion";
@@ -18,11 +18,11 @@ import Desktop from "./pages/Desktop/Desktop";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import ManagementReview from "./pages/ConfigForms/ManagementReview";
 import Extension from "./pages/ConfigForms/Extension";
-import ChangeControlPanel from "./pages/DocumentPanel/ChangeControlPanel";
+import ChangeControlPanel from "./pages/DocumentPanel/ChangeControlPanel/ChangeControlPanel";
 import InternalAuditPanel from "./pages/DocumentPanel/InternalAuditPanel";
 import ExternalAuditPanel from "./pages/DocumentPanel/ExternalAuditPanel";
 import DeviationPanel from './pages/DocumentPanel/DeviationPanel'
-import LabIncidentPanel from './pages/DocumentPanel/LabIncidentPanel'
+import LabIncidentPanel from './pages/DocumentPanel/LabIncidentPanel/LabIncidentPanel'
 import RootCauseAnalysisPanel from './pages/DocumentPanel/RootCauseAnalysisPanel'
 import RiskAssessmentPanel from './pages/DocumentPanel/RiskAssessmentPanel'
 import ManagementReviewPanel from './pages/DocumentPanel/ManagementReviewPanel'

@@ -1,10 +1,15 @@
-const currentDate = new Date()
-export const site = localStorage.getItem("site")
-export const currentYear = currentDate.getFullYear()
-
 export const formList = ["Document Information", "Incident Details", "Investigation Details", "CAPA", "QA Review", "QA Head/Designee Approval", "Activity Log"]
 
-export const workFlow = ["Opened", "Pending Incident Review", "Pending Investigation", "Pending Activity Completion", "Pending CAPA", "Pending QA Review", "Pending QA Head Approval"]
+export const progressItems = [
+    { id: 1, name: "Opened", details: '' },
+    { id: 2, name: "Pending Incident Review", details: '' },
+    { id: 3, name: "Pending Investigation", details: 'Root Cause Analysis child can be created at this stage.' },
+    { id: 4, name: "Pending Activity Completion", details: '' },
+    { id: 5, name: "Pending CAPA", details: 'CAPA child can be created at this stage.' },
+    { id: 6, name: "Pending QA Review", details: '' },
+    { id: 7, name: "Pending QA Head Approval", details: '' },
+    { id: 8, name: "Closed-Done", details: '' },
+]
 
 export const labFile = [
     {
