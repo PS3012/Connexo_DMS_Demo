@@ -24,14 +24,12 @@ function InputDate(_props) {
                 <div className="input-date">
                     <input
                         type="text"
-                        name={_props.label}
                         value={convertedDate}
                         readOnly
                         placeholder="DD-MMM-YYYY"
                     />
                     <input
                         type="date"
-                        name={_props.label}
                         className="hide-input"
                         value={inputDate}
                         onChange={(e) => handleInputChange(e)}

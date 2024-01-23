@@ -1,9 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './DataFields.css'
 
 function Grid(_props) {
-    const [rows, setRows] = useState([]);
+    const [rows, setRows] = useState(_props.initialValues || []);
 
+    useEffect(() => {
+        if (_props.onChange) {
+            _props.onChange(rows);
+        }
+    }, []);
     function handleAddRow() {
         const newRow = {
             id: Math.random(),
@@ -19,12 +24,20 @@ function Grid(_props) {
         setRows([...rows, newRow]);
     }
     function handleDeleteRow(id) {
-        const rowIndex = rows.findIndex((row) => row.id === id);
-        if (rowIndex !== -1) {
-            const updatedRows = [...rows.slice(0, rowIndex), ...rows.slice(rowIndex + 1)];
+        const updatedRows = rows.filter((row) => row.id !== id);
+        setRows(updatedRows);
+    }
+    const handleFileUpload = (rowId, event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const updatedRows = rows.map((row) =>
+                row.id === rowId
+                    ? { ...row, cells: [...row.cells.slice(0, 1), file.name, ...row.cells.slice(2)] }
+                    : row
+            );
             setRows(updatedRows);
         }
-    }
+    };
     return (
         <>
 
@@ -78,6 +91,8 @@ function Grid(_props) {
                                                             </option>
                                                         ))}
                                                     </select>
+                                                ) : _props.columnList[index - 1].type === 'singleSelection' ? (
+                                                    <input type="file" onChange={(e) => handleFileUpload(row.id, e)} />
                                                 ) : (
                                                     <input
                                                         type={_props.columnList[index - 1].type}
