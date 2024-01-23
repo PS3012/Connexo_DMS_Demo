@@ -7,24 +7,32 @@ import InputDate from "../../components/DataFields/InputDate";
 import FlexField from "../../components/DataFields/FlexField";
 import RelatedRecords from "../../components/DataFields/RelatedRecords";
 import { CurrentDate } from "../../components/DateReturners";
-import "./ConfigForms.css";
+import "./DocumentPanel.css";
 
-function InternalAudit() {
-  const formList = ["General Information", "Audit Planning", "Audit Preparation", "Audit Execution", "Audit Response & Closure", "Activity Log"]
-  const site = localStorage.getItem("site")
-  const currentDate = new Date()
-  const currentYear = currentDate.getFullYear()
-  const [internalAudit, setInternalAudit] = useReducer((prev, next) => ({
-    ...prev, ...next
-  }), {
-    initiatorGroup: '',
-    initiatedThrough: '',
-    typeOfAudit: ''
-  })
+function InternalAuditPanel() {
+  const formList = [
+    "General Information",
+    "Audit Planning",
+    "Audit Preparation",
+    "Audit Execution",
+    "Audit Response & Closure",
+    "Activity Log",
+  ];
+  const [internalAudit, setInternalAudit] = useReducer(
+    (prev, next) => ({
+      ...prev,
+      ...next,
+    }),
+    {
+      initiatorGroup: "",
+      initiatedThrough: "",
+      typeOfAudit: "",
+    }
+  );
   const [form, setForm] = useState(formList[0]);
   const [selected, setSelected] = useState([]);
-  const [asideWorkFlow, setAsideWorkFlow] = useState(false)
-  const [asideFamilyTree, setAsideFamilyTree] = useState(false)
+  const [asideWorkFlow, setAsideWorkFlow] = useState(false);
+  const [asideFamilyTree, setAsideFamilyTree] = useState(false);
   const FunctionName = [
     { label: "QA", value: "QA" },
     { label: "QC", value: "QC" },
@@ -205,6 +213,70 @@ function InternalAudit() {
     },
   ];
 
+  // /=====================================================
+
+  const progressItems = [
+    {
+      id: 1,
+      name: "Opened",
+      details: "Document is opened at 10 Jan, 2023 11:12PM",
+    },
+    {
+      id: 2,
+      name: "HOD Review",
+      details: "Action Item child can be created at this stage.",
+    },
+    { id: 3, name: "Pending QA Review", details: "" },
+    { id: 4, name: "CFT/SME Review", details: "" },
+    {
+      id: 5,
+      name: "Pending Change Implementation",
+      details: "New Document child can be created at this stage.",
+    },
+    { id: 6, name: "Closed - Done", details: "" },
+  ];
+  const [progressArray, setProgressArray] = useState([progressItems[0].name]);
+  const [signatureModal, setSignatureModal] = useState(false);
+  const [keyword, setKeyword] = useState("");
+  const [keywordElements, setKeywordElements] = useState([]);
+  const closeSignatureModal = () => setSignatureModal(false);
+  function handleESignature(key, elements) {
+    setKeyword(key);
+    setKeywordElements(elements);
+    for (let ele of elements) {
+      let updatedItemIndex = progressItems.findIndex(
+        (item) => item.name === ele
+      );
+      if (updatedItemIndex !== -1) {
+        progressItems[updatedItemIndex].details = "Updated";
+      } else {
+        console.error('Item with name "Opened" not found.');
+      }
+    }
+    setSignatureModal(true);
+  }
+  function signatureValue(key) {
+    if (key) {
+      if (keyword === "add") {
+        addProgress(keywordElements);
+      } else if (keyword === "remove") {
+        removeProgress(keywordElements);
+      } else {
+        setProgressArray("Closed-Cancelled");
+      }
+    } else {
+      alert("E-Signature Not Matched.");
+    }
+  }
+  function addProgress(addEle) {
+    for (let ele of addEle) {
+      setProgressArray((prevArray) => [...prevArray, ele]);
+    }
+  }
+  function removeProgress(removeEle) {
+    setProgressArray(progressArray.filter((item) => !removeEle.includes(item)));
+  }
+
   return (
     <>
       <div
@@ -279,13 +351,151 @@ function InternalAudit() {
               <strong> Record Name:&nbsp;</strong>Internal Audit
             </div>
             <div>
-              <strong> Site:&nbsp;</strong>{site}
+              <strong> Site:&nbsp;</strong>EHS-North America
             </div>
             <div>
               <strong> Current Status:&nbsp;</strong>Under Initiation
             </div>
             <div>
               <strong> Initiated By:&nbsp;</strong>Shaleen Mishra
+            </div>
+          </div>
+          <div id="document-panel">
+            <div className="inner-block">
+              <div className="workflow-bar">
+                <div className="workflow-top-block">
+                  <div className="head">Record Workflow</div>
+                  <div className="btn-bar">
+                    <button className="themeBtn">Audit Trail</button>
+                    <button className="themeBtn">Print</button>
+                    {progressArray.length === 1 && (
+                      <>
+                        <button
+                          className="themeBtn"
+                          onClick={() =>
+                            handleESignature("add", [progressItems[1].name])
+                          }
+                        >
+                          Submit
+                        </button>
+                        <button
+                          className="themeBtn"
+                          onClick={() => handleESignature("closed", [])}
+                        >
+                          Cancel
+                        </button>
+                      </>
+                    )}
+                    {progressArray.length === 2 && (
+                      <>
+                        <button
+                          className="themeBtn"
+                          onClick={() =>
+                            handleESignature("add", [progressItems[2].name])
+                          }
+                        >
+                          HOD Review Complete
+                        </button>
+                        <button
+                          className="themeBtn"
+                          onClick={() =>
+                            handleESignature("remove", [progressItems[1].name])
+                          }
+                        >
+                          More Information Required
+                        </button>
+                      </>
+                    )}
+                    {progressArray.length === 3 && (
+                      <>
+                        <button
+                          className="themeBtn"
+                          onClick={() =>
+                            handleESignature("add", [progressItems[3].name])
+                          }
+                        >
+                          Send to CFT Reviewers
+                        </button>
+                        <button
+                          className="themeBtn"
+                          onClick={() =>
+                            handleESignature("remove", [progressItems[2].name])
+                          }
+                        >
+                          More Information Required
+                        </button>
+                        <button
+                          className="themeBtn"
+                          onClick={() =>
+                            handleESignature("add", [
+                              progressItems[3].name,
+                              progressItems[4].name,
+                            ])
+                          }
+                        >
+                          CFT Review Not Required
+                        </button>
+                      </>
+                    )}
+                    {progressArray.length === 4 && (
+                      <>
+                        <button
+                          className="themeBtn"
+                          onClick={() =>
+                            handleESignature("add", [progressItems[4].name])
+                          }
+                        >
+                          Review Complete
+                        </button>
+                        <button
+                          className="themeBtn"
+                          onClick={() =>
+                            handleESignature("remove", [
+                              progressItems[2].name,
+                              progressItems[3].name,
+                            ])
+                          }
+                        >
+                          Request More Info
+                        </button>
+                      </>
+                    )}
+                    {progressArray.length === 5 && (
+                      <button
+                        className="themeBtn"
+                        onClick={() =>
+                          handleESignature("add", [progressItems[5].name])
+                        }
+                      >
+                        Implemented
+                      </button>
+                    )}
+                    <button className="themeBtn">Exit</button>
+                  </div>
+                </div>
+                <div className="progress-block">
+                  {progressArray === "Closed-Cancelled" ? (
+                    <>
+                      <div className="active">Opened</div>
+                      <div className="active closed">Closed-Cancelled</div>
+                    </>
+                  ) : (
+                    progressItems.map((item) => (
+                      <div
+                        key={item.id}
+                        className={
+                          progressArray.includes(item.name) ? "active" : ""
+                        }
+                      >
+                        {item.name}
+                        {item.details && (
+                          <div className="details">{item.details}</div>
+                        )}
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
             </div>
           </div>
 
@@ -308,11 +518,15 @@ function InternalAudit() {
                   <div className="form-flex">
                     <div className="group-input">
                       <label>Record Number</label>
-                      <input type="text" value={`${site}/IA/${currentYear}/00000001`} disabled />
+                      <input
+                        type="text"
+                        value="Jordan/IA/2024/00000001"
+                        disabled
+                      />
                     </div>
                     <div className="group-input">
                       <label>Division</label>
-                      <input type="text" value={site} disabled />
+                      <input type="text" value="Jordan" disabled />
                     </div>
                     <div className="group-input">
                       <label>Initiator</label>
@@ -342,7 +556,13 @@ function InternalAudit() {
                         <div className="required"></div>
                         Initiator Group
                       </label>
-                      <select name="initiatorGroup" value={internalAudit.initiatorGroup} onChange={(e) => setInternalAudit({ initiatorGroup: e.target.value })}>
+                      <select
+                        name="initiatorGroup"
+                        value={internalAudit.initiatorGroup}
+                        onChange={(e) =>
+                          setInternalAudit({ initiatorGroup: e.target.value })
+                        }
+                      >
                         <option value="">-- Select --</option>
                         <option value="CQA">Corporate Quality Assurance</option>
                         <option value="QAB">
@@ -369,7 +589,11 @@ function InternalAudit() {
                     </div>
                     <div className="group-input">
                       <label>Initiator Group Code</label>
-                      <input type="text" value={internalAudit.initiatorGroup} disabled />
+                      <input
+                        type="text"
+                        value={internalAudit.initiatorGroup}
+                        disabled
+                      />
                     </div>
                   </div>
                   <div className="group-input">
@@ -382,8 +606,16 @@ function InternalAudit() {
                   <div className="form-flex">
                     <div className="group-input">
                       <label>Initiated Through</label>
-                      <div className='instruction'>Please select related information</div>
-                      <select name="initiated_through" value={internalAudit.initiatedThrough} onChange={(e) => setInternalAudit({ initiatedThrough: e.target.value })}>
+                      <div className="instruction">
+                        Please select related information
+                      </div>
+                      <select
+                        name="initiated_through"
+                        value={internalAudit.initiatedThrough}
+                        onChange={(e) =>
+                          setInternalAudit({ initiatedThrough: e.target.value })
+                        }
+                      >
                         <option value="">-- Select --</option>
                         <option value="recall">Recall</option>
                         <option value="return">Return</option>
@@ -397,10 +629,14 @@ function InternalAudit() {
                     </div>
                     <div className="group-input">
                       <label>
-                        {internalAudit.initiatedThrough === 'others' && <div className="required"></div>}
+                        {internalAudit.initiatedThrough === "others" && (
+                          <div className="required"></div>
+                        )}
                         Other
                       </label>
-                      <textarea required={internalAudit.initiatedThrough === 'others'}></textarea>
+                      <textarea
+                        required={internalAudit.initiatedThrough === "others"}
+                      ></textarea>
                     </div>
                     <div className="group-input">
                       <label>Type of Audit</label>
@@ -408,7 +644,12 @@ function InternalAudit() {
                         Please select yes if it is has recurred in past six
                         months
                       </div>
-                      <select value={internalAudit.typeOfAudit} onChange={(e) => setInternalAudit({ typeOfAudit: e.target.value })} >
+                      <select
+                        value={internalAudit.typeOfAudit}
+                        onChange={(e) =>
+                          setInternalAudit({ typeOfAudit: e.target.value })
+                        }
+                      >
                         <option value="">-- Select --</option>
                         <option value="R&D">R&D</option>
                         <option value="GLP">GLP</option>
@@ -421,10 +662,14 @@ function InternalAudit() {
                     </div>
                     <div className="group-input">
                       <label>
-                        {internalAudit.typeOfAudit === 'Others' && <div className="required"></div>}
+                        {internalAudit.typeOfAudit === "Others" && (
+                          <div className="required"></div>
+                        )}
                         If Other
                       </label>
-                      <textarea required={internalAudit.typeOfAudit === 'Others'}></textarea>
+                      <textarea
+                        required={internalAudit.typeOfAudit === "Others"}
+                      ></textarea>
                     </div>
                   </div>
                   <FlexField
@@ -463,9 +708,7 @@ function InternalAudit() {
                     instruction={AuditAgenda.instruction}
                     columnList={AuditAgenda.columnList}
                   />
-                  <RelatedRecords
-                    label="Related Records"
-                  />
+                  <RelatedRecords label="Related Records" />
                   <div className="group-input">
                     <label>Function Name</label>
                     <MultiSelect
@@ -794,4 +1037,4 @@ function InternalAudit() {
   );
 }
 
-export default InternalAudit;
+export default InternalAuditPanel;

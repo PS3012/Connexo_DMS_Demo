@@ -67,19 +67,19 @@ function Dashboard() {
             <div id="scope_table_container">
                 <div className="scope_bar">
                     <div className="group-input-2">
-                        <label>Process</label>
+                        <label>Criteria</label>
                         <select>
                             <option value="all_records">All Records</option>
-                            <option value="internal_audit">Internal Audit</option>
-                            <option value="external_audit">External Audit</option>
-                            <option value="capa">Capa</option>
-                            <option value="lab_incident">Lab Incident</option>
-                            <option value="risk_assement">Risk Assesment</option>
-                            <option value="root_cause_analysis">Root Cause Analysis</option>
-                            <option value="management_review">Management Review</option>
+                            <option value="1">Closed Records</option>
+                            <option value="2">Opened Records</option>
+                            <option value="3">Cancelled Records</option>
+                            <option value="4">Overdue Records</option>
+                            <option value="5">Assigned To Me</option>
+                            <option value="6">Records Created Today</option>
                         </select>
                     </div>
-                    <button onClick={() => window.print()} className='btn'>Print</button>
+                    <button className='themeBtn'>Print</button>
+                    <button className='themeBtn'>Print All</button>
                 </div>
                 <div className="table_block">
                     {form === "Internal Audit" ? (
@@ -91,6 +91,7 @@ function Dashboard() {
                                         <th>Division</th>
                                         <th>Process</th>
                                         <th>Short Description</th>
+                                        <th>Severity Level</th>
                                         <th>Date Opened</th>
                                         <th>Assigned To</th>
                                         <th>Due Date</th>
@@ -103,6 +104,18 @@ function Dashboard() {
                                         <td>Internal Audit</td>
                                         <td>Internal-Audit</td>
                                         <td>description</td>
+                                        <td>Major</td>
+                                        <td>17-Jan-2024 11:09 AM</td>
+                                        <td>Amit guru</td>
+                                        <td>17-Jan-2024</td>
+                                        <td>Closed - Done</td>
+                                    </tr>
+                                    <tr>
+                                        <td>0001</td>
+                                        <td>Internal Audit</td>
+                                        <td>Internal-Audit</td>
+                                        <td>description</td>
+                                        <td>Major</td>
                                         <td>17-Jan-2024 11:09 AM</td>
                                         <td>Amit guru</td>
                                         <td>17-Jan-2024</td>
@@ -120,6 +133,7 @@ function Dashboard() {
                                         <th>Division</th>
                                         <th>Process</th>
                                         <th>Short Description</th>
+                                        <th>Severity Level</th>
                                         <th>Date Opened</th>
                                         <th>Assigned To</th>
                                         <th>Due Date</th>
@@ -132,6 +146,7 @@ function Dashboard() {
                                         <td>External Audit</td>
                                         <td>Internal-Audit</td>
                                         <td>description</td>
+                                        <td>Major</td>
                                         <td>17-Jan-2024 11:09 AM</td>
                                         <td>Amit guru</td>
                                         <td>17-Jan-2024</td>
@@ -149,6 +164,7 @@ function Dashboard() {
                                         <th>Division</th>
                                         <th>Process</th>
                                         <th>Short Description</th>
+                                        <th>Severity Level</th>
                                         <th>Date Opened</th>
                                         <th>Assigned To</th>
                                         <th>Due Date</th>
@@ -161,6 +177,7 @@ function Dashboard() {
                                         <td>CAPA</td>
                                         <td>Internal-Audit</td>
                                         <td>description</td>
+                                        <td>Minor</td>
                                         <td>17-Jan-2024 11:09 AM</td>
                                         <td>Amit guru</td>
                                         <td>17-Jan-2024</td>
@@ -178,6 +195,7 @@ function Dashboard() {
                                         <th>Division</th>
                                         <th>Process</th>
                                         <th>Short Description</th>
+                                        <th>Severity Level</th>
                                         <th>Date Opened</th>
                                         <th>Assigned To</th>
                                         <th>Due Date</th>
@@ -190,6 +208,7 @@ function Dashboard() {
                                         <td>Audit Program</td>
                                         <td>Internal-Audit</td>
                                         <td>description</td>
+                                        <td>Minor</td>
                                         <td>17-Jan-2024 11:09 AM</td>
                                         <td>Amit guru</td>
                                         <td>17-Jan-2024</td>
@@ -207,6 +226,7 @@ function Dashboard() {
                                         <th>Division</th>
                                         <th>Process</th>
                                         <th>Short Description</th>
+                                        <th>Severity Level</th>
                                         <th>Date Opened</th>
                                         <th>Assigned To</th>
                                         <th>Due Date</th>
@@ -219,6 +239,7 @@ function Dashboard() {
                                         <td>Lab Incident</td>
                                         <td>Internal-Audit</td>
                                         <td>description</td>
+                                        <td>Minor</td>
                                         <td>17-Jan-2024 11:09 AM</td>
                                         <td>Amit guru</td>
                                         <td>17-Jan-2024</td>
@@ -236,6 +257,7 @@ function Dashboard() {
                                         <th>Division</th>
                                         <th>Process</th>
                                         <th>Short Description</th>
+                                        <th>Severity Level</th>
                                         <th>Date Opened</th>
                                         <th>Assigned To</th>
                                         <th>Due Date</th>
@@ -248,6 +270,7 @@ function Dashboard() {
                                         <td>Change Control</td>
                                         <td>Internal-Audit</td>
                                         <td>description</td>
+                                        <td>Minor</td>
                                         <td>17-Jan-2024 11:09 AM</td>
                                         <td>Amit guru</td>
                                         <td>17-Jan-2024</td>
@@ -265,6 +288,7 @@ function Dashboard() {
                                         <th>Division</th>
                                         <th>Process</th>
                                         <th>Short Description</th>
+                                        <th>Severity Level</th>
                                         <th>Date Opened</th>
                                         <th>Assigned To</th>
                                         <th>Due Date</th>
@@ -277,6 +301,7 @@ function Dashboard() {
                                         <td>Risk Assessment</td>
                                         <td>Internal-Audit</td>
                                         <td>description</td>
+                                        <td>Minor</td>
                                         <td>17-Jan-2024 11:09 AM</td>
                                         <td>Amit guru</td>
                                         <td>17-Jan-2024</td>
@@ -294,6 +319,7 @@ function Dashboard() {
                                         <th>Division</th>
                                         <th>Process</th>
                                         <th>Short Description</th>
+                                        <th>Severity Level</th>
                                         <th>Date Opened</th>
                                         <th>Assigned To</th>
                                         <th>Due Date</th>
@@ -306,6 +332,7 @@ function Dashboard() {
                                         <td>Root Cause Analysis</td>
                                         <td>Internal-Audit</td>
                                         <td>description</td>
+                                        <td>Minor</td>
                                         <td>17-Jan-2024 11:09 AM</td>
                                         <td>Amit guru</td>
                                         <td>17-Jan-2024</td>
@@ -323,6 +350,7 @@ function Dashboard() {
                                         <th>Division</th>
                                         <th>Process</th>
                                         <th>Short Description</th>
+                                        <th>Severity Level</th>
                                         <th>Date Opened</th>
                                         <th>Assigned To</th>
                                         <th>Due Date</th>
@@ -335,6 +363,7 @@ function Dashboard() {
                                         <td>Management Review</td>
                                         <td>Internal-Audit</td>
                                         <td>description</td>
+                                        <td>Minor</td>
                                         <td>17-Jan-2024 11:09 AM</td>
                                         <td>Amit guru</td>
                                         <td>17-Jan-2024</td>
@@ -352,6 +381,7 @@ function Dashboard() {
                                         <th>Division</th>
                                         <th>Process</th>
                                         <th>Short Description</th>
+                                        <th>Severity Level</th>
                                         <th>Date Opened</th>
                                         <th>Assigned To</th>
                                         <th>Due Date</th>
@@ -364,6 +394,7 @@ function Dashboard() {
                                         <td>New Document</td>
                                         <td>Internal-Audit</td>
                                         <td>description</td>
+                                        <td>Minor</td>
                                         <td>17-Jan-2024 11:09 AM</td>
                                         <td>Amit guru</td>
                                         <td>17-Jan-2024</td>

@@ -12,7 +12,6 @@ function EffectivenessCheck() {
   const formList = [
     "General Information",
     "Effectiveness Check Results",
-    "Reference Info/Comments",
     "Activity History",
   ];
 
@@ -201,7 +200,6 @@ function EffectivenessCheck() {
                       enableDate="future"
                       isRequired="false"
                     />
-
                     <div className="group-input">
                       <label>Quality Reviewer</label>
                       <select
@@ -278,28 +276,6 @@ function EffectivenessCheck() {
                 </div>
               </div>
             ) : form === formList[2] ? (
-              <div className="document-form">
-                <div className="details-form-data">
-                  <div className="sub-head">Reference Info comments</div>
-                  <FlexField
-                    label="Comments"
-                    instruction=""
-                    isRequired="false"
-                  />
-
-                  <div className="group-input">
-                    <Grid
-                      label={docFile[2].label}
-                      required={docFile[2].required}
-                      instruction={docFile[2].instruction}
-                      columnList={docFile[2].columnList}
-                    />
-                  </div>
-
-                  <RelatedRecords label="Reference Records" />
-                </div>
-              </div>
-            ) : form === formList[3] ? (
               <div className="document-form">
                 <div className="details-form-data">
                   <div className="sub-head">Data History</div>

@@ -32,6 +32,10 @@
     border: 1px dashed grey;
 }
 
+label.color-label {
+    background: #80808045;
+}
+
 .grid-input-field .instruction {
     color: #006fc0;
 }

@@ -8,36 +8,28 @@ import FlexField from "../../components/DataFields/FlexField";
 import RelatedRecords from "../../components/DataFields/RelatedRecords";
 import "./DocumentPanel.css";
 
-function CapaPanel() {
+function CAPAPanel() {
   const [form, setForm] = useState("General Information");
   const [code, setCode] = useState("");
-
   const [groupComment, setGroupComment] = useState(0);
-
   const [changeControl, setChangeControl] = useReducer(
     (prev, next) => ({
       ...prev,
       ...next,
-    }),
-    {
-      initiatorGroup: "",
-      initiatedThrough: "",
-      typeOfAudit: "",
-    }
+    }), {
+    initiatorGroup: "",
+    initiatedThrough: "",
+    typeOfAudit: "",
+  }
   );
-
-  const [option, setOption] = useState(""); // State to track the selected option
-
+  const [option, setOption] = useState("");
   const handleOptionChange = (event) => {
-    setOption(event.target.value); // Update the state when the option is changed
+    setOption(event.target.value);
   };
-
-  const [selectedForm, setSelectedForm] = useState(""); // State to track the selected form
-
+  const [selectedForm, setSelectedForm] = useState("");
   const handleFormChange = (event) => {
-    setSelectedForm(event.target.value); // Update the state when the form is changed
+    setSelectedForm(event.target.value);
   };
-
   const docFile = [
     {
       label: "CAPA Attachments",
@@ -60,7 +52,6 @@ function CapaPanel() {
       ],
     },
   ];
-
   const docDetails = {
     label: "Product Details",
     instruction: <div></div>,
@@ -103,7 +94,6 @@ function CapaPanel() {
       },
     ],
   };
-
   const matDetails = {
     label: "Materials Details",
     instruction: <div></div>,
@@ -146,7 +136,6 @@ function CapaPanel() {
       },
     ],
   };
-
   const equiDetails = {
     label: "Equipment/Instruments Details",
     instruction: <div></div>,
@@ -157,7 +146,6 @@ function CapaPanel() {
       { id: "2.1.1.3", name: "Equipment/Instruments Comments", type: "text" },
     ],
   };
-
   const progressItems = [
     {
       id: 1,
@@ -221,7 +209,6 @@ function CapaPanel() {
   }
   return (
     <>
-    <div>xfj</div>
       <HeaderTop />
       <HeaderBottom />
       <div id="document-panel">
@@ -730,21 +717,21 @@ function CapaPanel() {
 
                     {(selectedForm === "corrective_action" ||
                       selectedForm === "corrective_preventive_action") && (
-                      <FlexField
-                        label="Corrective Action"
-                        instruction=""
-                        isRequired="false"
-                      />
-                    )}
+                        <FlexField
+                          label="Corrective Action"
+                          instruction=""
+                          isRequired="false"
+                        />
+                      )}
 
                     {(selectedForm === "preventive_action" ||
                       selectedForm === "corrective_preventive_action") && (
-                      <FlexField
-                        label="Preventive Action"
-                        instruction=""
-                        isRequired="false"
-                      />
-                    )}
+                        <FlexField
+                          label="Preventive Action"
+                          instruction=""
+                          isRequired="false"
+                        />
+                      )}
 
                     <FlexField
                       label="Supervisor Review Comments"
@@ -946,4 +933,4 @@ function CapaPanel() {
   );
 }
 
-export default CapaPanel;
+export default CAPAPanel;

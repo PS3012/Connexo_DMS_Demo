@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import HeaderTop from "../../components/Header/HeaderTop";
 import "./ConfigForms.css";
@@ -8,7 +7,7 @@ import InputDate from "../../components/DataFields/InputDate";
 import FlexField from "../../components/DataFields/FlexField";
 import RelatedRecords from "../../components/DataFields/RelatedRecords";
 
-function RiskAssesment() {
+function RiskAssessment() {
     const [form, setForm] = useState("Risk Assesment");
     const [groupComment, setGroupComment] = useState(0);
     const [selected, setSelected] = useState([]);
@@ -23,17 +22,12 @@ function RiskAssesment() {
         { label: "Manufacuring", value: "Manufacuring" },
         { label: "Warehouse", value: "Warehouse" },
     ];
-
-    const refrenceRecord = [
-        // { label: "---Select---", value: "Select" },
-    ];
     const rootCause = [
         { label: "Why-Why Chart", value: "Why-Why Chart" },
         { label: "Failure Mode and Efect Analysis", value: "Failure Mode and Efect Analysis" },
         { label: "Fishbone or Ishikawa Diagram", value: "Fishbone or Ishikawa Diagram" },
         { label: "Is/Is Not Analysis", value: "Is/Is Not Analysis" },
     ];
-
     const team = [
         { label: "Select Team Member", value: "Select Team Member" },
         { label: "Amit Guru", value: "Amit Guru" },
@@ -43,7 +37,6 @@ function RiskAssesment() {
         { label: "Shaleen Mishra", value: "Shaleen Mishra" },
         { label: "Madhulika Mishra", value: "Madhulika Mishra" },
     ];
-
     const docFile = [
         {
             label: "Action Plan",
@@ -57,7 +50,6 @@ function RiskAssesment() {
             ],
         },
     ];
-
     const FailureModenEffectAnalysis = [
         {
             label: "Failure Mode and Effect Analysis",
@@ -83,7 +75,6 @@ function RiskAssesment() {
             ],
         },
     ];
-
     const attachment = [
         {
             label: "Initial attachment",
@@ -96,8 +87,6 @@ function RiskAssesment() {
             ],
         },
     ];
-
-
     const Mitigation = [
         {
             label: "Mitigation Plan Details",
@@ -112,10 +101,9 @@ function RiskAssesment() {
             ],
         },
     ];
-
-
     return (
         <>
+
             <div id="main-form-container" style={asideWorkFlow || asideFamilyTree ? { 'padding': '0 0 0 300px' } : {}}>
                 {asideWorkFlow &&
                     <div className="aside-container">
@@ -1397,8 +1385,9 @@ function RiskAssesment() {
                     </div>
                 </div>
             </div>
+
         </>
     )
 }
 
-export default RiskAssesment
+export default RiskAssessment

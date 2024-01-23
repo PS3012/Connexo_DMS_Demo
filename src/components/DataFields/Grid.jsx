@@ -1,8 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import './DataFields.css'
 
 function Grid(_props) {
-    const [rows, setRows] = useState([]);
+    const [rows, setRows] = useState(_props.initialValues || []);
 
+    useEffect(() => {
+        if (_props.onChange) {
+            _props.onChange(rows);
+        }
+    }, []);
     function handleAddRow() {
         const newRow = {
             id: Math.random(),
@@ -17,6 +23,21 @@ function Grid(_props) {
 
         setRows([...rows, newRow]);
     }
+    function handleDeleteRow(id) {
+        const updatedRows = rows.filter((row) => row.id !== id);
+        setRows(updatedRows);
+    }
+    const handleFileUpload = (rowId, event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const updatedRows = rows.map((row) =>
+                row.id === rowId
+                    ? { ...row, cells: [...row.cells.slice(0, 1), file.name, ...row.cells.slice(2)] }
+                    : row
+            );
+            setRows(updatedRows);
+        }
+    };
     return (
         <>
 
@@ -40,24 +61,19 @@ function Grid(_props) {
                                     <th key={item.id}>
                                         <div>
                                             {item.name}
-                                            <svg width="15" height="15" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                <g fill="none" stroke="#d0d0d0" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2">
-                                                    <ellipse cx="12" cy="5" rx="9" ry="2" />
-                                                    <path d="M3 5c0 2.23 3.871 6.674 5.856 8.805A4.197 4.197 0 0 1 10 16.657V19a2 2 0 0 0 2 2v0a2 2 0 0 0 2-2v-2.343c0-1.061.421-2.075 1.144-2.852C17.13 11.674 21 7.231 21 5" />
-                                                </g>
-                                            </svg>
                                         </div>
                                     </th>
                                 ))}
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {rows.map((row) => (
+                            {rows.map((row, rowIndex) => (
                                 <tr key={row.id}>
                                     {row.cells.map((cell, index) => (
                                         <td key={index}>
                                             {index === 0 ? (
-                                                <input type="text" value={cell} readOnly />
+                                                <input type="text" value={rowIndex + 1} readOnly />
                                             ) : (
                                                 _props.columnList[index - 1].type === 'singleSelection' ? (
                                                     <select
@@ -75,6 +91,8 @@ function Grid(_props) {
                                                             </option>
                                                         ))}
                                                     </select>
+                                                ) : _props.columnList[index - 1].type === 'singleSelection' ? (
+                                                    <input type="file" onChange={(e) => handleFileUpload(row.id, e)} />
                                                 ) : (
                                                     <input
                                                         type={_props.columnList[index - 1].type}
@@ -89,6 +107,18 @@ function Grid(_props) {
                                             )}
                                         </td>
                                     ))}
+                                    <td>
+                                        <div className="action">
+                                            <div onClick={() => handleDeleteRow(row.id)}>
+                                                <svg width="25" height="25" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill="#FFF" d="M51.76 17H20.153v37.65c0 4.06 3.29 5.62 7.35 5.62H44.41c4.06 0 7.35-1.56 7.35-5.62zM31 16v-4h10v4" />
+                                                    <path fill="#ff0000" d="M51 37v20.621L48.3 60H33z" />
+                                                    <path fill="#FFF" d="M17 16h38v4H17z" />
+                                                    <path fill="none" stroke="#ff0000" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="2" d="M31 16v-4h10v4m10 9v31a4 4 0 0 1-4 4H25a4 4 0 0 1-4-4V25m-4-9h38v4H17zm24 12.25V55M31 28.25V55" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>
