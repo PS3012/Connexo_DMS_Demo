@@ -6,30 +6,25 @@ import { MultiSelect } from "react-multi-select-component";
 import InputDate from "../../components/DataFields/InputDate";
 import FlexField from "../../components/DataFields/FlexField";
 import RelatedRecords from "../../components/DataFields/RelatedRecords";
+import { CurrentDate } from "../../components/DateReturners";
 import "./ConfigForms.css";
 
 function InternalAudit() {
   const formList = ["General Information", "Audit Planning", "Audit Preparation", "Audit Execution", "Audit Response & Closure", "Activity Log"]
-  const [changeControl, setChangeControl] = useReducer((prev, next) => ({
+  const site = localStorage.getItem("site")
+  const currentDate = new Date()
+  const currentYear = currentDate.getFullYear()
+  const [internalAudit, setInternalAudit] = useReducer((prev, next) => ({
     ...prev, ...next
   }), {
     initiatorGroup: '',
     initiatedThrough: '',
     typeOfAudit: ''
   })
-  const [form, setForm] = useState("General Information");
+  const [form, setForm] = useState(formList[0]);
   const [selected, setSelected] = useState([]);
   const [asideWorkFlow, setAsideWorkFlow] = useState(false)
   const [asideFamilyTree, setAsideFamilyTree] = useState(false)
-  // const RelatedRecords = [
-  //   { label: "Plant 1", value: "Plant 1" },
-  //   { label: "QA", value: "QA" },
-  //   { label: "QC", value: "QC" },
-  //   { label: "MFG", value: "MFG" },
-  //   { label: "Corporate", value: "Corporate" },
-  //   { label: "Microbiology", value: "Microbiology" },
-  //   { label: "Others", value: "Others" },
-  // ];
   const FunctionName = [
     { label: "QA", value: "QA" },
     { label: "QC", value: "QC" },
@@ -45,14 +40,6 @@ function InternalAudit() {
     { label: "Madhulika Mishra", value: "Madhulika Mishra" },
     { label: "Shaleen Mishra", value: "Shaleen Mishra" },
   ];
-  // const ReferenceRecord = [
-  //   { label: "KSA/IA/2024/0003", value: "KSA/IA/2024/0003" },
-  //   { label: "KSA/IA/2024/0004", value: "KSA/IA/2024/0004" },
-  //   { label: "KSA/IA/2024/0005", value: "KSA/IA/2024/0005" },
-  //   { label: "KSA/IA/2024/0006", value: "KSA/IA/2024/0006" },
-  //   { label: "KSA/IA/2024/0007", value: "KSA/IA/2024/0007" },
-  //   { label: "KSA/IA/2024/0008", value: "KSA/IA/2024/0008" },
-  // ];
   const ObservationFields = [
     {
       label: "Observation Fields ",
@@ -157,68 +144,76 @@ function InternalAudit() {
   };
   const docFile = [
     {
-      label: 'Initial attachment',
-      instruction: 'Please Attach all relevant or supporting documents',
+      label: "Initial attachment",
+      instruction: "Please Attach all relevant or supporting documents",
       required: true,
       columnList: [
-        { id: '2.1.1.1', name: 'Title of Document', type: 'text' },
-        { id: '2.1.1.2', name: 'Attached File', type: 'File' },
-        { id: '2.1.1.3', name: 'Remark', type: 'text' },
-      ]
-    }, {
-      label: 'List of Attachment',
-      instruction: 'Please Attach all relevant or supporting documents',
+        { id: "2.1.1.1", name: "Title of Document", type: "text" },
+        { id: "2.1.1.2", name: "Attached File", type: "File" },
+        { id: "2.1.1.3", name: "Remark", type: "text" },
+      ],
+    },
+    {
+      label: "List of Attachment",
+      instruction: "Please Attach all relevant or supporting documents",
       required: true,
       columnList: [
-        { id: '2.1.1.1', name: 'Title of Document', type: 'text' },
-        { id: '2.1.1.2', name: 'Attached File', type: 'File' },
-        { id: '2.1.1.3', name: 'Remark', type: 'text' },
-      ]
-    }, {
-      label: 'Guideline Attachment',
-      instruction: 'Please Attach all relevant or supporting documents',
+        { id: "2.1.1.1", name: "Title of Document", type: "text" },
+        { id: "2.1.1.2", name: "Attached File", type: "File" },
+        { id: "2.1.1.3", name: "Remark", type: "text" },
+      ],
+    },
+    {
+      label: "Guideline Attachment",
+      instruction: "Please Attach all relevant or supporting documents",
       required: true,
       columnList: [
-        { id: '2.1.1.1', name: 'Title of Document', type: 'text' },
-        { id: '2.1.1.2', name: 'Attached File', type: 'File' },
-        { id: '2.1.1.3', name: 'Remark', type: 'text' },
-      ]
-    }, {
-      label: 'Audit Attachments',
-      instruction: 'Please Attach all relevant or supporting documents',
+        { id: "2.1.1.1", name: "Title of Document", type: "text" },
+        { id: "2.1.1.2", name: "Attached File", type: "File" },
+        { id: "2.1.1.3", name: "Remark", type: "text" },
+      ],
+    },
+    {
+      label: "Audit Attachments",
+      instruction: "Please Attach all relevant or supporting documents",
       required: true,
       columnList: [
-        { id: '2.1.1.1', name: 'Title of Document', type: 'text' },
-        { id: '2.1.1.2', name: 'Attached File', type: 'File' },
-        { id: '2.1.1.3', name: 'Remark', type: 'text' },
-      ]
-    }, {
-      label: 'Audit Attachments',
-      instruction: 'Please Attach all relevant or supporting documents',
+        { id: "2.1.1.1", name: "Title of Document", type: "text" },
+        { id: "2.1.1.2", name: "Attached File", type: "File" },
+        { id: "2.1.1.3", name: "Remark", type: "text" },
+      ],
+    },
+    {
+      label: "Audit Attachments",
+      instruction: "Please Attach all relevant or supporting documents",
       required: true,
       columnList: [
-        { id: '2.1.1.1', name: 'Title of Document', type: 'text' },
-        { id: '2.1.1.2', name: 'Attached File', type: 'File' },
-        { id: '2.1.1.3', name: 'Remark', type: 'text' },
-      ]
-    }, {
-      label: 'Report Attachments',
-      instruction: 'Please Attach all relevant or supporting documents',
+        { id: "2.1.1.1", name: "Title of Document", type: "text" },
+        { id: "2.1.1.2", name: "Attached File", type: "File" },
+        { id: "2.1.1.3", name: "Remark", type: "text" },
+      ],
+    },
+    {
+      label: "Report Attachments",
+      instruction: "Please Attach all relevant or supporting documents",
       required: true,
       columnList: [
-        { id: '2.1.1.1', name: 'Title of Document', type: 'text' },
-        { id: '2.1.1.2', name: 'Attached File', type: 'File' },
-        { id: '2.1.1.3', name: 'Remark', type: 'text' },
-      ]
-    }
-  ]
+        { id: "2.1.1.1", name: "Title of Document", type: "text" },
+        { id: "2.1.1.2", name: "Attached File", type: "File" },
+        { id: "2.1.1.3", name: "Remark", type: "text" },
+      ],
+    },
+  ];
 
   return (
     <>
-
-      <div id="main-form-container" style={asideWorkFlow || asideFamilyTree ? { 'padding': '0 0 0 300px' } : {}}>
-
-        {asideWorkFlow &&
+      <div
+        id="main-form-container"
+        style={
+          asideWorkFlow || asideFamilyTree ? { padding: "0 0 0 300px" } : {}
+        }
+      >
+        {asideWorkFlow && (
           <div className="aside-container">
             <div className="head">
               <div>Workflow</div>
@@ -253,14 +248,12 @@ function InternalAudit() {
                 Closed-Done
                 <img src="/down.gif" alt="..." />
               </div>
-              <div className="red-state">
-                Closed- Cancelled
-              </div>
+              <div className="red-state">Closed- Cancelled</div>
             </div>
           </div>
-        }
+        )}
 
-        {asideFamilyTree &&
+        {asideFamilyTree && (
           <div className="aside-container">
             <div className="head">
               <div>Family Tree</div>
@@ -276,23 +269,36 @@ function InternalAudit() {
               <div>Root Cause Analysis (0)</div>
             </div>
           </div>
-        }
+        )}
 
         <div id="config-form-document-page">
-
           <HeaderTop />
 
           <div className="top-block">
-            <div><strong> Record Name:&nbsp;</strong>Internal Audit</div>
-            <div><strong> Site:&nbsp;</strong>EHS-North America</div>
-            <div><strong> Current Status:&nbsp;</strong>Under Initiation</div>
-            <div><strong> Initiated By:&nbsp;</strong>Shaleen Mishra</div>
+            <div>
+              <strong> Record Name:&nbsp;</strong>Internal Audit
+            </div>
+            <div>
+              <strong> Site:&nbsp;</strong>{site}
+            </div>
+            <div>
+              <strong> Current Status:&nbsp;</strong>Under Initiation
+            </div>
+            <div>
+              <strong> Initiated By:&nbsp;</strong>Shaleen Mishra
+            </div>
           </div>
 
           <div className="document-block">
             <div className="document-tabs">
               {formList.map((item, index) => (
-                <div key={index} className={form === item ? 'active' : ''} onClick={() => setForm(item)}>{item}</div>
+                <div
+                  key={index}
+                  className={form === item ? "active" : ""}
+                  onClick={() => setForm(item)}
+                >
+                  {item}
+                </div>
               ))}
             </div>
 
@@ -302,11 +308,11 @@ function InternalAudit() {
                   <div className="form-flex">
                     <div className="group-input">
                       <label>Record Number</label>
-                      <input type="text" value="Jordan/EA/2024/00000001" disabled />
+                      <input type="text" value={`${site}/IA/${currentYear}/00000001`} disabled />
                     </div>
                     <div className="group-input">
-                      <label>Division Code</label>
-                      <input type="text" value="Jordan" disabled />
+                      <label>Division</label>
+                      <input type="text" value={site} disabled />
                     </div>
                     <div className="group-input">
                       <label>Initiator</label>
@@ -314,7 +320,7 @@ function InternalAudit() {
                     </div>
                     <div className="group-input">
                       <label>Date of Initiation</label>
-                      <input type="" value="10-Jan-2024" disabled />
+                      <input type="" value={CurrentDate()} disabled />
                     </div>
                     <div className="group-input">
                       <label>
@@ -326,36 +332,44 @@ function InternalAudit() {
                         <option value="2">Shaleen Mishra</option>
                       </select>
                     </div>
-                    <InputDate label="Due Date" enableDate="future" isRequired="false" />
+                    <InputDate
+                      label="Due Date"
+                      enableDate="future"
+                      isRequired="false"
+                    />
                     <div className="group-input">
                       <label htmlFor="initiatorGroup">
                         <div className="required"></div>
                         Initiator Group
                       </label>
-                      <select name="initiatorGroup" value={changeControl.initiatorGroup} onChange={(e) => setChangeControl({ initiatorGroup: e.target.value })}>
+                      <select name="initiatorGroup" value={internalAudit.initiatorGroup} onChange={(e) => setInternalAudit({ initiatorGroup: e.target.value })}>
                         <option value="">-- Select --</option>
                         <option value="CQA">Corporate Quality Assurance</option>
-                        <option value="QAB">Quality Assurance Bio-Pharma</option>
+                        <option value="QAB">
+                          Quality Assurance Bio-Pharma
+                        </option>
                         <option value="CQC">Central Quality Control</option>
                         <option value="Manu">Manufacturing</option>
                         <option value="PSG">Plasma Sourcing Group</option>
-                        <option value="CS" >Central Stores</option>
-                        <option value="ITG">Information Technology Group</option>
-                        <option value="MM" >Molecular Medicine</option>
-                        <option value="CL" >Central Laboratory</option>
-                        <option value="TT" >Tech team</option>
-                        <option value="QA" > Quality Assurance</option>
-                        <option value="QM" >Quality Management</option>
-                        <option value="IA" >IT Administration</option>
+                        <option value="CS">Central Stores</option>
+                        <option value="ITG">
+                          Information Technology Group
+                        </option>
+                        <option value="MM">Molecular Medicine</option>
+                        <option value="CL">Central Laboratory</option>
+                        <option value="TT">Tech team</option>
+                        <option value="QA"> Quality Assurance</option>
+                        <option value="QM">Quality Management</option>
+                        <option value="IA">IT Administration</option>
                         <option value="ACC">Accounting</option>
                         <option value="LOG">Logistics</option>
-                        <option value="SM" >Senior Management</option>
-                        <option value="BA" >Business Administration</option>
+                        <option value="SM">Senior Management</option>
+                        <option value="BA">Business Administration</option>
                       </select>
                     </div>
                     <div className="group-input">
                       <label>Initiator Group Code</label>
-                      <input type="text" value={changeControl.initiatorGroup} disabled />
+                      <input type="text" value={internalAudit.initiatorGroup} disabled />
                     </div>
                   </div>
                   <div className="group-input">
@@ -369,7 +383,7 @@ function InternalAudit() {
                     <div className="group-input">
                       <label>Initiated Through</label>
                       <div className='instruction'>Please select related information</div>
-                      <select name="initiated_through" value={changeControl.initiatedThrough} onChange={(e) => setChangeControl({ initiatedThrough: e.target.value })}>
+                      <select name="initiated_through" value={internalAudit.initiatedThrough} onChange={(e) => setInternalAudit({ initiatedThrough: e.target.value })}>
                         <option value="">-- Select --</option>
                         <option value="recall">Recall</option>
                         <option value="return">Return</option>
@@ -383,19 +397,18 @@ function InternalAudit() {
                     </div>
                     <div className="group-input">
                       <label>
-                        {changeControl.initiatedThrough === 'others' && <div className="required"></div>}
+                        {internalAudit.initiatedThrough === 'others' && <div className="required"></div>}
                         Other
                       </label>
-                      <textarea required={changeControl.initiatedThrough === 'others'}></textarea>
+                      <textarea required={internalAudit.initiatedThrough === 'others'}></textarea>
                     </div>
                     <div className="group-input">
-                      <label>
-                        Type of Audit
-                      </label>
+                      <label>Type of Audit</label>
                       <div className="instruction">
-                        Please select yes if it is has recurred in past six months
+                        Please select yes if it is has recurred in past six
+                        months
                       </div>
-                      <select value={changeControl.typeOfAudit} onChange={(e) => setChangeControl({ typeOfAudit: e.target.value })} >
+                      <select value={internalAudit.typeOfAudit} onChange={(e) => setInternalAudit({ typeOfAudit: e.target.value })} >
                         <option value="">-- Select --</option>
                         <option value="R&D">R&D</option>
                         <option value="GLP">GLP</option>
@@ -408,10 +421,10 @@ function InternalAudit() {
                     </div>
                     <div className="group-input">
                       <label>
-                        {changeControl.typeOfAudit === 'Others' && <div className="required"></div>}
+                        {internalAudit.typeOfAudit === 'Others' && <div className="required"></div>}
                         If Other
                       </label>
-                      <textarea required={changeControl.typeOfAudit === 'Others'}></textarea>
+                      <textarea required={internalAudit.typeOfAudit === 'Others'}></textarea>
                     </div>
                   </div>
                   <FlexField
@@ -450,21 +463,11 @@ function InternalAudit() {
                     instruction={AuditAgenda.instruction}
                     columnList={AuditAgenda.columnList}
                   />
-                  {/* <div className="group-input">
-                    <label>
-                      Related Records
-                    </label>
-                    <MultiSelect
-                      options={RelatedRecords}
-                      value={selected}
-                      onChange={setSelected}
-                      labelledBy="Select"
-                    />
-                  </div> */}
+                  <RelatedRecords
+                    label="Related Records"
+                  />
                   <div className="group-input">
-                    <label>
-                      Function Name
-                    </label>
+                    <label>Function Name</label>
                     <MultiSelect
                       options={FunctionName}
                       value={selected}
@@ -483,10 +486,8 @@ function InternalAudit() {
               <div className="document-form">
                 <div className="details-form-data">
                   <div className="group-input">
-                    <label>
-                      Lead Auditor
-                    </label>
-                    <select name="initiated_through" >
+                    <label>Lead Auditor</label>
+                    <select name="initiated_through">
                       <option value="">-- Select --</option>
                       <option value="amit_guru">Amit Guru</option>
                       <option value="amit_patel">Amit Patel</option>
@@ -511,9 +512,7 @@ function InternalAudit() {
                   </div>
                   <div className="form-flex">
                     <div className="group-input">
-                      <label>
-                        Audit Team
-                      </label>
+                      <label>Audit Team</label>
                       <MultiSelect
                         options={AuditTeam}
                         value={selected}
@@ -522,9 +521,7 @@ function InternalAudit() {
                       />
                     </div>
                     <div className="group-input">
-                      <label>
-                        Auditee
-                      </label>
+                      <label>Auditee</label>
                       <MultiSelect
                         options={AuditTeam}
                         value={selected}
@@ -560,10 +557,8 @@ function InternalAudit() {
                     columnList={docFile[2].columnList}
                   />
                   <div className="group-input">
-                    <label>
-                      Audit Category
-                    </label>
-                    <select name="initiated_through" >
+                    <label>Audit Category</label>
+                    <select name="initiated_through">
                       <option>Enter Your Selection Here</option>
                       <option>Internal Audit/Self Inspection</option>
                       <option>Supplier Audit</option>
@@ -572,15 +567,11 @@ function InternalAudit() {
                     </select>
                   </div>
                   <div className="group-input">
-                    <label>
-                      Supplier/Vendor/Manufacturer Details
-                    </label>
+                    <label>Supplier/Vendor/Manufacturer Details</label>
                     <input type="text" />
                   </div>
                   <div className="group-input">
-                    <label>
-                      Supplier/Vendor/Manufacturer Site
-                    </label>
+                    <label>Supplier/Vendor/Manufacturer Site</label>
                     <input type="text" />
                   </div>
                   <FlexField
@@ -628,9 +619,7 @@ function InternalAudit() {
                     instruction=""
                     isRequired="false"
                   />
-                  <RelatedRecords
-                    label="Reference Records"
-                  />
+                  <RelatedRecords label="Reference Records" />
                   <Grid
                     label={docFile[4].label}
                     required={docFile[4].required}
@@ -664,7 +653,8 @@ function InternalAudit() {
                       <strong>Audit Scheduled By:&nbsp;</strong>Shaleen Mishra
                     </div>
                     <div>
-                      <strong>Audit Scheduled On:&nbsp;</strong>15 Jan, 2023 11:00 PM
+                      <strong>Audit Scheduled On:&nbsp;</strong>15 Jan, 2023
+                      11:00 PM
                     </div>
                   </div>
                   <div className="activity-log-field">
@@ -677,50 +667,66 @@ function InternalAudit() {
                   </div>
                   <div className="activity-log-field">
                     <div>
-                      <strong>Audit Preparation Completed By:&nbsp;</strong>Shaleen Mishra
+                      <strong>Audit Preparation Completed By:&nbsp;</strong>
+                      Shaleen Mishra
                     </div>
                     <div>
-                      <strong>Audit Preparation Completed On:&nbsp;</strong>15 Jan, 2023 11:00 PM
-                    </div>
-                  </div>
-                  <div className="activity-log-field">
-                    <div>
-                      <strong>Audit Migration More Info Required By:&nbsp;</strong>Shaleen Mishra
-                    </div>
-                    <div>
-                      <strong>Audit Migration More Info Required On:&nbsp;</strong>15 Jan, 2023 11:00 PM
+                      <strong>Audit Preparation Completed On:&nbsp;</strong>15
+                      Jan, 2023 11:00 PM
                     </div>
                   </div>
                   <div className="activity-log-field">
                     <div>
-                      <strong>Audit Observation Submitted By:&nbsp;</strong>Shaleen Mishra
+                      <strong>
+                        Audit Migration More Info Required By:&nbsp;
+                      </strong>
+                      Shaleen Mishra
                     </div>
                     <div>
-                      <strong>Audit Observation Submitted On:&nbsp;</strong>15 Jan, 2023 11:00 PM
-                    </div>
-                  </div>
-                  <div className="activity-log-field">
-                    <div>
-                      <strong>Audit Lead More Info Required By:&nbsp;</strong>Shaleen Mishra
-                    </div>
-                    <div>
-                      <strong>Audit Lead More Info Required On:&nbsp;</strong>15 Jan, 2023 11:00 PM
+                      <strong>
+                        Audit Migration More Info Required On:&nbsp;
+                      </strong>
+                      15 Jan, 2023 11:00 PM
                     </div>
                   </div>
                   <div className="activity-log-field">
                     <div>
-                      <strong>Audit Response Completed By:&nbsp;</strong>Shaleen Mishra
+                      <strong>Audit Observation Submitted By:&nbsp;</strong>
+                      Shaleen Mishra
                     </div>
                     <div>
-                      <strong>Audit Response Completed On:&nbsp;</strong>15 Jan, 2023 11:00 PM
+                      <strong>Audit Observation Submitted On:&nbsp;</strong>15
+                      Jan, 2023 11:00 PM
                     </div>
                   </div>
                   <div className="activity-log-field">
                     <div>
-                      <strong>Response Feedback Verified By:&nbsp;</strong>Shaleen Mishra
+                      <strong>Audit Lead More Info Required By:&nbsp;</strong>
+                      Shaleen Mishra
                     </div>
                     <div>
-                      <strong>Response Feedback Verified On:&nbsp;</strong>15 Jan, 2023 11:00 PM
+                      <strong>Audit Lead More Info Required On:&nbsp;</strong>15
+                      Jan, 2023 11:00 PM
+                    </div>
+                  </div>
+                  <div className="activity-log-field">
+                    <div>
+                      <strong>Audit Response Completed By:&nbsp;</strong>Shaleen
+                      Mishra
+                    </div>
+                    <div>
+                      <strong>Audit Response Completed On:&nbsp;</strong>15 Jan,
+                      2023 11:00 PM
+                    </div>
+                  </div>
+                  <div className="activity-log-field">
+                    <div>
+                      <strong>Response Feedback Verified By:&nbsp;</strong>
+                      Shaleen Mishra
+                    </div>
+                    <div>
+                      <strong>Response Feedback Verified On:&nbsp;</strong>15
+                      Jan, 2023 11:00 PM
                     </div>
                   </div>
                 </div>
@@ -730,30 +736,60 @@ function InternalAudit() {
             )}
           </div>
 
-          <div className="button-block" style={asideWorkFlow || asideFamilyTree ? { 'width': 'calc(100% - 300px)' } : { 'width': '100%' }}>
+          <div
+            className="button-block"
+            style={
+              asideWorkFlow || asideFamilyTree
+                ? { width: "calc(100% - 300px)" }
+                : { width: "100%" }
+            }
+          >
             <button className="themeBtn">Save</button>
             <button className="themeBtn">Back</button>
             <button className="themeBtn">Next</button>
             <button className="themeBtn">Exit</button>
           </div>
-
         </div>
 
         <div className="sticky-buttons">
-          <div onClick={() => { setAsideWorkFlow(!asideWorkFlow); setAsideFamilyTree(false) }}>
-            <svg width="18" height="24" viewBox="0 0 384 512" xmlns="http://www.w3.org/2000/svg">
-              <path fill="#ffffff" d="M369.9 97.9L286 14C277 5 264.8-.1 252.1-.1H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48V131.9c0-12.7-5.1-25-14.1-34M332.1 128H256V51.9zM48 464V48h160v104c0 13.3 10.7 24 24 24h104v288zm220.1-208c-5.7 0-10.6 4-11.7 9.5c-20.6 97.7-20.4 95.4-21 103.5c-.2-1.2-.4-2.6-.7-4.3c-.8-5.1.3.2-23.6-99.5c-1.3-5.4-6.1-9.2-11.7-9.2h-13.3c-5.5 0-10.3 3.8-11.7 9.1c-24.4 99-24 96.2-24.8 103.7c-.1-1.1-.2-2.5-.5-4.2c-.7-5.2-14.1-73.3-19.1-99c-1.1-5.6-6-9.7-11.8-9.7h-16.8c-7.8 0-13.5 7.3-11.7 14.8c8 32.6 26.7 109.5 33.2 136c1.3 5.4 6.1 9.1 11.7 9.1h25.2c5.5 0 10.3-3.7 11.6-9.1l17.9-71.4c1.5-6.2 2.5-12 3-17.3l2.9 17.3c.1.4 12.6 50.5 17.9 71.4c1.3 5.3 6.1 9.1 11.6 9.1h24.7c5.5 0 10.3-3.7 11.6-9.1c20.8-81.9 30.2-119 34.5-136c1.9-7.6-3.8-14.9-11.6-14.9h-15.8z" />
+          <div
+            onClick={() => {
+              setAsideWorkFlow(!asideWorkFlow);
+              setAsideFamilyTree(false);
+            }}
+          >
+            <svg
+              width="18"
+              height="24"
+              viewBox="0 0 384 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill="#ffffff"
+                d="M369.9 97.9L286 14C277 5 264.8-.1 252.1-.1H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48V131.9c0-12.7-5.1-25-14.1-34M332.1 128H256V51.9zM48 464V48h160v104c0 13.3 10.7 24 24 24h104v288zm220.1-208c-5.7 0-10.6 4-11.7 9.5c-20.6 97.7-20.4 95.4-21 103.5c-.2-1.2-.4-2.6-.7-4.3c-.8-5.1.3.2-23.6-99.5c-1.3-5.4-6.1-9.2-11.7-9.2h-13.3c-5.5 0-10.3 3.8-11.7 9.1c-24.4 99-24 96.2-24.8 103.7c-.1-1.1-.2-2.5-.5-4.2c-.7-5.2-14.1-73.3-19.1-99c-1.1-5.6-6-9.7-11.8-9.7h-16.8c-7.8 0-13.5 7.3-11.7 14.8c8 32.6 26.7 109.5 33.2 136c1.3 5.4 6.1 9.1 11.7 9.1h25.2c5.5 0 10.3-3.7 11.6-9.1l17.9-71.4c1.5-6.2 2.5-12 3-17.3l2.9 17.3c.1.4 12.6 50.5 17.9 71.4c1.3 5.3 6.1 9.1 11.6 9.1h24.7c5.5 0 10.3-3.7 11.6-9.1c20.8-81.9 30.2-119 34.5-136c1.9-7.6-3.8-14.9-11.6-14.9h-15.8z"
+              />
             </svg>
           </div>
-          <div onClick={() => { setAsideFamilyTree(!asideFamilyTree); setAsideWorkFlow(false) }}>
-            <svg width="24" height="24" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-              <path fill="#ffffff" d="M25.01 49v46H103V49zM153 49v46h78V49zm128 0v46h78V49zm128 0v46h78V49zM55.01 113v64H119v46h18v-46h64v-64h-18v46H73.01v-46zM311 113v64h64v46h18v-46h64v-64h-18v46H329v-46zM89.01 241v46H167v-46zM345 241v46h78v-46zm-226 64v48h128v46h18v-46h128v-48h-18v30H137v-30zm98 112v46h78v-46z" />
+          <div
+            onClick={() => {
+              setAsideFamilyTree(!asideFamilyTree);
+              setAsideWorkFlow(false);
+            }}
+          >
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 512 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill="#ffffff"
+                d="M25.01 49v46H103V49zM153 49v46h78V49zm128 0v46h78V49zm128 0v46h78V49zM55.01 113v64H119v46h18v-46h64v-64h-18v46H73.01v-46zM311 113v64h64v46h18v-46h64v-64h-18v46H329v-46zM89.01 241v46H167v-46zM345 241v46h78v-46zm-226 64v48h128v46h18v-46h128v-48h-18v30H137v-30zm98 112v46h78v-46z"
+              />
             </svg>
           </div>
         </div>
-
       </div>
-
     </>
   );
 }

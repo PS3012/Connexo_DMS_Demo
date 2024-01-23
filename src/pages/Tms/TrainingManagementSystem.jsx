@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './TrainingManagementSystem.css';
+import HeaderTop from '../../components/Header/HeaderTop';
 
 function TrainingManagementSystem() {
 
@@ -7,8 +8,12 @@ function TrainingManagementSystem() {
 
     return (
         <>
-
+            <HeaderTop />
             <div className='TrainingManagementSystem-page'>
+                <div className="top-block">
+                    <div className="head">New Training Plan</div>
+                </div>
+
                 <div className='details-form'>
                     <div className='form-contain'>
                         <div className='sub-head'>Basic Information</div>
@@ -191,7 +196,7 @@ function TrainingManagementSystem() {
                                             </tbody>
                                         </table>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         </div>

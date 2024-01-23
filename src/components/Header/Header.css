@@ -87,6 +87,16 @@ th {
     color: white;
 }
 
+tr:nth-child(2n) {
+    background: #006fc026;
+}
+
+tr:nth-child(2n) input,
+tr:nth-child(2n) select,
+tr:nth-child(2n) textarea {
+    background: transparent !important;
+}
+
 .group-input {
     margin-bottom: 20px;
 }
@@ -100,6 +110,11 @@ th {
     display: flex;
     align-items: center;
     gap: 10px;
+}
+
+.group-input label.color-label {
+    background: #80808045;
+    padding: 7px 15px;
 }
 
 .group-input .instruction {

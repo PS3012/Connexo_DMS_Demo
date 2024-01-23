@@ -1,3 +1,21 @@
+/*! ================================================================= */
+/*! Top-Block */
+/*! ================================================================= */
+.TrainingManagementSystem-page  .top-block {
+    background: var(--themeColor);
+    padding: 23px 20px;
+    color: white;
+}
+
+.TrainingManagementSystem-page  .top-block .head {
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+/*! ================================================================= */
+/*! Top-Block-End */
+/*! ================================================================= */
 .TrainingManagementSystem-page #desktop-select {
     color: gray;
 }

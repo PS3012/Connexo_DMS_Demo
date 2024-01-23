@@ -110,7 +110,7 @@ function RelatedRecordModal(_props) {
                                         <td>15 Jan, 2024</td>
                                         <td>Shaleen Mishra</td>
                                         <td>15 Feb, 2024</td>
-                                        <th>Closed-Done</th>
+                                        <td>Closed-Done</td>
                                     </tr>
                                     <tr>
                                         <td><input type="checkbox" onChange={() => handleRecord('1002')} /></td>
@@ -121,7 +121,7 @@ function RelatedRecordModal(_props) {
                                         <td>15 Jan, 2024</td>
                                         <td>Shaleen Mishra</td>
                                         <td>15 Feb, 2024</td>
-                                        <th>Closed-Done</th>
+                                        <td>Closed-Done</td>
                                     </tr>
                                     <tr>
                                         <td><input type="checkbox" onChange={() => handleRecord('1003')} /></td>
@@ -132,7 +132,7 @@ function RelatedRecordModal(_props) {
                                         <td>15 Jan, 2024</td>
                                         <td>Shaleen Mishra</td>
                                         <td>15 Feb, 2024</td>
-                                        <th>Closed-Done</th>
+                                        <td>Closed-Done</td>
                                     </tr>
                                     <tr>
                                         <td><input type="checkbox" onChange={() => handleRecord('1004')} /></td>
@@ -143,7 +143,7 @@ function RelatedRecordModal(_props) {
                                         <td>15 Jan, 2024</td>
                                         <td>Shaleen Mishra</td>
                                         <td>15 Feb, 2024</td>
-                                        <th>Closed-Done</th>
+                                        <td>Closed-Done</td>
                                     </tr>
                                     <tr>
                                         <td><input type="checkbox" onChange={() => handleRecord('1005')} /></td>
@@ -154,7 +154,7 @@ function RelatedRecordModal(_props) {
                                         <td>15 Jan, 2024</td>
                                         <td>Shaleen Mishra</td>
                                         <td>15 Feb, 2024</td>
-                                        <th>Closed-Done</th>
+                                        <td>Closed-Done</td>
                                     </tr>
                                 </tbody>
                             </table>

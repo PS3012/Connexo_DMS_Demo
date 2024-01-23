@@ -1,10 +1,8 @@
-/* Multitab css  */
-/* 82pxht 50px hb 10% mt 75px sb*/
 #multitab_header_tabs {
     height: 10%;
     width: 100%;
     display: flex;
-    padding: 15px 20px;
+    padding: 20px;
     background-color: #ffffff;
 }
 
@@ -36,16 +34,12 @@
 
 
 #scope_table_container .scope_bar {
-    height: 75px;
-    gap: 40px;
-    width: 98%;
+    gap: 30px;
+    padding: 0 20px;
     display: grid;
-    margin: 0 auto;
-    padding: 20px 15px;
+    margin: 0 0 20px;
     border-radius: 5px;
-    margin-bottom: 20px;
-    grid-template-columns: 1fr 100px;
-    box-shadow: 0px 5px 5px 0px #dadada;
+    grid-template-columns: 1fr 100px 100px;
 }
 
 #scope_table_container .table_block {
