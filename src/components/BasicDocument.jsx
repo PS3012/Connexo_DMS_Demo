@@ -46,13 +46,11 @@ const styles = StyleSheet.create({
         padding: 5,
         border: '1px solid #ccc',
         flexDirection: "row",
-        padding: 2,
     },
     watermark: {
         position: 'absolute',
         top: '40%',
         left: '15%',
-        // transform:'translate(0,-50)',
         fontSize: '100',
         transform: 'rotate(-50deg)',
         opacity: 0.5
@@ -66,7 +64,6 @@ const styles = StyleSheet.create({
         margin: 10,
         padding: 5,
         flexDirection: "row",
-        padding: 2,
     },
     section: {
         padding: '5px 20px',
