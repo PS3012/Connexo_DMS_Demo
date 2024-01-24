@@ -50,7 +50,10 @@ function CreateRecordModal(_props) {
                 }, {
                     name: "New Document",
                     link: "/new-document"
-                }
+                }, {
+                    name: "Training plan",
+                    link: "/training-management-system"
+                },
             ]
         },
         {
@@ -87,7 +90,10 @@ function CreateRecordModal(_props) {
                 }, {
                     name: "New Document",
                     link: "/new-document"
-                }
+                }, {
+                    name: "Training plan",
+                    link: "/training-management-system"
+                },
             ]
         },
         {
@@ -124,7 +130,10 @@ function CreateRecordModal(_props) {
                 }, {
                     name: "New Document",
                     link: "/new-document"
-                }
+                }, {
+                    name: "Training plan",
+                    link: "/training-management-system"
+                },
             ]
         },
         {
@@ -161,7 +170,10 @@ function CreateRecordModal(_props) {
                 }, {
                     name: "New Document",
                     link: "/new-document"
-                }
+                }, {
+                    name: "Training plan",
+                    link: "/training-management-system"
+                },
             ]
         }
     ]
@@ -184,7 +196,7 @@ function CreateRecordModal(_props) {
                                 <div className="select-list division-list">
                                     {divisionList.map((item) => (
                                         <div
-                                            className={(division === item.name) && 'active'}
+                                            className={(division === item.name) ? 'active': ''}
                                             key={item.id}
                                             onClick={() => setDivision(item.name)}
                                         >{item.name}</div>
@@ -198,7 +210,7 @@ function CreateRecordModal(_props) {
                                         <div className="select-list project-list" key={item.id}>
                                             {item.projects.map((ele, index) => (
                                                 <div
-                                                    className={(project === ele.name) && 'active'}
+                                                    className={(project === ele.name) ? 'active' : ''}
                                                     key={index}
                                                     onClick={() => handleSelectProcess(ele)}
                                                 >{ele.name}</div>

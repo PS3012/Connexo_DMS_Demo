@@ -40,7 +40,6 @@ import QuestionPage from "./pages/Tms/TrainingPage/QuestionPage";
 import ManageQuestionPage from "./pages/Tms/TrainingPage/ManageQuestionPage";
 import ManageQuestionBank from "./pages/Tms/TrainingPage/ManageQuestionBank";
 import ManageQuizzes from "./pages/Tms/TrainingPage/ManageQuizzes";
-import ManageTrainingPlan from "./pages/Tms/TrainingPage/ManageTrainingPlan";
 
 function App() {
   localStorage.setItem("username", "amit.guru@connexo.io")
@@ -91,7 +90,6 @@ function App() {
           <Route path='/manage-question' element={<ManageQuestionPage />} />
           <Route path='/manage-question-bank' element={<ManageQuestionBank />} />
           <Route path='/manage-quizzes' element={<ManageQuizzes />} />
-          <Route path='/manage-training-plan' element={<ManageTrainingPlan />} />
         </Routes>
       </BrowserRouter >
     </>

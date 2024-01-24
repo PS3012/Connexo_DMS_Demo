@@ -5,7 +5,7 @@ import CreateRecordModal from "../Modals/CreateRecordModal/CreateRecordModal";
 
 function HeaderBottom() {
     const [recordModal, setRecordModal] = useState(false)
-    const closeRecordModal = () =>  setRecordModal(false)
+    const closeRecordModal = () => setRecordModal(false)
     return (
         <>
             <div className="Header_Bottom">
@@ -33,6 +33,24 @@ function HeaderBottom() {
                             <div className="navItem">
                                 <i className="ri-file-marked-fill"></i>
                                 <h3>Standards</h3>
+                            </div>
+                        </Link>
+                        <Link to="/questionpage">
+                            <div className="navItem">
+                                <i className="ri-question-fill"></i>
+                                <h3>Question</h3>
+                            </div>
+                        </Link>
+                        <Link to="/manage-question-bank">
+                            <div className="navItem">
+                                <i className="ri-bank-fill"></i>
+                                <h3>Question Bank</h3>
+                            </div>
+                        </Link>
+                        <Link to="/manage-quizzes">
+                            <div className="navItem">
+                                <i className="ri-speak-fill"></i>
+                                <h3>Quizzes</h3>
                             </div>
                         </Link>
                     </div>
