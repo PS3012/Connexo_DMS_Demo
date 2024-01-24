@@ -36,6 +36,7 @@ import CAPAPanel from './pages/DocumentPanel/CAPAPanel'
 import EffectivenessCheckPanel from './pages/DocumentPanel/EffectivenessCheckPanel'
 import ObservationPanel from './pages/DocumentPanel/ObservationPanel'
 import Login from "./pages/Login/Login";
+import BasicDocument from "./components/BasicDocument";
 
 function App() {
   localStorage.setItem("username", "amit.guru@connexo.io")
@@ -44,6 +45,7 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
+          <Route path="/report" element={<BasicDocument />} />
           <Route path="/" element={<Login />} />
           <Route path="/internal-audit-panel" element={<InternalAuditPanel />} />
           <Route path="/external-audit-panel" element={<ExternalAuditPanel />} />

@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import axios from 'axios';
 import HeaderTop from "../../components/Header/HeaderTop"
 import Grid from "../../components/DataFields/Grid";
 import OperationModal from "../../components/Modals/InstructionModal/OperationModal";
@@ -10,7 +12,6 @@ import ReleaseOfProduct from "../../components/Modals/InstructionModal/ReleaseOf
 import ControlofNonConforming from "../../components/Modals/InstructionModal/ControlofNonConforming";
 import InputDate from "../../components/DataFields/InputDate";
 import FlexField from "../../components/DataFields/FlexField";
-import PrintPDF from "../../components/PrintPDF";
 
 function ManagementReview() {
     const [form, setForm] = useState("General Information");
@@ -707,6 +708,7 @@ function ManagementReview() {
                         ) : ""}
                     </div>
                     <div className="button-block" style={asideWorkFlow || asideFamilyTree ? { 'width': 'calc(100% - 300px)' } : { 'width': '100%' }}>
+                        <Link to='/report'><button className="themeBtn">Report</button></Link>
                         <button className="themeBtn">Save</button>
                         <button className="themeBtn">Back</button>
                         <button className="themeBtn">Next</button>
