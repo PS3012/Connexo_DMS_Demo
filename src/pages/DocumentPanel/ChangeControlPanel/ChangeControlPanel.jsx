@@ -234,6 +234,7 @@ function ChangeControlPanel() {
                     </div>
 
                 </div>
+                
 
                 <div className='document-block'>
                     <div className="document-tabs">

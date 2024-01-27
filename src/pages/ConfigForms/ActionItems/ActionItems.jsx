@@ -1,59 +1,66 @@
 import React, { useReducer } from "react";
 import { useState } from "react";
-import HeaderTop from "../../components/Header/HeaderTop";
-import Grid from "../../components/DataFields/Grid";
+import HeaderTop from "../../../components/Header/HeaderTop";
+import Grid from "../../../components/DataFields/Grid";
 import { MultiSelect } from "react-multi-select-component";
-import InputDate from "../../components/DataFields/InputDate";
-import FlexField from "../../components/DataFields/FlexField";
-import RelatedRecords from "../../components/DataFields/RelatedRecords";
-import { CurrentDate } from "../../components/DateReturners";
-import "./ConfigForms.css";
+import InputDate from "../../../components/DataFields/InputDate";
+import RelatedRecords from "../../../components/DataFields/RelatedRecords";
+import { CurrentDate } from "../../../components/DateReturners";
+import {
+  formList,
+  workFlow,
+  FunctionName,
+  docFile,
+  site,
+  currentYear,
+} from "./ActionItemsFunctions";
+import "../ConfigForms.css";
 
 function ActionItems() {
-  const formList = [
-    "General Information",
-    "Post Completion",
-    "Action Approval",
-    "Activity Log",
-  ];
-  const [internalAudit, setInternalAudit] = useReducer(
+  const [form, setForm] = useState(formList[0]);
+  const [selected, setSelected] = useState([]);
+  const [asideWorkFlow, setAsideWorkFlow] = useState(false);
+  const [asideFamilyTree, setAsideFamilyTree] = useState(false);
+
+  const [generalInformation, setGeneralInformation] = useReducer(
     (prev, next) => ({
       ...prev,
       ...next,
     }),
     {
-      initiatorGroup: "",
-      initiatedThrough: "",
-      typeOfAudit: "",
+      recordNumber: `${site}/AI/${currentYear}/000001`,
+      site: site,
+      initiator: "Amit Guru",
+      dateOfInitiation: CurrentDate(),
+      assignedTo: "",
+      dueDate: "",  
+      shortDescription: "",
+      Description: "",
+      ResponsibleDepartment: "",
+      ResponsibleDepartmentOthers: "",
+      ActionItemRelatedRecords: '',
+      HodPersons: "",
+      severityLevel: "",
     }
   );
-  const [form, setForm] = useState(formList[0]);
-  const [selected, setSelected] = useState([]);
-  const [asideWorkFlow, setAsideWorkFlow] = useState(false);
-  const [asideFamilyTree, setAsideFamilyTree] = useState(false);
-  const FunctionName = [
-    { label: "Amit Guru", value: "Amit Guru" },
-    { label: "Shaleen Mishra", value: "Shaleen Mishra" },
-    { label: "Vikas Prajapati", value: "Vikas Prajapati" },
-    { label: "Anshul Patel", value: "Anshul Patel" },
-    { label: "Madhulika Mishra", value: "Madhulika Mishra" },
-    { label: " Akash Asthana", value: " Akash Asthana" },
-    { label: " Jim Kim", value: " Jim Kim" },
-  ];
 
-  const docFile = [
-    {
-      label: "File attachment",
-      instruction: "Please Attach all relevant or supporting documents",
-      required: true,
-      columnList: [
-        { id: "2.1.1.1", name: "Title of Document", type: "text" },
-        { id: "2.1.1.2", name: "Attached File", type: "File" },
-        { id: "2.1.1.3", name: "Remark", type: "text" },
-      ],
-    },
-   
-  ];
+  const [postCompletion, setPostCompletion] = useReducer((prev, next) => ({
+    ...prev, ...next
+}), {
+    ActualStartDate: '',
+    ActualEndDate: '',
+    Comments: '',
+    Actiontaken: '',
+  
+})
+
+const [actionApproval, setactionApproval] = useReducer((prev, next) => ({
+  ...prev, ...next
+}), {
+  QAReviewComments: '',
+  DueDateExtension: '',
+ 
+})
 
   return (
     <>
@@ -70,35 +77,22 @@ function ActionItems() {
               <div>Trust The Process</div>
             </div>
             <div className="content workflow">
-              <div className="green-state">
-                Opened
-                <img src="/down.gif" alt="..." />
-              </div>
-              <div>
-                Under HOD Review
-                <img src="/down.gif" alt="..." />
-              </div>
-              <div>
-                HOD Review Completed
-                <img src="/down.gif" alt="..." />
-              </div>
-              <div>
-                Under CFT Review
-                <img src="/down.gif" alt="..." />
-              </div>
-              <div>
-                Approved
-                <img src="/down.gif" alt="..." />
-              </div>
-              <div>
-                Implemented
-                <img src="/down.gif" alt="..." />
-              </div>
-              <div className="red-state">
-                Closed-Done
-                <img src="/down.gif" alt="..." />
-              </div>
-              <div className="red-state">Closed- Cancelled</div>
+              {workFlow.map((item, index) => (
+                <div
+                  className={
+                    index === 0
+                      ? "green-state"
+                      : index === workFlow.length - 1
+                      ? "red-state"
+                      : ""
+                  }
+                >
+                  {item}
+                  {index !== workFlow.length - 1 && (
+                    <img src="/down.gif" alt="..." />
+                  )}
+                </div>
+              ))}
             </div>
           </div>
         )}
@@ -141,7 +135,7 @@ function ActionItems() {
 
           <div className="document-block">
             <div className="document-tabs">
-              {formList.map((item, index) => (
+            {formList.map((item, index) => (
                 <div
                   key={index}
                   className={form === item ? "active" : ""}
@@ -161,80 +155,137 @@ function ActionItems() {
                       <label>Record Number</label>
                       <input
                         type="text"
-                        value="Jordan/IA/2024/00000001"
+                        value={generalInformation.recordNumber}
                         disabled
                       />
                     </div>
                     <div className="group-input">
-                      <label>Division Code</label>
-                      <input type="text" value="Jordan" disabled />
+                      <label>Site/Location Code</label>
+                      <input
+                        type="text"
+                        value={generalInformation.site}
+                        disabled
+                      />
                     </div>
                     <div className="group-input">
                       <label>Initiator</label>
-                      <input type="text" value="Amit Guru" disabled />
+                      <input
+                        type="text"
+                        value={generalInformation.initiator}
+                        disabled
+                      />
                     </div>
                     <div className="group-input">
                       <label>Date of Initiation</label>
-                      <input type="" value={CurrentDate()} disabled />
+                      <input
+                        type="text"
+                        value={generalInformation.dateOfInitiation}
+                        disabled
+                      />
                     </div>
                     <div className="group-input">
                       <label>Assigned To</label>
+                      <div className="instruction">&nbsp;</div>
                       <select
-                        id="select-state"
-                        placeholder="Select..."
-                        name="assign_id"
+                        value={generalInformation.assignedTo}
+                        onChange={(e) =>
+                          setGeneralInformation({ assignedTo: e.target.value })
+                        }
                       >
-                        <option value="">Select a value</option>
-                        <option value="1">Amit Guru</option>
-                        <option value="2">Shaleen Mishra</option>
-                        <option value="3">Vikas Prajapati</option>
-                        <option value="4">Anshul Patel</option>
-                        <option value="5">Amit Patel</option>
-                        <option value="6">Madhulika Mishra</option>
-                        <option value="7">Jin Kim</option>
-                        <option value="8">Akash Asthana</option>
+                        <option value="">-- Select --</option>
+                        <option value="amit_guru">Amit Guru</option>
+                        <option value="shaleen_mishra">Shaleen Mishra</option>
+                        <option value="vikas_prajapati">Vikas Prajapati</option>
+                        <option value="anshul_patel">Anshul Patel</option>
+                        <option value="amit_patel">Amit Patel</option>
+                        <option value="madhulika_mishra">
+                          Madhulika Mishra
+                        </option>
                       </select>
                     </div>
                     <InputDate
                       label="Due Date"
+                      instruction="Please mention expected date of completion."
+                      isRequired="true"
                       enableDate="future"
-                      isRequired="false"
+                      value={generalInformation.dueDate}
+                      returnDate={(date) =>
+                        setGeneralInformation({ dueDate: date })
+                      }
                     />
                   </div>
                   <div className="group-input">
                     <label>
-                      <div className="required"></div>
-                      Short Description
+                      <div className="required"></div>Short Description
                     </label>
-                    <input type="text" />
+                    <div className="instruction">
+                      Please mention brief summary
+                    </div>
+                    <textarea
+                      value={generalInformation.shortDescription}
+                      onChange={(e) =>
+                        setGeneralInformation({
+                          shortDescription: e.target.value,
+                        })
+                      }
+                    ></textarea>
+                  </div>
+                  <div className="group-input">
+                    <label>Severity Level</label>
+                    
+                    <select 
+                        value={generalInformation.severityLevel}
+                        onChange={(e) => setGeneralInformation({ severityLevel: e.target.value })}>
+
+                      <option value="">-- Select --</option>
+                      <option value="">Major</option>
+                      <option value="">Minor</option>
+                      <option value="">Critical</option>
+                    </select>
                   </div>
                   <RelatedRecords label="Action Item Related Records" />
                   <div className="group-input">
-                    <label>HOD Persons</label>
+                    <label>
+                      {generalInformation.HodPersons === "Yes" && (
+                        <div className="required"></div>
+                      )}
+                      HOD Persons
+                    </label>
                     <MultiSelect
-                     
                       options={FunctionName}
                       value={selected}
                       onChange={setSelected}
                       labelledBy="Select"
+                      required={generalInformation.HodPersons === "Yes"}
+                      disabled={!generalInformation.HodPersons === "Yes"}
                     />
 
-                    <FlexField
-                      label="Description"
-                      instruction=""
-                      isRequired="false"
-                    />
+                    <div className="group-input">
+                      <label> Description</label>
+                      <div className="instruction">
+                        Please mention brief summary
+                      </div>
+                      <textarea
+                        value={generalInformation.Description}
+                        onChange={(e) =>
+                          setGeneralInformation({ Description: e.target.value })
+                        }
+                      ></textarea>
+                    </div>
                   </div>
                   <div className="form-flex">
                     <div className="group-input">
                       <label>Responsible Department</label>
-
+                      <div className="instruction">
+                        Please select related information
+                      </div>
                       <select
-                        value={internalAudit.initiatedThrough}
+                        value={generalInformation.ResponsibleDepartment}
                         onChange={(e) =>
-                          setInternalAudit({ initiatedThrough: e.target.value })
+                          setGeneralInformation({
+                            ResponsibleDepartment: e.target.value,
+                          })
                         }
-                        name="departments"
                       >
                         <option value="">Enter Your Selection Here</option>
                         <option value="1">Quality Assurance-CQA</option>
@@ -313,18 +364,25 @@ function ActionItems() {
                     </div>
                     <div className="group-input">
                       <label>
-                        {internalAudit.initiatedThrough === "others" && (
+                        {generalInformation.ResponsibleDepartment === "others" && (
                           <div className="required"></div>
                         )}
                         Other
                       </label>
-                      <input
-                        type="text"
-                        required={internalAudit.initiatedThrough === "others"}
-                      ></input>
-                    </div>                  
+                      <textarea
+                        value={generalInformation.ResponsibleDepartmentOthers}
+                        onChange={(e) =>
+                          setGeneralInformation({
+                            ResponsibleDepartmentOthers: e.target.value,
+                          })
+                        }
+                        required={
+                          generalInformation.ResponsibleDepartment === "others"
+                        }
+                      ></textarea>
+                    </div>
                   </div>
-                 
+
                   <div className="group-input">
                     <Grid
                       label={docFile[0].label}
@@ -338,48 +396,89 @@ function ActionItems() {
             ) : form === formList[1] ? (
               <div className="document-form">
                 <div className="details-form-data">
-                 <div className="sub-head">Post Completion</div>
-                  <FlexField
-                    label="Action Taken"
-                    instruction=""
-                    isRequired="false"
-                  />
-                   <div className="form-flex">
+                  <div className="sub-head">Post Completion</div>
+                 
+                  <div className="group-input">
+                      <label>Action Taken</label>
+                      <textarea
+                        value={postCompletion.Actiontaken}
+                        onChange={(e) =>
+                          setPostCompletion({ Actiontaken : e.target.value })
+                        }
+                      ></textarea>
+                  </div>
+                  <div className="form-flex">
+                    
                     <InputDate
                       label="Actual Start Date"
+                      instruction="Please mention expected date of completion."
                       isRequired="false"
                       enableDate="future"
+                      value={postCompletion.ActualStartDate}
+                      returnDate={(date) =>
+                        setPostCompletion({ ActualStartDate: date })
+                      }
                     />
+
+                   
                     <InputDate
                       label="Actual End Date"
+                      instruction="Please mention expected date of completion."
                       isRequired="false"
                       enableDate="future"
+                      value={postCompletion.ActualEndDate}
+                      returnDate={(date) =>
+                        setPostCompletion({ ActualEndDate: date })
+                      }
                     />
+
                   </div>
-                  <FlexField
-                    label="Comments"
-                    instruction=""
-                    isRequired="false"
-                  />
+
+                   <div className="group-input">
+                      <label>Comments</label>
+                      <div className="instruction">
+                        Please mention brief summary
+                      </div>
+                      <textarea
+                        value={postCompletion.Comments}
+                        onChange={(e) =>
+                          setPostCompletion({ Comments: e.target.value })
+                        }
+                      ></textarea>
+                    </div>
                 </div>
               </div>
             ) : form === formList[2] ? (
               <div className="document-form">
                 <div className="details-form-data">
-                 <div className="sub-head">Action Approval</div>
-                 <FlexField
-                    label="QA Review Comments"
-                    instruction=""
-                    isRequired="false"
-                  />
+                  <div className="sub-head">Action Approval</div>
+                  
+                  <div className="group-input">
+                      <label>QA Review Comments</label>
+                      <div className="instruction">
+                        Please mention brief summary
+                      </div>
+                      <textarea
+                        value={actionApproval.QAReviewComments}
+                        onChange={(e) =>
+                          setactionApproval({ QAReviewComments: e.target.value })
+                        }
+                      ></textarea>
+                    </div>
                   <div className="sub-head">Extension Justification</div>
-                  <FlexField
-                    label="Due Date Extension Justification"
-                    instruction=""
-                    isRequired="false"
-                  />
-                    
-                   
+                
+                  <div className="group-input">
+                      <label>Due Date Extension Justification</label>
+                      <div className="instruction">
+                        Please mention brief summary
+                      </div>
+                      <textarea
+                        value={actionApproval.DueDateExtension}
+                        onChange={(e) =>
+                          setactionApproval({ DueDateExtension: e.target.value })
+                        }
+                      ></textarea>
+                    </div>
                 </div>
               </div>
             ) : form === formList[3] ? (
@@ -392,8 +491,7 @@ function ActionItems() {
                       Shaleen Mishra
                     </div>
                     <div>
-                      <strong>Submitted On:&nbsp;</strong>15
-                      Jan, 2023 11:00 PM
+                      <strong>Submitted On:&nbsp;</strong>15 Jan, 2023 11:00 PM
                     </div>
                   </div>
                   <div className="activity-log-field">
@@ -409,12 +507,9 @@ function ActionItems() {
                       <strong>Completed By:&nbsp;</strong>Shaleen Mishra
                     </div>
                     <div>
-                      <strong>Completed On:&nbsp;</strong>15 Jan, 2023
-                      11:00 PM
+                      <strong>Completed On:&nbsp;</strong>15 Jan, 2023 11:00 PM
                     </div>
                   </div>
-                 
-                  
                 </div>
               </div>
             ) : (
