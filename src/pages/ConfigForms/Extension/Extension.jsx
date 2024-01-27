@@ -1,50 +1,65 @@
 import React, { useReducer } from "react";
 import { useState } from "react";
-import HeaderTop from "../../components/Header/HeaderTop";
-import Grid from "../../components/DataFields/Grid";
-import { MultiSelect } from "react-multi-select-component";
-import InputDate from "../../components/DataFields/InputDate";
-import FlexField from "../../components/DataFields/FlexField";
-import RelatedRecords from "../../components/DataFields/RelatedRecords";
-import "./ConfigForms.css";
+import HeaderTop from "../../../components/Header/HeaderTop";
+import Grid from "../../../components/DataFields/Grid";
+import InputDate from "../../../components/DataFields/InputDate";
+import { CurrentDate } from "../../../components/DateReturners";
+
+import {
+  formList,
+  docFile,
+  workFlow,
+  currentYear,
+  site,
+} from "./ExtensionFunction";
+import "../ConfigForms.css";
 
 function Extension() {
-  const formList = ["General Information", " QA Approval", " Activity Log"];
-  const [changeControl, setChangeControl] = useReducer(
-    (prev, next) => ({
-      ...prev,
-      ...next,
-    }), {
-    initiatorGroup: "",
-    initiatedThrough: "",
-    typeOfAudit: "",
-  }
-  );
   const [form, setForm] = useState("General Information");
   const [asideWorkFlow, setAsideWorkFlow] = useState(false);
   const [asideFamilyTree, setAsideFamilyTree] = useState(false);
-  const docFile = [
+
+  const [generalInformation, setGeneralInformation] = useReducer(
+    (prev, next) => ({
+      ...prev,
+      ...next,
+    }),
     {
-      label: "Extention Attachments",
-      instruction: "Please Attach all relevant or supporting documents",
-      required: true,
-      columnList: [
-        { id: "2.1.1.1", name: "Title of Document", type: "text" },
-        { id: "2.1.1.2", name: "Attached File", type: "File" },
-        { id: "2.1.1.3", name: "Remark", type: "text" },
-      ],
-    },
+      recordNumber: `${site}/EX/${currentYear}/000001`,
+      site: site,
+      initiator: "Amit Guru",
+      dateOfInitiation: CurrentDate(),
+      assignedTo: "",
+      dueDate: "",
+      initiatorGroup: "",
+      shortDescription: "",
+      initiatedThrough: "",
+      initiatedThroughOthers: "",
+      currentParentDueDate: "",
+      revisedDueDate: "",
+      justificationOfExtention: "",
+      extentionAttachments: "",
+      approver: "",
+      severityLevel: "",
+    }
+  );
+  const [qAApproval, setQAApproval] = useReducer(
+    (prev, next) => ({
+      ...prev,
+      ...next,
+    }),
     {
-      label: "Closure Attachments",
-      instruction: "Please Attach all relevant or supporting documents",
-      required: true,
-      columnList: [
-        { id: "2.1.1.1", name: "Title of Document", type: "text" },
-        { id: "2.1.1.2", name: "Attached File", type: "File" },
-        { id: "2.1.1.3", name: "Remark", type: "text" },
-      ],
-    },
-  ];
+      approverComments: "",
+      extentionAttachments: "",
+      // typeOfChange: '',
+      // qAReviewComments: '',
+      // relatedRecords: '',
+      // qAAttachments: '',
+      // minorChangeJustification: '',
+      // majorChangeJustification: '',
+      // criticalChangeJustification: ''
+    }
+  );
   return (
     <>
       <div
@@ -60,35 +75,22 @@ function Extension() {
               <div>Trust The Process</div>
             </div>
             <div className="content workflow">
-              <div className="green-state">
-                Opened
-                <img src="/down.gif" alt="..." />
-              </div>
-              <div>
-                Under HOD Review
-                <img src="/down.gif" alt="..." />
-              </div>
-              <div>
-                HOD Review Completed
-                <img src="/down.gif" alt="..." />
-              </div>
-              <div>
-                Under CFT Review
-                <img src="/down.gif" alt="..." />
-              </div>
-              <div>
-                Approved
-                <img src="/down.gif" alt="..." />
-              </div>
-              <div>
-                Implemented
-                <img src="/down.gif" alt="..." />
-              </div>
-              <div className="red-state">
-                Closed-Done
-                <img src="/down.gif" alt="..." />
-              </div>
-              <div className="red-state">Closed- Cancelled</div>
+              {workFlow.map((item, index) => (
+                <div
+                  className={
+                    index === 0
+                      ? "green-state"
+                      : index === workFlow.length - 1
+                      ? "red-state"
+                      : ""
+                  }
+                >
+                  {item}
+                  {index !== workFlow.length - 1 && (
+                    <img src="/down.gif" alt="..." />
+                  )}
+                </div>
+              ))}
             </div>
           </div>
         )}
@@ -110,13 +112,12 @@ function Extension() {
             </div>
           </div>
         )}
-
         <div id="config-form-document-page">
           <HeaderTop />
 
           <div className="top-block">
             <div>
-              <strong> Record Name:&nbsp;</strong>Internal Audit
+              <strong> Record Name:&nbsp;</strong>Extention
             </div>
             <div>
               <strong> Site:&nbsp;</strong>EHS-North America
@@ -150,46 +151,97 @@ function Extension() {
                       <label>Record Number</label>
                       <input
                         type="text"
-                        value="Jordan/EA/2024/00000001"
+                        value={generalInformation.recordNumber}
                         disabled
                       />
                     </div>
                     <div className="group-input">
-                      <label>Division Code</label>
-                      <input type="text" value="Jordan" disabled />
+                      <label>Site/Location Code</label>
+                      <input
+                        type="text"
+                        value={generalInformation.site}
+                        disabled
+                      />
                     </div>
                     <div className="group-input">
                       <label>Initiator</label>
-                      <input type="text" value="Amit Guru" disabled />
+                      <input
+                        type="text"
+                        value={generalInformation.initiator}
+                        disabled
+                      />
                     </div>
                     <div className="group-input">
                       <label>Date of Initiation</label>
-                      <input type="" value="10-Jan-2024" disabled />
+                      <input
+                        type="text"
+                        value={generalInformation.dateOfInitiation}
+                        disabled
+                      />
                     </div>
+
                     <div className="group-input">
                       <label>Current Parent Due Date</label>
-                      <input type="" value="10-Jan-2024" disabled />
+                      <input
+                        type="text"
+                        value={generalInformation.currentParentDueDate}
+                        disabled
+                      />
                     </div>
 
                     <InputDate
                       label="Revised Due Date"
-                      enableDate="future"
+                      // instruction="Please mention expected date of completion."
                       isRequired="false"
+                      enableDate="future"
+                      value={generalInformation.revisedDueDate}
+                      returnDate={(date) =>
+                        setGeneralInformation({ revisedDueDate: date })
+                      }
                     />
                   </div>
                   <div className="group-input">
                     <label>
-                      <div className="require"></div>
-                      Short Description
+                      <div className="required"></div>Short Description
                     </label>
-                    <input type="text" />
+                    <div className="instruction">
+                      Please mention brief summary
+                    </div>
+                    <textarea
+                      value={generalInformation.shortDescription}
+                      onChange={(e) =>
+                        setGeneralInformation({
+                          shortDescription: e.target.value,
+                        })
+                      }
+                    ></textarea>
                   </div>
                   <div className="group-input">
-                    <label>
-                      <div className="require"></div>
-                      Justification of Extention
-                    </label>
-                    <input type="text" />
+                    <label>Severity Level</label>
+
+                    <select
+                      value={generalInformation.severityLevel}
+                      onChange={(e) =>
+                        setGeneralInformation({ severityLevel: e.target.value })
+                      }
+                    >
+                      <option value="">-- Select --</option>
+                      <option value="">Major</option>
+                      <option value="">Minor</option>
+                      <option value="">Critical</option>
+                    </select>
+                  </div>
+                  <div className="group-input">
+                    <label>Justification of Extention</label>
+                    <input
+                      type="text"
+                      value={generalInformation.justificationOfExtention}
+                      onChange={(e) =>
+                        setGeneralInformation({
+                          justificationOfExtention: e.target.value,
+                        })
+                      }
+                    />
                   </div>
 
                   <div className="group-input">
@@ -202,7 +254,13 @@ function Extension() {
                   </div>
                   <div className="group-input">
                     <label> Approver</label>
-                    <select name="initiated_through">
+                    {/* <div className='instruction'>Please select related information</div> */}
+                    <select
+                      value={generalInformation.approver}
+                      onChange={(e) =>
+                        setGeneralInformation({ approver: e.target.value })
+                      }
+                    >
                       <option value="">-- Select --</option>
                       <option value="amit_guru">Amit Guru</option>
                       <option value="amit_patel">Amit Patel</option>
@@ -216,11 +274,15 @@ function Extension() {
             ) : form === formList[1] ? (
               <div className="document-form">
                 <div className="details-form-data">
-                  <FlexField
-                    label="Approver Comments"
-                    instruction=""
-                    isRequired="false"
-                  />
+                  <div className="group-input">
+                    <label>Approver Comments</label>
+                    <textarea
+                      value={qAApproval.approverComments}
+                      onChange={(e) =>
+                        setQAApproval({ approverComments: e.target.value })
+                      }
+                    ></textarea>
+                  </div>
 
                   <div className="group-input">
                     <Grid

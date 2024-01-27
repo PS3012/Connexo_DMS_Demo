@@ -13,6 +13,7 @@ function generalInformationForm() {
     const [selected, setSelected] = useState([]);
     const [asideWorkFlow, setAsideWorkFlow] = useState(false)
     const [asideFamilyTree, setAsideFamilyTree] = useState(false)
+    
     const [generalInformation, setGeneralInformation] = useReducer((prev, next) => ({
         ...prev, ...next
     }), {
@@ -26,6 +27,7 @@ function generalInformationForm() {
         shortDescription: '',
         initiatedThrough: '',
         initiatedThroughOthers: '',
+       
         repeat: '',
         repeatNature: '',
         riskLevel: '',

@@ -1,59 +1,80 @@
-import React  from "react";
-import { useState } from "react";
-import HeaderTop from "../../components/Header/HeaderTop";
-import Grid from "../../components/DataFields/Grid";
-import InputDate from "../../components/DataFields/InputDate";
-import FlexField from "../../components/DataFields/FlexField";
-import RelatedRecords from "../../components/DataFields/RelatedRecords";
-import { CurrentDate } from "../../components/DateReturners";
-import "./ConfigForms.css";
+import React from "react";
+import { useState, useReducer } from "react";
+import HeaderTop from "../../../components/Header/HeaderTop";
+import Grid from "../../../components/DataFields/Grid";
+import InputDate from "../../../components/DataFields/InputDate";
+import { CurrentDate } from "../../../components/DateReturners";
+import {
+  formList,
+  docFile,
+  workFlow,
+  currentYear,
+  site,
+} from "./EffectivenessCheckFunction";
+import "../ConfigForms.css";
 
 function EffectivenessCheck() {
-  const formList = [
-    "General Information",
-    "Effectiveness Check Results",
-    "Activity History",
-  ];
-
   const [form, setForm] = useState(formList[0]);
-
   const [asideWorkFlow, setAsideWorkFlow] = useState(false);
   const [asideFamilyTree, setAsideFamilyTree] = useState(false);
-  
 
-  const docFile = [
+  const [generalInformation, setGeneralInformation] = useReducer(
+    (prev, next) => ({
+      ...prev,
+      ...next,
+    }),
     {
-      label: "Effectiveness check Attachment",
-      instruction: "Please Attach all relevant or supporting documents",
-      required: true,
-      columnList: [
-        { id: "2.1.1.1", name: "Title of Document", type: "text" },
-        { id: "2.1.1.2", name: "Attached File", type: "File" },
-        { id: "2.1.1.3", name: "Remark", type: "text" },
-      ],
-    },
+      recordNumber: `${site}/EC/${currentYear}/000001`,
+      site: site,
+      initiator: "Amit Guru",
+      dateOfInitiation: CurrentDate(),
+      assignedTo: "",
+      dueDate: "",
+      initiatorGroup: "",
+      shortDescription: "",
+      severityLevel: "",
+      initiatedThrough: "",
+      initiatedThroughOthers: "",
+      qualityReviewer: "",
 
+      repeat: "",
+      repeatNature: "",
+      riskLevel: "",
+      divisionCode: "",
+      natureOfChange: "",
+      natureOfChangeOthers: "",
+      initialAttachment: "",
+      groupComment: "",
+    }
+  );
+
+  const [effectivenessCheckResults, setEffectivenessCheckResults] = useReducer(
+    (prev, next) => ({
+      ...prev,
+      ...next,
+    }),
     {
-      label: "Addendum Attachment",
-      instruction: "Please Attach all relevant or supporting documents",
-      required: true,
-      columnList: [
-        { id: "2.1.1.1", name: "Title of Document", type: "text" },
-        { id: "2.1.1.2", name: "Attached File", type: "File" },
-        { id: "2.1.1.3", name: "Remark", type: "text" },
-      ],
-    },
+      effectivenessSummary: "",
+      effectivenessResults: "",
+      effectivenesscheckAttachment: "",
+      addendumComments: "",
+      addendumAttachment: "",
+    }
+  );
+
+  const [activityHistory, setActivityHistory] = useReducer(
+    (prev, next) => ({
+      ...prev,
+      ...next,
+    }),
     {
-      label: "Attachment",
-      instruction: "Please Attach all relevant or supporting documents",
-      required: true,
-      columnList: [
-        { id: "2.1.1.1", name: "Title of Document", type: "text" },
-        { id: "2.1.1.2", name: "Attached File", type: "File" },
-        { id: "2.1.1.3", name: "Remark", type: "text" },
-      ],
-    },
-  ];
+      actualClosureDate: "",
+      originalDateDue: "",
+      cancellationCategory: "",
+      trackWiseRecordType: "",
+      cancellationJustification: "",
+    }
+  );
 
   return (
     <>
@@ -70,35 +91,22 @@ function EffectivenessCheck() {
               <div>Trust The Process</div>
             </div>
             <div className="content workflow">
-              <div className="green-state">
-                Opened
-                <img src="/down.gif" alt="..." />
-              </div>
-              <div>
-                Under HOD Review
-                <img src="/down.gif" alt="..." />
-              </div>
-              <div>
-                HOD Review Completed
-                <img src="/down.gif" alt="..." />
-              </div>
-              <div>
-                Under CFT Review
-                <img src="/down.gif" alt="..." />
-              </div>
-              <div>
-                Approved
-                <img src="/down.gif" alt="..." />
-              </div>
-              <div>
-                Implemented
-                <img src="/down.gif" alt="..." />
-              </div>
-              <div className="red-state">
-                Closed-Done
-                <img src="/down.gif" alt="..." />
-              </div>
-              <div className="red-state">Closed- Cancelled</div>
+              {workFlow.map((item, index) => (
+                <div
+                  className={
+                    index === 0
+                      ? "green-state"
+                      : index === workFlow.length - 1
+                      ? "red-state"
+                      : ""
+                  }
+                >
+                  {item}
+                  {index !== workFlow.length - 1 && (
+                    <img src="/down.gif" alt="..." />
+                  )}
+                </div>
+              ))}
             </div>
           </div>
         )}
@@ -161,28 +169,42 @@ function EffectivenessCheck() {
                       <label>Record Number</label>
                       <input
                         type="text"
-                        value="Jordan/IA/2024/00000001"
+                        value={generalInformation.recordNumber}
                         disabled
                       />
                     </div>
                     <div className="group-input">
-                      <label>Division Code</label>
-                      <input type="text" value="Jordan" disabled />
+                      <label>Site/Location Code</label>
+                      <input
+                        type="text"
+                        value={generalInformation.site}
+                        disabled
+                      />
                     </div>
                     <div className="group-input">
                       <label>Initiator</label>
-                      <input type="text" value="Amit Guru" disabled />
+                      <input
+                        type="text"
+                        value={generalInformation.initiator}
+                        disabled
+                      />
                     </div>
                     <div className="group-input">
                       <label>Date of Initiation</label>
-                      <input type="" value={CurrentDate()} disabled />
+                      <input
+                        type="text"
+                        value={generalInformation.dateOfInitiation}
+                        disabled
+                      />
                     </div>
                     <div className="group-input">
                       <label>Assigned To</label>
                       <select
-                        id="select-state"
-                        placeholder="Select..."
                         name="assign_id"
+                        value={generalInformation.assignedTo}
+                        onChange={(e) =>
+                          setGeneralInformation({ assignedTo: e.target.value })
+                        }
                       >
                         <option value="">Select a value</option>
                         <option value="1">Amit Guru</option>
@@ -195,17 +217,27 @@ function EffectivenessCheck() {
                         <option value="8">Akash Asthana</option>
                       </select>
                     </div>
+
                     <InputDate
                       label="Due Date"
+                      instruction="Please mention expected date of completion."
+                      isRequired="true"
                       enableDate="future"
-                      isRequired="false"
+                      value={generalInformation.dueDate}
+                      returnDate={(date) =>
+                        setGeneralInformation({ dueDate: date })
+                      }
                     />
                     <div className="group-input">
                       <label>Quality Reviewer</label>
+
                       <select
-                        id="select-state"
-                        placeholder="Select..."
-                        name="assign_id"
+                        value={generalInformation.qualityReviewer}
+                        onChange={(e) =>
+                          setGeneralInformation({
+                            qualityReviewer: e.target.value,
+                          })
+                        }
                       >
                         <option value="">Select a value</option>
                         <option value="1">Amit Guru</option>
@@ -221,9 +253,34 @@ function EffectivenessCheck() {
                   </div>
                   <div className="group-input">
                     <label>
-                      Short Description
+                      <div className="required"></div>Short Description
                     </label>
-                    <input type="text" />
+                    <div className="instruction">
+                      Please mention brief summary
+                    </div>
+                    <textarea
+                      value={generalInformation.shortDescription}
+                      onChange={(e) =>
+                        setGeneralInformation({
+                          shortDescription: e.target.value,
+                        })
+                      }
+                    ></textarea>
+                  </div>
+                  <div className="group-input">
+                    <label>Severity Level</label>
+
+                    <select
+                      value={generalInformation.severityLevel}
+                      onChange={(e) =>
+                        setGeneralInformation({ severityLevel: e.target.value })
+                      }
+                    >
+                      <option value="">-- Select --</option>
+                      <option value="">Major</option>
+                      <option value="">Minor</option>
+                      <option value="">Critical</option>
+                    </select>
                   </div>
 
                   <div className="sub-head">
@@ -231,25 +288,47 @@ function EffectivenessCheck() {
                   </div>
                   <div className="group-input">
                     <label>Effectiveness check Plan</label>
-                    <input type="text" />
-                  </div>
 
-                
+                    <input
+                      type="text"
+                      value={generalInformation.effectivenesscheckPlan}
+                      onChange={(e) =>
+                        setGeneralInformation({
+                          effectivenesscheckPlan: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
                 </div>
               </div>
             ) : form === formList[1] ? (
               <div className="document-form">
                 <div className="details-form-data">
                   <div className="sub-head">Effectiveness Summary</div>
-                  <FlexField
-                    label="Effectiveness Summary"
-                    instruction=""
-                    isRequired="false"
-                  />
+
+                  <div className="group-input">
+                    <label>Effectiveness Summary</label>
+                    <textarea
+                      value={effectivenessCheckResults.effectivenessSummary}
+                      onChange={(e) =>
+                        setEffectivenessCheckResults({
+                          effectivenessSummary: e.target.value,
+                        })
+                      }
+                    ></textarea>
+                  </div>
                   <div className="sub-head">Effectiveness Check Results</div>
                   <div className="group-input">
                     <label>Effectiveness Results</label>
-                    <input type="text" />
+                    <input
+                      type="text"
+                      value={effectivenessCheckResults.effectivenessResults}
+                      onChange={(e) =>
+                        setEffectivenessCheckResults({
+                          effectivenessResults: e.target.value,
+                        })
+                      }
+                    />
                   </div>
                   <div className="group-input">
                     <Grid
@@ -263,7 +342,15 @@ function EffectivenessCheck() {
                   <div className="sub-head">Reopen</div>
                   <div className="group-input">
                     <label>Addendum Comments</label>
-                    <input type="text" />
+                    <input
+                      type="text"
+                      value={effectivenessCheckResults.addendumComments}
+                      onChange={(e) =>
+                        setEffectivenessCheckResults({
+                          addendumComments: e.target.value,
+                        })
+                      }
+                    />
                   </div>
                   <div className="group-input">
                     <Grid
@@ -282,13 +369,24 @@ function EffectivenessCheck() {
                   <div className="form-flex">
                     <InputDate
                       label="Actual Closure Date"
-                      enableDate="future"
+                      // instruction="Please mention expected date of completion."
                       isRequired="false"
+                      enableDate="future"
+                      value={activityHistory.actualClosureDate}
+                      returnDate={(date) =>
+                        setActivityHistory({ actualClosureDate: date })
+                      }
                     />
+
                     <InputDate
                       label="Original Date Due"
-                      enableDate="future"
+                      // instruction="Please mention expected date of completion."
                       isRequired="false"
+                      enableDate="future"
+                      value={activityHistory.originalDateDue}
+                      returnDate={(date) =>
+                        setActivityHistory({ originalDateDue: date })
+                      }
                     />
                   </div>
                   <div className="sub-head">Record Signature</div>
@@ -356,36 +454,60 @@ function EffectivenessCheck() {
                   </div>
                   <div className="sub-head">Cancellation Details</div>
                   <div className="form-flex">
-                  <div className="group-input">
-                    <label>Cancellation Category</label>
-                    <select>
-                      <option value="">Enter Your Selection Here</option>
-                      <option value="Duplicate Entry">Duplicate Entry</option>
-                      <option value="Entered in Error">Entered in Error</option>
-                      <option value="No Longer Necessary">
-                        No Longer Necessary
-                      </option>
-                      <option value="Parent Record Closed">
-                        Parent Record Closed
-                      </option>
-                    </select>
-                  </div>
+                    <div className="group-input">
+                      <label>Cancellation Category</label>
 
+                      <select
+                        value={activityHistory.cancellationCategory}
+                        onChange={(e) =>
+                          setActivityHistory({
+                            cancellationCategory: e.target.value,
+                          })
+                        }
+                      >
+                        <option value="">Enter Your Selection Here</option>
+                        <option value="Duplicate Entry">Duplicate Entry</option>
+                        <option value="Entered in Error">
+                          Entered in Error
+                        </option>
+                        <option value="No Longer Necessary">
+                          No Longer Necessary
+                        </option>
+                        <option value="Parent Record Closed">
+                          Parent Record Closed
+                        </option>
+                      </select>
+                    </div>
+
+                    <div className="group-input">
+                      <label>TrackWise Record Type</label>
+
+                      <select
+                        value={activityHistory.trackWiseRecordType}
+                        onChange={(e) =>
+                          setActivityHistory({
+                            trackWiseRecordType: e.target.value,
+                          })
+                        }
+                      >
+                        <option>Enter Your Selection Here</option>
+                        <option value="Effectiveness Check">
+                          Effectiveness Check
+                        </option>
+                      </select>
+                    </div>
+                  </div>
                   <div className="group-input">
-                    <label>TrackWise Record Type</label>
-                    <select>
-                      <option>Enter Your Selection Here</option>
-                      <option value="Effectiveness Check">
-                        Effectiveness Check
-                      </option>
-                    </select>
+                    <label>Cancellation Justification</label>
+                    <textarea
+                      value={activityHistory.cancellationJustification}
+                      onChange={(e) =>
+                        setActivityHistory({
+                          cancellationJustification: e.target.value,
+                        })
+                      }
+                    ></textarea>
                   </div>
-                  </div>
-                  <FlexField
-                    label="Cancellation Justification"
-                    instruction=""
-                    isRequired="false"
-                  />
                 </div>
               </div>
             ) : (

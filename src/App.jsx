@@ -11,13 +11,10 @@ import RiskAssessment from "./pages/ConfigForms/RiskAssessment";
 import RootCauseAnalysis from "./pages/ConfigForms/RootCauseAnalysis";
 import InternalAudit from "./pages/ConfigForms/InternalAudit";
 import ExternalAudit from "./pages/ConfigForms/ExternalAudit";
-import CAPA from "./pages/ConfigForms/CAPA";
-import Audit_Program from "./pages/ConfigForms/Audit_Program";
-import Deviation from "./pages/ConfigForms/Deviation";
+// import Deviation from "./pages/ConfigForms/Deviation";
 import Desktop from "./pages/Desktop/Desktop";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import ManagementReview from "./pages/ConfigForms/ManagementReview";
-import Extension from "./pages/ConfigForms/Extension";
 import ChangeControlPanel from "./pages/DocumentPanel/ChangeControlPanel/ChangeControlPanel";
 import InternalAuditPanel from "./pages/DocumentPanel/InternalAuditPanel";
 import ExternalAuditPanel from "./pages/DocumentPanel/ExternalAuditPanel";
@@ -27,15 +24,19 @@ import RootCauseAnalysisPanel from './pages/DocumentPanel/RootCauseAnalysisPanel
 import RiskAssessmentPanel from './pages/DocumentPanel/RiskAssessmentPanel'
 import ManagementReviewPanel from './pages/DocumentPanel/ManagementReviewPanel'
 import ExtensionPanel from './pages/DocumentPanel/ExtensionPanel'
-import ActionItems from './pages/ConfigForms/ActionItems'
-import Observation from './pages/ConfigForms/Observation'
-import EffectivenessCheck from './pages/ConfigForms/EffectivenessCheck'
-import ActionItemsPanel from './pages/DocumentPanel/ActionItemsPanel'
-import AuditProgramPanel from './pages/DocumentPanel/AuditProgramPanel'
+
 import CAPAPanel from './pages/DocumentPanel/CAPAPanel'
 import EffectivenessCheckPanel from './pages/DocumentPanel/EffectivenessCheckPanel'
 import ObservationPanel from './pages/DocumentPanel/ObservationPanel'
 import Login from "./pages/Login/Login";
+import ActionItems from "./pages/ConfigForms/ActionItems/ActionItems";
+import AuditProgram from "./pages/ConfigForms/AuditProgram/AuditProgram";
+import Extension from "./pages/ConfigForms/Extension/Extension";
+import EffectivenessCheck from "./pages/ConfigForms/EffectivenessCheck/EffectivenessCheck";
+import CAPA from "./pages/ConfigForms/Capa/Capa";
+import Observation from "./pages/ConfigForms/Observation/Observation";
+import ActionItemsPanel from "./pages/DocumentPanel/ActionItemsPanel/ActionItemsPanel";
+import AuditProgramPanel from "./pages/DocumentPanel/AuditProgramPanel/AuditProgramPanel";
 
 function App() {
   localStorage.setItem("username", "amit.guru@connexo.io")
@@ -67,17 +68,17 @@ function App() {
           <Route path='/internal-audit' element={<InternalAudit />} />
           <Route path='/external-audit' element={<ExternalAudit />} />
           <Route path='/root-cause-analysis' element={<RootCauseAnalysis />} />
-          <Route path='/capa' element={<CAPA />} />
-          <Route path='/audit-program' element={<Audit_Program />} />
-          <Route path='/action-item' element={<ActionItems />} />
-          <Route path='/observation' element={<Observation />} />
-          <Route path='/effectiveness-check' element={<EffectivenessCheck />} />
-          <Route path='/deviation' element={<Deviation />} />
+          <Route path='/capa' element={<CAPA/>} />
+          <Route path='/audit-program' element={<AuditProgram/>} />
+          <Route path='/action-item' element={<ActionItems/>} />
+          <Route path='/observation' element={<Observation/>} />
+          <Route path='/effectiveness-check' element={<EffectivenessCheck/>} />
+          {/* <Route path='/deviation' element={<Deviation />} /> */}
           <Route path='/management-review' element={<ManagementReview />} />
           <Route path='/change-control' element={<ChangeControlForm />} />
-          <Route path='/extension' element={<Extension />} />
-          <Route path='/action-item-panel' element={<ActionItemsPanel />} />
-          <Route path='/audit-program-panel' element={<AuditProgramPanel />} />
+          <Route path='/extension' element={<Extension/>} />
+          <Route path='/action-item-panel' element={<ActionItemsPanel/>} />
+          <Route path='/audit-program-panel' element={<AuditProgramPanel/>} />
           <Route path='/capa-panel' element={<CAPAPanel />} />
           <Route path='/effectiveness-check-panel' element={<EffectivenessCheckPanel />} />
           <Route path='/observation-panel' element={<ObservationPanel />} />
