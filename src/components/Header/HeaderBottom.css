@@ -39,6 +39,7 @@
 
 .Header_Bottom .headerBottomInner .headerBottomLft .navItem h3 {
     font-size: 15px;
+    width: max-content;
 }
 
 

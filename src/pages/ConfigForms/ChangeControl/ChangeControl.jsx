@@ -543,7 +543,8 @@ function generalInformationForm() {
                                         </div>
                                         <div className="group-input">
                                             <label>
-                                                {additionalInformation.cftReviewRequired === "Yes" && <div className="required"></div>}
+                                                {additionalInformation.cftReviewRequired === "Yes" && 
+                                                <div className="required"></div>}
                                                 CFT Reviewer Person
                                             </label>
                                             <MultiSelect

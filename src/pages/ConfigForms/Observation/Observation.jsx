@@ -19,7 +19,6 @@ function Observation() {
   const [form, setForm] = useState(formList[0]);
   const [asideWorkFlow, setAsideWorkFlow] = useState(false);
   const [asideFamilyTree, setAsideFamilyTree] = useState(false);
-
   const [changeControl, setChangeControl] = useReducer(
     (prev, next) => ({
       ...prev,

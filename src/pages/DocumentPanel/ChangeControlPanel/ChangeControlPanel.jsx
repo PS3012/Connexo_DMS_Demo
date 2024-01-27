@@ -3,7 +3,6 @@ import HeaderTop from '../../../components/Header/HeaderTop';
 import { MultiSelect } from 'react-multi-select-component';
 import Grid from '../../../components/DataFields/Grid';
 import InputDate from '../../../components/DataFields/InputDate';
-import { CurrentDate } from '../../../components/DateReturners';
 import RelatedRecords from '../../../components/DataFields/RelatedRecords';
 import HeaderBottom from '../../../components/Header/HeaderBottom';
 import ESignatureModal from '../../../components/Modals/ESignatureModal/ESignatureModal';

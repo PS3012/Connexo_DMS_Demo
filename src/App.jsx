@@ -3,28 +3,26 @@ import DocumentPanel from "./pages/DocumentPanel/DocumentPanel";
 import TrainingManagementSystem from "./pages/TMS/TrainingManagementSystem";
 import Question from "./pages/Question/Question";
 import ChangeControlForm from "./pages/ConfigForms/ChangeControl/ChangeControl";
-import DocumentForm from "./pages/ConfigForms/DocumentForm";
+import DocumentForm from "./pages/ConfigForms/DocumentForm/DocumentForm";
 import LabIncident from "./pages/ConfigForms/LabIncident/LabIncident";
-import AddQuestion from "./pages/AddQuestion/AddQuestion";
 import ManageQuiz from "./pages/ManageQuiz/ManageQuiz";
 import RiskAssessment from "./pages/ConfigForms/RiskAssessment";
 import RootCauseAnalysis from "./pages/ConfigForms/RootCauseAnalysis";
-import InternalAudit from "./pages/ConfigForms/InternalAudit";
-import ExternalAudit from "./pages/ConfigForms/ExternalAudit";
-// import Deviation from "./pages/ConfigForms/Deviation";
+import InternalAudit from "./pages/ConfigForms/InternalAudit/InternalAudit";
+import ExternalAudit from "./pages/ConfigForms/ExternalAudit/ExternalAudit";
+import CAPA from "./pages/ConfigForms/CAPA";
 import Desktop from "./pages/Desktop/Desktop";
 import Dashboard from "./pages/Dashboard/Dashboard";
-import ManagementReview from "./pages/ConfigForms/ManagementReview";
+import ManagementReview from "./pages/ConfigForms/ManagementReview/ManagementReview";
+import Extension from "./pages/ConfigForms/Extension";
 import ChangeControlPanel from "./pages/DocumentPanel/ChangeControlPanel/ChangeControlPanel";
 import InternalAuditPanel from "./pages/DocumentPanel/InternalAuditPanel";
-import ExternalAuditPanel from "./pages/DocumentPanel/ExternalAuditPanel";
-import DeviationPanel from './pages/DocumentPanel/DeviationPanel'
+import ExternalAuditPanel from "./pages/DocumentPanel/ExternalAuditPanel/ExternalAuditPanel";
 import LabIncidentPanel from './pages/DocumentPanel/LabIncidentPanel/LabIncidentPanel'
 import RootCauseAnalysisPanel from './pages/DocumentPanel/RootCauseAnalysisPanel'
 import RiskAssessmentPanel from './pages/DocumentPanel/RiskAssessmentPanel'
 import ManagementReviewPanel from './pages/DocumentPanel/ManagementReviewPanel'
 import ExtensionPanel from './pages/DocumentPanel/ExtensionPanel'
-
 import CAPAPanel from './pages/DocumentPanel/CAPAPanel'
 import EffectivenessCheckPanel from './pages/DocumentPanel/EffectivenessCheckPanel'
 import ObservationPanel from './pages/DocumentPanel/ObservationPanel'
@@ -37,6 +35,10 @@ import CAPA from "./pages/ConfigForms/Capa/Capa";
 import Observation from "./pages/ConfigForms/Observation/Observation";
 import ActionItemsPanel from "./pages/DocumentPanel/ActionItemsPanel/ActionItemsPanel";
 import AuditProgramPanel from "./pages/DocumentPanel/AuditProgramPanel/AuditProgramPanel";
+import QuestionPage from "./pages/Tms/TrainingPage/QuestionPage";
+import ManageQuestionPage from "./pages/Tms/TrainingPage/ManageQuestionPage";
+import ManageQuestionBank from "./pages/Tms/TrainingPage/ManageQuestionBank";
+import ManageQuizzes from "./pages/Tms/TrainingPage/ManageQuizzes";
 
 function App() {
   localStorage.setItem("username", "amit.guru@connexo.io")
@@ -49,7 +51,6 @@ function App() {
           <Route path="/internal-audit-panel" element={<InternalAuditPanel />} />
           <Route path="/external-audit-panel" element={<ExternalAuditPanel />} />
           <Route path='/change-control-panel' element={<ChangeControlPanel />} />
-          <Route path='/deviation-panel' element={<DeviationPanel />} />
           <Route path='/lab-incident-panel' element={<LabIncidentPanel />} />
           <Route path='/root-cause-analysis-panel' element={<RootCauseAnalysisPanel />} />
           <Route path='/risk-assessment-panel' element={<RiskAssessmentPanel />} />
@@ -59,7 +60,6 @@ function App() {
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/question' element={<Question />} />
           <Route path='/manage-quiz' element={<ManageQuiz />} />
-          <Route path='/add-question' element={<AddQuestion />} />
           <Route path='/risk-assessment' element={<RiskAssessment />} />
           <Route path='/document-panel' element={<DocumentPanel />} />
           <Route path='/training-management-system' element={<TrainingManagementSystem />} />
@@ -73,7 +73,6 @@ function App() {
           <Route path='/action-item' element={<ActionItems/>} />
           <Route path='/observation' element={<Observation/>} />
           <Route path='/effectiveness-check' element={<EffectivenessCheck/>} />
-          {/* <Route path='/deviation' element={<Deviation />} /> */}
           <Route path='/management-review' element={<ManagementReview />} />
           <Route path='/change-control' element={<ChangeControlForm />} />
           <Route path='/extension' element={<Extension/>} />
@@ -83,8 +82,12 @@ function App() {
           <Route path='/effectiveness-check-panel' element={<EffectivenessCheckPanel />} />
           <Route path='/observation-panel' element={<ObservationPanel />} />
           <Route path='/*' element={<Navigate to="/" />} />
+          <Route path='/question-page' element={<QuestionPage />} />
+          <Route path='/manage-question' element={<ManageQuestionPage />} />
+          <Route path='/manage-question-bank' element={<ManageQuestionBank />} />
+          <Route path='/manage-quizzes' element={<ManageQuizzes />} />
         </Routes>
-      </BrowserRouter>
+      </BrowserRouter >
     </>
   );
 }

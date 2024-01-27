@@ -288,7 +288,7 @@ function RiskAssessmentPanel() {
                                     </div>
                                     <div className="group-input">
                                         <label>
-                                            <b>Site / Division</b>
+                                            <b>Site/Location Code</b>
                                         </label>
                                         <input type="text" value="KSA" disabled />
                                     </div>
@@ -365,12 +365,6 @@ function RiskAssessmentPanel() {
                                         <input type="" value="" disabled />
                                     </div>
                                 </div>
-
-                                {/* <FlexField
-                                        label="Short Description"
-                                        instruction="Please mention brief summary"
-                                        isRequired="false"
-                                    /> */}
 
                                 <div className="group-input">
                                     <label>

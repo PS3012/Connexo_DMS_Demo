@@ -167,9 +167,9 @@ function RiskAssessment() {
                 <div id="config-form-document-page">
                     <HeaderTop />
                     <div className="top-block">
-                        <div className="head"><strong>Record Name</strong> : Risk Assesment</div>
+                        <div className="head"><strong>Record Name</strong> : Risk/Opportunity</div>
                         <div className="content">
-                            <strong>Site / Process</strong> : Jordan / Risk Assesment
+                            <strong>Site / Process</strong> : Jordan / Risk/Opportunity
                         </div>
                     </div>
                     <div className="document-block">
@@ -178,7 +178,7 @@ function RiskAssessment() {
                                 className={form === "Risk Assesment" ? "active" : ""}
                                 onClick={() => setForm("Risk Assesment")}
                             >
-                                Risk Assesment
+                                Risk/Opportunity
                             </div>
 
                             <div
@@ -187,13 +187,6 @@ function RiskAssessment() {
                             >
                                 Risk Details
                             </div>
-
-                            {/* <div
-                            className={form === "QA Review" ? "active" : ""}
-                            onClick={() => setForm("QA Review")}
-                            >
-                                QA Review
-                            </div> */}
 
                             <div
                                 className={form === "Work Group Assignment" ? "active" : ""}
@@ -208,15 +201,6 @@ function RiskAssessment() {
                             >
                                 Risk Analysis
                             </div>
-
-                            {/* {groupComment === "yes" && (
-                            <div
-                                className={form === "Group Comments" ? "active" : ""}
-                                onClick={() => setForm("Group Comments")}
-                            >
-                                Group Comments
-                            </div>
-                            )} */}
 
                             <div
                                 className={form === "Residual Risk" ? "active" : ""}
@@ -249,7 +233,7 @@ function RiskAssessment() {
                                         </div>
                                         <div className="group-input">
                                             <label>
-                                                <b>Site / Division</b>
+                                                <b>Site/Location Code</b>
                                             </label>
                                             <input type="text" value="KSA" disabled />
                                         </div>

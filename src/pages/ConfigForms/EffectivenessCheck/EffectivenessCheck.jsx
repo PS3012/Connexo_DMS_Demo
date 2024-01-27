@@ -17,7 +17,6 @@ function EffectivenessCheck() {
   const [form, setForm] = useState(formList[0]);
   const [asideWorkFlow, setAsideWorkFlow] = useState(false);
   const [asideFamilyTree, setAsideFamilyTree] = useState(false);
-
   const [generalInformation, setGeneralInformation] = useReducer(
     (prev, next) => ({
       ...prev,
@@ -36,7 +35,6 @@ function EffectivenessCheck() {
       initiatedThrough: "",
       initiatedThroughOthers: "",
       qualityReviewer: "",
-
       repeat: "",
       repeatNature: "",
       riskLevel: "",
@@ -288,7 +286,6 @@ function EffectivenessCheck() {
                   </div>
                   <div className="group-input">
                     <label>Effectiveness check Plan</label>
-
                     <input
                       type="text"
                       value={generalInformation.effectivenesscheckPlan}
@@ -456,7 +453,6 @@ function EffectivenessCheck() {
                   <div className="form-flex">
                     <div className="group-input">
                       <label>Cancellation Category</label>
-
                       <select
                         value={activityHistory.cancellationCategory}
                         onChange={(e) =>

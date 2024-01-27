@@ -1,19 +1,4 @@
 /*! ================================================================= */
-/*! Top-Block */
-/*! ================================================================= */
-.TrainingManagementSystem-page  .top-block {
-    background: var(--themeColor);
-    padding: 23px 20px;
-    color: white;
-}
-
-.TrainingManagementSystem-page  .top-block .head {
-    margin-bottom: 5px;
-    font-weight: bold;
-    font-size: 1.5rem;
-}
-
-/*! ================================================================= */
 /*! Top-Block-End */
 /*! ================================================================= */
 .TrainingManagementSystem-page #desktop-select {
@@ -44,15 +29,12 @@
     padding: 10px 20px;
 }
 
-/* .TrainingManagementSystem-page .details-form .details-form-heading {
-    background: #006fc0;
-    ;
-    border-radius: 10px 10px 0px 0px;
-    padding: 10px 20px;
-    font-size: 20px;
-    color: #ffff;
-    font-weight: 600;
-} */
+.TrainingManagementSystem-page .details-form .form-flex {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    gap: 0 20px;
+}
 
 .TrainingManagementSystem-page .details-form-data .group-input-flex {
     display: grid;
@@ -98,3 +80,19 @@
     place-items: center;
 }
 
+.TrainingManagementSystem-page .top-block {
+    background: var(--themeColor);
+    color: white;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.TrainingManagementSystem-page .top-block div {
+    padding: 10px 20px;
+    border-right: 1px dashed #ffffff;
+    font-size: 0.9rem;
+}
+
+.TrainingManagementSystem-page .top-block div:nth-last-child(1) {
+    border-right: 0;
+}

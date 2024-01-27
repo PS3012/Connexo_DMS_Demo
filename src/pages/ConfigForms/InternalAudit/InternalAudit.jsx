@@ -1,259 +1,109 @@
 import React, { useReducer } from "react";
 import { useState } from "react";
-import HeaderTop from "../../components/Header/HeaderTop";
-import Grid from "../../components/DataFields/Grid";
+import HeaderTop from "../../../components/Header/HeaderTop";
+import Grid from "../../../components/DataFields/Grid";
 import { MultiSelect } from "react-multi-select-component";
-import InputDate from "../../components/DataFields/InputDate";
-import FlexField from "../../components/DataFields/FlexField";
-import RelatedRecords from "../../components/DataFields/RelatedRecords";
-import { CurrentDate } from "../../components/DateReturners";
-import "./ConfigForms.css";
+import InputDate from "../../../components/DataFields/InputDate";
+import RelatedRecords from "../../../components/DataFields/RelatedRecords";
+import { CurrentDate } from "../../../components/DateReturners";
+import "../ConfigForms.css";
+import { formList, AuditTeam, ObservationFields, AuditAgenda, docFile, workFlow, site, currentYear } from './InternalAuditFunctions';
 
 function InternalAudit() {
-  const formList = ["General Information", "Audit Planning", "Audit Preparation", "Audit Execution", "Audit Response & Closure", "Activity Log"]
-  const site = localStorage.getItem("site")
-  const currentDate = new Date()
-  const currentYear = currentDate.getFullYear()
-  const [internalAudit, setInternalAudit] = useReducer((prev, next) => ({
-    ...prev, ...next
-  }), {
-    initiatorGroup: '',
-    initiatedThrough: '',
-    typeOfAudit: ''
-  })
   const [form, setForm] = useState(formList[0]);
   const [selected, setSelected] = useState([]);
   const [asideWorkFlow, setAsideWorkFlow] = useState(false)
   const [asideFamilyTree, setAsideFamilyTree] = useState(false)
-  const FunctionName = [
-    { label: "QA", value: "QA" },
-    { label: "QC", value: "QC" },
-    { label: "Manufacturing", value: "Manufacturing" },
-    { label: "Warehouse", value: "Warehouse" },
-    { label: "RA", value: "RA" },
-    { label: "R&D,", value: "R&D" },
-  ];
-  const AuditTeam = [
-    { label: "Amit Guru", value: "Amit Guru" },
-    { label: "Amit Patel", value: "Amit Patel" },
-    { label: "Akash Asthana", value: "Akash Asthana" },
-    { label: "Madhulika Mishra", value: "Madhulika Mishra" },
-    { label: "Shaleen Mishra", value: "Shaleen Mishra" },
-  ];
-  const ObservationFields = [
-    {
-      label: "Observation Fields ",
-      instruction: "Please Attach all relevant or supporting documents",
-      required: true,
-      columnList: [
-        { id: "2.1.1.1", name: "Observation ID", type: "text" },
-        { id: "2.1.1.2", name: "Date", type: "date" },
-        { id: "2.1.1.3", name: "Auditor", type: "select" },
-        { id: "2.1.1.4", name: "Auditee", type: "select" },
-        { id: "2.1.1.5", name: "Observation Description", type: "text" },
-        { id: "2.1.1.6", name: "Severity Level", type: "text" },
-        { id: "2.1.1.7", name: "Area/process", type: "text" },
-        { id: "2.1.1.8", name: "Observation Category", type: "text" },
-        { id: "2.1.1.9", name: "CAPA Required", type: "select" },
-        { id: "2.1.1.10", name: "Auditee Response", type: "text" },
-        { id: "2.1.1.11", name: "Auditor Review on Response", type: "text" },
-        { id: "2.1.1.12", name: "QA Comments", type: "text" },
-        { id: "2.1.1.13", name: "CAPA Details", type: "text" },
-        { id: "2.1.1.14", name: "CAPA Due Date", type: "date" },
-        { id: "2.1.1.15", name: "CAPA Owner", type: "select" },
-        { id: "2.1.1.16", name: "Action Taken", type: "text" },
-        { id: "2.1.1.17", name: "	CAPA Completion Date", type: "date" },
-        { id: "2.1.1.18", name: "Status", type: "text" },
-        { id: "2.1.1.19", name: "Remarks", type: "text" },
-      ],
-    },
-    {
-      label: "QA Attachments",
-      instruction: "Please Attach all relevant or supporting documents",
-      required: true,
-      columnList: [
-        { id: "2.1.1.1", name: "Title of Document", type: "text" },
-        { id: "2.1.1.2", name: "Attached File", type: "File" },
-        { id: "2.1.1.3", name: "Remark", type: "text" },
-      ],
-    },
-    {
-      label: "QA Attachments",
-      instruction: "Please Attach all relevant or supporting documents",
-      required: true,
-      columnList: [
-        { id: "2.1.1.1", name: "Title of Document", type: "text" },
-        { id: "2.1.1.2", name: "Attached File", type: "File" },
-        { id: "2.1.1.3", name: "Remark", type: "text" },
-      ],
-    },
-    {
-      label: "QA Attachments",
-      instruction: "Please Attach all relevant or supporting documents",
-      required: true,
-      columnList: [
-        { id: "2.1.1.1", name: "Title of Document", type: "text" },
-        { id: "2.1.1.2", name: "Attached File", type: "File" },
-        { id: "2.1.1.3", name: "Remark", type: "text" },
-      ],
-    },
-    {
-      label: "CFT Attachments",
-      instruction: "Please Attach all relevant or supporting documents",
-      required: true,
-      columnList: [
-        { id: "2.1.1.1", name: "Title of Document", type: "text" },
-        { id: "2.1.1.2", name: "Attached File", type: "File" },
-        { id: "2.1.1.3", name: "Remark", type: "text" },
-      ],
-    },
-    {
-      label: "Training Attachments",
-      instruction: "Please Attach all relevant or supporting documents",
-      required: true,
-      columnList: [
-        { id: "2.1.1.1", name: "Title of Document", type: "text" },
-        { id: "2.1.1.2", name: "Attached File", type: "File" },
-        { id: "2.1.1.3", name: "Remark", type: "text" },
-      ],
-    },
-    {
-      label: "List of Attachments",
-      instruction: "Please Attach all relevant or supporting documents",
-      required: true,
-      columnList: [
-        { id: "2.1.1.1", name: "Title of Document", type: "text" },
-        { id: "2.1.1.2", name: "Attached File", type: "File" },
-        { id: "2.1.1.3", name: "Remark", type: "text" },
-      ],
-    },
-  ];
-  const AuditAgenda = {
-    label: "Audit Agenda",
-    instruction: <div></div>,
-    required: true,
-    columnList: [
-      { id: "2.1.1.1", name: "	Area of Audit", type: "text" },
-      { id: "2.1.1.2", name: "Scheduled Start Date", type: "date" },
-      { id: "2.1.1.3", name: "Scheduled Start Time", type: "time" },
-      { id: "2.1.1.4", name: "Scheduled End Date", type: "date" },
-      { id: "2.1.1.5", name: "Auditor", type: "select" },
-      { id: "2.1.1.6", name: "Auditee", type: "text" },
-      { id: "2.1.1.7", name: "Remarks", type: "text" },
-    ],
-  };
-  const docFile = [
-    {
-      label: "Initial attachment",
-      instruction: "Please Attach all relevant or supporting documents",
-      required: true,
-      columnList: [
-        { id: "2.1.1.1", name: "Title of Document", type: "text" },
-        { id: "2.1.1.2", name: "Attached File", type: "File" },
-        { id: "2.1.1.3", name: "Remark", type: "text" },
-      ],
-    },
-    {
-      label: "List of Attachment",
-      instruction: "Please Attach all relevant or supporting documents",
-      required: true,
-      columnList: [
-        { id: "2.1.1.1", name: "Title of Document", type: "text" },
-        { id: "2.1.1.2", name: "Attached File", type: "File" },
-        { id: "2.1.1.3", name: "Remark", type: "text" },
-      ],
-    },
-    {
-      label: "Guideline Attachment",
-      instruction: "Please Attach all relevant or supporting documents",
-      required: true,
-      columnList: [
-        { id: "2.1.1.1", name: "Title of Document", type: "text" },
-        { id: "2.1.1.2", name: "Attached File", type: "File" },
-        { id: "2.1.1.3", name: "Remark", type: "text" },
-      ],
-    },
-    {
-      label: "Audit Attachments",
-      instruction: "Please Attach all relevant or supporting documents",
-      required: true,
-      columnList: [
-        { id: "2.1.1.1", name: "Title of Document", type: "text" },
-        { id: "2.1.1.2", name: "Attached File", type: "File" },
-        { id: "2.1.1.3", name: "Remark", type: "text" },
-      ],
-    },
-    {
-      label: "Audit Attachments",
-      instruction: "Please Attach all relevant or supporting documents",
-      required: true,
-      columnList: [
-        { id: "2.1.1.1", name: "Title of Document", type: "text" },
-        { id: "2.1.1.2", name: "Attached File", type: "File" },
-        { id: "2.1.1.3", name: "Remark", type: "text" },
-      ],
-    },
-    {
-      label: "Report Attachments",
-      instruction: "Please Attach all relevant or supporting documents",
-      required: true,
-      columnList: [
-        { id: "2.1.1.1", name: "Title of Document", type: "text" },
-        { id: "2.1.1.2", name: "Attached File", type: "File" },
-        { id: "2.1.1.3", name: "Remark", type: "text" },
-      ],
-    },
-  ];
+
+  const [internalAudit, setInternalAudit] = useReducer((prev, next) => ({
+    ...prev, ...next
+  }), {
+    recordNumber: `${site}/IA/${currentYear}/000001`,
+    site: site,
+    initiator: 'Amit Guru',
+    dateOfInitiation: CurrentDate(),
+    assignedTo: '',
+    dueDate: '',
+    initiatorGroup: '',
+    initiatedThrough: '',
+    typeOfAudit: '',
+    shortDescription: '',
+    severityLevel: '',
+    other: '',
+    ifOther: '',
+    initialAttachment: '',
+    description: '',
+  })
+  const [auditPlanning, setAuditPlanning] = useReducer((prev, next) => ({
+    ...prev, ...next
+  }), {
+    auditScheduleStartDate: '',
+    auditScheduleEndDate: '',
+    auditAgenda: '',
+    relatedRecords: '',
+    comments: '',
+  })
+  const [auditPreparation, setAuditPreparation] = useReducer((prev, next) => ({
+    ...prev, ...next
+  }), {
+    leadAuditor: '',
+    listofAttachment: '',
+    auditTeam: '',
+    externalAuditorDetails: '',
+    externalAuditingAgency: '',
+    auditee: '',
+    relevantGuidelines: '',
+    qaComments: '',
+    guidelineAttachment: '',
+    auditCategory: '',
+    supplierDetails: '',
+    supplierSite: '',
+    comments: '',
+
+  })
+  const [auditExecution, setAuditExecution] = useReducer((prev, next) => ({
+    ...prev, ...next
+  }), {
+    auditStartDate: '',
+    auditStartEnd: '',
+    observationFields: '',
+    auditAttachments: '',
+    auditComments: '',
+  })
+  const [auditResponse, setAuditResponse] = useReducer((prev, next) => ({
+    ...prev, ...next
+  }), {
+    remarks: '',
+    referenceRecords: '',
+    auditAttachments: '',
+    reportAttachments: '',
+    auditComments: '',
+    dueDateExtensionJustification: '',
+  })
+
 
   return (
     <>
-      <div
-        id="main-form-container"
-        style={
-          asideWorkFlow || asideFamilyTree ? { padding: "0 0 0 300px" } : {}
-        }
-      >
-        {asideWorkFlow && (
+      <div id="main-form-container" style={asideWorkFlow || asideFamilyTree ? { 'padding': '0 0 0 300px' } : {}}>
+
+        {asideWorkFlow &&
           <div className="aside-container">
             <div className="head">
               <div>Workflow</div>
               <div>Trust The Process</div>
             </div>
             <div className="content workflow">
-              <div className="green-state">
-                Opened
-                <img src="/down.gif" alt="..." />
-              </div>
-              <div>
-                Under HOD Review
-                <img src="/down.gif" alt="..." />
-              </div>
-              <div>
-                HOD Review Completed
-                <img src="/down.gif" alt="..." />
-              </div>
-              <div>
-                Under CFT Review
-                <img src="/down.gif" alt="..." />
-              </div>
-              <div>
-                Approved
-                <img src="/down.gif" alt="..." />
-              </div>
-              <div>
-                Implemented
-                <img src="/down.gif" alt="..." />
-              </div>
-              <div className="red-state">
-                Closed-Done
-                <img src="/down.gif" alt="..." />
-              </div>
-              <div className="red-state">Closed- Cancelled</div>
+              {workFlow.map((item, index) => (
+                <div className={index === 0 ? "green-state" : index === (workFlow.length - 1) ? "red-state" : ""}>
+                  {item}
+                  {index !== (workFlow.length - 1) && <img src="/down.gif" alt="..." />}
+                </div>
+              ))}
             </div>
           </div>
-        )}
+        }
 
-        {asideFamilyTree && (
+        {asideFamilyTree &&
           <div className="aside-container">
             <div className="head">
               <div>Family Tree</div>
@@ -269,7 +119,7 @@ function InternalAudit() {
               <div>Root Cause Analysis (0)</div>
             </div>
           </div>
-        )}
+        }
 
         <div id="config-form-document-page">
           <HeaderTop />
@@ -285,7 +135,7 @@ function InternalAudit() {
               <strong> Current Status:&nbsp;</strong>Under Initiation
             </div>
             <div>
-              <strong> Initiated By:&nbsp;</strong>Shaleen Mishra
+              <strong> Initiated By:&nbsp;</strong>{internalAudit.initiator}
             </div>
           </div>
 
@@ -308,15 +158,15 @@ function InternalAudit() {
                   <div className="form-flex">
                     <div className="group-input">
                       <label>Record Number</label>
-                      <input type="text" value={`${site}/IA/${currentYear}/00000001`} disabled />
+                      <input type="text" value={internalAudit.recordNumber} disabled />
                     </div>
                     <div className="group-input">
-                      <label>Division</label>
-                      <input type="text" value={site} disabled />
+                      <label>Site/Location Code</label>
+                      <input type="text" value={internalAudit.site} disabled />
                     </div>
                     <div className="group-input">
                       <label>Initiator</label>
-                      <input type="text" value="Amit Guru" disabled />
+                      <input type="text" value={internalAudit.initiator} disabled />
                     </div>
                     <div className="group-input">
                       <label>Date of Initiation</label>
@@ -327,7 +177,7 @@ function InternalAudit() {
                         <div className="required"></div>
                         Assigned To
                       </label>
-                      <select required>
+                      <select value={internalAudit.assignedTo} onChange={(e) => setInternalAudit({ assignedTo: e.target.value })}>
                         <option value="">Select a value</option>
                         <option value="2">Shaleen Mishra</option>
                       </select>
@@ -336,6 +186,8 @@ function InternalAudit() {
                       label="Due Date"
                       enableDate="future"
                       isRequired="false"
+                      value={internalAudit.dueDate}
+                      returnDate={(date) => setInternalAudit({ dueDate: date })}
                     />
                     <div className="group-input">
                       <label htmlFor="initiatorGroup">
@@ -345,16 +197,12 @@ function InternalAudit() {
                       <select name="initiatorGroup" value={internalAudit.initiatorGroup} onChange={(e) => setInternalAudit({ initiatorGroup: e.target.value })}>
                         <option value="">-- Select --</option>
                         <option value="CQA">Corporate Quality Assurance</option>
-                        <option value="QAB">
-                          Quality Assurance Bio-Pharma
-                        </option>
+                        <option value="QAB">Quality Assurance Bio-Pharma</option>
                         <option value="CQC">Central Quality Control</option>
                         <option value="Manu">Manufacturing</option>
                         <option value="PSG">Plasma Sourcing Group</option>
                         <option value="CS">Central Stores</option>
-                        <option value="ITG">
-                          Information Technology Group
-                        </option>
+                        <option value="ITG">Information Technology Group</option>
                         <option value="MM">Molecular Medicine</option>
                         <option value="CL">Central Laboratory</option>
                         <option value="TT">Tech team</option>
@@ -374,10 +222,19 @@ function InternalAudit() {
                   </div>
                   <div className="group-input">
                     <label>
-                      <div className="require"></div>
                       Short Description
                     </label>
-                    <input type="text" />
+                    <textarea type="text" rows="2" value={internalAudit.shortDescription} onChange={(e) => setInternalAudit({ shortDescription: e.target.value })}></textarea>
+                  </div>
+
+                  <div className="group-input">
+                    <label>Severity Level</label>
+                    <select value={internalAudit.severityLevel} onChange={(e) => setInternalAudit({ severityLevel: e.target.value })}>
+                      <option value="">-- Select --</option>
+                      <option value="">Major</option>
+                      <option value="">Minor</option>
+                      <option value="">Critical</option>
+                    </select>
                   </div>
                   <div className="form-flex">
                     <div className="group-input">
@@ -396,11 +253,8 @@ function InternalAudit() {
                       </select>
                     </div>
                     <div className="group-input">
-                      <label>
-                        {internalAudit.initiatedThrough === 'others' && <div className="required"></div>}
-                        Other
-                      </label>
-                      <textarea required={internalAudit.initiatedThrough === 'others'}></textarea>
+                      <label>Other</label>
+                      <textarea value={internalAudit.other} onChange={(e) => setInternalAudit({ other: e.target.value })}></textarea>
                     </div>
                     <div className="group-input">
                       <label>Type of Audit</label>
@@ -420,18 +274,16 @@ function InternalAudit() {
                       </select>
                     </div>
                     <div className="group-input">
-                      <label>
-                        {internalAudit.typeOfAudit === 'Others' && <div className="required"></div>}
-                        If Other
-                      </label>
-                      <textarea required={internalAudit.typeOfAudit === 'Others'}></textarea>
+                      <label>If Others</label>
+                      <textarea value={internalAudit.ifOther} onChange={(e) => setInternalAudit({ ifOther: e.target.value })}></textarea>
                     </div>
                   </div>
-                  <FlexField
-                    label="Initial Comments"
-                    instruction=""
-                    isRequired="true"
-                  />
+
+                  <div className="group-input">
+                    <label>Description</label>
+                    <textarea value={internalAudit.description} onChange={(e) => setInternalAudit({ description: e.target.value })}></textarea>
+                  </div>
+
                   <div className="group-input">
                     <Grid
                       label={docFile[0].label}
@@ -450,11 +302,15 @@ function InternalAudit() {
                       label="Audit Schedule Start Date"
                       isRequired="true"
                       enableDate="future"
+                      value={auditPlanning.auditScheduleStartDate}
+                      returnDate={(date) => setAuditPlanning({ auditScheduleStartDate: date })}
                     />
                     <InputDate
                       label="Audit Schedule End Date"
                       isRequired="true"
                       enableDate="future"
+                      value={auditPlanning.auditScheduleEndDate}
+                      returnDate={(date) => setAuditPlanning({ auditScheduleEndDate: date })}
                     />
                   </div>
                   <Grid
@@ -467,19 +323,10 @@ function InternalAudit() {
                     label="Related Records"
                   />
                   <div className="group-input">
-                    <label>Function Name</label>
-                    <MultiSelect
-                      options={FunctionName}
-                      value={selected}
-                      onChange={setSelected}
-                      labelledBy="Select"
-                    />
+                    <label>Comments (if any)</label>
+                    <textarea value={auditPlanning.comments} onChange={(e) => setAuditPlanning({ comments: e.target.value })}></textarea>
                   </div>
-                  <FlexField
-                    label="Comments (if any)"
-                    instruction=""
-                    isRequired="false"
-                  />
+
                 </div>
               </div>
             ) : form === formList[2] ? (
@@ -487,7 +334,7 @@ function InternalAudit() {
                 <div className="details-form-data">
                   <div className="group-input">
                     <label>Lead Auditor</label>
-                    <select name="initiated_through">
+                    <select value={auditPreparation.leadAuditor} onChange={(e) => setAuditPreparation({ leadAuditor: e.target.value })}>
                       <option value="">-- Select --</option>
                       <option value="amit_guru">Amit Guru</option>
                       <option value="amit_patel">Amit Patel</option>
@@ -502,54 +349,51 @@ function InternalAudit() {
                     instruction={docFile[1].instruction}
                     columnList={docFile[1].columnList}
                   />
-                  <div className="group-input">
-                    <Grid
-                      label={ObservationFields[0].label}
-                      required={ObservationFields[0].required}
-                      instruction={ObservationFields[0].instruction}
-                      columnList={ObservationFields[0].columnList}
-                    />
-                  </div>
+
                   <div className="form-flex">
                     <div className="group-input">
-                      <label>Audit Team</label>
+                      <label>  {auditPreparation.auditTeam === "Yes" && ''} Audit Team</label>
                       <MultiSelect
                         options={AuditTeam}
                         value={selected}
                         onChange={setSelected}
                         labelledBy="Select"
+                        required={auditPreparation.auditTeam === "Yes"}
+                        disabled={!auditPreparation.auditTeam === "Yes"}
                       />
                     </div>
                     <div className="group-input">
-                      <label>Auditee</label>
+                      <label>  {auditPreparation.auditee === "Yes" && ''}Auditee</label>
                       <MultiSelect
                         options={AuditTeam}
                         value={selected}
                         onChange={setSelected}
                         labelledBy="Select"
+                        required={auditPreparation.auditee === "Yes"}
+                        disabled={!auditPreparation.auditee === "Yes"}
                       />
                     </div>
                   </div>
-                  <FlexField
-                    label="External Auditor Details"
-                    instruction=""
-                    isRequired="false"
-                  />
-                  <FlexField
-                    label="External Auditing Agency"
-                    instruction=""
-                    isRequired="false"
-                  />
-                  <FlexField
-                    label="Relevant Guidelines / Industry Standards"
-                    instruction=""
-                    isRequired="false"
-                  />
-                  <FlexField
-                    label="QA Comments"
-                    instruction=""
-                    isRequired="false"
-                  />
+
+                  <div className="group-input">
+                    <label>External Auditor Details</label>
+                    <textarea value={auditPreparation.externalAuditorDetails} onChange={(e) => setAuditPreparation({ externalAuditorDetails: e.target.value })}></textarea>
+                  </div>
+
+                  <div className="group-input">
+                    <label>External Auditing Agency</label>
+                    <textarea value={auditPreparation.externalAuditingAgency} onChange={(e) => setAuditPreparation({ externalAuditingAgency: e.target.value })}></textarea>
+                  </div>
+
+                  <div className="group-input">
+                    <label>Relevant Guidelines / Industry Standards</label>
+                    <textarea value={auditPreparation.relevantGuidelines} onChange={(e) => setAuditPreparation({ relevantGuidelines: e.target.value })}></textarea>
+                  </div>
+                  <div className="group-input">
+                    <label>QA Comments</label>
+                    <textarea value={auditPreparation.qaComments} onChange={(e) => setAuditPreparation({ qaComments: e.target.value })}></textarea>
+                  </div>
+
                   <Grid
                     label={docFile[2].label}
                     required={docFile[2].required}
@@ -558,7 +402,7 @@ function InternalAudit() {
                   />
                   <div className="group-input">
                     <label>Audit Category</label>
-                    <select name="initiated_through">
+                    <select value={auditPreparation.auditCategory} onChange={(e) => setAuditPreparation({ auditCategory: e.target.value })}>
                       <option>Enter Your Selection Here</option>
                       <option>Internal Audit/Self Inspection</option>
                       <option>Supplier Audit</option>
@@ -568,17 +412,17 @@ function InternalAudit() {
                   </div>
                   <div className="group-input">
                     <label>Supplier/Vendor/Manufacturer Details</label>
-                    <input type="text" />
+                    <input type="text" value={auditPreparation.supplierDetails} onChange={(e) => setAuditPreparation({ supplierDetails: e.target.value })} />
                   </div>
                   <div className="group-input">
                     <label>Supplier/Vendor/Manufacturer Site</label>
-                    <input type="text" />
+                    <input type="text" value={auditPreparation.supplierSite} onChange={(e) => setAuditPreparation({ supplierSite: e.target.value })} />
                   </div>
-                  <FlexField
-                    label="Comments"
-                    instruction=""
-                    isRequired="false"
-                  />
+
+                  <div className="group-input">
+                    <label>Comments</label>
+                    <textarea value={auditPreparation.comments} onChange={(e) => setAuditPreparation({ comments: e.target.value })}></textarea>
+                  </div>
                 </div>
               </div>
             ) : form === formList[3] ? (
@@ -590,11 +434,24 @@ function InternalAudit() {
                       label="Audit Start Date"
                       isRequired="true"
                       enableDate="future"
+                      value={auditExecution.auditStartDate}
+                      returnDate={(date) => setAuditExecution({ auditStartDate: date })}
                     />
                     <InputDate
                       label="Audit End Date"
                       isRequired="true"
                       enableDate="future"
+                      value={auditExecution.auditEndDate}
+                      returnDate={(date) => setAuditExecution({ auditEndDate: date })}
+                    />
+                  </div>
+
+                  <div className="group-input">
+                    <Grid
+                      label={ObservationFields[0].label}
+                      required={ObservationFields[0].required}
+                      instruction={ObservationFields[0].instruction}
+                      columnList={ObservationFields[0].columnList}
                     />
                   </div>
                   <Grid
@@ -603,22 +460,21 @@ function InternalAudit() {
                     instruction={docFile[3].instruction}
                     columnList={docFile[3].columnList}
                   />
-                  <FlexField
-                    label="Audit Comments"
-                    instruction=""
-                    isRequired="false"
-                  />
+                  <div className="group-input">
+                    <label>Audit Comments</label>
+                    <textarea value={auditExecution.auditComments} onChange={(e) => setAuditExecution({ auditComments: e.target.value })}></textarea>
+                  </div>
                 </div>
               </div>
             ) : form === formList[4] ? (
               <div className="document-form">
                 <div className="details-form-data">
                   <div className="sub-head">Audit Response & Closure</div>
-                  <FlexField
-                    label="Remarks"
-                    instruction=""
-                    isRequired="false"
-                  />
+
+                  <div className="group-input">
+                    <label>Remarks</label>
+                    <textarea value={auditResponse.remarks} onChange={(e) => setAuditResponse({ remarks: e.target.value })}></textarea>
+                  </div>
                   <RelatedRecords label="Reference Records" />
                   <Grid
                     label={docFile[4].label}
@@ -632,17 +488,18 @@ function InternalAudit() {
                     instruction={docFile[5].instruction}
                     columnList={docFile[5].columnList}
                   />
-                  <FlexField
-                    label="Audit Comments"
-                    instruction=""
-                    isRequired="false"
-                  />
+
+                  <div className="group-input">
+                    <label>Audit Comments</label>
+                    <textarea value={auditResponse.auditComments} onChange={(e) => setAuditResponse({ auditComments: e.target.value })}></textarea>
+                  </div>
+
                   <div className="sub-head">Extension Details</div>
-                  <FlexField
-                    label="Due Date Extension Justification"
-                    instruction=""
-                    isRequired="false"
-                  />
+
+                  <div className="group-input">
+                    <label>Due Date Extension Justification</label>
+                    <textarea value={auditResponse.dueDateExtensionJustification} onChange={(e) => setAuditResponse({ dueDateExtensionJustification: e.target.value })}></textarea>
+                  </div>
                 </div>
               </div>
             ) : form === formList[5] ? (
