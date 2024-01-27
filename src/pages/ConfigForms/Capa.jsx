@@ -6,6 +6,7 @@ import InputDate from "../../components/DataFields/InputDate";
 import FlexField from "../../components/DataFields/FlexField";
 import RelatedRecords from "../../components/DataFields/RelatedRecords";
 import axios from "axios";
+import { MultiSelect } from "react-multi-select-component";
 
 function CAPA() {
   const [form, setForm] = useState("General Information");

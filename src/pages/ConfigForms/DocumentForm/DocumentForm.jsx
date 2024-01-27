@@ -1,18 +1,32 @@
 import { useEffect, useReducer, useState } from "react";
-import './ConfigForms.css'
-import HeaderTop from "../../components/Header/HeaderTop";
+import '../ConfigForms.css'
+import HeaderTop from "../../../components/Header/HeaderTop";
 import { MultiSelect } from "react-multi-select-component";
-import Grid from "../../components/DataFields/Grid";
-import { CurrentDate, convertDateFormat } from "../../components/DateReturners";
-import InputDate from "../../components/DataFields/InputDate";
-import FlexField from "../../components/DataFields/FlexField";
-import RelatedRecords from "../../components/DataFields/RelatedRecords";
+import Grid from "../../../components/DataFields/Grid";
+import { CurrentDate, convertDateFormat } from "../../../components/DateReturners";
+import InputDate from "../../../components/DataFields/InputDate";
+import FlexField from "../../../components/DataFields/FlexField";
+import RelatedRecords from "../../../components/DataFields/RelatedRecords";
+import { formList, site, NotifyTo, currentYear, interpretationOfResult, criticalSteps, referenceProcedures, approvers, responsibilities, reviewers, testData, Survey, docFormFile, docDetails, PersonPrintPermission, PersonDownloadPermission, workFlow } from "./DocumentFormFunction";
 
 function DocumentForm() {
-    const formList = ["Document Information", "Chemistry SOP", "Instrument SOP", "Instrumental Chemistry SOP", "Microbiology SOP", "Good Laboratory Practices", "Wet Chemistry", "If Others", "Training Information", "Distribution & Retrieval", "Print & Download Control", "Activity Log"]
-    const site = localStorage.getItem("site")
-    const currentDate = new Date()
-    const currentYear = currentDate.getFullYear()
+    const [form, setForm] = useState(formList[0]);
+    const [effectiveDateProper, setEffectiveProper] = useState('')
+    const [notifySelected, setSelectedNotify] = useState([]);
+    const [selected, setSelected] = useState([]);
+    const [selectedPersonDownload, setSelectedPersonDownload] = useState([]);
+    const [selectedPerson, setSelectedPerson] = useState([]);
+    const [selectedOther, setSelectedOther] = useState([]);
+    const [selectedwetChemistry, setSelectedwetChemistry] = useState([]);
+    const [selectedGoodLaboratory, setSelectedGoodLaboratory] = useState([]);
+    const [selectedMicrobiologySop, setSelectedMicrobiologySop] = useState([]);
+    const [selectedInstrumentChemistry, setSelectedInstrumentChemistry] = useState([]);
+    const [selectedsetInstrumentSop, setSelectedsetInstrumentSop] = useState([]);
+    const [selectedResponsibilities, setSelectedResponsibilities] = useState([]);
+    const [reviewersSelected, setReviewSelected] = useState([]);
+    const [asideWorkFlow, setAsideWorkFlow] = useState(false)
+    const [asideFamilyTree, setAsideFamilyTree] = useState(false);
+
     const [newDocument, setNewDocument] = useReducer((prev, next) => ({
         ...prev, ...next
     }), {
@@ -27,154 +41,145 @@ function DocumentForm() {
         trainingRequired: '',
         effectiveDate: '',
         reviewPeriod: '',
-        nextReviewDate: ''
+        nextReviewDate: '',
+        shortDescription: '',
+        severityLevel: '',
+        dueDate: '',
+        notifyTo: '',
+        description: '',
+        attachDraftDocument: '',
+        attachEffectiveDocument: '',
+        reviewers: '',
+        approvers: '',
+        revisionSummary: '',
+
     })
-    const NotifyTo = [
-        { label: "Amit Guru (Originator)", value: "1" },
-        { label: "Shaleen Mishra (HOD)", value: "mango", },
-        { label: "Vikas Prajapati (Approver)", value: "2" },
-        { label: "Amit Patel (Reviewer)", value: "3" },
-        { label: "Anshul Patel (CFT) ", value: "4" },
-    ];
-    const [effectiveDateProper, setEffectiveProper] = useState('')
-    const [form, setForm] = useState(formList[0]);
-    const [selected, setSelected] = useState([]);
-    const [asideWorkFlow, setAsideWorkFlow] = useState(false)
-    const [asideFamilyTree, setAsideFamilyTree] = useState(false)
-    const interpretationOfResult = {
-        label: '8.0 Interpretation of Result',
-        instruction: '',
-        required: false,
-        coloredLabel: true,
-        columnList: [
-            { id: '1', name: 'Result', type: 'text' },
-            { id: '2', name: 'Interpretation', type: 'text' },
-            { id: '3', name: 'Time Restriction (Date)', type: 'date' },
-            { id: '4', name: 'Time Restriction (Time)', type: 'time' },
-            { id: '5', name: 'Precaution/Notes (If any)', type: 'text' },
-        ]
-    }
-    const criticalSteps = {
-        label: '8.0 Critical Steps',
-        instruction: '',
-        required: false,
-        coloredLabel: true,
-        columnList: [
-            { id: '1', name: 'Step', type: 'text' },
-            { id: '2', name: 'Reasons', type: 'text' },
-            { id: '3', name: 'Expected Tests Outcomes', type: 'text' },
-            { id: '4', name: 'Acceptable values, if any', type: 'text' },
-            { id: '5', name: 'Attachment, if any', type: 'file' },
-            { id: '6', name: 'Remarks', type: 'text' },
-        ]
-    }
-    const referenceProcedures = {
-        label: '9.0 Reference Procedures/Forms',
-        instruction: "Related SOP's, QPS Forms etc.",
-        required: false,
-        coloredLabel: true,
-        columnList: [
-            { id: '2.1.1.1', name: 'Title of Document', type: 'text' },
-            { id: '2.1.1.2', name: 'Attached File', type: 'File' },
-            { id: '2.1.1.3', name: 'Remark', type: 'text' },
-        ]
-    }
-    const approvers = [
-        { label: "Amit", value: "" },
-    ];
-    const reviewers = [
-        { label: "Vikash", value: "" },
-    ];
-    const testData = {
-        label: 'Test(0)',
-        instruction: <div></div>,
-        required: true,
-        columnList: [
-            { id: '2.1.1', name: 'Question', type: 'text' },
-            { id: '2.1.2', name: 'Answer', type: 'text' },
-            { id: '2.1.3', name: 'Result', type: 'text' },
-            { id: '2.1.4', name: 'Comment', type: 'text' },
-            { id: '2.1.5', name: 'Remarks', type: 'text' },
-        ]
-    }
-    const Survey = {
-        label: 'Survey(0)',
-        instruction: <div></div>,
-        required: true,
-        columnList: [
-            { id: '2.1.1', name: 'Subject', type: 'text' },
-            { id: '2.1.2', name: 'Topic', type: 'text' },
-            { id: '2.1.3', name: 'Rating', type: 'text' },
-            { id: '2.1.4', name: 'Comment', type: 'text' },
-            { id: '2.1.5', name: 'Remarks', type: 'text' },
-        ]
-    }
-    const docFormFile = [
-        {
-            label: 'Attach Draft document',
-            instruction: 'Please Attach all relevant or supporting documents',
-            required: true,
-            columnList: [
-                { id: '2.1.1.1', name: 'Title of Document', type: 'text' },
-                { id: '2.1.1.2', name: 'Attached File', type: 'File' },
-                { id: '2.1.1.3', name: 'Remark', type: 'text' },
-            ]
-        },
-        {
-            label: 'Attach Effective document',
-            instruction: 'Please Attach all relevant or supporting documents',
-            required: true,
-            columnList: [
-                { id: '2.1.1.1', name: 'Title of Document', type: 'text' },
-                { id: '2.1.1.2', name: 'Attached File', type: 'File' },
-                { id: '2.1.1.3', name: 'Remark', type: 'text' },
-            ]
-        }, {
-            label: 'File Attachment',
-            instruction: 'Add relevant attachments, if any.',
-            coloredLabel: true,
-            required: false,
-            columnList: [
-                { id: '2.1.1.1', name: 'Title of Document', type: 'text' },
-                { id: '2.1.1.2', name: 'Attached File', type: 'File' },
-                { id: '2.1.1.3', name: 'Remark', type: 'text' },
-            ]
-        }
-    ];
-    const docDetails = {
-        label: 'Distribution & Retrieval ',
-        instruction: <div></div>,
-        required: true,
-        columnList: [
-            { id: '1', name: 'Document Title', type: 'text' },
-            { id: '2', name: 'Document Number', type: 'text' },
-            { id: '3', name: 'Document Printed By', type: 'text' },
-            { id: '4', name: 'Document Printed on', type: 'text' },
-            { id: '5', name: 'Number of Print Copies', type: 'text' },
-            { id: '6', name: 'Issuance Date', type: 'date' },
-            { id: '7', name: 'Department/Location', type: 'text' },
-            { id: '8', name: 'Number of Issued Copies	', type: 'text' },
-            { id: '9', name: 'Reason for Issuance', type: 'text' },
-            { id: '10', name: 'Retrieval Date', type: 'date' },
-            { id: '11', name: 'Retrieved By', type: 'text' },
-            { id: '12', name: 'Retrieved Person Department', type: 'text' },
-            { id: '13', name: 'Number of Retrieved Copies', type: 'number' },
-            { id: '14', name: 'Reason for Retrieval', type: 'text' },
-            { id: '15', name: 'Remarks', type: 'text' },
-        ]
-    };
-    const PersonPrintPermission = [
-        { label: "Anshul Patel", value: "1" },
-        { label: "Shaleen", value: "shaleen", },
-        { label: "Amit", value: "2", },
-        { label: "Piyush", value: "Piyush", },
-    ];
-    const PersonDownloadPermission = [
-        { label: "Anshul Patel", value: "1" },
-        { label: "Shaleen", value: "shaleen", },
-        { label: "Amit", value: "2", },
-        { label: "Piyush", value: "Piyush", },
-    ];
+    const [chemistrySop, setChemistrySop] = useReducer((prev, next) => ({
+        ...prev, ...next
+    }), {
+        responsibilities: '',
+        purpose: '',
+        scopeField: '',
+        materialsChemical: '',
+        equipmentInstruments: '',
+        safetyPrecautions: '',
+        procedure: '',
+        referenceProceduresForms: '',
+        interpretationofResult: '',
+        changeControl: '',
+        fileAttachment: '',
+    })
+    const [instrumentSop, setInstrumentSop] = useReducer((prev, next) => ({
+        ...prev, ...next
+    }), {
+        responsibilities: '',
+        purpose: '',
+        scopeField: '',
+        materialsRequired: '',
+        equipmentInstruments: '',
+        safetyPrecautions: '',
+        procedure: '',
+        operations: '',
+        authorizationMatrix: '',
+        references: '',
+        changeControl: '',
+        fileAttachment: '',
+    })
+    const [instrumentChemistrySop, setInstrumentChemistrySop] = useReducer((prev, next) => ({
+        ...prev, ...next
+    }), {
+        responsibilities: '',
+        purpose: '',
+        scopeField: '',
+        materialsChemical: '',
+        equipmentInstruments: '',
+        safetyPrecautions: '',
+        procedure: '',
+        operations: '',
+        authorizationMatrix: '',
+        references: '',
+        changeControl: '',
+        fileAttachment: '',
+        calculation: '',
+        softwareProcessingSteps: '',
+    })
+    const [microbiologySop, setMicrobiologySop] = useReducer((prev, next) => ({
+        ...prev, ...next
+    }), {
+        responsibilities: '',
+        purpose: '',
+        scopeField: '',
+        materialsChemical: '',
+        equipmentInstruments: '',
+        safetyPrecautions: '',
+        procedure: '',
+        authorizationMatrix: '',
+        references: '',
+        changeControl: '',
+        fileAttachment: '',
+
+    })
+    const [goodLaboratory, setGoodLaboratory] = useReducer((prev, next) => ({
+        ...prev, ...next
+    }), {
+        responsibilities: '',
+        purpose: '',
+        scopeField: '',
+        materialsChemical: '',
+        equipmentInstruments: '',
+        safetyPrecautions: '',
+        procedure: '',
+        authorizationMatrix: '',
+        references: '',
+        changeControl: '',
+        fileAttachment: '',
+
+    })
+    const [wetChemistry, setWetChemistry] = useReducer((prev, next) => ({
+        ...prev, ...next
+    }), {
+        responsibilities: '',
+        purpose: '',
+        scopeField: '',
+        materialsChemical: '',
+        equipmentInstruments: '',
+        safetyPrecautions: '',
+        procedure: '',
+        authorizationMatrix: '',
+        references: '',
+        changeControl: '',
+        fileAttachment: '',
+
+    })
+    const [other, setOther] = useReducer((prev, next) => ({
+        ...prev, ...next
+    }), {
+        responsibilities: '',
+        purpose: '',
+        scopeField: '',
+        materialsChemical: '',
+        equipmentInstruments: '',
+        safetyPrecautions: '',
+        procedure: '',
+        authorizationMatrix: '',
+        references: '',
+        changeControl: '',
+        fileAttachment: '',
+
+    })
+    const [trainingInformation, setTrainingInformation] = useReducer((prev, next) => ({
+        ...prev, ...next
+    }), {
+        trainingRequired: '',
+
+    })
+    const [printDownloadControl, setPrintDownloadControl] = useReducer((prev, next) => ({
+        ...prev, ...next
+    }), {
+        personPrintPermission: '',
+
+    })
+
     function returnEffectiveDate(date) {
         setEffectiveProper(date)
     }
@@ -199,37 +204,12 @@ function DocumentForm() {
                             <div>Trust The Process</div>
                         </div>
                         <div className="content workflow">
-                            <div className="green-state">
-                                Opened
-                                <img src="/down.gif" alt="..." />
-                            </div>
-                            <div>
-                                Under HOD Review
-                                <img src="/down.gif" alt="..." />
-                            </div>
-                            <div>
-                                HOD Review Completed
-                                <img src="/down.gif" alt="..." />
-                            </div>
-                            <div>
-                                Under CFT Review
-                                <img src="/down.gif" alt="..." />
-                            </div>
-                            <div>
-                                Approved
-                                <img src="/down.gif" alt="..." />
-                            </div>
-                            <div>
-                                Implemented
-                                <img src="/down.gif" alt="..." />
-                            </div>
-                            <div className="red-state">
-                                Closed-Done
-                                <img src="/down.gif" alt="..." />
-                            </div>
-                            <div className="red-state">
-                                Closed- Cancelled
-                            </div>
+                            {workFlow.map((item, index) => (
+                                <div className={index === 0 ? "green-state" : index === (workFlow.length - 1) ? "red-state" : ""}>
+                                    {item}
+                                    {index !== (workFlow.length - 1) && <img src="/down.gif" alt="..." />}
+                                </div>
+                            ))}
                         </div>
                     </div>
                 }
@@ -251,13 +231,14 @@ function DocumentForm() {
                         </div>
                     </div>
                 }
+
                 <div id='config-form-document-page'>
                     <HeaderTop />
                     <div className="top-block">
                         <div><strong> Record Name:&nbsp;</strong>Document</div>
                         <div><strong> Site:&nbsp;</strong>{site}</div>
                         <div><strong> Current Status:&nbsp;</strong>Under Initiation</div>
-                        <div><strong> Initiated By:&nbsp;</strong>Shaleen Mishra</div>
+                        <div><strong> Initiated By:&nbsp;</strong>{newDocument.initiator}</div>
                     </div>
 
                     <div className='document-block'>
@@ -316,15 +297,13 @@ function DocumentForm() {
                                         </div>
                                     </div>
                                     <div className="group-input">
-                                        <label>
-                                            Short Description
-                                        </label>
-                                        <textarea type="text" rows="2" />
+                                        <label>Short Description</label>
+                                        <textarea type="text" rows="2" value={newDocument.shortDescription} onChange={(e) => setNewDocument({ shortDescription: e.target.value })}></textarea>
                                     </div>
 
                                     <div className="group-input">
                                         <label>Severity Level</label>
-                                        <select>
+                                        <select value={newDocument.severityLevel} onChange={(e) => setNewDocument({ severityLevel: e.target.value })}>
                                             <option value="">-- Select --</option>
                                             <option value="">Major</option>
                                             <option value="">Minor</option>
@@ -337,22 +316,25 @@ function DocumentForm() {
                                             instruction="Please mention expected date of completion."
                                             isRequired="false"
                                             enableDate="future"
+                                            value={newDocument.dueDate}
+                                            returnDate={(date) => setNewDocument({ dueDate: date })}
                                         />
                                         <div className="group-input">
-                                            <label>Notify To</label>
+                                            <label>{newDocument.auditTeam === "Yes" && ''}Notify To</label>
                                             <MultiSelect
                                                 options={NotifyTo}
-                                                value={selected}
-                                                onChange={setSelected}
-                                                labelledBy="Select"
-                                                required={newDocument.CFTReviewers === "Yes"}
-                                                disabled={!newDocument.CFTReviewers === "Yes"}
+                                                value={notifySelected}
+                                                onChange={setSelectedNotify}
+                                                labelledBy="notifySelected"
+                                                required={newDocument.notifyTo === "Yes"}
+                                                disabled={!newDocument.notifyTo === "Yes"}
                                             />
                                         </div>
                                     </div>
-                                    <FlexField
-                                        label="Description"
-                                    />
+                                    <div className="group-input">
+                                        <label>Description</label>
+                                        <textarea type="text" rows="2" value={newDocument.description} onChange={(e) => setNewDocument({ description: e.target.value })}></textarea>
+                                    </div>
                                     <div className="group-input">
                                         <label>SOP Type</label>
                                         <select value={newDocument.sopType} onChange={(e) => setNewDocument({ sopType: e.target.value })}>
@@ -438,7 +420,7 @@ function DocumentForm() {
                                                 isRequired="false"
                                                 enableDate="future"
                                                 value={newDocument.effectiveDate}
-                                                returnDate={returnEffectiveDate}
+                                                returnDate={(date) => setNewDocument({ dueDate: date })}
                                             />
                                         </div>
                                         <div className="group-input">
@@ -477,23 +459,27 @@ function DocumentForm() {
                                     </div>
                                     <div className="form-flex">
                                         <div className="group-input">
-                                            <label><div className="required"></div>Reviewers</label>
+                                            <label>{newDocument.reviewers === "Yes" && ''}<div className="required"></div>Reviewers</label>
                                             <div className="instruction">Even multiple reviewers can be added!</div>
                                             <MultiSelect
                                                 options={reviewers}
-                                                value={selected}
-                                                onChange={setSelected}
+                                                value={reviewersSelected}
+                                                onChange={setReviewSelected}
                                                 labelledBy="Select"
+                                                required={newDocument.reviewers === "Yes"}
+                                                disabled={!newDocument.reviewers === "Yes"}
                                             />
                                         </div>
                                         <div className="group-input">
-                                            <label><div className="required"></div>Approvers</label>
+                                            <label>{newDocument.approvers === "Yes" && ''}<div className="required"></div>Approvers</label>
                                             <div className="instruction">Even multiple approvers can be added!</div>
                                             <MultiSelect
                                                 options={approvers}
                                                 value={selected}
                                                 onChange={setSelected}
                                                 labelledBy="Select"
+                                                required={newDocument.approvers === "Yes"}
+                                                disabled={!newDocument.approvers === "Yes"}
                                             />
                                         </div>
                                     </div>
@@ -518,36 +504,41 @@ function DocumentForm() {
                                     <div className="group-input">
                                         <label className="color-label">1.0 Purpose</label>
                                         <div className="instruction">To establish a plan for</div>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={chemistrySop.purpose} onChange={(e) => setChemistrySop({ purpose: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label className="color-label">2.0 Scope/Field of Application</label>
                                         <div className="instruction">All test samples received at the laboratory plant and required</div>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={chemistrySop.scopeField} onChange={(e) => setChemistrySop({ scopeField: e.target.value })}></textarea>
                                     </div>
+
                                     <div className="group-input">
-                                        <label className="color-label">3.0 Responsibilities</label>
+                                        <label>{chemistrySop.responsibilities === "Yes" && ''}<div className="required"></div>3.0 Responsibilities</label>
                                         <div className="instruction">The performance of the tests should be done by</div>
-                                        {/* MultiSelection person data field */}
+                                        <MultiSelect
+                                            options={responsibilities}
+                                            value={selectedResponsibilities}
+                                            onChange={setSelectedResponsibilities}
+                                            labelledBy="selectedResponsibilities"
+                                            required={newDocument.responsibilities === "Yes"}
+                                            disabled={!newDocument.responsibilities === "Yes"}
+                                        />
                                     </div>
                                     <div className="group-input">
                                         <label className="color-label">4.0 Materials/Chemical Required</label>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={chemistrySop.materialsChemical} onChange={(e) => setChemistrySop({ materialsChemical: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label className="color-label">5.0 Equipment/Instruments Used</label>
-                                        <textarea></textarea>
-                                    </div>
+                                        <textarea type="text" rows="2" value={chemistrySop.equipmentInstruments} onChange={(e) => setChemistrySop({ equipmentInstruments: e.target.value })}></textarea>                                    </div>
                                     <div className="group-input">
                                         <label className="color-label">6.0 Safety Precautions</label>
                                         <div className="instruction"></div>
-                                        <textarea></textarea>
-                                    </div>
+                                        <textarea type="text" rows="2" value={chemistrySop.safetyPrecautions} onChange={(e) => setChemistrySop({ safetyPrecautions: e.target.value })}></textarea>                                    </div>
                                     <div className="group-input">
                                         <label className="color-label">7.0 Procedure</label>
                                         <div className="instruction"></div>
-                                        <textarea></textarea>
-                                    </div>
+                                        <textarea type="text" rows="2" value={chemistrySop.procedure} onChange={(e) => setChemistrySop({ procedure: e.target.value })}></textarea>                                    </div>
                                     <Grid
                                         label={interpretationOfResult.label}
                                         coloredLabel={interpretationOfResult.coloredLabel}
@@ -565,7 +556,7 @@ function DocumentForm() {
                                     <div className="group-input">
                                         <label className="color-label">10.0 References</label>
                                         <div className="instruction"></div>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={chemistrySop.references} onChange={(e) => setChemistrySop({ references: e.target.value })}></textarea>
                                     </div>
                                     <RelatedRecords
                                         label="11.0 Change Control"
@@ -597,38 +588,46 @@ function DocumentForm() {
                                     <div className="group-input">
                                         <label className="color-label">1.0 Purpose</label>
                                         <div className="instruction">To establish a plan for handling, operating, calibration and maintaining of instrumentation</div>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={instrumentSop.purpose} onChange={(e) => setInstrumentSop({ purpose: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label className="color-label">2.0 Scope/Field of Application</label>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={instrumentSop.scopeField} onChange={(e) => setInstrumentSop({ scopeField: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
-                                        <label className="color-label">3.0 Responsibilities</label>
-                                        {/* MultiSelection person data field */}
+                                        <label>{instrumentSop.responsibilities === "Yes" && ''}<div className="required"></div>3.0 Responsibilities</label>
+                                        <div className="instruction">The performance of the tests should be done by</div>
+                                        <MultiSelect
+                                            options={responsibilities}
+                                            value={selectedsetInstrumentSop}
+                                            onChange={setSelectedsetInstrumentSop}
+                                            labelledBy="selectedsetInstrumentSop"
+                                            required={instrumentSop.responsibilities === "Yes"}
+                                            disabled={!instrumentSop.responsibilities === "Yes"}
+                                        />
                                     </div>
                                     <div className="group-input">
                                         <label className="color-label">4.0 Materials Required</label>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={instrumentSop.materialsRequired} onChange={(e) => setInstrumentSop({ materialsRequired: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label className="color-label">5.0 Procedure</label>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={instrumentSop.procedure} onChange={(e) => setInstrumentSop({ procedure: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label className="color-label">6.0 Operations</label>
                                         <div className="instruction"></div>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={instrumentSop.operations} onChange={(e) => setInstrumentSop({ operations: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label className="color-label">7.0 Authorization Matrix</label>
                                         <div className="instruction"></div>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={instrumentSop.authorizationMatrix} onChange={(e) => setInstrumentSop({ authorizationMatrix: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label className="color-label">8.0 References</label>
                                         <div className="instruction"></div>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={instrumentSop.references} onChange={(e) => setInstrumentSop({ references: e.target.value })}></textarea>
                                     </div>
                                     <RelatedRecords
                                         label="9.0 Change Control"
@@ -660,35 +659,42 @@ function DocumentForm() {
                                     <div className="group-input">
                                         <label className="color-label">1.0 Purpose</label>
                                         <div className="instruction">To establish a plan for</div>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={instrumentChemistrySop.purpose} onChange={(e) => setInstrumentChemistrySop({ purpose: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label className="color-label">2.0 Scope/Field of Application</label>
                                         <div className="instruction">All test samples received at the laboratory plant and required</div>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={instrumentChemistrySop.scopeField} onChange={(e) => setInstrumentChemistrySop({ scopeField: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
-                                        <label className="color-label">3.0 Responsibilities</label>
+                                        <label>{instrumentChemistrySop.responsibilities === "Yes" && ''}<div className="required"></div>3.0 Responsibilities</label>
                                         <div className="instruction">The performance of the tests should be done by</div>
-                                        {/* MultiSelection person data field */}
+                                        <MultiSelect
+                                            options={responsibilities}
+                                            value={selectedInstrumentChemistry}
+                                            onChange={setSelectedInstrumentChemistry}
+                                            labelledBy="selectedInstrumentChemistry"
+                                            required={instrumentChemistrySop.responsibilities === "Yes"}
+                                            disabled={!instrumentChemistrySop.responsibilities === "Yes"}
+                                        />
                                     </div>
                                     <div className="group-input">
                                         <label className="color-label">4.0 Materials/Chemical Required</label>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={instrumentChemistrySop.materialsChemical} onChange={(e) => setInstrumentChemistrySop({ materialsChemical: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label className="color-label">5.0 Equipment/Instruments Used</label>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={instrumentChemistrySop.equipmentInstruments} onChange={(e) => setInstrumentChemistrySop({ equipmentInstruments: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label className="color-label">6.0 Safety Precautions</label>
                                         <div className="instruction"></div>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={instrumentChemistrySop.safetyPrecautions} onChange={(e) => setInstrumentChemistrySop({ safetyPrecautions: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label className="color-label">7.0 Procedure</label>
                                         <div className="instruction"></div>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={instrumentChemistrySop.procedure} onChange={(e) => setInstrumentChemistrySop({ procedure: e.target.value })}></textarea>
                                     </div>
                                     <Grid
                                         label={criticalSteps.label}
@@ -700,17 +706,17 @@ function DocumentForm() {
                                     <div className="group-input">
                                         <label className="color-label">9.0 Software Processing Steps</label>
                                         <div className="instruction"></div>
-                                        <textarea></textarea>
+                                        <textarea value={instrumentChemistrySop.softwareProcessingSteps} onChange={(e) => setInstrumentChemistrySop({ softwareProcessingSteps: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label className="color-label">10.0 Calculation</label>
                                         <div className="instruction"></div>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={instrumentChemistrySop.calculation} onChange={(e) => setInstrumentChemistrySop({ calculation: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label className="color-label">11.0 References</label>
                                         <div className="instruction"></div>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={instrumentChemistrySop.references} onChange={(e) => setInstrumentChemistrySop({ references: e.target.value })}></textarea>
                                     </div>
                                     <RelatedRecords
                                         label="12.0 Change Control"
@@ -742,35 +748,42 @@ function DocumentForm() {
                                     <div className="group-input">
                                         <label className="color-label">1.0 Purpose</label>
                                         <div className="instruction">To establish a plan for</div>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={microbiologySop.purpose} onChange={(e) => setMicrobiologySop({ purpose: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label className="color-label">2.0 Scope/Field of Application</label>
                                         <div className="instruction">All test samples received at the laboratory plant and required</div>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={microbiologySop.scopeField} onChange={(e) => setMicrobiologySop({ scopeField: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
-                                        <label className="color-label">3.0 Responsibilities</label>
+                                        <label>{microbiologySop.responsibilities === "Yes" && ''}<div className="required"></div>3.0 Responsibilities</label>
                                         <div className="instruction">The performance of the tests should be done by</div>
-                                        {/* MultiSelection person data field */}
+                                        <MultiSelect
+                                            options={responsibilities}
+                                            value={selectedMicrobiologySop}
+                                            onChange={setSelectedMicrobiologySop}
+                                            labelledBy="selectedMicrobiologySop"
+                                            required={microbiologySop.responsibilities === "Yes"}
+                                            disabled={!microbiologySop.responsibilities === "Yes"}
+                                        />
                                     </div>
                                     <div className="group-input">
                                         <label className="color-label">4.0 Materials/Chemical Required</label>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={microbiologySop.materialsChemical} onChange={(e) => setMicrobiologySop({ materialsChemical: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label className="color-label">5.0 Equipment/Instruments Used</label>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={microbiologySop.equipmentInstruments} onChange={(e) => setMicrobiologySop({ equipmentInstruments: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label className="color-label">6.0 Safety Precautions</label>
                                         <div className="instruction"></div>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={microbiologySop.safetyPrecautions} onChange={(e) => setMicrobiologySop({ safetyPrecautions: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label className="color-label">7.0 Procedure</label>
                                         <div className="instruction"></div>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={microbiologySop.procedure} onChange={(e) => setMicrobiologySop({ procedure: e.target.value })}></textarea>
                                     </div>
                                     <Grid
                                         label={interpretationOfResult.label}
@@ -782,7 +795,7 @@ function DocumentForm() {
                                     <div className="group-input">
                                         <label className="color-label">9.0 References</label>
                                         <div className="instruction"></div>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={microbiologySop.references} onChange={(e) => setMicrobiologySop({ references: e.target.value })}></textarea>
                                     </div>
                                     <RelatedRecords
                                         label="10.0 Change Control"
@@ -814,35 +827,42 @@ function DocumentForm() {
                                     <div className="group-input">
                                         <label className="color-label">1.0 Purpose</label>
                                         <div className="instruction">To establish a plan for</div>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={goodLaboratory.purpose} onChange={(e) => setGoodLaboratory({ purpose: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label className="color-label">2.0 Scope/Field of Application</label>
                                         <div className="instruction">All test samples received at the laboratory plant and required</div>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={goodLaboratory.scopeField} onChange={(e) => setGoodLaboratory({ scopeField: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
-                                        <label className="color-label">3.0 Responsibilities</label>
+                                        <label>{microbiologySop.responsibilities === "Yes" && ''}<div className="required"></div>3.0 Responsibilities</label>
                                         <div className="instruction">The performance of the tests should be done by</div>
-                                        {/* MultiSelection person data field */}
+                                        <MultiSelect
+                                            options={responsibilities}
+                                            value={selectedGoodLaboratory}
+                                            onChange={setSelectedGoodLaboratory}
+                                            labelledBy="selectedGoodLaboratory"
+                                            required={microbiologySop.responsibilities === "Yes"}
+                                            disabled={!microbiologySop.responsibilities === "Yes"}
+                                        />
                                     </div>
                                     <div className="group-input">
                                         <label className="color-label">4.0 Materials/Chemical Required</label>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={goodLaboratory.materialsChemical} onChange={(e) => setGoodLaboratory({ materialsChemical: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label className="color-label">5.0 Equipment/Instruments Used</label>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={goodLaboratory.equipmentInstruments} onChange={(e) => setGoodLaboratory({ equipmentInstruments: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label className="color-label">6.0 Safety Precautions</label>
                                         <div className="instruction"></div>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={goodLaboratory.safetyPrecautions} onChange={(e) => setGoodLaboratory({ safetyPrecautions: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label className="color-label">7.0 Procedure</label>
                                         <div className="instruction"></div>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={goodLaboratory.procedure} onChange={(e) => setGoodLaboratory({ procedure: e.target.value })}></textarea>
                                     </div>
                                     <Grid
                                         label={interpretationOfResult.label}
@@ -854,7 +874,7 @@ function DocumentForm() {
                                     <div className="group-input">
                                         <label className="color-label">9.0 References</label>
                                         <div className="instruction"></div>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={goodLaboratory.references} onChange={(e) => setGoodLaboratory({ references: e.target.value })}></textarea>
                                     </div>
                                     <RelatedRecords
                                         label="10.0 Change Control"
@@ -882,39 +902,46 @@ function DocumentForm() {
                                             <div>Environmental Laboratory</div>
                                         </div>
                                     </div>
-                                    <div className="sub-head-2">Wet Chemistry</div>
                                     <div className="group-input">
                                         <label className="color-label">1.0 Purpose</label>
                                         <div className="instruction">To establish a plan for</div>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={wetChemistry.purpose} onChange={(e) => setWetChemistry({ purpose: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label className="color-label">2.0 Scope/Field of Application</label>
                                         <div className="instruction">All test samples received at the laboratory plant and required</div>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={wetChemistry.scopeField} onChange={(e) => setWetChemistry({ scopeField: e.target.value })}></textarea>
                                     </div>
+
                                     <div className="group-input">
-                                        <label className="color-label">3.0 Responsibilities</label>
+                                        <label>{wetChemistry.responsibilities === "Yes" && ''}<div className="required"></div>3.0 Responsibilities</label>
                                         <div className="instruction">The performance of the tests should be done by</div>
-                                        {/* MultiSelection person data field */}
+                                        <MultiSelect
+                                            options={responsibilities}
+                                            value={selectedwetChemistry}
+                                            onChange={setSelectedwetChemistry}
+                                            labelledBy="selectedwetChemistry"
+                                            required={wetChemistry.responsibilities === "Yes"}
+                                            disabled={!wetChemistry.responsibilities === "Yes"}
+                                        />
                                     </div>
                                     <div className="group-input">
                                         <label className="color-label">4.0 Materials/Chemical Required</label>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={wetChemistry.materialsChemical} onChange={(e) => setWetChemistry({ materialsChemical: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label className="color-label">5.0 Equipment/Instruments Used</label>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={wetChemistry.equipmentInstruments} onChange={(e) => setWetChemistry({ equipmentInstruments: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label className="color-label">6.0 Safety Precautions</label>
                                         <div className="instruction"></div>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={wetChemistry.safetyPrecautions} onChange={(e) => setWetChemistry({ safetyPrecautions: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label className="color-label">7.0 Procedure</label>
                                         <div className="instruction"></div>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={wetChemistry.procedure} onChange={(e) => setWetChemistry({ procedure: e.target.value })}></textarea>
                                     </div>
                                     <Grid
                                         label={criticalSteps.label}
@@ -926,17 +953,17 @@ function DocumentForm() {
                                     <div className="group-input">
                                         <label className="color-label">9.0 Software Processing Steps</label>
                                         <div className="instruction"></div>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={wetChemistry.softwareProcessingSteps} onChange={(e) => setWetChemistry({ softwareProcessingSteps: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label className="color-label">10.0 Calculation</label>
                                         <div className="instruction"></div>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={wetChemistry.calculation} onChange={(e) => setWetChemistry({ calculation: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label className="color-label">11.0 References</label>
                                         <div className="instruction"></div>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={wetChemistry.references} onChange={(e) => setWetChemistry({ references: e.target.value })}></textarea>
                                     </div>
                                     <RelatedRecords
                                         label="12.0 Change Control"
@@ -964,38 +991,46 @@ function DocumentForm() {
                                             <div>Environmental Laboratory</div>
                                         </div>
                                     </div>
+                                    <div className="sub-head-2">Wet Chemistry</div>
                                     <div className="group-input">
                                         <label className="color-label">1.0 Purpose</label>
                                         <div className="instruction">To establish a plan for</div>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={other.purpose} onChange={(e) => setOther({ purpose: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label className="color-label">2.0 Scope/Field of Application</label>
                                         <div className="instruction">All test samples received at the laboratory plant and required</div>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={other.scopeField} onChange={(e) => setOther({ scopeField: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
-                                        <label className="color-label">3.0 Responsibilities</label>
+                                        <label>{microbiologySop.responsibilities === "Yes" && ''}<div className="required"></div>3.0 Responsibilities</label>
                                         <div className="instruction">The performance of the tests should be done by</div>
-                                        {/* MultiSelection person data field */}
+                                        <MultiSelect
+                                            options={responsibilities}
+                                            value={selectedOther}
+                                            onChange={setSelectedOther}
+                                            labelledBy="selectedOther"
+                                            required={other.responsibilities === "Yes"}
+                                            disabled={!other.responsibilities === "Yes"}
+                                        />
                                     </div>
                                     <div className="group-input">
                                         <label className="color-label">4.0 Materials/Chemical Required</label>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={other.materialsChemical} onChange={(e) => setOther({ materialsChemical: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label className="color-label">5.0 Equipment/Instruments Used</label>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={other.equipmentInstruments} onChange={(e) => setOther({ equipmentInstruments: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label className="color-label">6.0 Safety Precautions</label>
                                         <div className="instruction"></div>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={other.safetyPrecautions} onChange={(e) => setOther({ safetyPrecautions: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label className="color-label">7.0 Procedure</label>
                                         <div className="instruction"></div>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={other.procedure} onChange={(e) => setOther({ procedure: e.target.value })}></textarea>
                                     </div>
                                     <Grid
                                         label={criticalSteps.label}
@@ -1007,17 +1042,17 @@ function DocumentForm() {
                                     <div className="group-input">
                                         <label className="color-label">9.0 Software Processing Steps</label>
                                         <div className="instruction"></div>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={other.softwareProcessingSteps} onChange={(e) => setOther({ softwareProcessingSteps: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label className="color-label">10.0 Calculation</label>
                                         <div className="instruction"></div>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={other.calculation} onChange={(e) => setOther({ calculation: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label className="color-label">11.0 References</label>
                                         <div className="instruction"></div>
-                                        <textarea></textarea>
+                                        <textarea type="text" rows="2" value={other.references} onChange={(e) => setOther({ references: e.target.value })}></textarea>
                                     </div>
                                     <RelatedRecords
                                         label="12.0 Change Control"
@@ -1042,7 +1077,7 @@ function DocumentForm() {
                                     <div className="form-flex">
                                         <div className="group-input">
                                             <label>Training Required?</label>
-                                            <select value={newDocument.trainingRequired} onChange={(e) => setNewDocument({ trainingRequired: e.target.value })}>
+                                            <select value={trainingInformation.trainingRequired} onChange={(e) => setTrainingInformation({ trainingRequired: e.target.value })}>
                                                 <option value="">-- Select --</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
@@ -1050,7 +1085,7 @@ function DocumentForm() {
                                         </div>
                                         <div className="group-input">
                                             <label>Trainer</label>
-                                            <select disabled={newDocument.trainingRequired !== "Yes"}>
+                                            <select disabled={trainingInformation.trainingRequired !== "Yes"}>
                                                 <option value="">- Select --</option>
                                                 <option value="">Madhulika Mishra</option>
                                             </select>
@@ -1074,7 +1109,7 @@ function DocumentForm() {
                                     </div>
                                     <div className="group-input">
                                         <label>Comments</label>
-                                        <textarea name="w3review" rows="2" cols="50"></textarea>
+                                        <textarea name="w3review" rows="2" value={trainingInformation.comments} onChange={(e) => setTrainingInformation({ comments: e.target.value })}></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -1101,12 +1136,14 @@ function DocumentForm() {
                                         Print Permissions
                                     </div>
                                     <div className="group-input">
-                                        <label>Person Print Permission</label>
+                                        <label>{selectedPerson.PersonPrintPermission === "Yes" && ''}Person Print Permission</label>
                                         <MultiSelect
                                             options={PersonPrintPermission}
-                                            value={selected}
-                                            onChange={setSelected}
-                                            labelledBy="Select"
+                                            value={selectedPerson}
+                                            onChange={setSelectedPerson}
+                                            labelledBy="selectedPerson"
+                                            required={selectedPerson.PersonPrintPermission === "Yes"}
+                                            disabled={!selectedPerson.PersonPrintPermission === "Yes"}
                                         />
                                     </div>
                                     <div className="group-input">
@@ -1137,12 +1174,14 @@ function DocumentForm() {
                                         Download Permissions
                                     </div>
                                     <div className="group-input">
-                                        <label>Person Download Permission</label>
+                                        <label>{selectedPerson.PersonDownloadPermission === "Yes" && ''}Person Download Permission</label>
                                         <MultiSelect
                                             options={PersonDownloadPermission}
-                                            value={selected}
-                                            onChange={setSelected}
-                                            labelledBy="Select"
+                                            value={selectedPersonDownload}
+                                            onChange={setSelectedPersonDownload}
+                                            labelledBy="selectedPersonDownload"
+                                            required={selectedPerson.PersonDownloadPermission === "Yes"}
+                                            disabled={!selectedPerson.PersonDownloadPermission === "Yes"}
                                         />
                                     </div>
                                     <div className="group-input">

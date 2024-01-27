@@ -1,146 +1,88 @@
 import { useReducer, useState } from "react";
-import HeaderTop from "../../components/Header/HeaderTop";
-import Grid from "../../components/DataFields/Grid";
+import HeaderTop from "../../../components/Header/HeaderTop";
+import Grid from "../../../components/DataFields/Grid";
 import { MultiSelect } from "react-multi-select-component";
-import InputDate from "../../components/DataFields/InputDate";
-import FlexField from "../../components/DataFields/FlexField";
-import RelatedRecords from "../../components/DataFields/RelatedRecords";
-import { CurrentDate } from "../../components/DateReturners";
-import "./ConfigForms.css";
+import InputDate from "../../../components/DataFields/InputDate";
+import RelatedRecords from "../../../components/DataFields/RelatedRecords";
+import { CurrentDate } from "../../../components/DateReturners";
+import "../ConfigForms.css";
+import { formList, AuditTeam, ObservationFields, AuditAgenda, docFile, workFlow, site, currentYear } from './ExternalAuditFunction';
+
 
 function ExternalAudit() {
-  const formList = ["General Information", "Audit Planning", "Audit Preparation", "Audit Execution", "Audit Response & Closure", "Activity Log"]
-  const site = localStorage.getItem("site")
-  const currentDate = new Date()
-  const currentYear = currentDate.getFullYear()
-  const [externalAudit, setExternalAudit] = useReducer((prev, next) => ({
-    ...prev, ...next
-  }), {
-    initiatorGroup: '',
-    initiatedThrough: '',
-    typeOfAudit: ''
-  })
   const [form, setForm] = useState(formList[0]);
   const [selected, setSelected] = useState([]);
   const [asideWorkFlow, setAsideWorkFlow] = useState(false)
   const [asideFamilyTree, setAsideFamilyTree] = useState(false)
-  const FunctionName = [
-    { label: "QA", value: "QA" },
-    { label: "QC", value: "QC" },
-    { label: "Manufacturing", value: "Manufacturing" },
-    { label: "Warehouse", value: "Warehouse" },
-    { label: "RA", value: "RA" },
-    { label: "R&D,", value: "R&D" },
-  ];
-  const AuditTeam = [
-    { label: "Amit Guru", value: "Amit Guru" },
-    { label: "Amit Patel", value: "Amit Patel" },
-    { label: "Akash Asthana", value: "Akash Asthana" },
-    { label: "Madhulika Mishra", value: "Madhulika Mishra" },
-    { label: "Shaleen Mishra", value: "Shaleen Mishra" },
-  ];
-  const ObservationFields = [
-    {
-      label: "Observation Fields ",
-      instruction: "Please Attach all relevant or supporting documents",
-      required: true,
-      columnList: [
-        { id: "2.1.1.1", name: "Observation ID", type: "text" },
-        { id: "2.1.1.2", name: "Date", type: "date" },
-        { id: "2.1.1.3", name: "Auditor", type: "select" },
-        { id: "2.1.1.4", name: "Auditee", type: "select" },
-        { id: "2.1.1.5", name: "Observation Description", type: "text" },
-        { id: "2.1.1.7", name: "Area/process", type: "text" },
-        { id: "2.1.1.8", name: "Observation Category", type: "text" },
-        { id: "2.1.1.9", name: "CAPA Required", type: "select" },
-        { id: "2.1.1.10", name: "Auditee Response", type: "text" },
-        { id: "2.1.1.11", name: "Auditor Review on Response", type: "text" },
-        { id: "2.1.1.12", name: "QA Comments", type: "text" },
-        { id: "2.1.1.13", name: "CAPA Details", type: "text" },
-        { id: "2.1.1.14", name: "CAPA Due Date", type: "date" },
-        { id: "2.1.1.15", name: "CAPA Owner", type: "select" },
-        { id: "2.1.1.16", name: "Action Taken", type: "text" },
-        { id: "2.1.1.17", name: "	CAPA Completion Date", type: "date" },
-        { id: "2.1.1.18", name: "Status", type: "text" },
-        { id: "2.1.1.19", name: "Remarks", type: "text" },
-      ],
-    },
-  ];
-  const AuditAgenda = {
-    label: "Audit Agenda",
-    instruction: <div></div>,
-    required: true,
-    columnList: [
-      { id: "2.1.1.1", name: "	Area of Audit", type: "text" },
-      { id: "2.1.1.2", name: "Scheduled Start Date", type: "date" },
-      { id: "2.1.1.3", name: "Scheduled Start Time", type: "time" },
-      { id: "2.1.1.4", name: "Scheduled End Date", type: "date" },
-      { id: "2.1.1.5", name: "Auditor", type: "select" },
-      { id: "2.1.1.6", name: "Auditee", type: "text" },
-      { id: "2.1.1.7", name: "Remarks", type: "text" },
-    ],
-  };
-  const docFile = [
-    {
-      label: 'Initial attachment',
-      instruction: 'Please Attach all relevant or supporting documents',
-      required: true,
-      columnList: [
-        { id: '2.1.1.1', name: 'Title of Document', type: 'text' },
-        { id: '2.1.1.2', name: 'Attached File', type: 'File' },
-        { id: '2.1.1.3', name: 'Remark', type: 'text' },
-      ]
-    }, {
-      label: 'List of Attachment',
-      instruction: 'Please Attach all relevant or supporting documents',
-      required: true,
-      columnList: [
-        { id: '2.1.1.1', name: 'Title of Document', type: 'text' },
-        { id: '2.1.1.2', name: 'Attached File', type: 'File' },
-        { id: '2.1.1.3', name: 'Remark', type: 'text' },
-      ]
-    }, {
-      label: 'Guideline Attachment',
-      instruction: 'Please Attach all relevant or supporting documents',
-      required: true,
-      columnList: [
-        { id: '2.1.1.1', name: 'Title of Document', type: 'text' },
-        { id: '2.1.1.2', name: 'Attached File', type: 'File' },
-        { id: '2.1.1.3', name: 'Remark', type: 'text' },
-      ]
-    }, {
-      label: 'Audit Attachments',
-      instruction: 'Please Attach all relevant or supporting documents',
-      required: true,
-      columnList: [
-        { id: '2.1.1.1', name: 'Title of Document', type: 'text' },
-        { id: '2.1.1.2', name: 'Attached File', type: 'File' },
-        { id: '2.1.1.3', name: 'Remark', type: 'text' },
-      ]
-    }, {
-      label: 'Audit Attachments',
-      instruction: 'Please Attach all relevant or supporting documents',
-      required: true,
-      columnList: [
-        { id: '2.1.1.1', name: 'Title of Document', type: 'text' },
-        { id: '2.1.1.2', name: 'Attached File', type: 'File' },
-        { id: '2.1.1.3', name: 'Remark', type: 'text' },
-      ]
-    }, {
-      label: 'Report Attachments',
-      instruction: 'Please Attach all relevant or supporting documents',
-      required: true,
-      columnList: [
-        { id: '2.1.1.1', name: 'Title of Document', type: 'text' },
-        { id: '2.1.1.2', name: 'Attached File', type: 'File' },
-        { id: '2.1.1.3', name: 'Remark', type: 'text' },
-      ]
-    }
-  ]
+  
+  const [externalAudit, setExternalAudit] = useReducer((prev, next) => ({
+    ...prev, ...next
+  }), {
+    recordNumber: `${site}/EA/${currentYear}/000001`,
+    site: site,
+    initiator: 'Amit Guru',
+    dateOfInitiation: CurrentDate(),
+    assignedTo: '',
+    dueDate: '',
+    initiatorGroup: '',
+    initiatedThrough: '',
+    typeOfAudit: '',
+    shortDescription: '',
+    severityLevel: '',
+    other: '',
+    ifOther: '',
+    initialAttachment: '',
+    description: '',
+  })
+  const [auditPlanning, setAuditPlanning] = useReducer((prev, next) => ({
+    ...prev, ...next
+  }), {
+    auditScheduleStartDate: '',
+    auditScheduleEndDate: '',
+    auditAgenda: '',
+    relatedRecords: '',
+    comments: '',
+  })
+  const [auditPreparation, setAuditPreparation] = useReducer((prev, next) => ({
+    ...prev, ...next
+  }), {
+    leadAuditor: '',
+    listofAttachment: '',
+    auditTeam: '',
+    externalAuditorDetails: '',
+    externalAuditingAgency: '',
+    auditee: '',
+    relevantGuidelines: '',
+    qaComments: '',
+    guidelineAttachment: '',
+    auditCategory: '',
+    supplierDetails: '',
+    supplierSite: '',
+    comments: '',
+
+  })
+  const [auditExecution, setAuditExecution] = useReducer((prev, next) => ({
+    ...prev, ...next
+  }), {
+    auditStartDate: '',
+    auditStartEnd: '',
+    observationFields: '',
+    auditAttachments: '',
+    auditComments: '',
+  })
+  const [auditResponse, setAuditResponse] = useReducer((prev, next) => ({
+    ...prev, ...next
+  }), {
+    remarks: '',
+    referenceRecords: '',
+    auditAttachments: '',
+    reportAttachments: '',
+    auditComments: '',
+    dueDateExtensionJustification: '',
+  })
 
   return (
     <>
-
       <div id="main-form-container" style={asideWorkFlow || asideFamilyTree ? { 'padding': '0 0 0 300px' } : {}}>
 
         {asideWorkFlow &&
@@ -150,37 +92,12 @@ function ExternalAudit() {
               <div>Trust The Process</div>
             </div>
             <div className="content workflow">
-              <div className="green-state">
-                Opened
-                <img src="/down.gif" alt="..." />
-              </div>
-              <div>
-                Under HOD Review
-                <img src="/down.gif" alt="..." />
-              </div>
-              <div>
-                HOD Review Completed
-                <img src="/down.gif" alt="..." />
-              </div>
-              <div>
-                Under CFT Review
-                <img src="/down.gif" alt="..." />
-              </div>
-              <div>
-                Approved
-                <img src="/down.gif" alt="..." />
-              </div>
-              <div>
-                Implemented
-                <img src="/down.gif" alt="..." />
-              </div>
-              <div className="red-state">
-                Closed-Done
-                <img src="/down.gif" alt="..." />
-              </div>
-              <div className="red-state">
-                Closed- Cancelled
-              </div>
+              {workFlow.map((item, index) => (
+                <div className={index === 0 ? "green-state" : index === (workFlow.length - 1) ? "red-state" : ""}>
+                  {item}
+                  {index !== (workFlow.length - 1) && <img src="/down.gif" alt="..." />}
+                </div>
+              ))}
             </div>
           </div>
         }
@@ -211,13 +128,16 @@ function ExternalAudit() {
             <div><strong> Record Name:&nbsp;</strong>External Audit</div>
             <div><strong> Site:&nbsp;</strong>{site}</div>
             <div><strong> Current Status:&nbsp;</strong>Under Initiation</div>
-            <div><strong> Initiated By:&nbsp;</strong>Shaleen Mishra</div>
+            <div><strong> Initiated By:&nbsp;</strong>{externalAudit.initiator}</div>
           </div>
 
           <div className="document-block">
             <div className="document-tabs">
               {formList.map((item, index) => (
-                <div key={index} className={form === item ? 'active' : ''} onClick={() => setForm(item)}>{item}</div>
+                <div key={index} className={form === item ? 'active' : ''
+                } onClick={() => setForm(item)}>
+                  {item}
+                </div>
               ))}
             </div>
 
@@ -227,15 +147,15 @@ function ExternalAudit() {
                   <div className="form-flex">
                     <div className="group-input">
                       <label>Record Number</label>
-                      <input type="text" value={`${site}/IA/${currentYear}/00000001`} disabled />
+                      <input type="text" value={externalAudit.recordNumber} disabled />
                     </div>
                     <div className="group-input">
                       <label>Site/Location Code</label>
-                      <input type="text" value="Jordan" disabled />
+                      <input type="text" value={externalAudit.site} disabled />
                     </div>
                     <div className="group-input">
                       <label>Initiator</label>
-                      <input type="text" value="Amit Guru" disabled />
+                      <input type="text" value={externalAudit.initiator} disabled />
                     </div>
                     <div className="group-input">
                       <label>Date of Initiation</label>
@@ -246,12 +166,19 @@ function ExternalAudit() {
                         <div className="required"></div>
                         Assigned To
                       </label>
-                      <select required>
+                      <select value={externalAudit.assignedTo} onChange={(e) => setExternalAudit({ assignedTo: e.target.value })}>
                         <option value="">Select a value</option>
                         <option value="2">Shaleen Mishra</option>
                       </select>
                     </div>
-                    <InputDate label="Due Date" enableDate="future" isRequired="false" />
+
+                    <InputDate
+                      label="Due Date"
+                      enableDate="future"
+                      isRequired="false"
+                      value={externalAudit.dueDate}
+                      returnDate={(date) => setExternalAudit({ dueDate: date })}
+                    />
                     <div className="group-input">
                       <label htmlFor="initiatorGroup">
                         <div className="required"></div>
@@ -287,12 +214,12 @@ function ExternalAudit() {
                     <label>
                       Short Description
                     </label>
-                    <textarea type="text" rows="2" />
+                    <textarea type="text" rows="2" value={externalAudit.shortDescription} onChange={(e) => setExternalAudit({ shortDescription: e.target.value })}></textarea>
                   </div>
 
                   <div className="group-input">
                     <label>Severity Level</label>
-                    <select>
+                    <select value={externalAudit.severityLevel} onChange={(e) => setExternalAudit({ severityLevel: e.target.value })}>
                       <option value="">-- Select --</option>
                       <option value="">Major</option>
                       <option value="">Minor</option>
@@ -317,7 +244,9 @@ function ExternalAudit() {
                     </div>
                     <div className="group-input">
                       <label>
-                        {externalAudit.initiatedThrough === 'others' && <div className="required"></div>}
+                        {externalAudit.initiatedThrough === 'others' &&
+                          <div className="required"></div>
+                        }
                         Other
                       </label>
                       <textarea required={externalAudit.initiatedThrough === 'others'}></textarea>
@@ -348,11 +277,13 @@ function ExternalAudit() {
                       <textarea required={externalAudit.typeOfAudit === 'Others'}></textarea>
                     </div>
                   </div>
-                  <FlexField
-                    label="Initial Comments"
-                    instruction=""
-                    isRequired="true"
-                  />
+
+                  <div className="group-input">
+                    <label>
+                      Description
+                    </label>
+                    <textarea type="text" rows="2" value={externalAudit.description} onChange={(e) => setExternalAudit({ description: e.target.value })}></textarea>
+                  </div>
                   <div className="group-input">
                     <Grid
                       label={docFile[0].label}
@@ -371,11 +302,15 @@ function ExternalAudit() {
                       label="Audit Schedule Start Date"
                       isRequired="true"
                       enableDate="future"
+                      value={auditPlanning.auditScheduleStartDate}
+                      returnDate={(date) => setAuditPlanning({ auditScheduleStartDate: date })}
                     />
                     <InputDate
                       label="Audit Schedule End Date"
                       isRequired="true"
                       enableDate="future"
+                      value={auditPlanning.auditScheduleEndDate}
+                      returnDate={(date) => setAuditPlanning({ auditScheduleEndDate: date })}
                     />
                   </div>
                   <Grid
@@ -388,21 +323,19 @@ function ExternalAudit() {
                     label="Related Records"
                   />
 
-                  <FlexField
-                    label="Comments (if any)"
-                    instruction=""
-                    isRequired="false"
-                  />
+                  <div className="group-input">
+                    <label>Comments (if any)</label>
+                    <textarea value={auditPlanning.comments} onChange={(e) => setAuditPlanning({ comments: e.target.value })}></textarea>
+                  </div>
                 </div>
+
               </div>
             ) : form === formList[2] ? (
               <div className="document-form">
                 <div className="details-form-data">
                   <div className="group-input">
-                    <label>
-                      Lead Auditor
-                    </label>
-                    <select name="initiated_through" >
+                    <label>Lead Auditor</label>
+                    <select value={auditPreparation.leadAuditor} onChange={(e) => setAuditPreparation({ leadAuditor: e.target.value })}>
                       <option value="">-- Select --</option>
                       <option value="amit_guru">Amit Guru</option>
                       <option value="amit_patel">Amit Patel</option>
@@ -420,48 +353,56 @@ function ExternalAudit() {
 
                   <div className="form-flex">
                     <div className="group-input">
-                      <label>
-                        Audit Team
-                      </label>
+                      <label> {auditPreparation.auditTeam === "Yes" && ''}Audit Team</label>
                       <MultiSelect
                         options={AuditTeam}
                         value={selected}
                         onChange={setSelected}
                         labelledBy="Select"
+                        required={auditPreparation.auditTeam === "Yes"}
+                        disabled={!auditPreparation.auditTeam === "Yes"}
                       />
                     </div>
                     <div className="group-input">
-                      <label>
-                        Auditee
-                      </label>
+                      <label> {auditPreparation.auditee === "Yes" && ''} Auditee</label>
                       <MultiSelect
                         options={AuditTeam}
                         value={selected}
                         onChange={setSelected}
                         labelledBy="Select"
+                        required={auditPreparation.auditee === "Yes"}
+                        disabled={!auditPreparation.auditee === "Yes"}
                       />
                     </div>
                   </div>
-                  <FlexField
-                    label="External Auditor Details"
-                    instruction=""
-                    isRequired="false"
-                  />
-                  <FlexField
-                    label="External Auditing Agency"
-                    instruction=""
-                    isRequired="false"
-                  />
-                  <FlexField
-                    label="Relevant Guidelines / Industry Standards"
-                    instruction=""
-                    isRequired="false"
-                  />
-                  <FlexField
-                    label="QA Comments"
-                    instruction=""
-                    isRequired="false"
-                  />
+
+                  <div className="group-input">
+                    <label>
+                      External Auditor Details
+                    </label>
+                    <textarea type="text" rows="2" value={auditPreparation.externalAuditorDetails} onChange={(e) => setAuditPreparation({ externalAuditorDetails: e.target.value })}></textarea>
+                  </div>
+
+                  <div className="group-input">
+                    <label>
+                      External Auditing Agency
+                    </label>
+                    <textarea type="text" rows="2" value={auditPreparation.externalAuditingAgency} onChange={(e) => setAuditPreparation({ externalAuditingAgency: e.target.value })}></textarea>
+                  </div>
+
+                  <div className="group-input">
+                    <label>
+                      Relevant Guidelines / Industry Standards
+                    </label>
+                    <textarea type="text" rows="2" value={auditPreparation.relevantGuidelines} onChange={(e) => setAuditPreparation({ relevantGuidelines: e.target.value })}></textarea>
+                  </div>
+
+                  <div className="group-input">
+                    <label>
+                      QA Comments
+                    </label>
+                    <textarea type="text" rows="2" value={auditPreparation.qaComments} onChange={(e) => setAuditPreparation({ qaComments: e.target.value })}></textarea>
+                  </div>
                   <Grid
                     label={docFile[2].label}
                     required={docFile[2].required}
@@ -472,7 +413,7 @@ function ExternalAudit() {
                     <label>
                       Audit Category
                     </label>
-                    <select name="initiated_through" >
+                    <select name="initiated_through" value={auditPreparation.auditCategory} onChange={(e) => setAuditPreparation({ auditCategory: e.target.value })}>
                       <option>Enter Your Selection Here</option>
                       <option>Internal Audit/Self Inspection</option>
                       <option>Supplier Audit</option>
@@ -484,19 +425,21 @@ function ExternalAudit() {
                     <label>
                       Supplier/Vendor/Manufacturer Details
                     </label>
-                    <input type="text" />
+                    <input type="text" value={auditPreparation.supplierDetails} onChange={(e) => setAuditPreparation({ supplierDetails: e.target.value })} />
                   </div>
                   <div className="group-input">
                     <label>
                       Supplier/Vendor/Manufacturer Site
                     </label>
-                    <input type="text" />
+                    <input type="text" value={auditPreparation.supplierSite} onChange={(e) => setAuditPreparation({ supplierSite: e.target.value })} />
                   </div>
-                  <FlexField
-                    label="Comments"
-                    instruction=""
-                    isRequired="false"
-                  />
+
+                  <div className="group-input">
+                    <label>
+                      Comments
+                    </label>
+                    <textarea type="text" rows="2" value={auditPreparation.comments} onChange={(e) => setAuditPreparation({ comments: e.target.value })}></textarea>
+                  </div>
                 </div>
               </div>
             ) : form === formList[3] ? (
@@ -508,11 +451,15 @@ function ExternalAudit() {
                       label="Audit Start Date"
                       isRequired="true"
                       enableDate="future"
+                      value={auditExecution.auditStartDate}
+                      returnDate={(date) => setAuditExecution({ auditStartDate: date })}
                     />
                     <InputDate
                       label="Audit End Date"
                       isRequired="true"
                       enableDate="future"
+                      value={auditExecution.auditEndDate}
+                      returnDate={(date) => setAuditExecution({ auditEndDate: date })}
                     />
                   </div>
 
@@ -530,22 +477,26 @@ function ExternalAudit() {
                     instruction={docFile[3].instruction}
                     columnList={docFile[3].columnList}
                   />
-                  <FlexField
-                    label="Audit Comments"
-                    instruction=""
-                    isRequired="false"
-                  />
+
+                  <div className="group-input">
+                    <label>
+                      Audit Comments
+                    </label>
+                    <textarea type="text" rows="2" value={auditExecution.auditComments} onChange={(e) => setAuditExecution({ auditComments: e.target.value })}></textarea>
+                  </div>
                 </div>
               </div>
             ) : form === formList[4] ? (
               <div className="document-form">
                 <div className="details-form-data">
                   <div className="sub-head">Audit Response & Closure</div>
-                  <FlexField
-                    label="Remarks"
-                    instruction=""
-                    isRequired="false"
-                  />
+
+                  <div className="group-input">
+                    <label>
+                      Remarks
+                    </label>
+                    <textarea type="text" rows="2" value={auditResponse.remarks} onChange={(e) => setAuditResponse({ remarks: e.target.value })}></textarea>
+                  </div>
                   <RelatedRecords
                     label="Reference Records"
                   />
@@ -561,17 +512,20 @@ function ExternalAudit() {
                     instruction={docFile[5].instruction}
                     columnList={docFile[5].columnList}
                   />
-                  <FlexField
-                    label="Audit Comments"
-                    instruction=""
-                    isRequired="false"
-                  />
+                  <div className="group-input">
+                    <label>
+                      Audit Comments
+                    </label>
+                    <textarea type="text" rows="2" value={auditResponse.auditComments} onChange={(e) => setAuditResponse({ auditComments: e.target.value })}></textarea>
+                  </div>
                   <div className="sub-head">Extension Details</div>
-                  <FlexField
-                    label="Due Date Extension Justification"
-                    instruction=""
-                    isRequired="false"
-                  />
+                 
+                  <div className="group-input">
+                    <label>
+                    Due Date Extension Justification
+                    </label>
+                    <textarea type="text" rows="2" value={auditResponse.dueDateExtensionJustification} onChange={(e) => setAuditResponse({ dueDateExtensionJustification: e.target.value })}></textarea>
+                  </div>
                 </div>
               </div>
             ) : form === formList[5] ? (

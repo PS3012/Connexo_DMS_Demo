@@ -13,6 +13,7 @@ function generalInformationForm() {
     const [selected, setSelected] = useState([]);
     const [asideWorkFlow, setAsideWorkFlow] = useState(false)
     const [asideFamilyTree, setAsideFamilyTree] = useState(false)
+    
     const [generalInformation, setGeneralInformation] = useReducer((prev, next) => ({
         ...prev, ...next
     }), {
@@ -541,7 +542,8 @@ function generalInformationForm() {
                                         </div>
                                         <div className="group-input">
                                             <label>
-                                                {additionalInformation.cftReviewRequired === "Yes" && <div className="required"></div>}
+                                                {additionalInformation.cftReviewRequired === "Yes" && 
+                                                <div className="required"></div>}
                                                 CFT Reviewer Person
                                             </label>
                                             <MultiSelect
