@@ -5,6 +5,7 @@ import { useState } from 'react'
 function ESignatureModal(_props) {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [comment, setComment] = useState('')
     const currentUsername = localStorage.getItem('username')
     const currentPassword = localStorage.getItem('password')
     function handleSubmit() {
@@ -17,6 +18,7 @@ function ESignatureModal(_props) {
     }
     return (
         <>
+        
             <div className="custom-modal" id="e-signature-modal">
                 <div className="modal-container" >
 
@@ -31,12 +33,16 @@ function ESignatureModal(_props) {
 
                     <div className="modal-middle">
                         <div className="group-input-2">
-                            <label htmlFor="username">Username</label>
-                            <input type="text" name="username" value={username} onChange={(e) => setUsername(e.target.value)} />
+                            <label>Username</label>
+                            <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
                         </div>
                         <div className="group-input-2">
-                            <label htmlFor="password">Password</label>
-                            <input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                            <label>Password</label>
+                            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                        </div>
+                        <div className="group-input-2">
+                            <label>Comments</label>
+                            <input type="text" value={comment} onChange={(e) => setComment(e.target.value)} />
                         </div>
                     </div>
 

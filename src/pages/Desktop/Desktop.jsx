@@ -1,14 +1,41 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import HeaderTop from '../../components/Header/HeaderTop';
 import HeaderBottom from '../../components/Header/HeaderBottom';
 import "./Desktop.css";
+import { convertDateFormat } from '../../components/DateReturners';
+import { Link } from 'react-router-dom';
 
 
 function Desktop() {
+    const [data, setData] = useState()
+    const site = localStorage.getItem("site")
+    function padNumber(number, width) {
+        number = number + '';
+        return number.length >= width ? number : new Array(width - number.length + 1).join('0') + number;
+    }
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch('http://195.35.6.197:9091/LabIncident/api/findAllDivision');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch data');
+                }
+                const result = await response.json();
+                setData(result);
+            } catch (error) {
+                toast.error(error)
+            }
+        };
+        fetchData();
+    }, []);
+    console.log(data)
     return (
         <>
+
             <HeaderTop />
+
             <HeaderBottom />
+
             <div className="desktop-input-table-wrapper">
                 <div className="input-wrapper">
                     <div className="group-input-2">
@@ -53,30 +80,37 @@ function Desktop() {
                             </tr>
                         </thead>
                         <tbody>
+                            {data && data.map((item) => (
+                                <tr key={item.id}>
+                                    <td>
+                                        <Link to={`/lab-incident-panel/${item.id}`}>{padNumber(item.id, 5)}</Link>
+                                    </td>
+                                    <td>{item.generalInformation[0].divisionCode}</td>
+                                    <td>{item.name}</td>
+                                    <td>{item.generalInformation[0].shortDescription}</td>
+                                    <td></td>
+                                    <td>{item.generalInformation[0].assignedTo}</td>
+                                    <td>{convertDateFormat(item.generalInformation[0].dueDate)}</td>
+                                    <td></td>
+                                </tr>
+                            ))}
                             <tr>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
+                                <td>
+                                    <Link to={`/root-cause-analysis-panel`} target='_blank'>00034</Link>
+                                </td>
+                                <td>{site}</td>
+                                <td>Root Cause Analysis</td>
+                                <td>Test</td>
+                                <td></td>
+                                <td>Amit Patel</td>
+                                <td>26-Jan-2024</td>
+                                <td></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
+
         </>
     )
 }

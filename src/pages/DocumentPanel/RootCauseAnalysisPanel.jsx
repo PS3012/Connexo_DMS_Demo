@@ -5,6 +5,8 @@ import Grid from '../../components/DataFields/Grid';
 import InputDate from '../../components/DataFields/InputDate';
 import { CurrentDate } from '../../components/DateReturners';
 import HeaderBottom from "../../components/Header/HeaderBottom";
+import ESignatureModal from "../../components/Modals/ESignatureModal/ESignatureModal";
+import { toast } from "react-toastify";
 function RootCauseAnalysisPanel() {
 
     const formList = ["Investigation", "Lab Investigator Remark", "QA Head/Designee Eval Comments", "Investigation & Root Cause", "Activity Log"]
@@ -127,11 +129,11 @@ function RootCauseAnalysisPanel() {
     ]
     // ------------------Record Workflow-------------
     const progressItems = [
-        { id: 1, name: 'Opened', details: 'Document is opened at 10 Jan, 2023 11:12PM' },
-        { id: 2, name: 'HOD Review', details: 'Action Item child can be created at this stage.' },
-        { id: 3, name: 'Pending QA Review', details: '' },
-        { id: 4, name: 'CFT/SME Review', details: '' },
-        { id: 5, name: 'Pending Change Implementation', details: 'New Document child can be created at this stage.' },
+        { id: 1, name: 'Opened', details: '' },
+        { id: 2, name: 'Investigation in Progress', details: '' },
+        { id: 3, name: 'Pending Group Review Discussion', details: '' },
+        { id: 4, name: 'Pending Group Review', details: '' },
+        { id: 5, name: 'Pending QA Review', details: '' },
         { id: 6, name: 'Closed - Done', details: '' },
     ]
     const [progressArray, setProgressArray] = useState([progressItems[0].name])
@@ -142,14 +144,6 @@ function RootCauseAnalysisPanel() {
     function handleESignature(key, elements) {
         setKeyword(key)
         setKeywordElements(elements)
-        for (let ele of elements) {
-            let updatedItemIndex = progressItems.findIndex((item) => item.name === ele);
-            if (updatedItemIndex !== -1) {
-                progressItems[updatedItemIndex].details = 'Updated';
-            } else {
-                console.error('Item with name "Opened" not found.');
-            }
-        }
         setSignatureModal(true)
     }
     function signatureValue(key) {
@@ -162,7 +156,7 @@ function RootCauseAnalysisPanel() {
                 setProgressArray('Closed-Cancelled')
             }
         } else {
-            alert('E-Signature Not Matched.')
+            toast.error('E-Signature Not Matched.') 
         }
     }
     function addProgress(addEle) {
@@ -180,7 +174,7 @@ function RootCauseAnalysisPanel() {
             <div id="document-panel">
 
                 <div className="top-block">
-                    <div><strong> Record Name:&nbsp;</strong>RootCauseAnalysis</div>
+                    <div><strong> Record Name:&nbsp;</strong>Root Cause Analysis</div>
                     <div><strong> Site:&nbsp;</strong>Jordan</div>
                     <div><strong> Current Status:&nbsp;</strong>Under Initiation</div>
                     <div><strong> Initiated By:&nbsp;</strong>Shaleen Mishra</div>
@@ -196,27 +190,25 @@ function RootCauseAnalysisPanel() {
                                 <button className="themeBtn">Print</button>
                                 {progressArray.length === 1 &&
                                     <>
-                                        <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[1].name])}>Submit</button>
+                                        <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[1].name])}>Acknowledge</button>
                                         <button className="themeBtn" onClick={() => handleESignature('closed', [])}>Cancel</button>
                                     </>
                                 }
                                 {progressArray.length === 2 &&
                                     <>
-                                        <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[2].name])}>HOD Review Complete</button>
-                                        <button className="themeBtn" onClick={() => handleESignature('remove', [progressItems[1].name])}>More Information Required</button>
+                                        <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[2].name])}>Submit</button>
                                     </>
                                 }
                                 {progressArray.length === 3 &&
                                     <>
-                                        <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[3].name])}>Send to CFT Reviewers</button>
-                                        <button className="themeBtn" onClick={() => handleESignature('remove', [progressItems[2].name])}>More Information Required</button>
-                                        <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[3].name, progressItems[4].name])}>CFT Review Not Required</button>
+                                        <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[3].name])}>Group CFT Review Required</button>
+                                        <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[3].name, progressItems[4].name])}>Group CFT Review Not Required</button>
                                     </>
                                 }
                                 {progressArray.length === 4 &&
                                     <>
-                                        <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[4].name])}>Review Complete</button>
-                                        <button className="themeBtn" onClick={() => handleESignature('remove', [progressItems[2].name, progressItems[3].name])}>Request More Info</button>
+                                        <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[4].name])}>QA Review Required</button>
+                                        <button className="themeBtn" onClick={() => handleESignature('remove', [progressItems[2].name, progressItems[3].name])}>More Information Required Required</button>
                                     </>
                                 }
                                 {progressArray.length === 5 &&
@@ -716,6 +708,8 @@ function RootCauseAnalysisPanel() {
                     <button className='themeBtn'>Exit</button>
                 </div>
             </div >
+
+            {signatureModal && <ESignatureModal closeModal={closeSignatureModal} returnSignature={signatureValue} />}
 
         </>
     )

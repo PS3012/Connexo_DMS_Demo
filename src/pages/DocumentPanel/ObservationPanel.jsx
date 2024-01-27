@@ -500,7 +500,6 @@ function ObservationPanel() {
                     instruction=""
                     isRequired="false"
                   />
-
                   <div className="sub-head">Further Information</div>
 
                   <div className="group-input">

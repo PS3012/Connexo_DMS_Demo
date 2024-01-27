@@ -7,13 +7,15 @@ import { CurrentDate } from '../../../components/DateReturners';
 import RelatedRecords from '../../../components/DataFields/RelatedRecords';
 import { CFTReviewer, changeCloser, currentYear, docDetails, docFile, formList, site, workFlow } from './ChangeControlFunctions';
 import '../ConfigForms.css'
+import axios from 'axios';
+import { ChangeControlCreate } from '../../../components/Constant';
+import { toast } from 'react-toastify';
 
 function generalInformationForm() {
     const [form, setForm] = useState(formList[0]);
-    const [selected, setSelected] = useState([]);
     const [asideWorkFlow, setAsideWorkFlow] = useState(false)
     const [asideFamilyTree, setAsideFamilyTree] = useState(false)
-    
+    const [cftPersons, setCftPersons] = useState([])
     const [generalInformation, setGeneralInformation] = useReducer((prev, next) => ({
         ...prev, ...next
     }), {
@@ -70,7 +72,6 @@ function generalInformationForm() {
         ...prev, ...next
     }), {
         cftReviewRequired: '',
-        cftReviewerPerson: '',
         groupReviewRequired: '',
         production: '',
         productionPerson: '',
@@ -124,6 +125,125 @@ function generalInformationForm() {
         effectivenessCheckPlan: '',
         dueDateExtensionJustification: '',
     })
+    const body = {
+        "generalInfo": [
+            {
+                "generalInfoAttachment": generalInformation.initialAttachment,
+                "dueDate": generalInformation.dueDate,
+                "shortDescription": generalInformation.shortDescription,
+                "ifOthers": generalInformation.natureOfChangeOthers,
+                "recordNumber": generalInformation.recordNumber,
+                "initiator": generalInformation.initiator,
+                "dateofInitiation": generalInformation.dateOfInitiation,
+                "assignedTo": generalInformation.assignedTo,
+                "initiatorGroup": generalInformation.initiatorGroup,
+                "initiatorGroupCode": '',
+                "initiatedThrough": generalInformation.initiatedThrough,
+                "repeats": generalInformation.repeat,
+                "others": generalInformation.initiatedThroughOthers,
+                "repeatNature": generalInformation.repeatNature,
+                "riskLevel": generalInformation.riskLevel,
+                "divisionCode": generalInformation.site,
+                "natureOfChange": generalInformation.natureOfChange
+            }
+        ],
+        "changedetails": [
+            {
+                "changeDetailsAttachment": changeDetails.documentDetails,
+                "currentPractice": changeDetails.currentPractice,
+                "proposedChange": changeDetails.proposedChange,
+                "reasonforChange": changeDetails.reasonForChange,
+                "anyOtherComments": changeDetails.anyOtherComments,
+                "supervisorComments": changeDetails.supervisorComments
+            }
+        ],
+        "chaConQAReview": [
+            {
+                "chaconQAReviewAttachment": qAReview.qAAttachments,
+                "typeofChange": qAReview.typeOfChange,
+                "qareviewComments": qAReview.qAReviewComments,
+                "relatedRecords": "manish"
+            }
+        ],
+        "evalution": [
+            {
+                "evalutionAttachment": evaluation.qAAttachments,
+                "qaevaluationComments": evaluation.qAEvaluationComments,
+                "trainingRequired": evaluation.trainingRequired,
+                "trainingComments": evaluation.trainingComments
+            }
+        ],
+        "additionalInformation": [
+            {
+                "additionalInfoAttach": additionalInformation.qaAttachments,
+                "others": additionalInformation.others,
+                "cftReviewer": additionalInformation.cftReviewRequired,
+                "cftReviewerPerson": cftPersons,
+                "isConcernedGroupReviewRequired": additionalInformation.groupReviewRequired,
+                "production": additionalInformation.production,
+                "productionPerson": additionalInformation.productionPerson,
+                "qualityApprover": additionalInformation.qualityApprover,
+                "qualityApproverPerson": additionalInformation.qualityApproverPerson,
+                "othersPerson": additionalInformation.othersPerson
+            }
+        ],
+        "groupComments": [
+            {
+                "groupCommentsCftAttach": groupComments.cftAttachments,
+                "groupCommentsAttach": '',
+                "qaheadDesigneeComments": groupComments.qaHeadDesigneeComments,
+                "qaComments": groupComments.qaComments,
+                "groupComments": groupComments.groupComments,
+                "cftComments": '',
+                "warehouseComments": groupComments.warehouseComments,
+                "engineeringComments": groupComments.engineeringComments,
+                "instrumentationComments": groupComments.instrumentationComments,
+                "validationComments": groupComments.validationComments,
+                "othersComments": groupComments.othersComments
+            }
+        ],
+        "riskAssessment": [
+            {
+                "riskAssessmentAttach": '',
+                "riskIdentification": riskAssessment.riskIdentification,
+                "severityRate": riskAssessment.severityRate,
+                "occurrence": riskAssessment.occurrence,
+                "detection": riskAssessment.detection,
+                "rpn": '',
+                "riskEvaluation": riskAssessment.riskEvaluation,
+                "migrationAction": riskAssessment.migrationAction
+            }
+        ],
+        "qaApprovalComments": [
+            {
+                "qaApprovalAttachment": qaApprovalComments.trainingAttachments,
+                "qaApprovalComments": qaApprovalComments.qaApprovalComments,
+                "trainingFeedback": qaApprovalComments.trainingFeedback
+            }
+        ],
+        "changeClouser": [
+            {
+                "changeClouserAttach": changeClosure.listOfAttachments,
+                "changeClouserInitialAttach": changeClosure.documentDetails,
+                "qaClosureComments": changeClosure.qaClosureComments,
+                "effectivessCheckRequired": changeClosure.effectivenessCheckRequired,
+                "effectivenessCheckCreationDate": changeClosure.effectivenessCheckCreationDate,
+                "effectivenessChecker": changeClosure.effectivenessChecker,
+                "effectivenessCheckPlan": changeClosure.effectivenessCheckPlan,
+                "dueDateExtensionJustification": changeClosure.dueDateExtensionJustification
+            }
+        ],
+        "changeControlName": "GeneralInformation"
+    }
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        axios.post(ChangeControlCreate, body).then(response => {
+            toast.success("Form saved successfully.")
+            window.location.href = '/desktop'
+        }).catch(error => {
+            toast.error("There was an error occurring while saving the form.")
+        })
+    }
 
     return (
         <>
@@ -344,7 +464,7 @@ function generalInformationForm() {
                                         </div>
                                         <div className="group-input">
                                             <label>Nature Of Change</label>
-                                            <select name="natureChange" value={generalInformation.natureOfChange} onChange={(e) => setGeneralInformation({ natureOfChange: e.target.value })}>
+                                            <select value={generalInformation.natureOfChange} onChange={(e) => setGeneralInformation({ natureOfChange: e.target.value })}>
                                                 <option value="0">-- Select --</option>
                                                 <option value="Temporary">Temporary</option>
                                                 <option value="Permanent">Permanent</option>
@@ -369,11 +489,12 @@ function generalInformationForm() {
                                             required={docFile[0].required}
                                             instruction={docFile[0].instruction}
                                             columnList={docFile[0].columnList}
+                                            onChange={(data) => setGeneralInformation({ initialAttachment: data })}
                                         />
                                     </div>
                                     <div className="group-input">
-                                        <label htmlFor="group_comment_required">Group Comment Required</label>
-                                        <select name="group_comment_required" value={generalInformation.groupComment} onChange={(e) => setGeneralInformation({ groupComment: e.target.value })}>
+                                        <label>Group Comment Required</label>
+                                        <select value={generalInformation.groupComment} onChange={(e) => setGeneralInformation({ groupComment: e.target.value })}>
                                             <option value="0">-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
@@ -389,6 +510,7 @@ function generalInformationForm() {
                                         required={docDetails.required}
                                         instruction={docDetails.instruction}
                                         columnList={docDetails.columnList}
+                                        onChange={(data) => setChangeDetails({ documentDetails: data })}
                                     />
                                     <div className="sub-head">
                                         Change Details
@@ -440,9 +562,10 @@ function generalInformationForm() {
                                             required={docFile[1].required}
                                             instruction={docFile[1].instruction}
                                             columnList={docFile[1].columnList}
+                                            onChange={(data) => setQAReview({ qAAttachments: data })}
                                         />
                                     </div>
-                                    {generalInformation.typeOfChange === 'minor' ?
+                                    {qAReview.typeOfChange === 'minor' &&
                                         <>
                                             <div className="sub-head">
                                                 Minor Change Justification
@@ -452,11 +575,11 @@ function generalInformationForm() {
                                                     <div className="required"></div>
                                                     Minor Change Justification
                                                 </label>
-                                                <textarea value={qAReview.minorChangeJustification} onChange={(e) => setQAReview({ minorChangeJustification: e.target.value })} required={generalInformation.typeOfChange === 'minor'}></textarea>
+                                                <textarea value={qAReview.minorChangeJustification} onChange={(e) => setQAReview({ minorChangeJustification: e.target.value })} required={qAReview.typeOfChange === 'minor'}></textarea>
                                             </div>
-                                        </> : ''
+                                        </>
                                     }
-                                    {generalInformation.typeOfChange === 'major' ?
+                                    {qAReview.typeOfChange === 'major' &&
                                         <>
                                             <div className="sub-head">
                                                 Major Change Justification
@@ -468,9 +591,9 @@ function generalInformationForm() {
                                                 </label>
                                                 <textarea value={qAReview.majorChangeJustification} onChange={(e) => setQAReview({ majorChangeJustification: e.target.value })} required={generalInformation.typeOfChange === 'major'}></textarea>
                                             </div>
-                                        </> : ''
+                                        </>
                                     }
-                                    {generalInformation.typeOfChange === 'critical' ?
+                                    {qAReview.typeOfChange === 'critical' &&
                                         <>
                                             <div className="sub-head">
                                                 Critical Change Justification
@@ -482,7 +605,7 @@ function generalInformationForm() {
                                                 </label>
                                                 <textarea value={qAReview.criticalChangeJustification} onChange={(e) => setQAReview({ criticalChangeJustification: e.target.value })} required={generalInformation.typeOfChange === 'critical'}></textarea>
                                             </div>
-                                        </> : ''
+                                        </>
                                     }
                                 </div>
                             </div>
@@ -502,6 +625,7 @@ function generalInformationForm() {
                                             required={docFile[2].required}
                                             instruction={docFile[2].instruction}
                                             columnList={docFile[2].columnList}
+                                            onChange={(data) => setEvaluation({ qAAttachments: data })}
                                         />
                                     </div>
                                     <div className="sub-head">
@@ -549,11 +673,11 @@ function generalInformationForm() {
                                             </label>
                                             <MultiSelect
                                                 options={CFTReviewer}
-                                                value={selected}
-                                                onChange={setSelected}
+                                                value={cftPersons}
+                                                onChange={setCftPersons}
                                                 labelledBy="Select"
                                                 required={additionalInformation.cftReviewRequired === "Yes"}
-                                                disabled={!additionalInformation.cftReviewRequired === "Yes"}
+                                                disabled={additionalInformation.cftReviewRequired !== "Yes"}
                                             />
                                         </div>
                                     </div>
@@ -687,6 +811,7 @@ function generalInformationForm() {
                                             required={docFile[3].required}
                                             instruction={docFile[3].instruction}
                                             columnList={docFile[3].columnList}
+                                            onChange={(data) => setAdditionalInformation({ qaAttachments: data })}
                                         />
                                     </div>
                                 </div>
@@ -699,7 +824,7 @@ function generalInformationForm() {
                                     </div>
                                     <div className="group-input">
                                         <label>QA Evaluation Comments</label>
-                                        <textarea value={groupComments.qaEvaluationComments} setGroupComments={(e) => setGroupComments({ qaEvaluationComments: e.target.value })}></textarea>
+                                        <textarea value={groupComments.qaEvaluationComments} onChange={(e) => setGroupComments({ qaEvaluationComments: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <Grid
@@ -707,6 +832,7 @@ function generalInformationForm() {
                                             required={docFile[4].required}
                                             instruction={docFile[4].instruction}
                                             columnList={docFile[4].columnList}
+                                            onChange={(data) => setGroupComments({ cftAttachments: data })}
                                         />
                                     </div>
                                     <div className="sub-head">
@@ -714,35 +840,35 @@ function generalInformationForm() {
                                     </div>
                                     <div className="group-input">
                                         <label>QA Comments</label>
-                                        <textarea value={groupComments.qaComments} setGroupComments={(e) => setGroupComments({ qaComments: e.target.value })}></textarea>
+                                        <textarea value={groupComments.qaComments} onChange={(e) => setGroupComments({ qaComments: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label>QA Head Designee Comments</label>
-                                        <textarea value={groupComments.qaHeadDesigneeComments} setGroupComments={(e) => setGroupComments({ qaHeadDesigneeComments: e.target.value })}></textarea>
+                                        <textarea value={groupComments.qaHeadDesigneeComments} onChange={(e) => setGroupComments({ qaHeadDesigneeComments: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label>Warehouse Comments</label>
-                                        <textarea value={groupComments.warehouseComments} setGroupComments={(e) => setGroupComments({ warehouseComments: e.target.value })}></textarea>
+                                        <textarea value={groupComments.warehouseComments} onChange={(e) => setGroupComments({ warehouseComments: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label>Engineering Comments</label>
-                                        <textarea value={groupComments.engineeringComments} setGroupComments={(e) => setGroupComments({ engineeringComments: e.target.value })}></textarea>
+                                        <textarea value={groupComments.engineeringComments} onChange={(e) => setGroupComments({ engineeringComments: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label>Instrumentation Comments</label>
-                                        <textarea value={groupComments.instrumentationComments} setGroupComments={(e) => setGroupComments({ instrumentationComments: e.target.value })}></textarea>
+                                        <textarea value={groupComments.instrumentationComments} onChange={(e) => setGroupComments({ instrumentationComments: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label>Validation Comments</label>
-                                        <textarea value={groupComments.validationComments} setGroupComments={(e) => setGroupComments({ validationComments: e.target.value })}></textarea>
+                                        <textarea value={groupComments.validationComments} onChange={(e) => setGroupComments({ validationComments: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label>Others Comments</label>
-                                        <textarea value={groupComments.othersComments} setGroupComments={(e) => setGroupComments({ othersComments: e.target.value })}></textarea>
+                                        <textarea value={groupComments.othersComments} onChange={(e) => setGroupComments({ othersComments: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label>Group Comments</label>
-                                        <textarea value={groupComments.groupComments} setGroupComments={(e) => setGroupComments({ groupComments: e.target.value })}></textarea>
+                                        <textarea value={groupComments.groupComments} onChange={(e) => setGroupComments({ groupComments: e.target.value })}></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -817,6 +943,7 @@ function generalInformationForm() {
                                             required={docFile[5].required}
                                             instruction={docFile[5].instruction}
                                             columnList={docFile[5].columnList}
+                                            onChange={(data) => setQAApprovalComments({ trainingAttachments: data })}
                                         />
                                     </div>
                                 </div>
@@ -829,6 +956,7 @@ function generalInformationForm() {
                                         required={changeCloser.required}
                                         instruction={changeCloser.instruction}
                                         columnList={changeCloser.columnList}
+                                        onChange={(data) => setChangeClosure({ documentDetails: data })}
                                     />
                                     <div className="group-input">
                                         <label>QA Closure Comments</label>
@@ -840,6 +968,7 @@ function generalInformationForm() {
                                             required={docFile[6].required}
                                             instruction={docFile[6].instruction}
                                             columnList={docFile[6].columnList}
+                                            onChange={(data) => setChangeClosure({ listOfAttachments: data })}
                                         />
                                     </div>
                                     <div className="sub-head">
@@ -944,7 +1073,7 @@ function generalInformationForm() {
                     </div>
 
                     <div className="button-block" style={asideWorkFlow || asideFamilyTree ? { 'width': 'calc(100% - 300px)' } : { 'width': '100%' }}>
-                        <button className='themeBtn'>Save</button>
+                        <button className='themeBtn' onClick={handleSubmit}>Save</button>
                         <button className='themeBtn'>Back</button>
                         <button className='themeBtn'>Next</button>
                         <button className='themeBtn'>Exit</button>

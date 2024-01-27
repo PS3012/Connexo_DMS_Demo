@@ -6,11 +6,10 @@ import ChangeControlForm from "./pages/ConfigForms/ChangeControl/ChangeControl";
 import DocumentForm from "./pages/ConfigForms/DocumentForm/DocumentForm";
 import LabIncident from "./pages/ConfigForms/LabIncident/LabIncident";
 import ManageQuiz from "./pages/ManageQuiz/ManageQuiz";
-import RiskAssessment from "./pages/ConfigForms/RiskAssessment";
-import RootCauseAnalysis from "./pages/ConfigForms/RootCauseAnalysis";
-import InternalAudit from "./pages/ConfigForms/InternalAudit/InternalAudit";
-import ExternalAudit from "./pages/ConfigForms/ExternalAudit/ExternalAudit";
-import CAPA from "./pages/ConfigForms/CAPA";
+import RiskAssessment from "./pages/ConfigForms/RiskAssessment/RiskAssessment";
+import RootCauseAnalysis from "./pages/ConfigForms/RootCauseAnalysis/RootCauseAnalysis";
+import InternalAudit from "./pages/ConfigForms/InternalAudit";
+import ExternalAudit from "./pages/ConfigForms/ExternalAudit";
 import Desktop from "./pages/Desktop/Desktop";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import ManagementReview from "./pages/ConfigForms/ManagementReview/ManagementReview";
@@ -39,10 +38,9 @@ import QuestionPage from "./pages/Tms/TrainingPage/QuestionPage";
 import ManageQuestionPage from "./pages/Tms/TrainingPage/ManageQuestionPage";
 import ManageQuestionBank from "./pages/Tms/TrainingPage/ManageQuestionBank";
 import ManageQuizzes from "./pages/Tms/TrainingPage/ManageQuizzes";
+import { ToastContainer } from "react-toastify";
 
 function App() {
-  localStorage.setItem("username", "amit.guru@connexo.io")
-  localStorage.setItem("password", "Dms@123")
   return (
     <>
       <BrowserRouter>
@@ -51,16 +49,17 @@ function App() {
           <Route path="/internal-audit-panel" element={<InternalAuditPanel />} />
           <Route path="/external-audit-panel" element={<ExternalAuditPanel />} />
           <Route path='/change-control-panel' element={<ChangeControlPanel />} />
-          <Route path='/lab-incident-panel' element={<LabIncidentPanel />} />
+          <Route path='/lab-incident-panel/:formId' element={<LabIncidentPanel />} />
           <Route path='/root-cause-analysis-panel' element={<RootCauseAnalysisPanel />} />
-          <Route path='/risk-assessment-panel' element={<RiskAssessmentPanel />} />
+          <Route path='/risk-opportunity-panel' element={<RiskAssessmentPanel />} />
           <Route path='/management-review-panel' element={<ManagementReviewPanel />} />
           <Route path='/extension-panel' element={<ExtensionPanel />} />
           <Route path='/desktop' element={<Desktop />} />
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/question' element={<Question />} />
           <Route path='/manage-quiz' element={<ManageQuiz />} />
-          <Route path='/risk-assessment' element={<RiskAssessment />} />
+          <Route path='/add-question' element={<AddQuestion />} />
+          <Route path='/risk-opportunity' element={<RiskAssessment />} />
           <Route path='/document-panel' element={<DocumentPanel />} />
           <Route path='/training-management-system' element={<TrainingManagementSystem />} />
           <Route path='/new-document' element={<DocumentForm />} />
@@ -87,7 +86,8 @@ function App() {
           <Route path='/manage-question-bank' element={<ManageQuestionBank />} />
           <Route path='/manage-quizzes' element={<ManageQuizzes />} />
         </Routes>
-      </BrowserRouter >
+        <ToastContainer />
+      </BrowserRouter>
     </>
   );
 }

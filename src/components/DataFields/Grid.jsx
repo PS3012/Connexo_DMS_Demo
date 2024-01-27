@@ -3,12 +3,6 @@ import './DataFields.css'
 
 function Grid(_props) {
     const [rows, setRows] = useState(_props.initialValues || []);
-
-    useEffect(() => {
-        if (_props.onChange) {
-            _props.onChange(rows);
-        }
-    }, []);
     function handleAddRow() {
         const newRow = {
             id: Math.random(),
@@ -82,6 +76,7 @@ function Grid(_props) {
                                                             const updatedRows = [...rows];
                                                             updatedRows.find((r) => r.id === row.id).cells[index] = e.target.value;
                                                             setRows(updatedRows);
+                                                            _props.onChange(rows);
                                                         }}
                                                     >
                                                         <option value="">-- Select --</option>
@@ -92,7 +87,7 @@ function Grid(_props) {
                                                         ))}
                                                     </select>
                                                 ) : _props.columnList[index - 1].type === 'singleSelection' ? (
-                                                    <input type="file" onChange={(e) => handleFileUpload(row.id, e)} />
+                                                    <input type="file" onChange={(e) => { handleFileUpload(row.id, e); _props.onChange(rows); }} />
                                                 ) : (
                                                     <input
                                                         type={_props.columnList[index - 1].type}
@@ -101,6 +96,7 @@ function Grid(_props) {
                                                             const updatedRows = [...rows];
                                                             updatedRows.find((r) => r.id === row.id).cells[index] = e.target.value;
                                                             setRows(updatedRows);
+                                                            _props.onChange(rows);
                                                         }}
                                                     />
                                                 )
