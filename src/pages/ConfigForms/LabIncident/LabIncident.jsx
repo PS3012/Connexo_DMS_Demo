@@ -10,7 +10,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { LabIncidentCreate } from "../../../components/Constant";
 import '../ConfigForms.css'
-import axios from "axios";
+
 
 function LabIncident() {
     const [form, setForm] = useState(formList[0]);

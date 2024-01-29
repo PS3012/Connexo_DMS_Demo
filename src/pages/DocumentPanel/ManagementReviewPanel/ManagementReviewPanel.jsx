@@ -1,24 +1,21 @@
-import { useReducer, useState } from "react";
+import { useState, useReducer} from "react";
 import HeaderTop from "../../../components/Header/HeaderTop"
 import Grid from "../../../components/DataFields/Grid";
-// import OperationModal from "../../../components/Modals/InstructionModal/OperationModal";
-// import RequirementsforProductModal from "../../../components/Modals/InstructionModal/RequirementsforProductModal";
-// import DesignnDevelopment from "../../../components/Modals/InstructionModal/DesignnDevelopment";
-// import ControlofExternally from "../../../components/Modals/InstructionModal/ControlofExternally";
-// import ProductionnService from "../../../components/Modals/InstructionModal/ProductionnService";
-// import ReleaseOfProduct from "../../../components/Modals/InstructionModal/ReleaseOfProduct";
-// import ControlofNonConforming from "../../../components/Modals/InstructionModal/ControlofNonConforming";
+import OperationModal from "../../../components/Modals/InstructionModal/OperationModal";
+import RequirementsforProductModal from "../../../components/Modals/InstructionModal/RequirementsforProductModal";
+import DesignnDevelopment from "../../../components/Modals/InstructionModal/DesignnDevelopment";
+import ControlofExternally from "../../../components/Modals/InstructionModal/ControlofExternally";
+import ProductionnService from "../../../components/Modals/InstructionModal/ProductionnService";
+import ReleaseOfProduct from "../../../components/Modals/InstructionModal/ReleaseOfProduct";
+import ControlofNonConforming from "../../../components/Modals/InstructionModal/ControlofNonConforming";
 import InputDate from "../../../components/DataFields/InputDate";
-
-import { managementReview, site, Agenda, actionItem, attachment, performanceEvaluation, capaDetails, formList, workFlow, currentYear, } from './ManagementReviewFunction';
 import { CurrentDate } from "../../../components/DateReturners";
+import HeaderBottom from "../../../components/Header/HeaderBottom";
+import { managementReview, site, Agenda, actionItem, attachment, performanceEvaluation, capaDetails,progressItems, formList, currentYear, } from './ManagementReviewPanelFunctions';
 
-
-function ManagementReview() {
-    const [form, setForm] = useState(formList[0]);
-    const [modal, setModal] = useState(" ");
-    const [asideWorkFlow, setAsideWorkFlow] = useState(false)
-    const [asideFamilyTree, setAsideFamilyTree] = useState(false)
+function ManagementReviewPanel() {
+    const [form, setForm] = useState("General Information");
+    const currentDate = new Date();
 
     const [generalInformation, setGeneralInformation] = useReducer((prev, next) => ({
         ...prev, ...next
@@ -82,54 +79,127 @@ function ManagementReview() {
         dueDateExtensionJustification: '',
     })
 
+
+    const dateFormatOptions = { day: '2-digit', month: 'short', year: 'numeric' };
+    const formattedDate = currentDate.toLocaleDateString('en-GB', dateFormatOptions).replace(/ /g, '-');
+
+    const oneMonthLater = new Date(currentDate);
+    oneMonthLater.setMonth(currentDate.getMonth() + 1);
+
+
+
+    // ------------------Record Workflow-------------
+   
+    const [progressArray, setProgressArray] = useState([progressItems[0].name])
+    const [signatureModal, setSignatureModal] = useState(false)
+    const [keyword, setKeyword] = useState('')
+    const [keywordElements, setKeywordElements] = useState([])
+    const closeSignatureModal = () => setSignatureModal(false);
+    function handleESignature(key, elements) {
+        setKeyword(key)
+        setKeywordElements(elements)
+        for (let ele of elements) {
+            let updatedItemIndex = progressItems.findIndex((item) => item.name === ele);
+            if (updatedItemIndex !== -1) {
+                progressItems[updatedItemIndex].details = 'Updated';
+            } else {
+                console.error('Item with name "Opened" not found.');
+            }
+        }
+        setSignatureModal(true)
+    }
+    function signatureValue(key) {
+        if (key) {
+            if (keyword === 'add') {
+                addProgress(keywordElements)
+            } else if (keyword === 'remove') {
+                removeProgress(keywordElements)
+            } else {
+                setProgressArray('Closed-Cancelled')
+            }
+        } else {
+            alert('E-Signature Not Matched.')
+        }
+    }
+    function addProgress(addEle) {
+        for (let ele of addEle) {
+            setProgressArray((prevArray) => [...prevArray, ele])
+        }
+    }
+    function removeProgress(removeEle) {
+        setProgressArray(progressArray.filter((item) => !removeEle.includes(item)));
+    }
     return (
         <>
-            <div id="main-form-container" style={asideWorkFlow || asideFamilyTree ? { 'padding': '0 0 0 300px' } : {}}>
+            <HeaderTop />
+            <HeaderBottom />
+            <div id="document-panel">
 
-                {asideWorkFlow &&
-                    <div className="aside-container">
-                        <div className="head">
-                            <div>Workflow</div>
-                            <div>Trust The Process</div>
+
+                <div className="top-block">
+                    <div><strong> Record Name:&nbsp;</strong>Management Review Panel</div>
+                    <div><strong> Site:&nbsp;</strong>Jordan</div>
+                    <div><strong> Current Status:&nbsp;</strong>Under Initiation</div>
+                    <div><strong> Initiated By:&nbsp;</strong>Shaleen Mishra</div>
+                </div>
+
+                <div className="inner-block">
+
+                    <div className="workflow-bar">
+                        <div className="workflow-top-block">
+                            <div className="head">Record Workflow</div>
+                            <div className="btn-bar">
+                                <button className="themeBtn">Audit Trail</button>
+                                <button className="themeBtn">Print</button>
+                                {progressArray.length === 1 &&
+                                    <>
+                                        <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[1].name])}>Submit</button>
+                                        <button className="themeBtn" onClick={() => handleESignature('closed', [])}>Cancel</button>
+                                    </>
+                                }
+                                {progressArray.length === 2 &&
+                                    <>
+                                        <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[2].name])}>HOD Review Complete</button>
+                                        <button className="themeBtn" onClick={() => handleESignature('remove', [progressItems[1].name])}>More Information Required</button>
+                                    </>
+                                }
+                                {progressArray.length === 3 &&
+                                    <>
+                                        <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[3].name])}>Send to CFT Reviewers</button>
+                                        <button className="themeBtn" onClick={() => handleESignature('remove', [progressItems[2].name])}>More Information Required</button>
+                                        <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[3].name, progressItems[4].name])}>CFT Review Not Required</button>
+                                    </>
+                                }
+                                {progressArray.length === 4 &&
+                                    <>
+                                        <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[4].name])}>Review Complete</button>
+                                        <button className="themeBtn" onClick={() => handleESignature('remove', [progressItems[2].name, progressItems[3].name])}>Request More Info</button>
+                                    </>
+                                }
+                                {progressArray.length === 5 &&
+                                    <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[5].name])}>Implemented</button>
+                                }
+                                <button className="themeBtn">Exit</button>
+                            </div>
                         </div>
-                        <div className="content workflow">
-                            {workFlow.map((item, index) => (
-                                <div className={index === 0 ? "green-state" : index === (workFlow.length - 1) ? "red-state" : ""}>
-                                    {item}
-                                    {index !== (workFlow.length - 1) && <img src="/down.gif" alt="..." />}
-                                </div>
-                            ))}
+                        <div className="progress-block">
+                            {(progressArray === 'Closed-Cancelled') ?
+                                <>
+                                    <div className="active">Opened</div>
+                                    <div className="active closed">Closed-Cancelled</div>
+                                </>
+                                : progressItems.map((item) => (
+                                    <div key={item.id} className={progressArray.includes(item.name) ? 'active' : ''}>
+                                        {item.name}
+                                        {item.details && <div className="details">{item.details}</div>}
+                                    </div>
+                                ))
+                            }
                         </div>
                     </div>
-                }
 
-                {asideFamilyTree &&
-                    <div className="aside-container">
-                        <div className="head">
-                            <div>Family Tree</div>
-                            <div>Family of Precision</div>
-                        </div>
-                        <div className="content family-list">
-                            <div>CAPA (1)</div>
-                            <div>Audit Program (0)</div>
-                            <div>Observation (3)</div>
-                            <div>Extension (2)</div>
-                            <div>Effectiveness Check (0)</div>
-                            <div>Change Control (0)</div>
-                            <div>Root Cause Analysis (0)</div>
-                        </div>
-                    </div>
-                }
-
-                <div id="config-form-document-page">
-                    <HeaderTop />
-                    <div className="top-block">
-                        <div><strong> Record Name:&nbsp;</strong>Management Review</div>
-                        <div><strong> Site:&nbsp;</strong>{site}</div>
-                        <div><strong> Current Status:&nbsp;</strong>Under Initiation</div>
-                        <div><strong> Initiated By:&nbsp;</strong>{generalInformation.initiator}</div>
-                    </div>
-                    <div className="document-block">
+                </div>
+                <div className="document-block">
                         <div className="document-tabs">
                             <div className={form === formList[0] ? 'active' : ''} onClick={() => setForm(formList[0])}>{formList[0]}</div>
                             <div className={form === formList[1] ? 'active' : ''} onClick={() => setForm(formList[1])}>{formList[1]}</div>
@@ -519,28 +589,15 @@ function ManagementReview() {
                             </div>
                         ) : ""}
                     </div>
-                    <div className="button-block" style={asideWorkFlow || asideFamilyTree ? { 'width': 'calc(100% - 300px)' } : { 'width': '100%' }}>
-                        <button className="themeBtn">Save</button>
-                        <button className="themeBtn">Back</button>
-                        <button className="themeBtn">Next</button>
-                        <button className="themeBtn">Exit</button>
-                    </div>
-                </div>
-                <div className="sticky-buttons">
-                    <div onClick={() => { setAsideWorkFlow(!asideWorkFlow); setAsideFamilyTree(false) }}>
-                        <svg width="18" height="24" viewBox="0 0 384 512" xmlns="http://www.w3.org/2000/svg">
-                            <path fill="#ffffff" d="M369.9 97.9L286 14C277 5 264.8-.1 252.1-.1H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48V131.9c0-12.7-5.1-25-14.1-34M332.1 128H256V51.9zM48 464V48h160v104c0 13.3 10.7 24 24 24h104v288zm220.1-208c-5.7 0-10.6 4-11.7 9.5c-20.6 97.7-20.4 95.4-21 103.5c-.2-1.2-.4-2.6-.7-4.3c-.8-5.1.3.2-23.6-99.5c-1.3-5.4-6.1-9.2-11.7-9.2h-13.3c-5.5 0-10.3 3.8-11.7 9.1c-24.4 99-24 96.2-24.8 103.7c-.1-1.1-.2-2.5-.5-4.2c-.7-5.2-14.1-73.3-19.1-99c-1.1-5.6-6-9.7-11.8-9.7h-16.8c-7.8 0-13.5 7.3-11.7 14.8c8 32.6 26.7 109.5 33.2 136c1.3 5.4 6.1 9.1 11.7 9.1h25.2c5.5 0 10.3-3.7 11.6-9.1l17.9-71.4c1.5-6.2 2.5-12 3-17.3l2.9 17.3c.1.4 12.6 50.5 17.9 71.4c1.3 5.3 6.1 9.1 11.6 9.1h24.7c5.5 0 10.3-3.7 11.6-9.1c20.8-81.9 30.2-119 34.5-136c1.9-7.6-3.8-14.9-11.6-14.9h-15.8z" />
-                        </svg>
-                    </div>
-                    <div onClick={() => { setAsideFamilyTree(!asideFamilyTree); setAsideWorkFlow(false) }}>
-                        <svg width="24" height="24" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-                            <path fill="#ffffff" d="M25.01 49v46H103V49zM153 49v46h78V49zm128 0v46h78V49zm128 0v46h78V49zM55.01 113v64H119v46h18v-46h64v-64h-18v46H73.01v-46zM311 113v64h64v46h18v-46h64v-64h-18v46H329v-46zM89.01 241v46H167v-46zM345 241v46h78v-46zm-226 64v48h128v46h18v-46h128v-48h-18v30H137v-30zm98 112v46h78v-46z" />
-                        </svg>
-                    </div>
+                <div className="button-block">
+                    <button className="themeBtn">Save</button>
+                    <button className="themeBtn">Back</button>
+                    <button className="themeBtn">Next</button>
+                    <button className="themeBtn">Exit</button>
                 </div>
             </div>
         </>
     )
 }
 
-export default ManagementReview
+export default ManagementReviewPanel

@@ -274,10 +274,10 @@ function EffectivenessCheck() {
                         setGeneralInformation({ severityLevel: e.target.value })
                       }
                     >
-                      <option value="">-- Select --</option>
-                      <option value="">Major</option>
-                      <option value="">Minor</option>
-                      <option value="">Critical</option>
+                      <option value="Select">-- Select --</option>
+                      <option value="Major">Major</option>
+                      <option value="Minor">Minor</option>
+                      <option value="Critical">Critical</option>
                     </select>
                   </div>
 

@@ -1,75 +1,82 @@
-import { useState } from 'react'
-import HeaderTop from '../../components/Header/HeaderTop'
-import HeaderBottom from '../../components/Header/HeaderBottom'
-import ESignatureModal from '../../components/Modals/ESignatureModal/ESignatureModal';
-import './DocumentPanel.css'
+import { useState, useReducer } from 'react'
+import HeaderTop from '../../../components/Header/HeaderTop'
+import HeaderBottom from '../../../components/Header/HeaderBottom'
+import ESignatureModal from '../../../components/Modals/ESignatureModal/ESignatureModal';
+import '../DocumentPanel.css'
 import React from "react";
-import Grid from "../../components/DataFields/Grid";
-import InputDate from "../../components/DataFields/InputDate";
-import FlexField from "../../components/DataFields/FlexField";
-import RelatedRecords from "../../components/DataFields/RelatedRecords";
-import { CurrentDate } from "../../components/DateReturners";
+import Grid from "../../../components/DataFields/Grid";
+import InputDate from "../../../components/DataFields/InputDate";
+import { CurrentDate } from "../../../components/DateReturners";
+import {formList , docFile, progressItems, currentYear, site,} from './EffectivenessCheckPanelFunctions';
 
 
 function EffectivenessCheckPanel() {
-
-  const formList = [
-    "General Information",
-    "Effectiveness Check Results",
-    "Reference Info/Comments",
-    "Activity History",
-  ];
-
-  const [form, setForm] = useState(formList[0]);
-
-
-  const docFile = [
-    {
-      label: "Effectiveness check Attachment",
-      instruction: "Please Attach all relevant or supporting documents",
-      required: true,
-      columnList: [
-        { id: "2.1.1.1", name: "Title of Document", type: "text" },
-        { id: "2.1.1.2", name: "Attached File", type: "File" },
-        { id: "2.1.1.3", name: "Remark", type: "text" },
-      ],
-    },
-
-    {
-      label: "Addendum Attachment",
-      instruction: "Please Attach all relevant or supporting documents",
-      required: true,
-      columnList: [
-        { id: "2.1.1.1", name: "Title of Document", type: "text" },
-        { id: "2.1.1.2", name: "Attached File", type: "File" },
-        { id: "2.1.1.3", name: "Remark", type: "text" },
-      ],
-    },
-    {
-      label: "Attachment",
-      instruction: "Please Attach all relevant or supporting documents",
-      required: true,
-      columnList: [
-        { id: "2.1.1.1", name: "Title of Document", type: "text" },
-        { id: "2.1.1.2", name: "Attached File", type: "File" },
-        { id: "2.1.1.3", name: "Remark", type: "text" },
-      ],
-    },
-  ];
-
-  const progressItems = [
-    { id: 1, name: 'Opened', details: 'Document is opened at 10 Jan, 2023 11:12PM' },
-    { id: 2, name: 'HOD Review', details: 'Action Item child can be created at this stage.' },
-    { id: 3, name: 'Pending QA Review', details: '' },
-    { id: 4, name: 'CFT/SME Review', details: '' },
-    { id: 5, name: 'Pending Change Implementation', details: 'New Document child can be created at this stage.' },
-    { id: 6, name: 'Closed - Done', details: '' },
-  ]
+  const [form, setForm] = useState(formList[0]); 
   const [progressArray, setProgressArray] = useState([progressItems[0].name])
   const [signatureModal, setSignatureModal] = useState(false)
   const [keyword, setKeyword] = useState('')
   const [keywordElements, setKeywordElements] = useState([])
+
+  const [generalInformation, setGeneralInformation] = useReducer(
+    (prev, next) => ({
+      ...prev,
+      ...next,
+    }),
+    {
+      recordNumber: `${site}/EC/${currentYear}/000001`,
+      site: site,
+      initiator: "Amit Guru",
+      dateOfInitiation: CurrentDate(),
+      assignedTo: "",
+      dueDate: "",
+      initiatorGroup: "",
+      shortDescription: "",
+      severityLevel: "",
+      initiatedThrough: "",
+      initiatedThroughOthers: "",
+      qualityReviewer: "",
+      repeat: "",
+      repeatNature: "",
+      riskLevel: "",
+      divisionCode: "",
+      natureOfChange: "",
+      natureOfChangeOthers: "",
+      initialAttachment: "",
+      groupComment: "",
+    }
+  );
+
+  const [effectivenessCheckResults, setEffectivenessCheckResults] = useReducer(
+    (prev, next) => ({
+      ...prev,
+      ...next,
+    }),
+    {
+      effectivenessSummary: "",
+      effectivenessResults: "",
+      effectivenesscheckAttachment: "",
+      addendumComments: "",
+      addendumAttachment: "",
+    }
+  );
+
+  const [activityHistory, setActivityHistory] = useReducer(
+    (prev, next) => ({
+      ...prev,
+      ...next,
+    }),
+    {
+      actualClosureDate: "",
+      originalDateDue: "",
+      cancellationCategory: "",
+      trackWiseRecordType: "",
+      cancellationJustification: "",
+    }
+  );
+
+
   const closeSignatureModal = () => setSignatureModal(false);
+
   function handleESignature(key, elements) {
     setKeyword(key)
     setKeywordElements(elements)
@@ -203,28 +210,42 @@ function EffectivenessCheckPanel() {
                       <label>Record Number</label>
                       <input
                         type="text"
-                        value="Jordan/IA/2024/00000001"
+                        value={generalInformation.recordNumber}
                         disabled
                       />
                     </div>
                     <div className="group-input">
                       <label>Site/Location Code</label>
-                      <input type="text" value="Jordan" disabled />
+                      <input
+                        type="text"
+                        value={generalInformation.site}
+                        disabled
+                      />
                     </div>
                     <div className="group-input">
                       <label>Initiator</label>
-                      <input type="text" value="Amit Guru" disabled />
+                      <input
+                        type="text"
+                        value={generalInformation.initiator}
+                        disabled
+                      />
                     </div>
                     <div className="group-input">
                       <label>Date of Initiation</label>
-                      <input type="" value={CurrentDate()} disabled />
+                      <input
+                        type="text"
+                        value={generalInformation.dateOfInitiation}
+                        disabled
+                      />
                     </div>
                     <div className="group-input">
                       <label>Assigned To</label>
                       <select
-                        id="select-state"
-                        placeholder="Select..."
                         name="assign_id"
+                        value={generalInformation.assignedTo}
+                        onChange={(e) =>
+                          setGeneralInformation({ assignedTo: e.target.value })
+                        }
                       >
                         <option value="">Select a value</option>
                         <option value="1">Amit Guru</option>
@@ -237,18 +258,27 @@ function EffectivenessCheckPanel() {
                         <option value="8">Akash Asthana</option>
                       </select>
                     </div>
+
                     <InputDate
                       label="Due Date"
+                      instruction="Please mention expected date of completion."
+                      isRequired="true"
                       enableDate="future"
-                      isRequired="false"
+                      value={generalInformation.dueDate}
+                      returnDate={(date) =>
+                        setGeneralInformation({ dueDate: date })
+                      }
                     />
-
                     <div className="group-input">
                       <label>Quality Reviewer</label>
+
                       <select
-                        id="select-state"
-                        placeholder="Select..."
-                        name="assign_id"
+                        value={generalInformation.qualityReviewer}
+                        onChange={(e) =>
+                          setGeneralInformation({
+                            qualityReviewer: e.target.value,
+                          })
+                        }
                       >
                         <option value="">Select a value</option>
                         <option value="1">Amit Guru</option>
@@ -262,21 +292,35 @@ function EffectivenessCheckPanel() {
                       </select>
                     </div>
                   </div>
-                  
                   <div className="group-input">
                     <label>
-                      Short Description
+                      <div className="required"></div>Short Description
                     </label>
-                    <textarea type="text" rows="2" />
+                    <div className="instruction">
+                      Please mention brief summary
+                    </div>
+                    <textarea
+                      value={generalInformation.shortDescription}
+                      onChange={(e) =>
+                        setGeneralInformation({
+                          shortDescription: e.target.value,
+                        })
+                      }
+                    ></textarea>
                   </div>
-
                   <div className="group-input">
                     <label>Severity Level</label>
-                    <select>
-                      <option value="">-- Select --</option>
-                      <option value="">Major</option>
-                      <option value="">Minor</option>
-                      <option value="">Critical</option>
+
+                    <select
+                      value={generalInformation.severityLevel}
+                      onChange={(e) =>
+                        setGeneralInformation({ severityLevel: e.target.value })
+                      }
+                    >
+                      <option value="Select">-- Select --</option>
+                      <option value="Major">Major</option>
+                      <option value="Minor">Minor</option>
+                      <option value="Critical">Critical</option>
                     </select>
                   </div>
 
@@ -285,25 +329,46 @@ function EffectivenessCheckPanel() {
                   </div>
                   <div className="group-input">
                     <label>Effectiveness check Plan</label>
-                    <input type="text" />
+                    <input
+                      type="text"
+                      value={generalInformation.effectivenesscheckPlan}
+                      onChange={(e) =>
+                        setGeneralInformation({
+                          effectivenesscheckPlan: e.target.value,
+                        })
+                      }
+                    />
                   </div>
-
-
                 </div>
               </div>
             ) : form === formList[1] ? (
               <div className="document-form">
                 <div className="details-form-data">
                   <div className="sub-head">Effectiveness Summary</div>
-                  <FlexField
-                    label="Effectiveness Summary"
-                    instruction=""
-                    isRequired="false"
-                  />
+
+                  <div className="group-input">
+                    <label>Effectiveness Summary</label>
+                    <textarea
+                      value={effectivenessCheckResults.effectivenessSummary}
+                      onChange={(e) =>
+                        setEffectivenessCheckResults({
+                          effectivenessSummary: e.target.value,
+                        })
+                      }
+                    ></textarea>
+                  </div>
                   <div className="sub-head">Effectiveness Check Results</div>
                   <div className="group-input">
                     <label>Effectiveness Results</label>
-                    <input type="text" />
+                    <input
+                      type="text"
+                      value={effectivenessCheckResults.effectivenessResults}
+                      onChange={(e) =>
+                        setEffectivenessCheckResults({
+                          effectivenessResults: e.target.value,
+                        })
+                      }
+                    />
                   </div>
                   <div className="group-input">
                     <Grid
@@ -317,7 +382,15 @@ function EffectivenessCheckPanel() {
                   <div className="sub-head">Reopen</div>
                   <div className="group-input">
                     <label>Addendum Comments</label>
-                    <input type="text" />
+                    <input
+                      type="text"
+                      value={effectivenessCheckResults.addendumComments}
+                      onChange={(e) =>
+                        setEffectivenessCheckResults({
+                          addendumComments: e.target.value,
+                        })
+                      }
+                    />
                   </div>
                   <div className="group-input">
                     <Grid
@@ -332,39 +405,28 @@ function EffectivenessCheckPanel() {
             ) : form === formList[2] ? (
               <div className="document-form">
                 <div className="details-form-data">
-                  <div className="sub-head">Reference Info comments</div>
-                  <FlexField
-                    label="Comments"
-                    instruction=""
-                    isRequired="false"
-                  />
-
-                  <div className="group-input">
-                    <Grid
-                      label={docFile[2].label}
-                      required={docFile[2].required}
-                      instruction={docFile[2].instruction}
-                      columnList={docFile[2].columnList}
-                    />
-                  </div>
-
-                  <RelatedRecords label="Reference Records" />
-                </div>
-              </div>
-            ) : form === formList[3] ? (
-              <div className="document-form">
-                <div className="details-form-data">
                   <div className="sub-head">Data History</div>
                   <div className="form-flex">
                     <InputDate
                       label="Actual Closure Date"
-                      enableDate="future"
+                      // instruction="Please mention expected date of completion."
                       isRequired="false"
+                      enableDate="future"
+                      value={activityHistory.actualClosureDate}
+                      returnDate={(date) =>
+                        setActivityHistory({ actualClosureDate: date })
+                      }
                     />
+
                     <InputDate
                       label="Original Date Due"
-                      enableDate="future"
+                      // instruction="Please mention expected date of completion."
                       isRequired="false"
+                      enableDate="future"
+                      value={activityHistory.originalDateDue}
+                      returnDate={(date) =>
+                        setActivityHistory({ originalDateDue: date })
+                      }
                     />
                   </div>
                   <div className="sub-head">Record Signature</div>
@@ -434,10 +496,19 @@ function EffectivenessCheckPanel() {
                   <div className="form-flex">
                     <div className="group-input">
                       <label>Cancellation Category</label>
-                      <select>
+                      <select
+                        value={activityHistory.cancellationCategory}
+                        onChange={(e) =>
+                          setActivityHistory({
+                            cancellationCategory: e.target.value,
+                          })
+                        }
+                      >
                         <option value="">Enter Your Selection Here</option>
                         <option value="Duplicate Entry">Duplicate Entry</option>
-                        <option value="Entered in Error">Entered in Error</option>
+                        <option value="Entered in Error">
+                          Entered in Error
+                        </option>
                         <option value="No Longer Necessary">
                           No Longer Necessary
                         </option>
@@ -449,7 +520,15 @@ function EffectivenessCheckPanel() {
 
                     <div className="group-input">
                       <label>TrackWise Record Type</label>
-                      <select>
+
+                      <select
+                        value={activityHistory.trackWiseRecordType}
+                        onChange={(e) =>
+                          setActivityHistory({
+                            trackWiseRecordType: e.target.value,
+                          })
+                        }
+                      >
                         <option>Enter Your Selection Here</option>
                         <option value="Effectiveness Check">
                           Effectiveness Check
@@ -457,17 +536,24 @@ function EffectivenessCheckPanel() {
                       </select>
                     </div>
                   </div>
-                  <FlexField
-                    label="Cancellation Justification"
-                    instruction=""
-                    isRequired="false"
-                  />
+                  <div className="group-input">
+                    <label>Cancellation Justification</label>
+                    <textarea
+                      value={activityHistory.cancellationJustification}
+                      onChange={(e) =>
+                        setActivityHistory({
+                          cancellationJustification: e.target.value,
+                        })
+                      }
+                    ></textarea>
+                  </div>
                 </div>
               </div>
             ) : (
               ""
             )}
           </div>
+
           <div className="button-block" style={{ width: "100%" }}>
             <button className="themeBtn">Save</button>
             <button className="themeBtn">Back</button>

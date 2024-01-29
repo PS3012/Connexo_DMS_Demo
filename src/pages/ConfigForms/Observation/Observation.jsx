@@ -3,22 +3,15 @@ import { useState, useReducer } from "react";
 import HeaderTop from "../../../components/Header/HeaderTop";
 import Grid from "../../../components/DataFields/Grid";
 import InputDate from "../../../components/DataFields/InputDate";
-import FlexField from "../../../components/DataFields/FlexField";
 import { CurrentDate } from "../../../components/DateReturners";
-import {
-  formList,
-  workFlow,
-  actionPlan,
-  docFile,
-  site,
-  currentYear,
-} from "./ObservationFunction";
+import {  formList,  workFlow,  actionPlan,  docFile,  site,  currentYear,} from "./ObservationFunction";
 import "../ConfigForms.css";
 
 function Observation() {
   const [form, setForm] = useState(formList[0]);
   const [asideWorkFlow, setAsideWorkFlow] = useState(false);
   const [asideFamilyTree, setAsideFamilyTree] = useState(false);
+  
   const [changeControl, setChangeControl] = useReducer(
     (prev, next) => ({
       ...prev,
@@ -292,10 +285,10 @@ function Observation() {
                         value={generalInformation.severityLevel}
                         onChange={(e) => setGeneralInformation({ severityLevel: e.target.value })}>
 
-                      <option value="">-- Select --</option>
-                      <option value="">Major</option>
-                      <option value="">Minor</option>
-                      <option value="">Critical</option>
+                      <option value="Select">-- Select --</option>
+                      <option value="Major">Major</option>
+                      <option value="Minor">Minor</option>
+                      <option value="Critical">Critical</option>
                     </select>
                   </div>
                   <div className="sub-head">Observation Details</div>

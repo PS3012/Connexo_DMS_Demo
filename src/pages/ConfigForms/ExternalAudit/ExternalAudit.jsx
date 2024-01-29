@@ -220,10 +220,10 @@ function ExternalAudit() {
                   <div className="group-input">
                     <label>Severity Level</label>
                     <select value={externalAudit.severityLevel} onChange={(e) => setExternalAudit({ severityLevel: e.target.value })}>
-                      <option value="">-- Select --</option>
-                      <option value="">Major</option>
-                      <option value="">Minor</option>
-                      <option value="">Critical</option>
+                      <option value="Select">-- Select --</option>
+                      <option value="Major">Major</option>
+                      <option value="Minor">Minor</option>
+                      <option value="Critical">Critical</option>
                     </select>
                   </div>
                   <div className="form-flex">

@@ -8,23 +8,16 @@ import LabIncident from "./pages/ConfigForms/LabIncident/LabIncident";
 import ManageQuiz from "./pages/ManageQuiz/ManageQuiz";
 import RiskAssessment from "./pages/ConfigForms/RiskAssessment/RiskAssessment";
 import RootCauseAnalysis from "./pages/ConfigForms/RootCauseAnalysis/RootCauseAnalysis";
-import InternalAudit from "./pages/ConfigForms/InternalAudit";
-import ExternalAudit from "./pages/ConfigForms/ExternalAudit";
 import Desktop from "./pages/Desktop/Desktop";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import ManagementReview from "./pages/ConfigForms/ManagementReview/ManagementReview";
-import Extension from "./pages/ConfigForms/Extension";
 import ChangeControlPanel from "./pages/DocumentPanel/ChangeControlPanel/ChangeControlPanel";
-import InternalAuditPanel from "./pages/DocumentPanel/InternalAuditPanel";
+
 import ExternalAuditPanel from "./pages/DocumentPanel/ExternalAuditPanel/ExternalAuditPanel";
 import LabIncidentPanel from './pages/DocumentPanel/LabIncidentPanel/LabIncidentPanel'
 import RootCauseAnalysisPanel from './pages/DocumentPanel/RootCauseAnalysisPanel'
 import RiskAssessmentPanel from './pages/DocumentPanel/RiskAssessmentPanel'
-import ManagementReviewPanel from './pages/DocumentPanel/ManagementReviewPanel'
-import ExtensionPanel from './pages/DocumentPanel/ExtensionPanel'
-import CAPAPanel from './pages/DocumentPanel/CAPAPanel'
-import EffectivenessCheckPanel from './pages/DocumentPanel/EffectivenessCheckPanel'
-import ObservationPanel from './pages/DocumentPanel/ObservationPanel'
+// import ManagementReviewPanel from './pages/DocumentPanel/ManagementReviewPanel'
 import Login from "./pages/Login/Login";
 import ActionItems from "./pages/ConfigForms/ActionItems/ActionItems";
 import AuditProgram from "./pages/ConfigForms/AuditProgram/AuditProgram";
@@ -39,6 +32,15 @@ import ManageQuestionPage from "./pages/Tms/TrainingPage/ManageQuestionPage";
 import ManageQuestionBank from "./pages/Tms/TrainingPage/ManageQuestionBank";
 import ManageQuizzes from "./pages/Tms/TrainingPage/ManageQuizzes";
 import { ToastContainer } from "react-toastify";
+import InternalAudit from "./pages/ConfigForms/InternalAudit/InternalAudit";
+import ExternalAudit from "./pages/ConfigForms/ExternalAudit/ExternalAudit";
+import Analytics from "./pages/Analytics/Analytics";
+import CAPAPanel from "./pages/DocumentPanel/CapaPanel/CapaPanel";
+import EffectivenessCheckPanel from "./pages/DocumentPanel/EffectivenessCheckPanel/EffectivenessCheckPanel";
+import ExtensionPanel from "./pages/DocumentPanel/ExtensionPanel/ExtensionPanel";
+import ObservationPanel from "./pages/DocumentPanel/ObservationPanel/ObservationPanel";
+import InternalAuditPanel from "./pages/DocumentPanel/InternalAuditPanel/InternalAuditPanel";
+import ManagementReviewPanel from "./pages/DocumentPanel/ManagementReviewPanel/ManagementReviewPanel";
 
 function App() {
   return (
@@ -52,13 +54,12 @@ function App() {
           <Route path='/lab-incident-panel/:formId' element={<LabIncidentPanel />} />
           <Route path='/root-cause-analysis-panel' element={<RootCauseAnalysisPanel />} />
           <Route path='/risk-opportunity-panel' element={<RiskAssessmentPanel />} />
-          <Route path='/management-review-panel' element={<ManagementReviewPanel />} />
-          <Route path='/extension-panel' element={<ExtensionPanel />} />
+          <Route path='/management-review-panel' element={<ManagementReviewPanel/>} />
+          <Route path='/extension-panel' element={<ExtensionPanel/>} />
           <Route path='/desktop' element={<Desktop />} />
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/question' element={<Question />} />
           <Route path='/manage-quiz' element={<ManageQuiz />} />
-          <Route path='/add-question' element={<AddQuestion />} />
           <Route path='/risk-opportunity' element={<RiskAssessment />} />
           <Route path='/document-panel' element={<DocumentPanel />} />
           <Route path='/training-management-system' element={<TrainingManagementSystem />} />
@@ -79,12 +80,14 @@ function App() {
           <Route path='/audit-program-panel' element={<AuditProgramPanel/>} />
           <Route path='/capa-panel' element={<CAPAPanel />} />
           <Route path='/effectiveness-check-panel' element={<EffectivenessCheckPanel />} />
-          <Route path='/observation-panel' element={<ObservationPanel />} />
+          <Route path='/observation-panel' element={<ObservationPanel/>} />
           <Route path='/*' element={<Navigate to="/" />} />
           <Route path='/question-page' element={<QuestionPage />} />
           <Route path='/manage-question' element={<ManageQuestionPage />} />
           <Route path='/manage-question-bank' element={<ManageQuestionBank />} />
           <Route path='/manage-quizzes' element={<ManageQuizzes />} />
+          <Route path='/analytics' element={<Analytics/>} />
+
         </Routes>
         <ToastContainer />
       </BrowserRouter>

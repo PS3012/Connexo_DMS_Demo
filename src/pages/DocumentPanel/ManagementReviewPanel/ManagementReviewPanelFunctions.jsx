@@ -4,7 +4,7 @@ export const currentYear = currentDate.getFullYear()
 
 export const formList = ["General Information", "Operational planning and control", "Meetings and summary", "Closure", "Signatures",]
 
-export const workFlow = ["Opened", "HOD Review", "Pending QA Review", "CFT/SME Review", "Pending Change Implementation", "Closed-Done"]
+
 
 export const Agenda = [
     {
@@ -96,3 +96,12 @@ export const capaDetails = [
         ],
     },
 ];
+
+export const progressItems = [
+    { id: 1, name: 'Opened', details: 'Document is opened at 10 Jan, 2023 11:12PM' },
+    { id: 2, name: 'HOD Review', details: 'Action Item child can be created at this stage.' },
+    { id: 3, name: 'Pending QA Review', details: '' },
+    { id: 4, name: 'CFT/SME Review', details: '' },
+    { id: 5, name: 'Pending Change Implementation', details: 'New Document child can be created at this stage.' },
+    { id: 6, name: 'Closed - Done', details: '' },
+]

@@ -1,101 +1,102 @@
-import HeaderBottom from "../../components/Header/HeaderBottom";
-import ESignatureModal from "../../components/Modals/ESignatureModal/ESignatureModal";
+import HeaderBottom from "../../../components/Header/HeaderBottom";
+import ESignatureModal from "../../../components/Modals/ESignatureModal/ESignatureModal";
 import React from "react";
 import { useState, useReducer } from "react";
-import HeaderTop from "../../components/Header/HeaderTop";
-import Grid from "../../components/DataFields/Grid";
-import InputDate from "../../components/DataFields/InputDate";
-import FlexField from "../../components/DataFields/FlexField";
-import { CurrentDate } from "../../components/DateReturners";
-import "./DocumentPanel.css";
+import HeaderTop from "../../../components/Header/HeaderTop";
+import Grid from "../../../components/DataFields/Grid";
+import InputDate from "../../../components/DataFields/InputDate";
+import { CurrentDate } from "../../../components/DateReturners";
+import "../DocumentPanel.css";
+import {  formList, progressItems, actionPlan,  docFile,  site,  currentYear,} from "./ObservationPanelFunctions";
 
 function ObservationPanel() {
-  const formList = [
-    "Observation",
-    "CAPA Plan",
-    "Impact Analysis",
-    "Summary",
-    "Signatures",
-  ];
+
 
   const [form, setForm] = useState(formList[0]);
-  const [changeControl, setChangeControl] = useReducer(
+  const [generalInformation, setGeneralInformation] = useReducer(
     (prev, next) => ({
       ...prev,
       ...next,
     }),
     {
-      severityRate: 0,
-      occurrence: 0,
-      detection: 0,
+      recordNumber: `${site}/OB/${currentYear}/000001`,
+      site: site,
+      originator: "Amit Guru",
+      dateOfInitiation: CurrentDate(),
+      assignedTo: "",
+      dueDate: "",
+      dateOpened: "",
+      initiatorGroup: "",
+      shortDescription: "",
+      Description: "",
+      attachedFiles: "",
+      grading: "",
+      referencedGuideline: "",
+      categoryobservation: "",
+      recomendationDateDueforCAPA: "",
+      recommendedAction: "",
+      relatedObsevations: "",
+      nonCompliance: "",
+      initiatedThrough: "",
+      initiatedThroughOthers: "",
+      severityLevel: "",
+      repeat: "",
+      repeatNature: "",
+      riskLevel: "",
+      divisionCode: "",
+      natureOfChange: "",
+      natureOfChangeOthers: "",
+      initialAttachment: "",
+      groupComment: "",
     }
   );
 
-  const actionPlan = {
-    label: "Action Plan",
-    instruction: <div></div>,
-    required: false,
-    columnList: [
-      { id: "2.1.1.1", name: "Action", type: "text" },
-      { id: "2.1.1.2", name: "Responsible", type: "text" },
-      { id: "2.1.1.3", name: "Deadline", type: "text" },
-      { id: "2.1.1.4", name: "Item Status", type: "text" },
-    ],
-  };
+  const [cAPAPlan, setCAPAPlan] = useReducer(
+    (prev, next) => ({
+      ...prev,
+      ...next,
+    }),
+    {
+      dateResponseDue: "",
+      dateDue: "",
+      assignedTo: "",
+      cROVendor: "",
+      actionPlan: "",
+      comments: "",
+    }
+  );
 
-  const docFile = [
+  const [impactAnalysis, setImpactAnalysis] = useReducer(
+    (prev, next) => ({
+      ...prev,
+      ...next,
+    }),
     {
-      label: "Attached Files",
-      instruction: "Please Attach all relevant or supporting documents",
-      required: false,
-      columnList: [
-        { id: "2.1.1.1", name: "Title of Document", type: "text" },
-        { id: "2.1.1.2", name: "Attached File", type: "File" },
-        { id: "2.1.1.3", name: "Remark", type: "text" },
-      ],
-    },
-    {
-      label: "Related Obsevations",
-      instruction: "Please Attach all relevant or supporting documents",
-      required: false,
-      columnList: [
-        { id: "2.1.1.1", name: "Title of Document", type: "text" },
-        { id: "2.1.1.2", name: "Attached File", type: "File" },
-        { id: "2.1.1.3", name: "Remark", type: "text" },
-      ],
-    },
-    {
-      label: "Attached Files",
-      instruction: "Please Attach all relevant or supporting documents",
-      required: false,
-      columnList: [
-        { id: "2.1.1.1", name: "Title of Document", type: "text" },
-        { id: "2.1.1.2", name: "Attached File", type: "File" },
-        { id: "2.1.1.3", name: "Remark", type: "text" },
-      ],
-    },
-  ];
+      impact: "",
+      impactAnalysis: "",
+      severityRate: "",
+      occurrence: "",
+      detection: "",
+    }
+  );
 
-  const progressItems = [
+  const [summary, setSummary] = useReducer(
+    (prev, next) => ({
+      ...prev,
+      ...next,
+    }),
     {
-      id: 1,
-      name: "Opened",
-      details: "Document is opened at 10 Jan, 2023 11:12PM",
-    },
-    {
-      id: 2,
-      name: "HOD Review",
-      details: "Action Item child can be created at this stage.",
-    },
-    { id: 3, name: "Pending QA Review", details: "" },
-    { id: 4, name: "CFT/SME Review", details: "" },
-    {
-      id: 5,
-      name: "Pending Change Implementation",
-      details: "New Document child can be created at this stage.",
-    },
-    { id: 6, name: "Closed - Done", details: "" },
-  ];
+      actualStartDate: "",
+      actualEndDate: "",
+      actionTaken: "",
+      dateRsponseDue: "",
+      dateofResponse: "",
+      attachedFiles: "",
+      relatedURL: "",
+      responseSummary: "",
+    }
+  );
+
   const [progressArray, setProgressArray] = useState([progressItems[0].name]);
   const [signatureModal, setSignatureModal] = useState(false);
   const [keyword, setKeyword] = useState("");
@@ -315,30 +316,45 @@ function ObservationPanel() {
                       <label>Record Number</label>
                       <input
                         type="text"
-                        value="Jordan/IA/2024/00000001"
+                        value={generalInformation.recordNumber}
                         disabled
                       />
                     </div>
                     <div className="group-input">
                       <label>Site/Location Code</label>
-                      <input type="text" value="Jordan" disabled />
+                      <input
+                        type="text"
+                        value={generalInformation.site}
+                        disabled
+                      />
                     </div>
+
                     <div className="group-input">
                       <label>Originator</label>
-                      <input type="text" value="Amit Guru" disabled />
+                      <input
+                        type="text"
+                        value={generalInformation.originator}
+                        disabled
+                      />
                     </div>
+
                     <div className="group-input">
                       <label>Date Opened</label>
-                      <input type="" value={CurrentDate()} disabled />
+                      <input
+                        type="text"
+                        value={generalInformation.dateOpened}
+                        disabled
+                      />
                     </div>
                     <div className="group-input">
                       <label>Assigned To</label>
                       <select
-                        id="select-state"
-                        placeholder="Select..."
                         name="assign_id"
+                        value={generalInformation.assignedTo}
+                        onChange={(e) =>
+                          setGeneralInformation({ assignedTo: e.target.value })
+                        }
                       >
-                        <option value="">Select a value</option>
                         <option value="1">Amit Guru</option>
                         <option value="2">Shaleen Mishra</option>
                         <option value="3">Vikas Prajapati</option>
@@ -351,24 +367,43 @@ function ObservationPanel() {
                     </div>
                     <InputDate
                       label="Due Date"
+                      instruction="Please mention expected date of completion."
+                      isRequired="true"
                       enableDate="future"
-                      isRequired="false"
+                      value={generalInformation.dueDate}
+                      returnDate={(date) =>
+                        setGeneralInformation({ dueDate: date })
+                      }
                     />
                   </div>
                   <div className="group-input">
                     <label>
-                      Short Description
+                      <div className="required"></div>Short Description
                     </label>
-                    <textarea type="text" rows="2" />
+                    <div className="instruction">
+                      Please mention brief summary
+                    </div>
+                    <textarea
+                      value={generalInformation.shortDescription}
+                      onChange={(e) =>
+                        setGeneralInformation({
+                          shortDescription: e.target.value,
+                        })
+                      }
+                    ></textarea>
                   </div>
 
                   <div className="group-input">
                     <label>Severity Level</label>
-                    <select>
-                      <option value="">-- Select --</option>
-                      <option value="">Major</option>
-                      <option value="">Minor</option>
-                      <option value="">Critical</option>
+                    
+                    <select 
+                        value={generalInformation.severityLevel}
+                        onChange={(e) => setGeneralInformation({ severityLevel: e.target.value })}>
+
+                      <option value="Select">-- Select --</option>
+                      <option value="Major">Major</option>
+                      <option value="Minor">Minor</option>
+                      <option value="Critical">Critical</option>
                     </select>
                   </div>
                   <div className="sub-head">Observation Details</div>
@@ -376,7 +411,13 @@ function ObservationPanel() {
                   <div className="form-flex">
                     <div className="group-input">
                       <label>Grading</label>
-                      <select name="grading">
+                      <select
+                        name="grading"
+                        value={generalInformation.grading}
+                        onChange={(e) =>
+                          setGeneralInformation({ grading: e.target.value })
+                        }
+                      >
                         <option value="">-- Select --</option>
                         <option value="1">Recommendation</option>
                         <option value="2">Major</option>
@@ -386,7 +427,15 @@ function ObservationPanel() {
                     </div>
                     <div className="group-input">
                       <label>Category Observation</label>
-                      <select name="category_observation">
+                      <select
+                        name="category_observation"
+                        value={generalInformation.categoryobservation}
+                        onChange={(e) =>
+                          setGeneralInformation({
+                            categoryobservation: e.target.value,
+                          })
+                        }
+                      >
                         <option value="">-- Select --</option>
                         <option title="Case Report Form (CRF)" value="1">
                           Case Report Form (CRF)
@@ -493,13 +542,27 @@ function ObservationPanel() {
 
                   <div className="group-input">
                     <label>Referenced Guideline</label>
-                    <input type="text" />
+                    <input
+                      type="text"
+                      value={generalInformation.referencedGuideline}
+                      onChange={(e) =>
+                        setGeneralInformation({
+                          referencedGuideline: e.target.value,
+                        })
+                      }
+                    />
                   </div>
-                  <FlexField
-                    label="Description"
-                    instruction=""
-                    isRequired="false"
-                  />
+
+                  <div className="group-input">
+                    <label>Description</label>
+                    <textarea
+                      value={generalInformation.description}
+                      onChange={(e) =>
+                        setGeneralInformation({ description: e.target.value })
+                      }
+                    ></textarea>
+                  </div>
+
                   <div className="sub-head">Further Information</div>
 
                   <div className="group-input">
@@ -512,21 +575,38 @@ function ObservationPanel() {
                   </div>
                   <InputDate
                     label="Recomendation Date Due for CAPA"
+                    // instruction="Please mention expected date of completion."
+                    isRequired="false"
                     enableDate="future"
-                    isRequired="false"
+                    value={generalInformation.recomendationDateDueforCAPA}
+                    returnDate={(date) =>
+                      setGeneralInformation({
+                        recomendationDateDueforCAPA: date,
+                      })
+                    }
                   />
 
-                  <FlexField
-                    label="Non Compliance"
-                    instruction=""
-                    isRequired="false"
-                  />
-                  <FlexField
-                    label="Recommended Action"
-                    instruction=""
-                    isRequired="false"
-                  />
+                  <div className="group-input">
+                    <label>Non Compliance</label>
+                    <textarea
+                      value={generalInformation.nonCompliance}
+                      onChange={(e) =>
+                        setGeneralInformation({ nonCompliance: e.target.value })
+                      }
+                    ></textarea>
+                  </div>
 
+                  <div className="group-input">
+                    <label>Recommended Action</label>
+                    <textarea
+                      value={generalInformation.recommendedAction}
+                      onChange={(e) =>
+                        setGeneralInformation({
+                          recommendedAction: e.target.value,
+                        })
+                      }
+                    ></textarea>
+                  </div>
                   <div className="group-input">
                     <Grid
                       label={docFile[1].label}
@@ -544,21 +624,34 @@ function ObservationPanel() {
                   <div className="form-flex">
                     <InputDate
                       label="Date Response Due"
+                      // instruction="Please mention expected date of completion."
                       isRequired="false"
                       enableDate="future"
+                      value={cAPAPlan.dateResponseDue}
+                      returnDate={(date) =>
+                        setCAPAPlan({ dateResponseDue: date })
+                      }
                     />
+
                     <InputDate
                       label="Date Due"
+                      // instruction="Please mention expected date of completion."
                       isRequired="false"
                       enableDate="future"
+                      value={cAPAPlan.dateDue}
+                      returnDate={(date) => setCAPAPlan({ dateDue: date })}
                     />
 
                     <div className="group-input">
                       <label>Assigned To</label>
+
                       <select
                         id="select-state"
-                        placeholder="Select..."
                         name="assign_id"
+                        value={cAPAPlan.assignedTo}
+                        onChange={(e) =>
+                          setCAPAPlan({ assignedTo: e.target.value })
+                        }
                       >
                         <option value="">-Select-</option>
                         <option value="1">Amit Guru</option>
@@ -574,10 +667,14 @@ function ObservationPanel() {
 
                     <div className="group-input">
                       <label>CRO/Vendor</label>
+
                       <select
                         id="select-state"
-                        placeholder="Select..."
                         name="assign_id"
+                        value={cAPAPlan.cROVendor}
+                        onChange={(e) =>
+                          setCAPAPlan({ cROVendor: e.target.value })
+                        }
                       >
                         <option value="">-Select-</option>
                         <option value="1">Amit Guru</option>
@@ -599,11 +696,15 @@ function ObservationPanel() {
                     columnList={actionPlan.columnList}
                   />
 
-                  <FlexField
-                    label="Comments"
-                    instruction=""
-                    isRequired="false"
-                  />
+                  <div className="group-input">
+                    <label>Comments</label>
+                    <textarea
+                      value={cAPAPlan.comments}
+                      onChange={(e) =>
+                        setCAPAPlan({ comments: e.target.value })
+                      }
+                    ></textarea>
+                  </div>
                 </div>
               </div>
             ) : form === formList[2] ? (
@@ -612,7 +713,14 @@ function ObservationPanel() {
                   <div className="sub-head">Impact Analysis</div>
                   <div className="group-input">
                     <label>Impact</label>
-                    <select name="impact">
+
+                    <select
+                      name="impact"
+                      value={impactAnalysis.impact}
+                      onChange={(e) =>
+                        setImpactAnalysis({ impact: e.target.value })
+                      }
+                    >
                       <option value="">-- Select --</option>
                       <option value="1">High</option>
                       <option value="2">Medium</option>
@@ -620,11 +728,16 @@ function ObservationPanel() {
                       <option value="4">None</option>
                     </select>
                   </div>
-                  <FlexField
-                    label="Impact Analysis"
-                    instruction=""
-                    isRequired="false"
-                  />
+
+                  <div className="group-input">
+                    <label>Impact Analysis</label>
+                    <textarea
+                      value={impactAnalysis.impactAnalysis}
+                      onChange={(e) =>
+                        setImpactAnalysis({ impactAnalysis: e.target.value })
+                      }
+                    ></textarea>
+                  </div>
                   <div className="sub-head">Risk Analysis</div>
 
                   <div className="form-flex">
@@ -632,9 +745,9 @@ function ObservationPanel() {
                       <label>Severity Rate</label>
                       <select
                         name="severity"
-                        value={changeControl.severityRate}
+                        value={impactAnalysis.severityRate}
                         onChange={(e) =>
-                          setChangeControl({ severityRate: e.target.value })
+                          setImpactAnalysis({ severityRate: e.target.value })
                         }
                       >
                         <option value="0">-- Select --</option>
@@ -645,11 +758,12 @@ function ObservationPanel() {
                     </div>
                     <div className="group-input">
                       <label>Occurrence</label>
+
                       <select
                         name="Occurrence"
-                        value={changeControl.occurrence}
+                        value={impactAnalysis.occurrence}
                         onChange={(e) =>
-                          setChangeControl({ occurrence: e.target.value })
+                          setImpactAnalysis({ occurrence: e.target.value })
                         }
                       >
                         <option value="0">-- Select --</option>
@@ -660,11 +774,12 @@ function ObservationPanel() {
                     </div>
                     <div className="group-input">
                       <label>Detection</label>
+
                       <select
                         name="Detection"
-                        value={changeControl.detection}
+                        value={impactAnalysis.detection}
                         onChange={(e) =>
-                          setChangeControl({ detection: e.target.value })
+                          setImpactAnalysis({ detection: e.target.value })
                         }
                       >
                         <option value="0">-- Select --</option>
@@ -673,6 +788,7 @@ function ObservationPanel() {
                         <option value="3">High</option>
                       </select>
                     </div>
+
                     <div className="group-input">
                       <label>RPN</label>
                       <div className="instruction">Auto - Calculated</div>
@@ -680,9 +796,9 @@ function ObservationPanel() {
                         type="text"
                         name="RPN"
                         value={
-                          changeControl.severityRate *
-                          changeControl.occurrence *
-                          changeControl.detection
+                          impactAnalysis.severityRate *
+                          impactAnalysis.occurrence *
+                          impactAnalysis.detection
                         }
                         disabled
                       />
@@ -697,49 +813,53 @@ function ObservationPanel() {
                   <div className="form-flex">
                     <InputDate
                       label="Actual Start Date"
+                      // instruction="Please mention expected date of completion."
                       isRequired="false"
                       enableDate="future"
+                      value={summary.actualStartDate}
+                      returnDate={(date) =>
+                        setSummary({ actualStartDate: date })
+                      }
                     />
+
                     <InputDate
                       label="Actual End Date"
                       isRequired="false"
                       enableDate="future"
+                      value={summary.actualEndDate}
+                      returnDate={(date) => setSummary({ actualEndDate: date })}
                     />
                   </div>
-                  <FlexField
-                    label="Action Taken"
-                    instruction=""
-                    isRequired="false"
-                  />
+                  <div className="group-input">
+                    <label>Action Taken</label>
+                    <textarea
+                      value={summary.actionTaken}
+                      onChange={(e) =>
+                        setSummary({ actionTaken: e.target.value })
+                      }
+                    ></textarea>
+                  </div>
 
-                  {/* <Grid
-                    label={docFile[4].label}
-                    required={docFile[4].required}
-                    instruction={docFile[4].instruction}
-                    columnList={docFile[4].columnList}
-                  /> */}
-                  {/* <Grid
-                    label={docFile[5].label}
-                    required={docFile[5].required}
-                    instruction={docFile[5].instruction}
-                    columnList={docFile[5].columnList}
-                  /> */}
-                  {/* <FlexField
-                    label="Audit Comments"
-                    instruction=""
-                    isRequired="false"
-                  /> */}
                   <div className="sub-head">Response Summary</div>
                   <div className="form-flex">
                     <InputDate
                       label="Date Rsponse Due"
                       isRequired="false"
                       enableDate="future"
+                      value={summary.dateRsponseDue}
+                      returnDate={(date) =>
+                        setSummary({ dateRsponseDue: date })
+                      }
                     />
+
                     <InputDate
                       label="Date of Response"
                       isRequired="false"
                       enableDate="future"
+                      value={summary.dateofResponse}
+                      returnDate={(date) =>
+                        setSummary({ dateofResponse: date })
+                      }
                     />
                   </div>
                   <div className="group-input">
@@ -752,14 +872,24 @@ function ObservationPanel() {
                   </div>
                   <div className="group-input">
                     <label>Related URL</label>
-                    <input type="text" />
+                    <input
+                      type="text"
+                      value={summary.relatedURL}
+                      onChange={(e) =>
+                        setSummary({ relatedURL: e.target.value })
+                      }
+                    />
                   </div>
 
-                  <FlexField
-                    label="Response Summary"
-                    instruction=""
-                    isRequired="false"
-                  />
+                  <div className="group-input">
+                    <label>Response Summary</label>
+                    <textarea
+                      value={summary.responseSummary}
+                      onChange={(e) =>
+                        setSummary({ responseSummary: e.target.value })
+                      }
+                    ></textarea>
+                  </div>
                 </div>
               </div>
             ) : form === formList[4] ? (
@@ -799,6 +929,7 @@ function ObservationPanel() {
               ""
             )}
           </div>
+
           <div className="button-block" style={{ width: "100%" }}>
             <button className="themeBtn">Save</button>
             <button className="themeBtn">Back</button>

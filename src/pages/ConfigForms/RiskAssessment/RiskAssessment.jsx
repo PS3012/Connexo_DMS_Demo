@@ -3,7 +3,6 @@ import "../ConfigForms.css";
 import { MultiSelect } from "react-multi-select-component";
 import Grid from "../../../components/DataFields/Grid";
 import InputDate from "../../../components/DataFields/InputDate";
-import FlexField from "../../../components/DataFields/FlexField";
 import RelatedRecords from "../../../components/DataFields/RelatedRecords";
 import HeaderTop from "../../../components/Header/HeaderTop";
 import { currentYear, departments, formList, site, teamMembers, rootCauseMethodology, workFlow, docFile, attachment, Mitigation } from "./RiskAssessmentFunctions";

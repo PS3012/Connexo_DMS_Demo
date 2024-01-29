@@ -169,7 +169,7 @@ function AuditProgram() {
                                 </div>
 
                                 <div className="group-input">
-                                  <label>Division Code</label>
+                                  <label>Site/Location Code</label>
                                   <input
                                     type="text"
                                     value={auditProgram.site}
@@ -333,10 +333,10 @@ function AuditProgram() {
                                     })
                                   }
                                 >
-                                  <option value="">-- Select --</option>
-                                  <option value="">Major</option>
-                                  <option value="">Minor</option>
-                                  <option value="">Critical</option>
+                                  <option value="select">-- Select --</option>
+                                  <option value="Major">Major</option>
+                                  <option value="Minor">Minor</option>
+                                  <option value="Critical">Critical</option>
                                 </select>
                               </div>
 
