@@ -15,52 +15,102 @@ import {
   currentYear,
 } from "./ActionItemsFunctions";
 import "../ConfigForms.css";
+import { toast } from "react-toastify";
 
 function ActionItems() {
   const [form, setForm] = useState(formList[0]);
-  const [selected, setSelected] = useState([]);
+  const [hodPersons, setHodPersons] = useState([]);
   const [asideWorkFlow, setAsideWorkFlow] = useState(false);
   const [asideFamilyTree, setAsideFamilyTree] = useState(false);
-
   const [generalInformation, setGeneralInformation] = useReducer(
     (prev, next) => ({
-      ...prev,
-      ...next,
+      ...prev, ...next,
     }),
     {
-      recordNumber: `${site}/AI/${currentYear}/000001`,
+      recordNumber: `${site}/AI/${currentYear}`,
       site: site,
       initiator: "Amit Guru",
       dateOfInitiation: CurrentDate(),
       assignedTo: "",
-      dueDate: "",  
+      dueDate: "",
       shortDescription: "",
       Description: "",
       ResponsibleDepartment: "",
       ResponsibleDepartmentOthers: "",
       ActionItemRelatedRecords: '',
-      HodPersons: "",
       severityLevel: "",
     }
   );
-
   const [postCompletion, setPostCompletion] = useReducer((prev, next) => ({
     ...prev, ...next
-}), {
+  }), {
     ActualStartDate: '',
     ActualEndDate: '',
     Comments: '',
-    Actiontaken: '',
-  
-})
-
-const [actionApproval, setactionApproval] = useReducer((prev, next) => ({
-  ...prev, ...next
-}), {
-  QAReviewComments: '',
-  DueDateExtension: '',
- 
-})
+    ActionTaken: '',
+  })
+  const [actionApproval, setActionApproval] = useReducer((prev, next) => ({
+    ...prev, ...next
+  }), {
+    QAReviewComments: '',
+    DueDateExtension: '',
+  })
+  const body = {
+    "actionItem": {
+      "name": "Action Item",
+      "actionItemGeneralInfo": [
+        {
+          "dueDate": generalInformation.dueDate,
+          "shortDescription": generalInformation.shortDescription,
+          "recordNumber": generalInformation.recordNumber,
+          "initiator": generalInformation.initiator,
+          "assignedTo": generalInformation.assignedTo,
+          "divisionCode": generalInformation.site,
+          "dateOfInitiation": generalInformation.dateOfInitiation,
+          "actionItemInfoAttach": [{
+            "titleOfDocument": "abc",
+            "attachedFile": "bce",
+            "remark": "cde"
+          }]
+        }
+      ],
+      "postCompletion": [
+        {
+          "actionTaken": postCompletion.actionTaken,
+          "comments": postCompletion.Comments,
+          "actualStartDate": postCompletion.ActualStartDate,
+          "actualEndDate": postCompletion.ActualEndDate
+        }
+      ],
+      "actionApproval": [
+        {
+          "qaReviewComments": actionApproval.QAReviewComments,
+          "dueDateExtensionJustification": actionApproval.DueDateExtension
+        }
+      ]
+    }
+  }
+  const handleSubmit = () => {
+    if (!generalInformation.dueDate) {
+      toast.error("Due Date is required.")
+    } else if (!generalInformation.shortDescription) {
+      toast.error("Short Description is required.")
+    } else {
+      fetch('http://195.35.6.197:9091/actionitem/api/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*'
+        },
+        body: JSON.stringify(body)
+      }).then(response => response.json()).then(data => {
+        toast.success('Form saved Successfully');
+        window.location.replace("/desktop");
+      }).catch((error) => {
+        toast.error('Error occurring while saving the form.');
+      });
+    }
+  }
 
   return (
     <>
@@ -83,8 +133,8 @@ const [actionApproval, setactionApproval] = useReducer((prev, next) => ({
                     index === 0
                       ? "green-state"
                       : index === workFlow.length - 1
-                      ? "red-state"
-                      : ""
+                        ? "red-state"
+                        : ""
                   }
                 >
                   {item}
@@ -123,19 +173,19 @@ const [actionApproval, setactionApproval] = useReducer((prev, next) => ({
               <strong> Record Name:&nbsp;</strong>Action Items
             </div>
             <div>
-              <strong> Site:&nbsp;</strong>EHS-North America
+              <strong> Site:&nbsp;</strong>{generalInformation.site}
             </div>
             <div>
               <strong> Current Status:&nbsp;</strong>Under Initiation
             </div>
             <div>
-              <strong> Initiated By:&nbsp;</strong>Shaleen Mishra
+              <strong> Initiated By:&nbsp;</strong>{generalInformation.initiator}
             </div>
           </div>
 
           <div className="document-block">
             <div className="document-tabs">
-            {formList.map((item, index) => (
+              {formList.map((item, index) => (
                 <div
                   key={index}
                   className={form === item ? "active" : ""}
@@ -230,48 +280,49 @@ const [actionApproval, setactionApproval] = useReducer((prev, next) => ({
                       }
                     ></textarea>
                   </div>
-                  <div className="group-input">
-                    <label>Severity Level</label>
-                    
-                    <select 
+                  <div className="form-flex">
+                    <div className="group-input">
+                      <label>Severity Level</label>
+                      <select
                         value={generalInformation.severityLevel}
                         onChange={(e) => setGeneralInformation({ severityLevel: e.target.value })}>
-
-                      <option value="">-- Select --</option>
-                      <option value="">Major</option>
-                      <option value="">Minor</option>
-                      <option value="">Critical</option>
-                    </select>
-                  </div>
-                  <RelatedRecords label="Action Item Related Records" />
-                  <div className="group-input">
-                    <label>
-                      {generalInformation.HodPersons === "Yes" && (
-                        <div className="required"></div>
-                      )}
-                      HOD Persons
-                    </label>
-                    <MultiSelect
-                      options={FunctionName}
-                      value={selected}
-                      onChange={setSelected}
-                      labelledBy="Select"
-                      required={generalInformation.HodPersons === "Yes"}
-                      disabled={!generalInformation.HodPersons === "Yes"}
-                    />
-
-                    <div className="group-input">
-                      <label> Description</label>
-                      <div className="instruction">
-                        Please mention brief summary
-                      </div>
-                      <textarea
-                        value={generalInformation.Description}
-                        onChange={(e) =>
-                          setGeneralInformation({ Description: e.target.value })
-                        }
-                      ></textarea>
+                        <option value="">-- Select --</option>
+                        <option value="">Major</option>
+                        <option value="">Minor</option>
+                        <option value="">Critical</option>
+                      </select>
                     </div>
+                    <div className="group-input">
+                      <label>
+                        {generalInformation.HodPersons === "Yes" && (
+                          <div className="required"></div>
+                        )}
+                        HOD Persons
+                      </label>
+                      <MultiSelect
+                        options={FunctionName}
+                        value={hodPersons}
+                        onChange={setHodPersons}
+                        labelledBy="Select"
+                        required={generalInformation.HodPersons === "Yes"}
+                        disabled={!generalInformation.HodPersons === "Yes"}
+                      />
+                    </div>
+                  </div>
+                  <RelatedRecords
+                    label="Action Item Related Records"
+                  />
+                  <div className="group-input">
+                    <label> Description</label>
+                    <div className="instruction">
+                      Please mention brief summary
+                    </div>
+                    <textarea
+                      value={generalInformation.Description}
+                      onChange={(e) =>
+                        setGeneralInformation({ Description: e.target.value })
+                      }
+                    ></textarea>
                   </div>
                   <div className="form-flex">
                     <div className="group-input">
@@ -300,22 +351,14 @@ const [actionApproval, setactionApproval] = useReducer((prev, next) => ({
                         <option value="10">QCAT</option>
                         <option value="11">Marketing</option>
                         <option value="12">GMP Pilot Plant</option>
-                        <option value="13">
-                          Manufacturing Sciences and Technology
-                        </option>
-                        <option value="14">
-                          Environment, Health and Safety
-                        </option>
-                        <option value="15">
-                          Business Relationship Management
-                        </option>
+                        <option value="13">Manufacturing Sciences and Technology</option>
+                        <option value="14">Environment, Health and Safety</option>
+                        <option value="15">Business Relationship Management</option>
                         <option value="16">National Regulatory Affairs</option>
                         <option value="17">HR</option>
                         <option value="18">Admin</option>
                         <option value="19">Information Technology</option>
-                        <option value="20">
-                          Program Management QA Analytical (Q13)
-                        </option>
+                        <option value="20">Program Management QA Analytical (Q13)</option>
                         <option value="21">QA Analytical (Q8)</option>
                         <option value="22">QA Packaging Development</option>
                         <option value="23">QA Engineering</option>
@@ -330,32 +373,17 @@ const [actionApproval, setactionApproval] = useReducer((prev, next) => ({
                         <option value="32">Production (Packing)</option>
                         <option value="33">Production (Devices)</option>
                         <option value="34">Production (DS)</option>
-                        <option value="35">
-                          Engineering and Maintenance (B1)
-                        </option>
-                        <option value="36">
-                          Engineering and Maintenance (B2)
-                        </option>
-                        <option value="37">
-                          Engineering and Maintenance (W20)
-                        </option>
-                        <option value="38">
-                          Device Technology Principle Management
-                        </option>
+                        <option value="35">Engineering and Maintenance (B1)</option>
+                        <option value="36">Engineering and Maintenance (B2)</option>
+                        <option value="37">Engineering and Maintenance (W20)</option>
+                        <option value="38">Device Technology Principle Management</option>
                         <option value="39">Production (82)</option>
                         <option value="40">Production (Packing)</option>
                         <option value="41">Production (Devices)</option>
                         <option value="42">Production (DS)</option>
-                        <option value="43">
-                          Engineering and Maintenance (B1)
-                        </option>
-                        <option value="44">
-                          Engineering and Maintenance (B2) Engineering and
-                          Maintenance (W20)
-                        </option>
-                        <option value="45">
-                          Device Technology Principle Management
-                        </option>
+                        <option value="43">Engineering and Maintenance (B1)</option>
+                        <option value="44">Engineering and Maintenance (B2) Engineering and Maintenance (W20)</option>
+                        <option value="45">Device Technology Principle Management</option>
                         <option value="46">Warehouse(DP)</option>
                         <option value="47">Drug safety</option>
                         <option value="48">Visual Inspection</option>
@@ -382,7 +410,6 @@ const [actionApproval, setactionApproval] = useReducer((prev, next) => ({
                       ></textarea>
                     </div>
                   </div>
-
                   <div className="group-input">
                     <Grid
                       label={docFile[0].label}
@@ -397,18 +424,16 @@ const [actionApproval, setactionApproval] = useReducer((prev, next) => ({
               <div className="document-form">
                 <div className="details-form-data">
                   <div className="sub-head">Post Completion</div>
-                 
                   <div className="group-input">
-                      <label>Action Taken</label>
-                      <textarea
-                        value={postCompletion.Actiontaken}
-                        onChange={(e) =>
-                          setPostCompletion({ Actiontaken : e.target.value })
-                        }
-                      ></textarea>
+                    <label>Action Taken</label>
+                    <textarea
+                      value={postCompletion.actionTaken}
+                      onChange={(e) =>
+                        setPostCompletion({ actionTaken: e.target.value })
+                      }
+                    ></textarea>
                   </div>
                   <div className="form-flex">
-                    
                     <InputDate
                       label="Actual Start Date"
                       instruction="Please mention expected date of completion."
@@ -419,8 +444,6 @@ const [actionApproval, setactionApproval] = useReducer((prev, next) => ({
                         setPostCompletion({ ActualStartDate: date })
                       }
                     />
-
-                   
                     <InputDate
                       label="Actual End Date"
                       instruction="Please mention expected date of completion."
@@ -431,54 +454,50 @@ const [actionApproval, setactionApproval] = useReducer((prev, next) => ({
                         setPostCompletion({ ActualEndDate: date })
                       }
                     />
-
                   </div>
-
-                   <div className="group-input">
-                      <label>Comments</label>
-                      <div className="instruction">
-                        Please mention brief summary
-                      </div>
-                      <textarea
-                        value={postCompletion.Comments}
-                        onChange={(e) =>
-                          setPostCompletion({ Comments: e.target.value })
-                        }
-                      ></textarea>
+                  <div className="group-input">
+                    <label>Comments</label>
+                    <div className="instruction">
+                      Please mention brief summary
                     </div>
+                    <textarea
+                      value={postCompletion.Comments}
+                      onChange={(e) =>
+                        setPostCompletion({ Comments: e.target.value })
+                      }
+                    ></textarea>
+                  </div>
                 </div>
               </div>
             ) : form === formList[2] ? (
               <div className="document-form">
                 <div className="details-form-data">
                   <div className="sub-head">Action Approval</div>
-                  
                   <div className="group-input">
-                      <label>QA Review Comments</label>
-                      <div className="instruction">
-                        Please mention brief summary
-                      </div>
-                      <textarea
-                        value={actionApproval.QAReviewComments}
-                        onChange={(e) =>
-                          setactionApproval({ QAReviewComments: e.target.value })
-                        }
-                      ></textarea>
+                    <label>QA Review Comments</label>
+                    <div className="instruction">
+                      Please mention brief summary
                     </div>
+                    <textarea
+                      value={actionApproval.QAReviewComments}
+                      onChange={(e) =>
+                        setActionApproval({ QAReviewComments: e.target.value })
+                      }
+                    ></textarea>
+                  </div>
                   <div className="sub-head">Extension Justification</div>
-                
                   <div className="group-input">
-                      <label>Due Date Extension Justification</label>
-                      <div className="instruction">
-                        Please mention brief summary
-                      </div>
-                      <textarea
-                        value={actionApproval.DueDateExtension}
-                        onChange={(e) =>
-                          setactionApproval({ DueDateExtension: e.target.value })
-                        }
-                      ></textarea>
+                    <label>Due Date Extension Justification</label>
+                    <div className="instruction">
+                      Please mention brief summary
                     </div>
+                    <textarea
+                      value={actionApproval.DueDateExtension}
+                      onChange={(e) =>
+                        setActionApproval({ DueDateExtension: e.target.value })
+                      }
+                    ></textarea>
+                  </div>
                 </div>
               </div>
             ) : form === formList[3] ? (
@@ -525,7 +544,7 @@ const [actionApproval, setactionApproval] = useReducer((prev, next) => ({
                 : { width: "100%" }
             }
           >
-            <button className="themeBtn">Save</button>
+            <button className="themeBtn" onClick={handleSubmit}>Save</button>
             <button className="themeBtn">Back</button>
             <button className="themeBtn">Next</button>
             <button className="themeBtn">Exit</button>

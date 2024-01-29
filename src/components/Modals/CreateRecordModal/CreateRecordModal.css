@@ -24,21 +24,22 @@
 #create-record-modal .select-list {
     max-height: 300px;
     overflow-y: auto;
+    display: grid;
 }
 
-#create-record-modal .select-list div {
+#create-record-modal .select-list>* {
     font-size: 0.9rem;
     padding: 7px 20px;
     transition: all 0.3s linear;
     cursor: pointer;
 }
 
-#create-record-modal .division-list div:hover,
-#create-record-modal .division-list div.active {
+#create-record-modal .division-list>*:hover,
+#create-record-modal .division-list>*.active {
     background: #006fc057;
 }
 
-#create-record-modal .project-list div:hover,
-#create-record-modal .project-list div.active {
+#create-record-modal .project-list>*:hover,
+#create-record-modal .project-list>*.active {
     background: #80808030;
 }

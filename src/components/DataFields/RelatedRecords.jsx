@@ -1,10 +1,35 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './DataFields.css'
 import RelatedRecordModal from '../Modals/RelatedRecordModal/RelatedRecordModal'
+import { convertDateFormat } from '../DateReturners'
 
 function RelatedRecords(_props) {
     const [openModal, setOpenModal] = useState(false)
     const closeRecordModal = () => setOpenModal(false)
+    const [returnData, setReturnData] = useState([])
+    const [data, setData] = useState()
+    function padNumber(number, width) {
+        number = number + '';
+        return number.length >= width ? number : new Array(width - number.length + 1).join('0') + number;
+    }
+    const fetchData = async () => {
+        try {
+            const response = await fetch('http://195.35.6.197:9091/LabIncident/api/findAllDivision');
+            if (!response.ok) {
+                throw new Error('Failed to fetch data');
+            }
+            const result = await response.json();
+            setData(result);
+        } catch (error) {
+            toast.error(error)
+        }
+    };
+    useEffect(() => {
+        fetchData();
+    }, []);
+    const handleSelectedData = (data) => {
+        setReturnData(data)
+    }
     return (
         <>
 
@@ -21,7 +46,6 @@ function RelatedRecords(_props) {
                     <table>
                         <thead>
                             <tr>
-                                <th>Row</th>
                                 <th>Record ID</th>
                                 <th>Division</th>
                                 <th>Process</th>
@@ -32,11 +56,26 @@ function RelatedRecords(_props) {
                                 <th>Status</th>
                             </tr>
                         </thead>
+                        <tbody>
+                            {data && data.map((item, index) =>
+                                returnData.includes(padNumber(item.id, 5)) && (
+                                    <tr key={index}>
+                                        <td>{padNumber(item.id, 5)}</td>
+                                        <td>{item.generalInformation[0].divisionCode}</td>
+                                        <td>{item.name}</td>
+                                        <td>{item.generalInformation[0].shortDescription}</td>
+                                        <td>{item.generalInformation[0].invocationType}</td>
+                                        <td>{item.generalInformation[0].assignedTo}</td>
+                                        <td>{convertDateFormat(item.generalInformation[0].dueDate)}</td>
+                                        <td></td>
+                                    </tr>
+                                ))}
+                        </tbody>
                     </table>
                 </div>
             </div>
 
-            {openModal && <RelatedRecordModal closeModal={closeRecordModal} />}
+            {openModal && <RelatedRecordModal closeModal={closeRecordModal} formName={_props.formName} returnData={(data) => handleSelectedData(data)} />}
 
         </>
     )

@@ -8,12 +8,9 @@ import LabIncident from "./pages/ConfigForms/LabIncident/LabIncident";
 import ManageQuiz from "./pages/ManageQuiz/ManageQuiz";
 import RiskAssessment from "./pages/ConfigForms/RiskAssessment/RiskAssessment";
 import RootCauseAnalysis from "./pages/ConfigForms/RootCauseAnalysis/RootCauseAnalysis";
-import InternalAudit from "./pages/ConfigForms/InternalAudit";
-import ExternalAudit from "./pages/ConfigForms/ExternalAudit";
 import Desktop from "./pages/Desktop/Desktop";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import ManagementReview from "./pages/ConfigForms/ManagementReview/ManagementReview";
-import Extension from "./pages/ConfigForms/Extension";
 import ChangeControlPanel from "./pages/DocumentPanel/ChangeControlPanel/ChangeControlPanel";
 import InternalAuditPanel from "./pages/DocumentPanel/InternalAuditPanel";
 import ExternalAuditPanel from "./pages/DocumentPanel/ExternalAuditPanel/ExternalAuditPanel";
@@ -39,6 +36,8 @@ import ManageQuestionPage from "./pages/Tms/TrainingPage/ManageQuestionPage";
 import ManageQuestionBank from "./pages/Tms/TrainingPage/ManageQuestionBank";
 import ManageQuizzes from "./pages/Tms/TrainingPage/ManageQuizzes";
 import { ToastContainer } from "react-toastify";
+import ExternalAudit from "./pages/ConfigForms/ExternalAudit/ExternalAudit";
+import InternalAudit from "./pages/ConfigForms/InternalAudit/InternalAudit";
 
 function App() {
   return (
@@ -58,7 +57,6 @@ function App() {
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/question' element={<Question />} />
           <Route path='/manage-quiz' element={<ManageQuiz />} />
-          <Route path='/add-question' element={<AddQuestion />} />
           <Route path='/risk-opportunity' element={<RiskAssessment />} />
           <Route path='/document-panel' element={<DocumentPanel />} />
           <Route path='/training-management-system' element={<TrainingManagementSystem />} />
@@ -80,11 +78,11 @@ function App() {
           <Route path='/capa-panel' element={<CAPAPanel />} />
           <Route path='/effectiveness-check-panel' element={<EffectivenessCheckPanel />} />
           <Route path='/observation-panel' element={<ObservationPanel />} />
-          <Route path='/*' element={<Navigate to="/" />} />
           <Route path='/question-page' element={<QuestionPage />} />
           <Route path='/manage-question' element={<ManageQuestionPage />} />
           <Route path='/manage-question-bank' element={<ManageQuestionBank />} />
           <Route path='/manage-quizzes' element={<ManageQuizzes />} />
+          <Route path='/*' element={<Navigate to="/" />} />
         </Routes>
         <ToastContainer />
       </BrowserRouter>
