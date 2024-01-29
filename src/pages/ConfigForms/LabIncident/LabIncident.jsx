@@ -8,9 +8,7 @@ import RelatedRecords from "../../../components/DataFields/RelatedRecords";
 import axios from "axios";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { LabIncidentCreate } from "../../../components/Constant";
 import '../ConfigForms.css'
-
 
 function LabIncident() {
     const [form, setForm] = useState(formList[0]);
@@ -76,19 +74,18 @@ function LabIncident() {
     })
     const body = {
         "labincident": {
-            "name": "generalInformation",
+            "name": "Lab Incident",
             "generalInformation": [
                 {
                     "recordNumber": documentInformation.recordNumber,
                     "divisionCode": documentInformation.site,
                     "initiator": documentInformation.initiator,
-                    "assignedTo": "RecordId",
+                    "assignedTo": documentInformation.assignedTo,
                     "dueDate": documentInformation.dueDate,
-                    "initiatorGroup": "RecordId",
+                    "initiatorGroup": documentInformation.initiatorGroup,
                     "shortDescription": documentInformation.shortDescription,
-                    "incidentCategory": "RecordId",
-                    "invocationType": "RecordId",
-
+                    "incidentCategory": documentInformation.shortDescription,
+                    "invocationType": documentInformation.dateOfInitiation,
                     "initialAttachments": [{
                         "titleOfDocument": "Image",
                         "attachedFile": "abc",
@@ -98,12 +95,12 @@ function LabIncident() {
             ],
             "incidentDetails": [
                 {
-                    "IncidentDetails": "abc",
-                    "documentDetails": "abc",
-                    "instruntDetails": "abc",
-                    "involvedPersonnel": "abc",
-                    "productDetails": "abc",
-                    "supervisorReviewComments": "abc",
+                    "IncidentDetails": incidentDetails.incidentDetails,
+                    "documentDetails": incidentDetails.documentDetails,
+                    "instruntDetails": incidentDetails.instruntDetails,
+                    "involvedPersonnel": incidentDetails.involvedPersonnel,
+                    "productDetails": incidentDetails.productDetails,
+                    "supervisorReviewComments": incidentDetails.supervisorReviewComments,
                     "incidentAttach": [{
                         "titleOfDocument": "Image",
                         "attachedFile": "abc",
@@ -113,9 +110,9 @@ function LabIncident() {
             ],
             "investigationDetails": [
                 {
-                    "investigationDetails": "xyz",
-                    "actionTaken": "xyz",
-                    "rootCause": "xyz",
+                    "investigationDetails": investigationDetails.investigationDetails,
+                    "actionTaken": investigationDetails.actionTaken,
+                    "rootCause": investigationDetails.rootCause,
                     "invAttachments": [{
                         "titleOfDocument": "Image",
                         "attachedFile": "xyz",
@@ -125,8 +122,8 @@ function LabIncident() {
             ],
             "capa": [
                 {
-                    "investigationDetail": "yyyy",
-                    "actionTaken": "yyy",
+                    "investigationDetail": capa.investigationDetails,
+                    "actionTaken": capa.actionTaken,
                     "capaAttachment": [{
                         "titleOfDocument": "Image",
                         "attachedFile": "yyy",
@@ -136,7 +133,7 @@ function LabIncident() {
             ],
             "qaReviews": [
                 {
-                    "qaReviewComments": "zzzz",
+                    "qaReviewComments": qAReview.qAReviewComments,
                     "qaHeadAttachments": [{
                         "titleOfDocument": "Image",
                         "attachedFile": "zzzz",
@@ -146,24 +143,35 @@ function LabIncident() {
             ],
             "qaHeadDesigneApprovel": [
                 {
-                    "investigationDetails": "aaaaa",
-                    "effectivenessCheckrequired": "aaaaa",
-                    "effectivenessCheckCreationDate": "aaaa",
-                    "effectivnessChecker": "aaaa",
-                    "conclusion": "aaaaa",
-                    "dueDateExtentionJustification": "aaaa"
+                    "investigationDetails": qAHeadApproval.investigationDetails,
+                    "effectivenessCheckrequired": qAHeadApproval.effectivenessCheckRequired,
+                    "effectivenessCheckCreationDate": qAHeadApproval.effectivenessCheckCreationDate,
+                    "effectivnessChecker": qAHeadApproval.effectivenessChecker,
+                    "conclusion": qAHeadApproval.conclusion,
+                    "dueDateExtentionJustification": qAHeadApproval.dueDateExtensionJustification
                 }
             ]
         }
     }
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        axios.post('http://195.35.6.197:9091/LabIncident/api/create', body).then(response => {
-            window.location.href = '/desktop'
-            toast.success("Form saved successfully.")
-        }).catch(error => {
-            toast.error("There was an error occurring while saving the form.")
-        })
+    const handleSubmit = () => {
+        if (!documentInformation.dueDate) {
+            toast.error("Due Date is required.")
+        } else if (!documentInformation.shortDescription) {
+            toast.error("Short Description is required.")
+        } else {
+            fetch('http://195.35.6.197:9091/LabIncident/api/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            }).then(response => response.json()).then(data => {
+                toast.success('Form saved Successfully');
+                window.location.replace("/desktop");
+            }).catch((error) => {
+                toast.error('Error occurring while saving the form.');
+            });
+        }
     }
 
     return (
@@ -206,6 +214,7 @@ function LabIncident() {
                 }
 
                 <div id='config-form-document-page'>
+
                     <HeaderTop />
 
                     <div className="top-block">
@@ -247,14 +256,13 @@ function LabIncident() {
                                             <div className="instruction">&nbsp;</div>
                                             <select value={documentInformation.assignedTo} onChange={(e) => setDocumentInformation({ assignedTo: e.target.value })}>
                                                 <option value="">-- Select --</option>
-                                                <option value="amit_guru">Amit Guru</option>
-                                                <option value="shaleen_mishra">Shaleen Mishra</option>
-                                                <option value="vikas_prajapati">Vikas Prajapati</option>
-                                                <option value="anshul_patel">Anshul Patel</option>
-                                                <option value="amit_patel">Amit Patel</option>
-                                                <option value="madhulika_mishra">Madhulika Mishra</option>
+                                                <option value="Amit Guru">Amit Guru</option>
+                                                <option value="Shaleen Mishra">Shaleen Mishra</option>
+                                                <option value="Vikas Prajapati">Vikas Prajapati</option>
+                                                <option value="Anshul Patel">Anshul Patel</option>
+                                                <option value="Amit Patel">Amit Patel</option>
+                                                <option value="Madhulika Mishra">Madhulika Mishra</option>
                                             </select>
-                                            
                                         </div>
                                         <InputDate
                                             label="Due Date"
@@ -299,26 +307,17 @@ function LabIncident() {
                                     </div>
                                     <RelatedRecords
                                         label="Other Reference Document No"
+                                        formName="Lab Incident"
                                     />
-                                    {/* <div className='form-flex'> */}
-                                        <div className='group-input'>
-                                            <label>Incident Category</label>
-                                            <select value={documentInformation.incidentCategory} onChange={(e) => setDocumentInformation({ incidentCategory: e.target.value })}>
-                                                <option value="">Enter Your Selection Here</option>
-                                                <option value="Biological">Biological</option>
-                                                <option value="Chemical">Chemical</option>
-                                                <option value="Others">Others</option>
-                                            </select>
-                                        </div>
-                                        {/* <div className='group-input'>
-                                            <label>Invocation Type</label>
-                                            <select value={documentInformation.invocationType} onChange={(e) => setDocumentInformation({ invocationType: e.target.value })}>
-                                                <option value="">Enter Your Selection Here</option>
-                                                <option value="auto">Auto</option>
-                                                <option value="manual">Manual</option>
-                                            </select>
-                                        </div>
-                                    </div> */}
+                                    <div className='group-input'>
+                                        <label>Incident Category</label>
+                                        <select value={documentInformation.incidentCategory} onChange={(e) => setDocumentInformation({ incidentCategory: e.target.value })}>
+                                            <option value="">Enter Your Selection Here</option>
+                                            <option value="Biological">Biological</option>
+                                            <option value="Chemical">Chemical</option>
+                                            <option value="Others">Others</option>
+                                        </select>
+                                    </div>
                                     <div className="group-input">
                                         <Grid
                                             label={labFile[0].label}
@@ -470,12 +469,12 @@ function LabIncident() {
                                             onChange={(e) => setQAHeadApproval({ effectivenessChecker: e.target.value })}
                                         >
                                             <option value="">-- Select --</option>
-                                            <option value="amit_guru">Amit Guru</option>
-                                            <option value="shaleen_mishra">Shaleen Mishra</option>
-                                            <option value="vikas_prajapati">Vikas Prajapati</option>
-                                            <option value="anshul_patel">Anshul Patel</option>
-                                            <option value="amit_patel">Amit Patel</option>
-                                            <option value="madhulika_mishra">Madhulika Mishra</option>
+                                            <option value="Amit Guru">Amit Guru</option>
+                                            <option value="Shaleen Mishra">Shaleen Mishra</option>
+                                            <option value="Vikas Prajapati">Vikas Prajapati</option>
+                                            <option value="Anshul Patel">Anshul Patel</option>
+                                            <option value="Amit Patel">Amit Patel</option>
+                                            <option value="Madhulika Mishra">Madhulika Mishra</option>
                                         </select>
                                     </div>
                                     <div className="group-input">
@@ -557,11 +556,12 @@ function LabIncident() {
                     </div>
 
                     <div className="button-block" style={asideWorkFlow || asideFamilyTree ? { 'width': 'calc(100% - 300px)' } : { 'width': '100%' }}>
-                        <button className='themeBtn' onClick={(e) => handleSubmit(e)}>Save</button>
+                        <button className='themeBtn' onClick={(e) => handleSubmit()}>Save</button>
                         <button className='themeBtn'>Back</button>
                         <button className='themeBtn'>Next</button>
                         <button className='themeBtn'>Exit</button>
                     </div>
+
                 </div>
                 <div className="sticky-buttons">
                     <div onClick={() => { setAsideWorkFlow(!asideWorkFlow); setAsideFamilyTree(false) }}>

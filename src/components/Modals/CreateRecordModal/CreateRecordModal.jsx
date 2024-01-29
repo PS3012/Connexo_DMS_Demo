@@ -1,19 +1,15 @@
 import { useState } from 'react'
 import '../General.css'
 import './CreateRecordModal.css'
+import { Link } from 'react-router-dom'
 
 function CreateRecordModal(_props) {
     const [division, setDivision] = useState('KSA')
     const [project, setProject] = useState('')
-    const [formLink, setFormLink] = useState('')
     const handleSelectProcess = (element) => {
         setProject(element.name)
-        setFormLink(element.link)
-    }
-    const handleSubmit = () => {
         localStorage.removeItem("site")
         localStorage.setItem("site", division)
-        window.location.href = formLink;
     }
     const divisionList = [
         {
@@ -209,11 +205,12 @@ function CreateRecordModal(_props) {
                                     division === item.name ? (
                                         <div className="select-list project-list" key={item.id}>
                                             {item.projects.map((ele, index) => (
-                                                <div
+                                                <Link
                                                     className={(project === ele.name) ? 'active' : ''}
                                                     key={index}
+                                                    to={ele.link}
                                                     onClick={() => handleSelectProcess(ele)}
-                                                >{ele.name}</div>
+                                                >{ele.name}</Link>
                                             ))}
                                         </div>
                                     ) : (
@@ -225,7 +222,6 @@ function CreateRecordModal(_props) {
                     </div>
 
                     <div className="modal-bottom">
-                        <div className="modal-btn btn-1" onClick={handleSubmit}>Submit</div>
                         <div className="modal-btn btn-2" onClick={_props.closeModal}>Cancel</div>
                     </div>
 

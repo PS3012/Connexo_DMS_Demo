@@ -32,15 +32,8 @@ import ManageQuestionPage from "./pages/Tms/TrainingPage/ManageQuestionPage";
 import ManageQuestionBank from "./pages/Tms/TrainingPage/ManageQuestionBank";
 import ManageQuizzes from "./pages/Tms/TrainingPage/ManageQuizzes";
 import { ToastContainer } from "react-toastify";
-import InternalAudit from "./pages/ConfigForms/InternalAudit/InternalAudit";
 import ExternalAudit from "./pages/ConfigForms/ExternalAudit/ExternalAudit";
-import Analytics from "./pages/Analytics/Analytics";
-import CAPAPanel from "./pages/DocumentPanel/CapaPanel/CapaPanel";
-import EffectivenessCheckPanel from "./pages/DocumentPanel/EffectivenessCheckPanel/EffectivenessCheckPanel";
-import ExtensionPanel from "./pages/DocumentPanel/ExtensionPanel/ExtensionPanel";
-import ObservationPanel from "./pages/DocumentPanel/ObservationPanel/ObservationPanel";
-import InternalAuditPanel from "./pages/DocumentPanel/InternalAuditPanel/InternalAuditPanel";
-import ManagementReviewPanel from "./pages/DocumentPanel/ManagementReviewPanel/ManagementReviewPanel";
+import InternalAudit from "./pages/ConfigForms/InternalAudit/InternalAudit";
 
 function App() {
   return (
@@ -80,14 +73,12 @@ function App() {
           <Route path='/audit-program-panel' element={<AuditProgramPanel/>} />
           <Route path='/capa-panel' element={<CAPAPanel />} />
           <Route path='/effectiveness-check-panel' element={<EffectivenessCheckPanel />} />
-          <Route path='/observation-panel' element={<ObservationPanel/>} />
-          <Route path='/*' element={<Navigate to="/" />} />
+          <Route path='/observation-panel' element={<ObservationPanel />} />
           <Route path='/question-page' element={<QuestionPage />} />
           <Route path='/manage-question' element={<ManageQuestionPage />} />
           <Route path='/manage-question-bank' element={<ManageQuestionBank />} />
           <Route path='/manage-quizzes' element={<ManageQuizzes />} />
-          <Route path='/analytics' element={<Analytics/>} />
-
+          <Route path='/*' element={<Navigate to="/" />} />
         </Routes>
         <ToastContainer />
       </BrowserRouter>

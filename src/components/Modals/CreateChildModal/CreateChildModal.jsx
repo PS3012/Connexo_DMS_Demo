@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 
 function CreateChildModal(_props) {
     const [child, setChild] = useState('')
-    // const [formLink, setFormLink] = useState('')
+    const [formLink, setFormLink] = useState('')
     const childList = [
         { name: 'Action Item', link: '/action-item' },
         { name: 'New Document', link: '/new-document' },
@@ -16,9 +16,9 @@ function CreateChildModal(_props) {
         setChild(element.name)
         setFormLink(element.link)
     }
-    // const handleSubmit = () => {
-    //     window.location.href = formLink;
-    // }
+    const handleSubmit = () => {
+        window.location.assign(formLink);
+    }
     return (
         <>
 
@@ -38,23 +38,21 @@ function CreateChildModal(_props) {
                         <div className="children">
                             {childList.map((item, index) => (
                                 _props.children.includes(item.name) &&
-                                <Link
+                                <div
                                     key={index}
                                     className={(child === item.name) && 'active'}
-                                    to={item.link}
-                                    target="_blank"
                                     onClick={() => handleSelectChild(item)}
                                 >
                                     {item.name}
-                                </Link>
+                                </div>
                             ))}
                         </div>
                     </div>
 
-                    {/* <div className="modal-bottom">
+                    <div className="modal-bottom">
                         <div className="modal-btn btn-1" onClick={handleSubmit}>Submit</div>
                         <div className="modal-btn btn-2" onClick={_props.closeModal}>Cancel</div>
-                    </div> */}
+                    </div>
 
                 </div>
 

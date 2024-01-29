@@ -1,17 +1,43 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import '../General.css'
 import './RelatedRecordModal.css'
+import { toast } from 'react-toastify'
+import { convertDateFormat } from '../../DateReturners'
 
 function RelatedRecordModal(_props) {
     const [records, setRecords] = useState([])
+    const [data, setData] = useState()
+    function padNumber(number, width) {
+        number = number + '';
+        return number.length >= width ? number : new Array(width - number.length + 1).join('0') + number;
+    }
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch('http://195.35.6.197:9091/LabIncident/api/findAllDivision');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch data');
+                }
+                const result = await response.json();
+                setData(result);
+            } catch (error) {
+                toast.error(error)
+            }
+        };
+        fetchData();
+    }, []);
+    console.log(data)
     function handleRecord(recordNumber) {
         setRecords((prevRecords) => {
             const exists = prevRecords.includes(recordNumber);
-
             return exists
                 ? prevRecords.filter((record) => record !== recordNumber)
                 : [...prevRecords, recordNumber];
         });
+    }
+    const handleAdd = () => {
+        _props.returnData(records)
+        _props.closeModal();
     }
     return (
         <>
@@ -101,61 +127,19 @@ function RelatedRecordModal(_props) {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td><input type="checkbox" onChange={() => handleRecord('1001')} /></td>
-                                        <td>1001</td>
-                                        <td>Global</td>
-                                        <td>CAPA</td>
-                                        <td>CAPA for Plavix</td>
-                                        <td>15 Jan, 2024</td>
-                                        <td>Shaleen Mishra</td>
-                                        <td>15 Feb, 2024</td>
-                                        <td>Closed-Done</td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox" onChange={() => handleRecord('1002')} /></td>
-                                        <td>1002</td>
-                                        <td>Global</td>
-                                        <td>CAPA</td>
-                                        <td>CAPA for Syringe Pump</td>
-                                        <td>15 Jan, 2024</td>
-                                        <td>Shaleen Mishra</td>
-                                        <td>15 Feb, 2024</td>
-                                        <td>Closed-Done</td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox" onChange={() => handleRecord('1003')} /></td>
-                                        <td>1003</td>
-                                        <td>Global</td>
-                                        <td>CAPA</td>
-                                        <td>CAPA for Aspirin</td>
-                                        <td>15 Jan, 2024</td>
-                                        <td>Shaleen Mishra</td>
-                                        <td>15 Feb, 2024</td>
-                                        <td>Closed-Done</td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox" onChange={() => handleRecord('1004')} /></td>
-                                        <td>1004</td>
-                                        <td>Global</td>
-                                        <td>CAPA</td>
-                                        <td>CAPA for Advil</td>
-                                        <td>15 Jan, 2024</td>
-                                        <td>Shaleen Mishra</td>
-                                        <td>15 Feb, 2024</td>
-                                        <td>Closed-Done</td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox" onChange={() => handleRecord('1005')} /></td>
-                                        <td>1005</td>
-                                        <td>Global</td>
-                                        <td>CAPA</td>
-                                        <td>CAPA for Viagara</td>
-                                        <td>15 Jan, 2024</td>
-                                        <td>Shaleen Mishra</td>
-                                        <td>15 Feb, 2024</td>
-                                        <td>Closed-Done</td>
-                                    </tr>
+                                    {data && data.map((item, index) => (
+                                        <tr key={index}>
+                                            <td><input type="checkbox" onChange={() => handleRecord(padNumber(item.id, 5))} /></td>
+                                            <td>{padNumber(item.id, 5)}</td>
+                                            <td>{item.generalInformation[0].divisionCode}</td>
+                                            <td>{item.name}</td>
+                                            <td>{item.generalInformation[0].shortDescription}</td>
+                                            <td>{item.generalInformation[0].invocationType}</td>
+                                            <td>{item.generalInformation[0].assignedTo}</td>
+                                            <td>{convertDateFormat(item.generalInformation[0].dueDate)}</td>
+                                            <td></td>
+                                        </tr>
+                                    ))}
                                 </tbody>
                             </table>
                         </div>
@@ -163,7 +147,7 @@ function RelatedRecordModal(_props) {
                     </div>
 
                     <div className="modal-bottom">
-                        <div className="modal-btn btn-1">Add</div>
+                        <div className="modal-btn btn-1" onClick={handleAdd}>Add</div>
                         <div className="modal-btn btn-2" onClick={_props.closeModal}>Close</div>
                     </div>
 

@@ -8,7 +8,6 @@ import RelatedRecords from '../../../components/DataFields/RelatedRecords';
 import { CFTReviewer, changeCloser, currentYear, docDetails, docFile, formList, site, workFlow } from './ChangeControlFunctions';
 import '../ConfigForms.css'
 import axios from 'axios';
-import { ChangeControlCreate } from '../../../components/Constant';
 import { toast } from 'react-toastify';
 
 function generalInformationForm() {
@@ -19,7 +18,7 @@ function generalInformationForm() {
     const [generalInformation, setGeneralInformation] = useReducer((prev, next) => ({
         ...prev, ...next
     }), {
-        recordNumber: `${site}/CC/${currentYear}/000001`,
+        recordNumber: `${site}/CC/${currentYear}`,
         site: site,
         initiator: 'Amit Guru',
         dateOfInitiation: CurrentDate(),
@@ -29,11 +28,9 @@ function generalInformationForm() {
         shortDescription: '',
         initiatedThrough: '',
         initiatedThroughOthers: '',
-       
         repeat: '',
         repeatNature: '',
         riskLevel: '',
-        divisionCode: '',
         natureOfChange: '',
         natureOfChangeOthers: '',
         initialAttachment: '',
@@ -85,7 +82,7 @@ function generalInformationForm() {
     const [groupComments, setGroupComments] = useReducer((prev, next) => ({
         ...prev, ...next
     }), {
-        qaEvaluationComments: '',
+        cFTComments: '',
         cftAttachments: '',
         qaComments: '',
         qaHeadDesigneeComments: '',
@@ -126,123 +123,188 @@ function generalInformationForm() {
         dueDateExtensionJustification: '',
     })
     const body = {
-        "generalInfo": [
-            {
-                "generalInfoAttachment": generalInformation.initialAttachment,
-                "dueDate": generalInformation.dueDate,
-                "shortDescription": generalInformation.shortDescription,
-                "ifOthers": generalInformation.natureOfChangeOthers,
-                "recordNumber": generalInformation.recordNumber,
-                "initiator": generalInformation.initiator,
-                "dateofInitiation": generalInformation.dateOfInitiation,
-                "assignedTo": generalInformation.assignedTo,
-                "initiatorGroup": generalInformation.initiatorGroup,
-                "initiatorGroupCode": '',
-                "initiatedThrough": generalInformation.initiatedThrough,
-                "repeats": generalInformation.repeat,
-                "others": generalInformation.initiatedThroughOthers,
-                "repeatNature": generalInformation.repeatNature,
-                "riskLevel": generalInformation.riskLevel,
-                "divisionCode": generalInformation.site,
-                "natureOfChange": generalInformation.natureOfChange
-            }
-        ],
-        "changedetails": [
-            {
-                "changeDetailsAttachment": changeDetails.documentDetails,
-                "currentPractice": changeDetails.currentPractice,
-                "proposedChange": changeDetails.proposedChange,
-                "reasonforChange": changeDetails.reasonForChange,
-                "anyOtherComments": changeDetails.anyOtherComments,
-                "supervisorComments": changeDetails.supervisorComments
-            }
-        ],
-        "chaConQAReview": [
-            {
-                "chaconQAReviewAttachment": qAReview.qAAttachments,
-                "typeofChange": qAReview.typeOfChange,
-                "qareviewComments": qAReview.qAReviewComments,
-                "relatedRecords": "manish"
-            }
-        ],
-        "evalution": [
-            {
-                "evalutionAttachment": evaluation.qAAttachments,
-                "qaevaluationComments": evaluation.qAEvaluationComments,
-                "trainingRequired": evaluation.trainingRequired,
-                "trainingComments": evaluation.trainingComments
-            }
-        ],
-        "additionalInformation": [
-            {
-                "additionalInfoAttach": additionalInformation.qaAttachments,
-                "others": additionalInformation.others,
-                "cftReviewer": additionalInformation.cftReviewRequired,
-                "cftReviewerPerson": cftPersons,
-                "isConcernedGroupReviewRequired": additionalInformation.groupReviewRequired,
-                "production": additionalInformation.production,
-                "productionPerson": additionalInformation.productionPerson,
-                "qualityApprover": additionalInformation.qualityApprover,
-                "qualityApproverPerson": additionalInformation.qualityApproverPerson,
-                "othersPerson": additionalInformation.othersPerson
-            }
-        ],
-        "groupComments": [
-            {
-                "groupCommentsCftAttach": groupComments.cftAttachments,
-                "groupCommentsAttach": '',
-                "qaheadDesigneeComments": groupComments.qaHeadDesigneeComments,
-                "qaComments": groupComments.qaComments,
-                "groupComments": groupComments.groupComments,
-                "cftComments": '',
-                "warehouseComments": groupComments.warehouseComments,
-                "engineeringComments": groupComments.engineeringComments,
-                "instrumentationComments": groupComments.instrumentationComments,
-                "validationComments": groupComments.validationComments,
-                "othersComments": groupComments.othersComments
-            }
-        ],
-        "riskAssessment": [
-            {
-                "riskAssessmentAttach": '',
-                "riskIdentification": riskAssessment.riskIdentification,
-                "severityRate": riskAssessment.severityRate,
-                "occurrence": riskAssessment.occurrence,
-                "detection": riskAssessment.detection,
-                "rpn": '',
-                "riskEvaluation": riskAssessment.riskEvaluation,
-                "migrationAction": riskAssessment.migrationAction
-            }
-        ],
-        "qaApprovalComments": [
-            {
-                "qaApprovalAttachment": qaApprovalComments.trainingAttachments,
-                "qaApprovalComments": qaApprovalComments.qaApprovalComments,
-                "trainingFeedback": qaApprovalComments.trainingFeedback
-            }
-        ],
-        "changeClouser": [
-            {
-                "changeClouserAttach": changeClosure.listOfAttachments,
-                "changeClouserInitialAttach": changeClosure.documentDetails,
-                "qaClosureComments": changeClosure.qaClosureComments,
-                "effectivessCheckRequired": changeClosure.effectivenessCheckRequired,
-                "effectivenessCheckCreationDate": changeClosure.effectivenessCheckCreationDate,
-                "effectivenessChecker": changeClosure.effectivenessChecker,
-                "effectivenessCheckPlan": changeClosure.effectivenessCheckPlan,
-                "dueDateExtensionJustification": changeClosure.dueDateExtensionJustification
-            }
-        ],
-        "changeControlName": "GeneralInformation"
+        "changeControl": {
+            "changeControlName": "Change Control",
+            "generalInfo": [
+                {
+                    "name": "",
+                    "dueDate": generalInformation.dueDate,
+                    "shortDescription": generalInformation.shortDescription,
+                    "ifOthers": generalInformation.natureOfChangeOthers,
+                    "recordNumber": generalInformation.recordNumber,
+                    "initiator": generalInformation.initiator,
+                    "dateofInitiation": generalInformation.dateOfInitiation,
+                    "assignedTo": generalInformation.assignedTo,
+                    "initiatorGroup": generalInformation.initiatorGroup,
+                    "initiatorGroupCode": "uvw",
+                    "initiatedThrough": generalInformation.initiatedThrough,
+                    "repeats": generalInformation.repeat,
+                    "others": generalInformation.initiatedThroughOthers,
+                    "repeatNature": generalInformation.repeatNature,
+                    "riskLevel": generalInformation.riskLevel,
+                    "divisionCode": generalInformation.site,
+                    "natureOfChange": generalInformation.natureOfChangeOthers,
+                    "generalInfoAttachment": [{
+                        "titleOfDocument": "abc",
+                        "attachedFile": "bce",
+                        "remark": "cde"
+                    }]
+
+                }
+            ],
+            "changedetails": [
+                {
+                    "currentPractice": changeDetails.currentPractice,
+                    "proposedChange": changeDetails.proposedChange,
+                    "reasonforChange": changeDetails.reasonForChange,
+                    "anyOtherComments": changeDetails.anyOtherComments,
+                    "supervisorComments": changeDetails.supervisorComments,
+                    "changeDetailsAttachment": [{
+                        "CurrentDocumentNo": "123",
+                        "currentVersionNo": "456",
+                        "newDocumentNo": "789",
+                        "newVersionNo": "123"
+                    }]
+                }
+            ],
+            "chaConQAReview": [
+                {
+
+                    "typeofChange": qAReview.typeOfChange,
+                    "qareviewComments": qAReview.qAReviewComments,
+                    "relatedRecords": '',
+                    "chaconQAReviewAttachment": [{
+                        "titleOfDocument": "abc",
+                        "attachedFile": "bce",
+                        "remark": "cde"
+                    }]
+                }
+            ],
+            "evalution": [
+                {
+                    "qaevaluationComments": evaluation.qAEvaluationComments,
+                    "trainingRequired": evaluation.trainingRequired,
+                    "trainingComments": evaluation.trainingComments,
+                    "evalutionAttachment": [{
+                        "titleOfDocument": "abc",
+                        "attachedFile": "bce",
+                        "remark": "cde"
+                    }]
+                }
+            ],
+            "additionalInformation": [
+                {
+                    "others": additionalInformation.others,
+                    "cftReviewer": additionalInformation.cftReviewRequired,
+                    "cftReviewerPerson": cftPersons,
+                    "isConcernedGroupReviewRequired": additionalInformation.groupReviewRequired,
+                    "production": additionalInformation.production,
+                    "productionPerson": additionalInformation.productionPerson,
+                    "qualityApprover": additionalInformation.qualityApprover,
+                    "qualityApproverPerson": additionalInformation.qualityApproverPerson,
+                    "othersPerson": additionalInformation.othersPerson,
+                    "additionalInfoAttach": [{
+                        "titleOfDocument": "abc",
+                        "attachedFile": "bce",
+                        "remark": "cde"
+                    }]
+                }
+            ],
+            "groupComments": [
+                {
+                    "qaheadDesigneeComments": groupComments.qaHeadDesigneeComments,
+                    "qaComments": groupComments.qaComments,
+                    "groupComments": groupComments.groupComments,
+                    "cftComments": groupComments.cFTComments,
+                    "warehouseComments": groupComments.warehouseComments,
+                    "engineeringComments": groupComments.engineeringComments,
+                    "instrumentationComments": groupComments.instrumentationComments,
+                    "validationComments": groupComments.validationComments,
+                    "othersComments": groupComments.othersComments,
+                    "groupCommentsCftAttach": [{
+                        "titleOfDocument": "abc",
+                        "attachedFile": "bce",
+                        "remark": "cde"
+                    }],
+                    "groupCommentsAttach": [{
+                        "titleOfDocument": "abc",
+                        "attachedFile": "bce",
+                        "remark": "cde"
+                    }]
+                }
+            ],
+            "riskAssessment": [
+                {
+                    "riskIdentification": riskAssessment.riskIdentification,
+                    "severityRate": riskAssessment.severityRate,
+                    "occurrence": riskAssessment.occurrence,
+                    "detection": riskAssessment.detection,
+                    "rpn": '',
+                    "riskEvaluation": riskAssessment.riskEvaluation,
+                    "migrationAction": riskAssessment.migrationAction,
+                    "riskAssessmentAttach": [{
+                        "titleOfDocument": "abc",
+                        "attachedFile": "bce",
+                        "remark": "cde"
+                    }]
+                }
+            ],
+            "qaApprovalComments": [
+                {
+                    "qaApprovalComments": qaApprovalComments.qaApprovalComments,
+                    "trainingFeedback": qaApprovalComments.trainingFeedback,
+                    "qaApprovalAttach": [{
+                        "titleOfDocument": "abc",
+                        "attachedFile": "bce",
+                        "remark": "cde"
+                    }]
+                }
+            ],
+            "changeClouser": [
+                {
+                    "qaClosureComments": changeClosure.qaClosureComments,
+                    "effectivessCheckRequired": changeClosure.effectivenessCheckRequired,
+                    "effectivenessCheckCreationDate": changeClosure.effectivenessCheckCreationDate,
+                    "effectivenessChecker": changeClosure.effectivenessChecker,
+                    "effectivenessCheckPlan": changeClosure.effectivenessCheckPlan,
+                    "dueDateExtensionJustification": changeClosure.dueDateExtensionJustification,
+                    "changeClouserInitialAttach": [{
+                        "titleOfDocument": "abc",
+                        "attachedFile": "bce",
+                        "remark": "cde"
+                    }],
+                    "changeClouserAttach": [{
+                        "affectedDocuments": "abc",
+                        "documentName": "bce",
+                        "documentNo": "cde",
+                        "versionNo": "123",
+                        "implementationDate": "2023-12-12",
+                        "newDocumentNo": "yes",
+                        "newsVersionNo": "no"
+                    }]
+                }
+            ]
+        }
     }
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        axios.post(ChangeControlCreate, body).then(response => {
-            toast.success("Form saved successfully.")
-            window.location.href = '/desktop'
-        }).catch(error => {
-            toast.error("There was an error occurring while saving the form.")
-        })
+    const handleSubmit = () => {
+        if (!generalInformation.dueDate) {
+            toast.error("Due Date is required.")
+        } else if (!generalInformation.shortDescription) {
+            toast.error("Short Description is required.")
+        } else {
+            fetch('http://195.35.6.197:9091/LabIncident/api/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            }).then(response => response.json()).then(data => {
+                toast.success('Form saved Successfully');
+                window.location.replace("/desktop");
+            }).catch((error) => {
+                toast.error('Error occurring while saving the form.');
+            });
+        }
     }
 
     return (
@@ -321,7 +383,7 @@ function generalInformationForm() {
                                             <input type="text" value={generalInformation.recordNumber} disabled />
                                         </div>
                                         <div className="group-input">
-                                            <label>Division Code</label>
+                                            <label>Site/Location Code</label>
                                             <input type="text" value={generalInformation.site} disabled />
                                         </div>
                                         <div className="group-input">
@@ -435,35 +497,8 @@ function generalInformationForm() {
                                             ></textarea>
                                         </div>
                                         <div className="group-input">
-                                            <label>Risk Level</label>
-                                            <select value={generalInformation.riskLevel} onChange={(e) => setGeneralInformation({ riskLevel: e.target.value })}>
-                                                <option value="0">-- Select --</option>
-                                                <option value="minor">Minor</option>
-                                                <option value="major">Major</option>
-                                                <option value="critical">Critical</option>
-                                            </select>
-                                        </div>
-                                        <div className="group-input">
-                                            <label>
-                                                <div className="required"></div>
-                                                Division Code
-                                            </label>
-                                            <select value={generalInformation.divisionCode} onChange={(e) => setGeneralInformation({ divisionCode: e.target.value })}>
-                                                <option value="0">-- Select --</option>
-                                                <option value="P1">P1</option>
-                                                <option value="P2">P2</option>
-                                                <option value="P3">P3</option>
-                                                <option value="P4A">P4A</option>
-                                                <option value="P4B">P4B</option>
-                                                <option value="P5">P5</option>
-                                                <option value="P6">P6</option>
-                                                <option value="P7">P7</option>
-                                                <option value="RLS">RLS</option>
-                                                <option value="CRS">CRS</option>
-                                            </select>
-                                        </div>
-                                        <div className="group-input">
                                             <label>Nature Of Change</label>
+                                            <div className="instruction">&nbsp;</div>
                                             <select value={generalInformation.natureOfChange} onChange={(e) => setGeneralInformation({ natureOfChange: e.target.value })}>
                                                 <option value="0">-- Select --</option>
                                                 <option value="Temporary">Temporary</option>
@@ -482,6 +517,23 @@ function generalInformationForm() {
                                                 required={generalInformation.natureOfChange === 'Others'}
                                             ></textarea>
                                         </div>
+                                        <div className="group-input">
+                                            <label>Risk Level</label>
+                                            <select value={generalInformation.riskLevel} onChange={(e) => setGeneralInformation({ riskLevel: e.target.value })}>
+                                                <option value="0">-- Select --</option>
+                                                <option value="minor">Minor</option>
+                                                <option value="major">Major</option>
+                                                <option value="critical">Critical</option>
+                                            </select>
+                                        </div>
+                                        <div className="group-input">
+                                            <label>Group Comment Required</label>
+                                            <select value={generalInformation.groupComment} onChange={(e) => setGeneralInformation({ groupComment: e.target.value })}>
+                                                <option value="0">-- Select --</option>
+                                                <option value="yes">Yes</option>
+                                                <option value="no">No</option>
+                                            </select>
+                                        </div>
                                     </div>
                                     <div className="group-input">
                                         <Grid
@@ -491,14 +543,6 @@ function generalInformationForm() {
                                             columnList={docFile[0].columnList}
                                             onChange={(data) => setGeneralInformation({ initialAttachment: data })}
                                         />
-                                    </div>
-                                    <div className="group-input">
-                                        <label>Group Comment Required</label>
-                                        <select value={generalInformation.groupComment} onChange={(e) => setGeneralInformation({ groupComment: e.target.value })}>
-                                            <option value="0">-- Select --</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
-                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -667,8 +711,8 @@ function generalInformationForm() {
                                         </div>
                                         <div className="group-input">
                                             <label>
-                                                {additionalInformation.cftReviewRequired === "Yes" && 
-                                                <div className="required"></div>}
+                                                {additionalInformation.cftReviewRequired === "Yes" &&
+                                                    <div className="required"></div>}
                                                 CFT Reviewer Person
                                             </label>
                                             <MultiSelect
@@ -823,8 +867,8 @@ function generalInformationForm() {
                                         CFT Feedback
                                     </div>
                                     <div className="group-input">
-                                        <label>QA Evaluation Comments</label>
-                                        <textarea value={groupComments.qaEvaluationComments} onChange={(e) => setGroupComments({ qaEvaluationComments: e.target.value })}></textarea>
+                                        <label>CFT Comments</label>
+                                        <textarea value={groupComments.cFTComments} onChange={(e) => setGroupComments({ cFTComments: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <Grid
