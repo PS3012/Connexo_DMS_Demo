@@ -31,7 +31,6 @@ const data = [
         occupation: "Graphic Designer",
         author: "shBob Johnsonrijit"
     },
-    // Add more objects as needed
 ];
 
 // Styles
