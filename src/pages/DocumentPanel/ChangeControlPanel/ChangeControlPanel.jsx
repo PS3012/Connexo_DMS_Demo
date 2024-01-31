@@ -3,12 +3,12 @@ import HeaderTop from '../../../components/Header/HeaderTop';
 import { MultiSelect } from 'react-multi-select-component';
 import Grid from '../../../components/DataFields/Grid';
 import InputDate from '../../../components/DataFields/InputDate';
-import { CurrentDate } from '../../../components/DateReturners';
 import RelatedRecords from '../../../components/DataFields/RelatedRecords';
 import HeaderBottom from '../../../components/Header/HeaderBottom';
 import ESignatureModal from '../../../components/Modals/ESignatureModal/ESignatureModal';
 import { CFTReviewer, changeCloser, docDetails, docFile, formList, progressItems } from './ChangeControlPanelFunctions';
 import '../DocumentPanel.css'
+import CreateChildModal from '../../../components/Modals/CreateChildModal/CreateChildModal';
 
 function ChangeControlPanel() {
     const [generalInformation, setGeneralInformation] = useReducer((prev, next) => ({
@@ -122,24 +122,18 @@ function ChangeControlPanel() {
     })
     const [form, setForm] = useState(formList[0]);
     const [selected, setSelected] = useState([]);
-
     // ------------------Record Workflow-------------
     const [progressArray, setProgressArray] = useState([progressItems[0].name])
     const [signatureModal, setSignatureModal] = useState(false)
+    const closeSignatureModal = () => setSignatureModal(false);
     const [keyword, setKeyword] = useState('')
     const [keywordElements, setKeywordElements] = useState([])
-    const closeSignatureModal = () => setSignatureModal(false);
+    const [childModal, setChildModal] = useState(false)
+    const closeChildModal = () => setChildModal(false);
+    const [children, setChildren] = useState([])
     function handleESignature(key, elements) {
         setKeyword(key)
         setKeywordElements(elements)
-        for (let ele of elements) {
-            let updatedItemIndex = progressItems.findIndex((item) => item.name === ele);
-            if (updatedItemIndex !== -1) {
-                progressItems[updatedItemIndex].details = 'Updated';
-            } else {
-                console.error('Item with name "Opened" not found.');
-            }
-        }
         setSignatureModal(true)
     }
     function signatureValue(key) {
@@ -162,6 +156,10 @@ function ChangeControlPanel() {
     }
     function removeProgress(removeEle) {
         setProgressArray(progressArray.filter((item) => !removeEle.includes(item)));
+    }
+    function handleChildButton(child) {
+        setChildren(child)
+        setChildModal(true)
     }
 
     return (
@@ -196,6 +194,7 @@ function ChangeControlPanel() {
                                     <>
                                         <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[2].name])}>HOD Review Complete</button>
                                         <button className="themeBtn" onClick={() => handleESignature('remove', [progressItems[1].name])}>More Information Required</button>
+                                        <button className="themeBtn" onClick={() => handleChildButton(["Action Item"])}>Child</button>
                                     </>
                                 }
                                 {progressArray.length === 3 &&
@@ -209,6 +208,7 @@ function ChangeControlPanel() {
                                     <>
                                         <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[4].name])}>Review Complete</button>
                                         <button className="themeBtn" onClick={() => handleESignature('remove', [progressItems[2].name, progressItems[3].name])}>Request More Info</button>
+                                        <button className="themeBtn" onClick={() => handleChildButton(["New Document"])}>Child</button>
                                     </>
                                 }
                                 {progressArray.length === 5 &&
@@ -234,6 +234,7 @@ function ChangeControlPanel() {
                     </div>
 
                 </div>
+                
 
                 <div className='document-block'>
                     <div className="document-tabs">
@@ -1011,6 +1012,8 @@ function ChangeControlPanel() {
             </div>
 
             {signatureModal && <ESignatureModal closeModal={closeSignatureModal} returnSignature={signatureValue} />}
+
+            {childModal && <CreateChildModal children={children} closeModal={closeChildModal} />}
 
         </>
     )

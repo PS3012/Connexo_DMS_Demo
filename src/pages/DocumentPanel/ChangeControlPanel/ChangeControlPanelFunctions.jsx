@@ -164,7 +164,7 @@ export const changeCloser = {
 };
 
 export const progressItems = [
-    { id: 1, name: 'Opened', details: 'Document is opened at 10 Jan, 2023 11:12PM' },
+    { id: 1, name: 'Opened', details: '' },
     { id: 2, name: 'HOD Review', details: 'Action Item child can be created at this stage.' },
     { id: 3, name: 'Pending QA Review', details: '' },
     { id: 4, name: 'CFT/SME Review', details: '' },

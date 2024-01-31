@@ -1,18 +1,40 @@
 import HeaderTop from "../../../components/Header/HeaderTop";
-import { useReducer, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import Grid from '../../../components/DataFields/Grid';
 import InputDate from '../../../components/DataFields/InputDate';
 import HeaderBottom from "../../../components/Header/HeaderBottom";
 import ESignatureModal from "../../../components/Modals/ESignatureModal/ESignatureModal";
 import { formList, labFile, progressItems } from "./LabIncidentPanelFunctions";
 import RelatedRecords from "../../../components/DataFields/RelatedRecords";
+import { Link, useParams } from "react-router-dom";
+import { convertDateFormat } from "../../../components/DateReturners";
+import CreateChildModal from "../../../components/Modals/CreateChildModal/CreateChildModal";
+import { toast } from "react-toastify";
 
 function LabIncidentPanel() {
+    const [data, setData] = useState()
+    const { formId } = useParams();
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch(`http://195.35.6.197:9091/LabIncident/api/GetBy/${formId}`);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch data');
+                }
+                const result = await response.json();
+                setData(result);
+            } catch (error) {
+                toast.error(error)
+            }
+        };
+        fetchData();
+    }, []);
+    console.log(data)
     const [form, setForm] = useState(formList[0]);
     const [documentInformation, setDocumentInformation] = useReducer((prev, next) => ({
         ...prev, ...next
     }), {
-        recordNumber: `Estonia/SOP/2024/000001`,
+        recordNumber: '',
         site: "Estonia",
         initiator: 'Amit Guru',
         dateOfInitiation: "25-Jan-2024",
@@ -67,27 +89,30 @@ function LabIncidentPanel() {
         conclusion: '',
         dueDateExtensionJustification: '',
     })
-    const handleChange = (updatedData) => {
-        setDocumentInformation({ initialAttachment: updatedData })
-    };
+    useEffect(() => {
+        if (data) {
+            setDocumentInformation(data.generalInformation[0]);
+            setIncidentDetails(data.incidentDetails[0]);
+            setInvestigationDetails(data.investigationDetails[0]);
+            setCapa(data.capa[0]);
+            setQAReview(data.qaReviews[0]);
+            setQAHeadApproval(data.qaHeadDesigneApprovel[0]);
+            console.log(data.generalInformation[0]);
+        }
+    }, [data]);
 
     // ------------------Record Workflow------------
     const [progressArray, setProgressArray] = useState([progressItems[0].name])
     const [signatureModal, setSignatureModal] = useState(false)
+    const closeSignatureModal = () => setSignatureModal(false);
     const [keyword, setKeyword] = useState('')
     const [keywordElements, setKeywordElements] = useState([])
-    const closeSignatureModal = () => setSignatureModal(false);
+    const [childModal, setChildModal] = useState(false)
+    const closeChildModal = () => setChildModal(false);
+    const [children, setChildren] = useState([])
     function handleESignature(key, elements) {
         setKeyword(key)
         setKeywordElements(elements)
-        for (let ele of elements) {
-            let updatedItemIndex = progressItems.findIndex((item) => item.name === ele);
-            if (updatedItemIndex !== -1) {
-                progressItems[updatedItemIndex].details = 'Updated';
-            } else {
-                console.error('Item with name "Opened" not found.');
-            }
-        }
         setSignatureModal(true)
     }
     function signatureValue(key) {
@@ -100,7 +125,7 @@ function LabIncidentPanel() {
                 setProgressArray('Closed-Cancelled')
             }
         } else {
-            alert('E-Signature Not Matched.')
+            toast.error('E-Signature Not Matched.')
         }
     }
     function addProgress(addEle) {
@@ -111,6 +136,12 @@ function LabIncidentPanel() {
     function removeProgress(removeEle) {
         setProgressArray(progressArray.filter((item) => !removeEle.includes(item)));
     }
+    function handleChildButton(child) {
+        setChildren(child)
+        setChildModal(true)
+    }
+
+
     return (
         <>
             <HeaderTop />
@@ -119,7 +150,7 @@ function LabIncidentPanel() {
             <div id="document-panel">
 
                 <div className="top-block">
-                    <div><strong> Record Name:&nbsp;</strong>Lab Incident Panel</div>
+                    <div><strong> Record Name:&nbsp;</strong>Lab Incident</div>
                     <div><strong> Site:&nbsp;</strong>{documentInformation.site}</div>
                     <div><strong> Current Status:&nbsp;</strong>{progressArray[progressArray.length - 1]}</div>
                     <div><strong> Initiated By:&nbsp;</strong>{documentInformation.initiator}</div>
@@ -149,6 +180,7 @@ function LabIncidentPanel() {
                                     <>
                                         <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[3].name])}>Investigation Completed</button>
                                         <button className="themeBtn" onClick={() => handleESignature('remove', [progressItems[2].name])}>Request More Information</button>
+                                        <button className="themeBtn" onClick={() => handleChildButton(["Root Cause Analysis"])}>Child</button>
                                     </>
                                 }
                                 {progressArray.length === 4 &&
@@ -160,6 +192,7 @@ function LabIncidentPanel() {
                                     <>
                                         <button className="themeBtn" onClick={() => handleESignature('add', [progressItems[5].name])}>Review</button>
                                         <button className="themeBtn" onClick={() => handleESignature('remove', [progressItems[4].name, progressItems[3].name])}>Further Investigation Required</button>
+                                        <button className="themeBtn" onClick={() => handleChildButton(["CAPA"])}>Child</button>
                                     </>
                                 }
                                 {progressArray.length === 6 &&
@@ -174,7 +207,10 @@ function LabIncidentPanel() {
                                         <button className="themeBtn" onClick={() => handleESignature('remove', [progressItems[6].name])}>Return to QA Review</button>
                                     </>
                                 }
-                                <button className="themeBtn">Exit</button>
+                                {progressArray.length === 8 &&
+                                    <button className="themeBtn" onClick={() => handleChildButton(["Effectiveness Check"])}>Child</button>
+                                }
+                                <Link to="/desktop" className="themeBtn">Exit</Link>
                             </div>
                         </div>
                         <div className="progress-block">
@@ -209,7 +245,7 @@ function LabIncidentPanel() {
                                 <div className='form-flex'>
                                     <div className="group-input">
                                         <label>Record Number</label>
-                                        <input type="text" value={documentInformation.recordNumber} disabled />
+                                        <input type="text" value={`${documentInformation.recordNumber}/00031`} disabled />
                                     </div>
                                     <div className="group-input">
                                         <label>Division Code</label>
@@ -241,7 +277,7 @@ function LabIncidentPanel() {
                                         instruction="Please mention expected date of completion."
                                         isRequired="true"
                                         enableDate="future"
-                                        value={documentInformation.dueDate}
+                                        value={convertDateFormat(documentInformation.dueDate)}
                                         returnDate={(date) => setDocumentInformation({ dueDate: date })}
                                     />
                                     <div className="group-input">
@@ -280,7 +316,7 @@ function LabIncidentPanel() {
                                 <RelatedRecords
                                     label="Other Reference Document No"
                                 />
-                                <div className='form-flex'>
+                                {/* <div className='form-flex'> */}
                                     <div className='group-input'>
                                         <label>Incident Category</label>
                                         <select value={documentInformation.incidentCategory} onChange={(e) => setDocumentInformation({ incidentCategory: e.target.value })}>
@@ -290,23 +326,22 @@ function LabIncidentPanel() {
                                             <option value="Others">Others</option>
                                         </select>
                                     </div>
-                                    <div className='group-input'>
+                                    {/* <div className='group-input'>
                                         <label>Invocation Type</label>
                                         <select value={documentInformation.invocationType} onChange={(e) => setDocumentInformation({ invocationType: e.target.value })}>
                                             <option value="">Enter Your Selection Here</option>
                                             <option value="auto">Auto</option>
                                             <option value="manual">Manual</option>
                                         </select>
-                                    </div>
-                                </div>
+                                    </div> */}
+                                {/* </div> */}
                                 <div className="group-input">
                                     <Grid
                                         label={labFile[0].label}
                                         required={labFile[0].required}
                                         instruction={labFile[0].instruction}
                                         columnList={labFile[0].columnList}
-                                        initialValues={documentInformation.initialAttachment}
-                                        onChange={handleChange}
+                                        onChange={(data) => setDocumentInformation({ initialAttachment: data })}
                                     />
                                 </div>
                             </div>
@@ -344,6 +379,7 @@ function LabIncidentPanel() {
                                         required={labFile[1].required}
                                         instruction={labFile[1].instruction}
                                         columnList={labFile[1].columnList}
+                                        onChange={(data) => setIncidentDetails({ attachment: data })}
                                     />
                                 </div>
                             </div>
@@ -357,6 +393,7 @@ function LabIncidentPanel() {
                                         required={labFile[2].required}
                                         instruction={labFile[2].instruction}
                                         columnList={labFile[2].columnList}
+                                        onChange={(data) => setInvestigationDetails({ invAttachment: data })}
                                     />
                                 </div>
                                 <div className="group-input">
@@ -379,7 +416,7 @@ function LabIncidentPanel() {
                             <div className='details-form-data'>
                                 <div className="group-input">
                                     <label>Investigation Details</label>
-                                    <textarea value={capa.investigationDetails} onChange={(e) => setCapa({ investigationDetails: e.target.value })}></textarea>
+                                    <textarea value={capa.investigationDetail} onChange={(e) => setCapa({ investigationDetails: e.target.value })}></textarea>
                                 </div>
                                 <div className="group-input">
                                     <label>Action Taken</label>
@@ -391,6 +428,7 @@ function LabIncidentPanel() {
                                         required={labFile[3].required}
                                         instruction={labFile[3].instruction}
                                         columnList={labFile[3].columnList}
+                                        onChange={(data) => setCapa({ capaAttachment: data })}
                                     />
                                 </div>
                             </div>
@@ -400,7 +438,7 @@ function LabIncidentPanel() {
                             <div className='details-form-data'>
                                 <div className="group-input">
                                     <label>QA Review Comments</label>
-                                    <textarea value={qAReview.qAReviewComments} onChange={(e) => setQAReview({ qAReviewComments: e.target.value })}></textarea>
+                                    <textarea value={qAReview.qaReviewComments} onChange={(e) => setQAReview({ qaReviewComments: e.target.value })}></textarea>
                                 </div>
                                 <div className='group-input'>
                                     <Grid
@@ -408,6 +446,7 @@ function LabIncidentPanel() {
                                         required={labFile[4].required}
                                         instruction={labFile[4].instruction}
                                         columnList={labFile[4].columnList}
+                                        onChange={(data) => setQAReview({ qAHeadAttachments: data })}
                                     />
                                 </div>
                             </div>
@@ -423,7 +462,7 @@ function LabIncidentPanel() {
                                 <div className='form-flex'>
                                     <div className='group-input'>
                                         <label>Effectiveness Check required?</label>
-                                        <select value={qAHeadApproval.effectivenessCheckRequired} onChange={(e) => setQAHeadApproval({ effectivenessCheckRequired: e.target.value })}>
+                                        <select value={qAHeadApproval.effectivenessCheckrequired} onChange={(e) => setQAHeadApproval({ effectivenessCheckrequired: e.target.value })}>
                                             <option value="">Enter Your Selection Here</option>
                                             <option value="Yes">Yes</option>
                                             <option value="No">No</option>
@@ -432,7 +471,7 @@ function LabIncidentPanel() {
                                     <InputDate
                                         label="Effectiveness Check Creation Date"
                                         instruction=""
-                                        isDisabled={qAHeadApproval.effectivenessCheckRequired !== "Yes"}
+                                        isDisabled={qAHeadApproval.effectivenessCheckrequired !== "Yes"}
                                         isRequired="false"
                                         enableDate="future"
                                         value={qAHeadApproval.effectivenessCheckCreationDate}
@@ -442,9 +481,9 @@ function LabIncidentPanel() {
                                 <div className='group-input'>
                                     <label>Effectiveness Checker</label>
                                     <select
-                                        value={qAHeadApproval.effectivenessChecker}
-                                        disabled={qAHeadApproval.effectivenessCheckRequired !== "Yes"}
-                                        onChange={(e) => setQAHeadApproval({ effectivenessChecker: e.target.value })}
+                                        value={qAHeadApproval.effectivnessChecker}
+                                        disabled={qAHeadApproval.effectivenessCheckrequired !== "Yes"}
+                                        onChange={(e) => setQAHeadApproval({ effectivnessChecker: e.target.value })}
                                     >
                                         <option value="">-- Select --</option>
                                         <option value="amit_guru">Amit Guru</option>
@@ -463,15 +502,13 @@ function LabIncidentPanel() {
                                 <div className="group-input">
                                     <label>Due Date Extension Justification</label>
                                     <div className="instruction">Please Mention justification if due date is crossed</div>
-                                    <textarea value={qAHeadApproval.dueDateExtensionJustification} onChange={(e) => setQAHeadApproval({ dueDateExtensionJustification: e.target.value })}></textarea>
+                                    <textarea value={qAHeadApproval.dueDateExtentionJustification} onChange={(e) => setQAHeadApproval({ dueDateExtentionJustification: e.target.value })}></textarea>
                                 </div>
                             </div>
                         </div>
                     ) : form === formList[6] ? (
                         <div className='document-form'>
                             <div className='details-form-data'>
-
-
                                 <div className='activity-log-field'>
                                     <div>
                                         <strong> Submitted By:&nbsp;</strong>Shaleen Mishra
@@ -480,7 +517,6 @@ function LabIncidentPanel() {
                                         <strong> Submitted On:&nbsp;</strong>15 Jan, 2023 11:00 PM
                                     </div>
                                 </div>
-
                                 <div className='activity-log-field'>
                                     <div>
                                         <strong> Incident Review Completed By:&nbsp;</strong>Anshul Jain
@@ -489,7 +525,6 @@ function LabIncidentPanel() {
                                         <strong> Incident Review Completed On:&nbsp;</strong>15 Jan, 2023 11:00 PM
                                     </div>
                                 </div>
-
                                 <div className='activity-log-field'>
                                     <div>
                                         <strong> Investigation Review Completed By:&nbsp;</strong>Amit Guru
@@ -498,7 +533,6 @@ function LabIncidentPanel() {
                                         <strong> Investigation Review Completed On:&nbsp;</strong>15 Jan, 2023 11:00 PM
                                     </div>
                                 </div>
-
                                 <div className='activity-log-field'>
                                     <div>
                                         <strong> Inv and CAPA Review Comp. By:&nbsp;</strong>Piyush Shau
@@ -507,7 +541,6 @@ function LabIncidentPanel() {
                                         <strong>Inv and CAPA Review Comp. On:&nbsp;</strong>15 Jan, 2023 11:00 PM
                                     </div>
                                 </div>
-
                                 <div className='activity-log-field'>
                                     <div>
                                         <strong> QA Review Completed By:&nbsp;</strong>Gopal
@@ -516,7 +549,6 @@ function LabIncidentPanel() {
                                         <strong>QA Review Completed On:&nbsp;</strong>15 Jan, 2023 11:00 PM
                                     </div>
                                 </div>
-
                                 <div className='activity-log-field'>
                                     <div>
                                         <strong>QA Head Approval Completed By:&nbsp;</strong>Amit Patel
@@ -525,9 +557,6 @@ function LabIncidentPanel() {
                                         <strong>QA Head Approval Completed On:&nbsp;</strong>15 Jan, 2023 11:00 PM
                                     </div>
                                 </div>
-
-
-
                                 <div className='activity-log-field'>
                                     <div>
                                         <strong>Cancelled By:&nbsp;</strong>Amit Guru
@@ -536,7 +565,6 @@ function LabIncidentPanel() {
                                         <strong>Cancelled On:&nbsp;</strong>15 Jan, 2023 11:00 PM
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     ) : (
@@ -554,6 +582,8 @@ function LabIncidentPanel() {
             </div>
 
             {signatureModal && <ESignatureModal closeModal={closeSignatureModal} returnSignature={signatureValue} />}
+
+            {childModal && <CreateChildModal children={children} closeModal={closeChildModal} />}
 
         </>
     )

@@ -54,4 +54,33 @@
     max-height: 75%;
     overflow-y: auto;
 }
+/* ... (previous CSS) */
 
+/* Chart container styles */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 20px;
+  }
+  
+  .col-4 {
+    flex: 0 0 30%; /* Adjust this value based on your design */
+    margin-bottom: 20px;
+    text-align: center; /* Center the chart inside its container */
+  }
+  
+  /* Chart specific styles */
+  .apexchart {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  /* Responsive styling */
+  @media (max-width: 768px) {
+    .col-4 {
+      flex: 0 0 100%; /* Full width on smaller screens */
+    }
+  }
+  

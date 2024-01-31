@@ -7,16 +7,18 @@ import { CurrentDate } from '../../../components/DateReturners';
 import RelatedRecords from '../../../components/DataFields/RelatedRecords';
 import { CFTReviewer, changeCloser, currentYear, docDetails, docFile, formList, site, workFlow } from './ChangeControlFunctions';
 import '../ConfigForms.css'
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 function generalInformationForm() {
     const [form, setForm] = useState(formList[0]);
-    const [selected, setSelected] = useState([]);
     const [asideWorkFlow, setAsideWorkFlow] = useState(false)
     const [asideFamilyTree, setAsideFamilyTree] = useState(false)
+    const [cftPersons, setCftPersons] = useState([])
     const [generalInformation, setGeneralInformation] = useReducer((prev, next) => ({
         ...prev, ...next
     }), {
-        recordNumber: `${site}/CC/${currentYear}/000001`,
+        recordNumber: `${site}/CC/${currentYear}`,
         site: site,
         initiator: 'Amit Guru',
         dateOfInitiation: CurrentDate(),
@@ -29,7 +31,6 @@ function generalInformationForm() {
         repeat: '',
         repeatNature: '',
         riskLevel: '',
-        divisionCode: '',
         natureOfChange: '',
         natureOfChangeOthers: '',
         initialAttachment: '',
@@ -68,7 +69,6 @@ function generalInformationForm() {
         ...prev, ...next
     }), {
         cftReviewRequired: '',
-        cftReviewerPerson: '',
         groupReviewRequired: '',
         production: '',
         productionPerson: '',
@@ -82,7 +82,7 @@ function generalInformationForm() {
     const [groupComments, setGroupComments] = useReducer((prev, next) => ({
         ...prev, ...next
     }), {
-        qaEvaluationComments: '',
+        cFTComments: '',
         cftAttachments: '',
         qaComments: '',
         qaHeadDesigneeComments: '',
@@ -122,6 +122,190 @@ function generalInformationForm() {
         effectivenessCheckPlan: '',
         dueDateExtensionJustification: '',
     })
+    const body = {
+        "changeControl": {
+            "changeControlName": "Change Control",
+            "generalInfo": [
+                {
+                    "name": "",
+                    "dueDate": generalInformation.dueDate,
+                    "shortDescription": generalInformation.shortDescription,
+                    "ifOthers": generalInformation.natureOfChangeOthers,
+                    "recordNumber": generalInformation.recordNumber,
+                    "initiator": generalInformation.initiator,
+                    "dateofInitiation": generalInformation.dateOfInitiation,
+                    "assignedTo": generalInformation.assignedTo,
+                    "initiatorGroup": generalInformation.initiatorGroup,
+                    "initiatorGroupCode": "uvw",
+                    "initiatedThrough": generalInformation.initiatedThrough,
+                    "repeats": generalInformation.repeat,
+                    "others": generalInformation.initiatedThroughOthers,
+                    "repeatNature": generalInformation.repeatNature,
+                    "riskLevel": generalInformation.riskLevel,
+                    "divisionCode": generalInformation.site,
+                    "natureOfChange": generalInformation.natureOfChangeOthers,
+                    "generalInfoAttachment": [{
+                        "titleOfDocument": "abc",
+                        "attachedFile": "bce",
+                        "remark": "cde"
+                    }]
+
+                }
+            ],
+            "changedetails": [
+                {
+                    "currentPractice": changeDetails.currentPractice,
+                    "proposedChange": changeDetails.proposedChange,
+                    "reasonforChange": changeDetails.reasonForChange,
+                    "anyOtherComments": changeDetails.anyOtherComments,
+                    "supervisorComments": changeDetails.supervisorComments,
+                    "changeDetailsAttachment": [{
+                        "CurrentDocumentNo": "123",
+                        "currentVersionNo": "456",
+                        "newDocumentNo": "789",
+                        "newVersionNo": "123"
+                    }]
+                }
+            ],
+            "chaConQAReview": [
+                {
+
+                    "typeofChange": qAReview.typeOfChange,
+                    "qareviewComments": qAReview.qAReviewComments,
+                    "relatedRecords": '',
+                    "chaconQAReviewAttachment": [{
+                        "titleOfDocument": "abc",
+                        "attachedFile": "bce",
+                        "remark": "cde"
+                    }]
+                }
+            ],
+            "evalution": [
+                {
+                    "qaevaluationComments": evaluation.qAEvaluationComments,
+                    "trainingRequired": evaluation.trainingRequired,
+                    "trainingComments": evaluation.trainingComments,
+                    "evalutionAttachment": [{
+                        "titleOfDocument": "abc",
+                        "attachedFile": "bce",
+                        "remark": "cde"
+                    }]
+                }
+            ],
+            "additionalInformation": [
+                {
+                    "others": additionalInformation.others,
+                    "cftReviewer": additionalInformation.cftReviewRequired,
+                    "cftReviewerPerson": cftPersons,
+                    "isConcernedGroupReviewRequired": additionalInformation.groupReviewRequired,
+                    "production": additionalInformation.production,
+                    "productionPerson": additionalInformation.productionPerson,
+                    "qualityApprover": additionalInformation.qualityApprover,
+                    "qualityApproverPerson": additionalInformation.qualityApproverPerson,
+                    "othersPerson": additionalInformation.othersPerson,
+                    "additionalInfoAttach": [{
+                        "titleOfDocument": "abc",
+                        "attachedFile": "bce",
+                        "remark": "cde"
+                    }]
+                }
+            ],
+            "groupComments": [
+                {
+                    "qaheadDesigneeComments": groupComments.qaHeadDesigneeComments,
+                    "qaComments": groupComments.qaComments,
+                    "groupComments": groupComments.groupComments,
+                    "cftComments": groupComments.cFTComments,
+                    "warehouseComments": groupComments.warehouseComments,
+                    "engineeringComments": groupComments.engineeringComments,
+                    "instrumentationComments": groupComments.instrumentationComments,
+                    "validationComments": groupComments.validationComments,
+                    "othersComments": groupComments.othersComments,
+                    "groupCommentsCftAttach": [{
+                        "titleOfDocument": "abc",
+                        "attachedFile": "bce",
+                        "remark": "cde"
+                    }],
+                    "groupCommentsAttach": [{
+                        "titleOfDocument": "abc",
+                        "attachedFile": "bce",
+                        "remark": "cde"
+                    }]
+                }
+            ],
+            "riskAssessment": [
+                {
+                    "riskIdentification": riskAssessment.riskIdentification,
+                    "severityRate": riskAssessment.severityRate,
+                    "occurrence": riskAssessment.occurrence,
+                    "detection": riskAssessment.detection,
+                    "rpn": '',
+                    "riskEvaluation": riskAssessment.riskEvaluation,
+                    "migrationAction": riskAssessment.migrationAction,
+                    "riskAssessmentAttach": [{
+                        "titleOfDocument": "abc",
+                        "attachedFile": "bce",
+                        "remark": "cde"
+                    }]
+                }
+            ],
+            "qaApprovalComments": [
+                {
+                    "qaApprovalComments": qaApprovalComments.qaApprovalComments,
+                    "trainingFeedback": qaApprovalComments.trainingFeedback,
+                    "qaApprovalAttach": [{
+                        "titleOfDocument": "abc",
+                        "attachedFile": "bce",
+                        "remark": "cde"
+                    }]
+                }
+            ],
+            "changeClouser": [
+                {
+                    "qaClosureComments": changeClosure.qaClosureComments,
+                    "effectivessCheckRequired": changeClosure.effectivenessCheckRequired,
+                    "effectivenessCheckCreationDate": changeClosure.effectivenessCheckCreationDate,
+                    "effectivenessChecker": changeClosure.effectivenessChecker,
+                    "effectivenessCheckPlan": changeClosure.effectivenessCheckPlan,
+                    "dueDateExtensionJustification": changeClosure.dueDateExtensionJustification,
+                    "changeClouserInitialAttach": [{
+                        "titleOfDocument": "abc",
+                        "attachedFile": "bce",
+                        "remark": "cde"
+                    }],
+                    "changeClouserAttach": [{
+                        "affectedDocuments": "abc",
+                        "documentName": "bce",
+                        "documentNo": "cde",
+                        "versionNo": "123",
+                        "implementationDate": "2023-12-12",
+                        "newDocumentNo": "yes",
+                        "newsVersionNo": "no"
+                    }]
+                }
+            ]
+        }
+    }
+    const handleSubmit = () => {
+        if (!generalInformation.dueDate) {
+            toast.error("Due Date is required.")
+        } else if (!generalInformation.shortDescription) {
+            toast.error("Short Description is required.")
+        } else {
+            fetch('http://195.35.6.197:9091/LabIncident/api/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            }).then(response => response.json()).then(data => {
+                toast.success('Form saved Successfully');
+                window.location.replace("/desktop");
+            }).catch((error) => {
+                toast.error('Error occurring while saving the form.');
+            });
+        }
+    }
 
     return (
         <>
@@ -199,7 +383,7 @@ function generalInformationForm() {
                                             <input type="text" value={generalInformation.recordNumber} disabled />
                                         </div>
                                         <div className="group-input">
-                                            <label>Division Code</label>
+                                            <label>Site/Location Code</label>
                                             <input type="text" value={generalInformation.site} disabled />
                                         </div>
                                         <div className="group-input">
@@ -313,36 +497,9 @@ function generalInformationForm() {
                                             ></textarea>
                                         </div>
                                         <div className="group-input">
-                                            <label>Risk Level</label>
-                                            <select value={generalInformation.riskLevel} onChange={(e) => setGeneralInformation({ riskLevel: e.target.value })}>
-                                                <option value="0">-- Select --</option>
-                                                <option value="minor">Minor</option>
-                                                <option value="major">Major</option>
-                                                <option value="critical">Critical</option>
-                                            </select>
-                                        </div>
-                                        <div className="group-input">
-                                            <label>
-                                                <div className="required"></div>
-                                                Division Code
-                                            </label>
-                                            <select value={generalInformation.divisionCode} onChange={(e) => setGeneralInformation({ divisionCode: e.target.value })}>
-                                                <option value="0">-- Select --</option>
-                                                <option value="P1">P1</option>
-                                                <option value="P2">P2</option>
-                                                <option value="P3">P3</option>
-                                                <option value="P4A">P4A</option>
-                                                <option value="P4B">P4B</option>
-                                                <option value="P5">P5</option>
-                                                <option value="P6">P6</option>
-                                                <option value="P7">P7</option>
-                                                <option value="RLS">RLS</option>
-                                                <option value="CRS">CRS</option>
-                                            </select>
-                                        </div>
-                                        <div className="group-input">
                                             <label>Nature Of Change</label>
-                                            <select name="natureChange" value={generalInformation.natureOfChange} onChange={(e) => setGeneralInformation({ natureOfChange: e.target.value })}>
+                                            <div className="instruction">&nbsp;</div>
+                                            <select value={generalInformation.natureOfChange} onChange={(e) => setGeneralInformation({ natureOfChange: e.target.value })}>
                                                 <option value="0">-- Select --</option>
                                                 <option value="Temporary">Temporary</option>
                                                 <option value="Permanent">Permanent</option>
@@ -360,6 +517,23 @@ function generalInformationForm() {
                                                 required={generalInformation.natureOfChange === 'Others'}
                                             ></textarea>
                                         </div>
+                                        <div className="group-input">
+                                            <label>Risk Level</label>
+                                            <select value={generalInformation.riskLevel} onChange={(e) => setGeneralInformation({ riskLevel: e.target.value })}>
+                                                <option value="0">-- Select --</option>
+                                                <option value="minor">Minor</option>
+                                                <option value="major">Major</option>
+                                                <option value="critical">Critical</option>
+                                            </select>
+                                        </div>
+                                        <div className="group-input">
+                                            <label>Group Comment Required</label>
+                                            <select value={generalInformation.groupComment} onChange={(e) => setGeneralInformation({ groupComment: e.target.value })}>
+                                                <option value="0">-- Select --</option>
+                                                <option value="yes">Yes</option>
+                                                <option value="no">No</option>
+                                            </select>
+                                        </div>
                                     </div>
                                     <div className="group-input">
                                         <Grid
@@ -367,15 +541,8 @@ function generalInformationForm() {
                                             required={docFile[0].required}
                                             instruction={docFile[0].instruction}
                                             columnList={docFile[0].columnList}
+                                            onChange={(data) => setGeneralInformation({ initialAttachment: data })}
                                         />
-                                    </div>
-                                    <div className="group-input">
-                                        <label htmlFor="group_comment_required">Group Comment Required</label>
-                                        <select name="group_comment_required" value={generalInformation.groupComment} onChange={(e) => setGeneralInformation({ groupComment: e.target.value })}>
-                                            <option value="0">-- Select --</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
-                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -387,6 +554,7 @@ function generalInformationForm() {
                                         required={docDetails.required}
                                         instruction={docDetails.instruction}
                                         columnList={docDetails.columnList}
+                                        onChange={(data) => setChangeDetails({ documentDetails: data })}
                                     />
                                     <div className="sub-head">
                                         Change Details
@@ -438,9 +606,10 @@ function generalInformationForm() {
                                             required={docFile[1].required}
                                             instruction={docFile[1].instruction}
                                             columnList={docFile[1].columnList}
+                                            onChange={(data) => setQAReview({ qAAttachments: data })}
                                         />
                                     </div>
-                                    {generalInformation.typeOfChange === 'minor' ?
+                                    {qAReview.typeOfChange === 'minor' &&
                                         <>
                                             <div className="sub-head">
                                                 Minor Change Justification
@@ -450,11 +619,11 @@ function generalInformationForm() {
                                                     <div className="required"></div>
                                                     Minor Change Justification
                                                 </label>
-                                                <textarea value={qAReview.minorChangeJustification} onChange={(e) => setQAReview({ minorChangeJustification: e.target.value })} required={generalInformation.typeOfChange === 'minor'}></textarea>
+                                                <textarea value={qAReview.minorChangeJustification} onChange={(e) => setQAReview({ minorChangeJustification: e.target.value })} required={qAReview.typeOfChange === 'minor'}></textarea>
                                             </div>
-                                        </> : ''
+                                        </>
                                     }
-                                    {generalInformation.typeOfChange === 'major' ?
+                                    {qAReview.typeOfChange === 'major' &&
                                         <>
                                             <div className="sub-head">
                                                 Major Change Justification
@@ -466,9 +635,9 @@ function generalInformationForm() {
                                                 </label>
                                                 <textarea value={qAReview.majorChangeJustification} onChange={(e) => setQAReview({ majorChangeJustification: e.target.value })} required={generalInformation.typeOfChange === 'major'}></textarea>
                                             </div>
-                                        </> : ''
+                                        </>
                                     }
-                                    {generalInformation.typeOfChange === 'critical' ?
+                                    {qAReview.typeOfChange === 'critical' &&
                                         <>
                                             <div className="sub-head">
                                                 Critical Change Justification
@@ -480,7 +649,7 @@ function generalInformationForm() {
                                                 </label>
                                                 <textarea value={qAReview.criticalChangeJustification} onChange={(e) => setQAReview({ criticalChangeJustification: e.target.value })} required={generalInformation.typeOfChange === 'critical'}></textarea>
                                             </div>
-                                        </> : ''
+                                        </>
                                     }
                                 </div>
                             </div>
@@ -500,6 +669,7 @@ function generalInformationForm() {
                                             required={docFile[2].required}
                                             instruction={docFile[2].instruction}
                                             columnList={docFile[2].columnList}
+                                            onChange={(data) => setEvaluation({ qAAttachments: data })}
                                         />
                                     </div>
                                     <div className="sub-head">
@@ -541,16 +711,17 @@ function generalInformationForm() {
                                         </div>
                                         <div className="group-input">
                                             <label>
-                                                {additionalInformation.cftReviewRequired === "Yes" && <div className="required"></div>}
+                                                {additionalInformation.cftReviewRequired === "Yes" &&
+                                                    <div className="required"></div>}
                                                 CFT Reviewer Person
                                             </label>
                                             <MultiSelect
                                                 options={CFTReviewer}
-                                                value={selected}
-                                                onChange={setSelected}
+                                                value={cftPersons}
+                                                onChange={setCftPersons}
                                                 labelledBy="Select"
                                                 required={additionalInformation.cftReviewRequired === "Yes"}
-                                                disabled={!additionalInformation.cftReviewRequired === "Yes"}
+                                                disabled={additionalInformation.cftReviewRequired !== "Yes"}
                                             />
                                         </div>
                                     </div>
@@ -684,6 +855,7 @@ function generalInformationForm() {
                                             required={docFile[3].required}
                                             instruction={docFile[3].instruction}
                                             columnList={docFile[3].columnList}
+                                            onChange={(data) => setAdditionalInformation({ qaAttachments: data })}
                                         />
                                     </div>
                                 </div>
@@ -695,8 +867,8 @@ function generalInformationForm() {
                                         CFT Feedback
                                     </div>
                                     <div className="group-input">
-                                        <label>QA Evaluation Comments</label>
-                                        <textarea value={groupComments.qaEvaluationComments} setGroupComments={(e) => setGroupComments({ qaEvaluationComments: e.target.value })}></textarea>
+                                        <label>CFT Comments</label>
+                                        <textarea value={groupComments.cFTComments} onChange={(e) => setGroupComments({ cFTComments: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <Grid
@@ -704,6 +876,7 @@ function generalInformationForm() {
                                             required={docFile[4].required}
                                             instruction={docFile[4].instruction}
                                             columnList={docFile[4].columnList}
+                                            onChange={(data) => setGroupComments({ cftAttachments: data })}
                                         />
                                     </div>
                                     <div className="sub-head">
@@ -711,35 +884,35 @@ function generalInformationForm() {
                                     </div>
                                     <div className="group-input">
                                         <label>QA Comments</label>
-                                        <textarea value={groupComments.qaComments} setGroupComments={(e) => setGroupComments({ qaComments: e.target.value })}></textarea>
+                                        <textarea value={groupComments.qaComments} onChange={(e) => setGroupComments({ qaComments: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label>QA Head Designee Comments</label>
-                                        <textarea value={groupComments.qaHeadDesigneeComments} setGroupComments={(e) => setGroupComments({ qaHeadDesigneeComments: e.target.value })}></textarea>
+                                        <textarea value={groupComments.qaHeadDesigneeComments} onChange={(e) => setGroupComments({ qaHeadDesigneeComments: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label>Warehouse Comments</label>
-                                        <textarea value={groupComments.warehouseComments} setGroupComments={(e) => setGroupComments({ warehouseComments: e.target.value })}></textarea>
+                                        <textarea value={groupComments.warehouseComments} onChange={(e) => setGroupComments({ warehouseComments: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label>Engineering Comments</label>
-                                        <textarea value={groupComments.engineeringComments} setGroupComments={(e) => setGroupComments({ engineeringComments: e.target.value })}></textarea>
+                                        <textarea value={groupComments.engineeringComments} onChange={(e) => setGroupComments({ engineeringComments: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label>Instrumentation Comments</label>
-                                        <textarea value={groupComments.instrumentationComments} setGroupComments={(e) => setGroupComments({ instrumentationComments: e.target.value })}></textarea>
+                                        <textarea value={groupComments.instrumentationComments} onChange={(e) => setGroupComments({ instrumentationComments: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label>Validation Comments</label>
-                                        <textarea value={groupComments.validationComments} setGroupComments={(e) => setGroupComments({ validationComments: e.target.value })}></textarea>
+                                        <textarea value={groupComments.validationComments} onChange={(e) => setGroupComments({ validationComments: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label>Others Comments</label>
-                                        <textarea value={groupComments.othersComments} setGroupComments={(e) => setGroupComments({ othersComments: e.target.value })}></textarea>
+                                        <textarea value={groupComments.othersComments} onChange={(e) => setGroupComments({ othersComments: e.target.value })}></textarea>
                                     </div>
                                     <div className="group-input">
                                         <label>Group Comments</label>
-                                        <textarea value={groupComments.groupComments} setGroupComments={(e) => setGroupComments({ groupComments: e.target.value })}></textarea>
+                                        <textarea value={groupComments.groupComments} onChange={(e) => setGroupComments({ groupComments: e.target.value })}></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -814,6 +987,7 @@ function generalInformationForm() {
                                             required={docFile[5].required}
                                             instruction={docFile[5].instruction}
                                             columnList={docFile[5].columnList}
+                                            onChange={(data) => setQAApprovalComments({ trainingAttachments: data })}
                                         />
                                     </div>
                                 </div>
@@ -826,6 +1000,7 @@ function generalInformationForm() {
                                         required={changeCloser.required}
                                         instruction={changeCloser.instruction}
                                         columnList={changeCloser.columnList}
+                                        onChange={(data) => setChangeClosure({ documentDetails: data })}
                                     />
                                     <div className="group-input">
                                         <label>QA Closure Comments</label>
@@ -837,6 +1012,7 @@ function generalInformationForm() {
                                             required={docFile[6].required}
                                             instruction={docFile[6].instruction}
                                             columnList={docFile[6].columnList}
+                                            onChange={(data) => setChangeClosure({ listOfAttachments: data })}
                                         />
                                     </div>
                                     <div className="sub-head">
@@ -941,7 +1117,7 @@ function generalInformationForm() {
                     </div>
 
                     <div className="button-block" style={asideWorkFlow || asideFamilyTree ? { 'width': 'calc(100% - 300px)' } : { 'width': '100%' }}>
-                        <button className='themeBtn'>Save</button>
+                        <button className='themeBtn' onClick={handleSubmit}>Save</button>
                         <button className='themeBtn'>Back</button>
                         <button className='themeBtn'>Next</button>
                         <button className='themeBtn'>Exit</button>

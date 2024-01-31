@@ -1,0 +1,18 @@
+#create-child-modal .children {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px
+}
+
+#create-child-modal .children div {
+    padding: 6px 10px;
+    background: #80808030;
+    border-radius: 5px;
+    transition: all 0.3s linear;
+    cursor: pointer;
+}
+
+#create-child-modal .children div:hover,
+#create-child-modal .children div.active {
+    background: #006fc057;
+}
