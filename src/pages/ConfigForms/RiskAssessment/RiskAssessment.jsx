@@ -20,6 +20,7 @@ function RiskAssessment() {
     const [rootCause, setRootCause] = useState([]);
     const [asideWorkFlow, setAsideWorkFlow] = useState(false)
     const [asideFamilyTree, setAsideFamilyTree] = useState(false)
+    
     const [riskAssessment, setRiskAssessment] = useReducer((prev, next) => ({
         ...prev, ...next
     }), {

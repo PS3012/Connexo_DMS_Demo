@@ -12,12 +12,8 @@ import Desktop from "./pages/Desktop/Desktop";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import ManagementReview from "./pages/ConfigForms/ManagementReview/ManagementReview";
 import ChangeControlPanel from "./pages/DocumentPanel/ChangeControlPanel/ChangeControlPanel";
-
 import ExternalAuditPanel from "./pages/DocumentPanel/ExternalAuditPanel/ExternalAuditPanel";
 import LabIncidentPanel from './pages/DocumentPanel/LabIncidentPanel/LabIncidentPanel'
-import RootCauseAnalysisPanel from './pages/DocumentPanel/RootCauseAnalysisPanel'
-import RiskAssessmentPanel from './pages/DocumentPanel/RiskAssessmentPanel'
-// import ManagementReviewPanel from './pages/DocumentPanel/ManagementReviewPanel'
 import Login from "./pages/Login/Login";
 import ActionItems from "./pages/ConfigForms/ActionItems/ActionItems";
 import AuditProgram from "./pages/ConfigForms/AuditProgram/AuditProgram";
@@ -34,6 +30,15 @@ import ManageQuizzes from "./pages/Tms/TrainingPage/ManageQuizzes";
 import { ToastContainer } from "react-toastify";
 import ExternalAudit from "./pages/ConfigForms/ExternalAudit/ExternalAudit";
 import InternalAudit from "./pages/ConfigForms/InternalAudit/InternalAudit";
+import InternalAuditPanel from "./pages/DocumentPanel/InternalAuditPanel/InternalAuditPanel";
+import ManagementReviewPanel from "./pages/DocumentPanel/ManagementReviewPanel/ManagementReviewPanel";
+import EffectivenessCheckPanel from "./pages/DocumentPanel/EffectivenessCheckPanel/EffectivenessCheckPanel";
+import ObservationPanel from "./pages/DocumentPanel/ObservationPanel/ObservationPanel";
+import ExtensionPanel from "./pages/DocumentPanel/ExtensionPanel/ExtensionPanel";
+import CAPAPanel from "./pages/DocumentPanel/CapaPanel/CapaPanel";
+import ActionItemsss from "./pages/ConfigForms/ActionItems/ActionItemsss";
+import RiskAssessmentPanel from "./pages/DocumentPanel/RiskAssessmentPanel/RiskAssessmentPanel";
+import RootCauseAnalysisPanel from "./pages/DocumentPanel/RootCauseAnalysisPanel/RootCauseAnalysisPanel";
 
 function App() {
   return (
@@ -41,7 +46,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="/internal-audit-panel" element={<InternalAuditPanel />} />
+          <Route path="/internal-audit-panel" element={<InternalAuditPanel/>} />
           <Route path="/external-audit-panel" element={<ExternalAuditPanel />} />
           <Route path='/change-control-panel' element={<ChangeControlPanel />} />
           <Route path='/lab-incident-panel/:formId' element={<LabIncidentPanel />} />
@@ -72,12 +77,13 @@ function App() {
           <Route path='/action-item-panel' element={<ActionItemsPanel/>} />
           <Route path='/audit-program-panel' element={<AuditProgramPanel/>} />
           <Route path='/capa-panel' element={<CAPAPanel />} />
-          <Route path='/effectiveness-check-panel' element={<EffectivenessCheckPanel />} />
-          <Route path='/observation-panel' element={<ObservationPanel />} />
+          <Route path='/effectiveness-check-panel' element={<EffectivenessCheckPanel/>} />
+          <Route path='/observation-panel' element={<ObservationPanel/>} />
           <Route path='/question-page' element={<QuestionPage />} />
           <Route path='/manage-question' element={<ManageQuestionPage />} />
           <Route path='/manage-question-bank' element={<ManageQuestionBank />} />
           <Route path='/manage-quizzes' element={<ManageQuizzes />} />
+          <Route path='/action' element={<ActionItemsss/>} />
           <Route path='/*' element={<Navigate to="/" />} />
         </Routes>
         <ToastContainer />

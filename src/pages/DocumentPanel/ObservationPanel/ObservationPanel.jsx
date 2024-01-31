@@ -7,7 +7,7 @@ import Grid from "../../../components/DataFields/Grid";
 import InputDate from "../../../components/DataFields/InputDate";
 import { CurrentDate } from "../../../components/DateReturners";
 import "../DocumentPanel.css";
-import {  formList, progressItems, actionPlan,  docFile,  site,  currentYear,} from "./ObservationPanelFunctions";
+import {  formList, progressItems, actionPlan,  docFile,  site,  currentYear} from "./ObservationPanelFunctions";
 
 function ObservationPanel() {
 

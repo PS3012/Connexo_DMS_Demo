@@ -6,6 +6,7 @@ import { MultiSelect } from "react-multi-select-component";
 import InputDate from "../../../components/DataFields/InputDate";
 import RelatedRecords from "../../../components/DataFields/RelatedRecords";
 import { CurrentDate } from "../../../components/DateReturners";
+// import AiBotChat from "../../../components/AiBotChat";
 import {
   formList,
   workFlow,
@@ -16,8 +17,9 @@ import {
 } from "./ActionItemsFunctions";
 import "../ConfigForms.css";
 import { toast } from "react-toastify";
+import AiBotChat from "../../../components/DataFields/AiBotChat";
 
-function ActionItems() {
+function ActionItemsss() {
   const [form, setForm] = useState(formList[0]);
   const [hodPersons, setHodPersons] = useState([]);
   const [asideWorkFlow, setAsideWorkFlow] = useState(false);
@@ -112,12 +114,22 @@ function ActionItems() {
     }
   }
 
+    // State for controlling AI bot sidebar
+    const [showAiBot, setShowAiBot] = useState(false);
+
+    // Function to toggle AI bot sidebar
+    const toggleAiBot = () => {
+      setShowAiBot(!showAiBot);
+      setAsideWorkFlow(false);
+      setAsideFamilyTree(false);
+    };
+
   return (
     <>
       <div
         id="main-form-container"
         style={
-          asideWorkFlow || asideFamilyTree ? { padding: "0 0 0 300px" } : {}
+          asideWorkFlow || asideFamilyTree || showAiBot ? { padding: "0 0 0 300px" } : {}
         }
       >
         {asideWorkFlow && (
@@ -164,6 +176,16 @@ function ActionItems() {
             </div>
           </div>
         )}
+     {/* Ai bot Functionality adds */}
+        {showAiBot && (
+        <div className="aside-container">
+             <div className="head">
+              <div>AI Bot</div>
+              <div>CLear Your Doubts</div>
+            </div>
+        <AiBotChat 
+         onClose={toggleAiBot} />
+        </div>)}
 
         <div id="config-form-document-page">
           <HeaderTop />
@@ -286,10 +308,10 @@ function ActionItems() {
                       <select
                         value={generalInformation.severityLevel}
                         onChange={(e) => setGeneralInformation({ severityLevel: e.target.value })}>
-                        <option value="Select">-- Select --</option>
-                        <option value="Major">Major</option>
-                        <option value="Minor">Minor</option>
-                        <option value="Critical">Critical</option>
+                        <option value="">-- Select --</option>
+                        <option value="">Major</option>
+                        <option value="">Minor</option>
+                        <option value="">Critical</option>
                       </select>
                     </div>
                     <div className="group-input">
@@ -539,7 +561,7 @@ function ActionItems() {
           <div
             className="button-block"
             style={
-              asideWorkFlow || asideFamilyTree
+              asideWorkFlow || asideFamilyTree || showAiBot
                 ? { width: "calc(100% - 300px)" }
                 : { width: "100%" }
             }
@@ -552,10 +574,24 @@ function ActionItems() {
         </div>
 
         <div className="sticky-buttons">
+          <div onClick={toggleAiBot}>
+            {/* Your AI Bot icon */}
+            <svg
+              width="18"
+              height="24"
+              viewBox="0 0 384 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              {/* AI Bot icon path */}
+            </svg>
+          </div>
+  
           <div
             onClick={() => {
               setAsideWorkFlow(!asideWorkFlow);
               setAsideFamilyTree(false);
+              setShowAiBot(false);
+              
             }}
           >
             <svg
@@ -574,6 +610,7 @@ function ActionItems() {
             onClick={() => {
               setAsideFamilyTree(!asideFamilyTree);
               setAsideWorkFlow(false);
+              setShowAiBot(false);
             }}
           >
             <svg
@@ -588,10 +625,11 @@ function ActionItems() {
               />
             </svg>
           </div>
+ 
         </div>
       </div>
     </>
   );
 }
 
-export default ActionItems;
+export default ActionItemsss;

@@ -19,6 +19,7 @@ function RootCauseAnalysis() {
     const [department, setDepartment] = useState([])
     const [rootCause, setRootCause] = useState([])
     const [cftPersons, setCftPersons] = useState([])
+    
     const [generalInformation, setGeneralInformation] = useReducer((prev, next) => ({
         ...prev, ...next
     }), {
