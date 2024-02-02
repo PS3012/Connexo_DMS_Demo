@@ -211,7 +211,6 @@ function CAPA() {
             <div className="inner-block-content">
               <div className="change-control-fields">
                 <div className="container-fluid">
-                  {/* <div id="change-control-fields"> */}
                   <div className="top-block">
                     <div>
                       <strong>Record Name:&nbsp;</strong> CAPA

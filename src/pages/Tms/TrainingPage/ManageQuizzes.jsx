@@ -1,6 +1,7 @@
 import './TrainingPage.css';
 import HeaderTop from '../../../components/Header/HeaderTop'
 import HeaderBottom from '../../../components/Header/HeaderBottom'
+import { Link } from 'react-router-dom';
 
 function ManageQuizzes() {
     return (
@@ -22,10 +23,10 @@ function ManageQuizzes() {
                         <div className="group-input-2">
                             <label>Questions</label>
                             <input type="text" value="Manage Quizzes" disabled />
-                           
+
                         </div>
-                        <div className='themeBtn'>Add</div>
-                        <div className='themeBtn'>Print</div>
+                        <Link to='/add-quizzes'><div className='themeBtn'>Add</div></Link>
+                        <Link to='/'><div className='themeBtn'>Print</div></Link>
                     </div>
                     <div className="selection-table">
                         <table className="">

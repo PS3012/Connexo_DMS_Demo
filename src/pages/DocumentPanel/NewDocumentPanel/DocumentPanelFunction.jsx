@@ -6,6 +6,11 @@ export const formList = ["Document Information", "Chemistry SOP", "Instrument SO
 
 export const workFlow = ["Opened", "HOD Review", "Pending QA Review", "CFT/SME Review", "Pending Change Implementation", "Closed-Done"]
 
+export const responsibilities = [
+    { label: "Amit", value: "Amit" },
+    { label: "Manish", value: "Manish" },
+    { label: "Piyush", value: "piyush" },
+];
 export const NotifyTo = [
     { label: "Amit Guru (Originator)", value: "1" },
     { label: "Shaleen Mishra (HOD)", value: "mango", },
@@ -54,11 +59,6 @@ export const referenceProcedures = {
 export const approvers = [
     { label: "Amit", value: "" },
 ];
-export const responsibilities = [
-    { label: "Amit", value: "Amit" },
-    { label: "Manish", value: "Manish" },
-    { label: "Piyush", value: "piyush" },
-];
 export const reviewers = [
     { label: "Vikash", value: "" },
 ];
@@ -88,7 +88,7 @@ export const Survey = {
 }
 export const docFormFile = [
     {
-        label: 'Attach Draft Document',
+        label: 'Attach Draft document',
         instruction: 'Please Attach all relevant or supporting documents',
         required: true,
         columnList: [
@@ -98,7 +98,7 @@ export const docFormFile = [
         ]
     },
     {
-        label: 'Attach Effective Document',
+        label: 'Attach Effective document',
         instruction: 'Please Attach all relevant or supporting documents',
         required: true,
         columnList: [

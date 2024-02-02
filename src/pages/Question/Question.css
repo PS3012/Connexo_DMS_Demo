@@ -22,10 +22,11 @@
     display: grid;
     gap: 20px;
 }
+
 /* ---------grid------ */
 #add-question-page .main-block .option-grid>div {
     display: grid;
-    grid-template-columns: 1fr  15px 20px;
+    grid-template-columns: 1fr 15px 20px;
     gap: 20px;
 }
 
@@ -50,4 +51,75 @@
     left: 0;
     width: 100%;
     box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px 10px;
+}
+
+/*! ===============================AddQuestion.jsx======================================= */
+#AddQuestion {
+    padding: 20px 25px;
+}
+
+#AddQuestion .document-form {
+    padding: 15px;
+    border-radius: 5px;
+    order: 3;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+}
+
+#AddQuestion .document-form .button-block {
+    padding: 19px 20px;
+    background: white;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    height: 76px;
+    left: 0;
+    width: 100%;
+    box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px 10px;
+}
+/* !==================================AddQuizzes=========================================== */
+#AddQuizzes {
+    padding: 20px 25px 96px;
+
+}
+#AddQuizzes .document-form {
+    padding: 15px;
+    border-radius: 5px;
+    order: 3;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+}
+#AddQuizzes .document-form .form-flex{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+#AddQuizzes .document-form .button-block {
+    padding: 19px 20px;
+    background: white;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    height: 76px;
+    left: 0;
+    width: 100%;
+    box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px 10px;
+}
+#AddQuizzes .document-form .checkbox-flex{
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+#AddQuizzes .document-form .table-head{
+    font-size: 22px;
+    font-weight: 600;
+    padding: 20px 0px;
 }

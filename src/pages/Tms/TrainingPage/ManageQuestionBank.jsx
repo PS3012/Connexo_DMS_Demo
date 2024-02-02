@@ -2,6 +2,7 @@ import React from 'react'
 import './TrainingPage.css';
 import HeaderBottom from '../../../components/Header/HeaderBottom';
 import HeaderTop from '../../../components/Header/HeaderTop';
+import { Link } from 'react-router-dom';
 
 function ManageQuestionBank() {
     return (
@@ -26,8 +27,8 @@ function ManageQuestionBank() {
                             <input type="text" value="Manage Question Bank" disabled />
 
                         </div>
-                        <div className='themeBtn'>Add</div>
-                        <div className='themeBtn'>Print</div>
+                        <Link to='/add-question'><div className='themeBtn'>Add</div></Link>
+                        <Link to='/'><div className='themeBtn'>Print</div></Link>
                     </div>
                     <div className="selection-table">
                         <table className="">

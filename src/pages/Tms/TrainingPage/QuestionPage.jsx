@@ -31,7 +31,7 @@ function QuestionPage() {
 
                             </select>
                         </div>
-                        <Link to="/question">  <div className='themeBtn'>Add</div></Link>
+                        <Link to="/question"><div className='themeBtn'>Add</div></Link>
                         <Link to=""><div className='themeBtn'>Print</div></Link>
                     </div>
                     <div className="selection-table">

@@ -1,13 +1,20 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import DocumentPanel from "./pages/DocumentPanel/DocumentPanel";
+// import DocumentPanel from "./pages/DocumentPanel/DocumentPanel";
 import TrainingManagementSystem from "./pages/TMS/TrainingManagementSystem";
 import Question from "./pages/Question/Question";
 import ChangeControlForm from "./pages/ConfigForms/ChangeControl/ChangeControl";
 import DocumentForm from "./pages/ConfigForms/DocumentForm/DocumentForm";
 import LabIncident from "./pages/ConfigForms/LabIncident/LabIncident";
 import ManageQuiz from "./pages/ManageQuiz/ManageQuiz";
+<<<<<<< Updated upstream
 import RiskAssessment from "./pages/ConfigForms/RiskAssessment/RiskAssessment";
 import RootCauseAnalysis from "./pages/ConfigForms/RootCauseAnalysis/RootCauseAnalysis";
+=======
+import RiskAssessment from "./pages/ConfigForms/RiskAssessment";
+import RootCauseAnalysis from "./pages/ConfigForms/RootCauseAnalysis";
+import InternalAudit from "./pages/ConfigForms/InternalAudit/InternalAudit";
+import ExternalAudit from "./pages/ConfigForms/ExternalAudit/ExternalAudit";
+>>>>>>> Stashed changes
 import Desktop from "./pages/Desktop/Desktop";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import ManagementReview from "./pages/ConfigForms/ManagementReview/ManagementReview";
@@ -24,9 +31,9 @@ import Observation from "./pages/ConfigForms/Observation/Observation";
 import ActionItemsPanel from "./pages/DocumentPanel/ActionItemsPanel/ActionItemsPanel";
 import AuditProgramPanel from "./pages/DocumentPanel/AuditProgramPanel/AuditProgramPanel";
 import QuestionPage from "./pages/Tms/TrainingPage/QuestionPage";
-import ManageQuestionPage from "./pages/Tms/TrainingPage/ManageQuestionPage";
 import ManageQuestionBank from "./pages/Tms/TrainingPage/ManageQuestionBank";
 import ManageQuizzes from "./pages/Tms/TrainingPage/ManageQuizzes";
+<<<<<<< Updated upstream
 import { ToastContainer } from "react-toastify";
 import ExternalAudit from "./pages/ConfigForms/ExternalAudit/ExternalAudit";
 import InternalAudit from "./pages/ConfigForms/InternalAudit/InternalAudit";
@@ -39,6 +46,14 @@ import CAPAPanel from "./pages/DocumentPanel/CapaPanel/CapaPanel";
 import ActionItemsss from "./pages/ConfigForms/ActionItems/ActionItemsss";
 import RiskAssessmentPanel from "./pages/DocumentPanel/RiskAssessmentPanel/RiskAssessmentPanel";
 import RootCauseAnalysisPanel from "./pages/DocumentPanel/RootCauseAnalysisPanel/RootCauseAnalysisPanel";
+=======
+import AuditTrail from "./pages/AuditTrail/AuditTrail";
+import Analytics from "./pages/Analytics/Analytics";
+import AuditTrailinner from "./pages/AuditTrail/AuditTrailinner";
+import AddQuestion from "./pages/Question/AddQuestion";
+import AddQuizzes from "./pages/Question/AddQuizzes";
+import DocumentPanel from "./pages/DocumentPanel/NewDocumentPanel/DocumentPanel";
+>>>>>>> Stashed changes
 
 function App() {
   return (
@@ -66,25 +81,32 @@ function App() {
           <Route path='/internal-audit' element={<InternalAudit />} />
           <Route path='/external-audit' element={<ExternalAudit />} />
           <Route path='/root-cause-analysis' element={<RootCauseAnalysis />} />
-          <Route path='/capa' element={<CAPA/>} />
-          <Route path='/audit-program' element={<AuditProgram/>} />
-          <Route path='/action-item' element={<ActionItems/>} />
-          <Route path='/observation' element={<Observation/>} />
-          <Route path='/effectiveness-check' element={<EffectivenessCheck/>} />
+          <Route path='/capa' element={<CAPA />} />
+          <Route path='/audit-program' element={<AuditProgram />} />
+          <Route path='/action-item' element={<ActionItems />} />
+          <Route path='/observation' element={<Observation />} />
+          <Route path='/effectiveness-check' element={<EffectivenessCheck />} />
           <Route path='/management-review' element={<ManagementReview />} />
           <Route path='/change-control' element={<ChangeControlForm />} />
-          <Route path='/extension' element={<Extension/>} />
-          <Route path='/action-item-panel' element={<ActionItemsPanel/>} />
-          <Route path='/audit-program-panel' element={<AuditProgramPanel/>} />
+          <Route path='/extension' element={<Extension />} />
+          <Route path='/action-item-panel' element={<ActionItemsPanel />} />
+          <Route path='/audit-program-panel' element={<AuditProgramPanel />} />
           <Route path='/capa-panel' element={<CAPAPanel />} />
           <Route path='/effectiveness-check-panel' element={<EffectivenessCheckPanel/>} />
           <Route path='/observation-panel' element={<ObservationPanel/>} />
           <Route path='/question-page' element={<QuestionPage />} />
-          <Route path='/manage-question' element={<ManageQuestionPage />} />
           <Route path='/manage-question-bank' element={<ManageQuestionBank />} />
+          <Route path='/add-question' element={<AddQuestion />} />
           <Route path='/manage-quizzes' element={<ManageQuizzes />} />
+<<<<<<< Updated upstream
           <Route path='/action' element={<ActionItemsss/>} />
           <Route path='/*' element={<Navigate to="/" />} />
+=======
+          <Route path='/audit-trial' element={<AuditTrail />} />
+          <Route path='/analytics' element={<Analytics />} />
+          <Route path='/audit-trail-inner' element={<AuditTrailinner />} />
+          <Route path='/add-quizzes' element={<AddQuizzes />} />
+>>>>>>> Stashed changes
         </Routes>
         <ToastContainer />
       </BrowserRouter>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./Question.css";
 import HeaderTop from "../../components/Header/HeaderTop";
+import HeaderBottom from "../../components/Header/HeaderBottom";
 
 function Question() {
     const [questionType, setQuestionType] = useState(0);
@@ -24,10 +25,8 @@ function Question() {
     return (
         <>
             <HeaderTop />
+            <HeaderBottom />
             <div id="add-question-page">
-                <div className="top-block">
-                    <div className="head">Add Question</div>
-                </div>
                 <div className="main-block">
                     <div className="form-block">
                         <div className="group-input">

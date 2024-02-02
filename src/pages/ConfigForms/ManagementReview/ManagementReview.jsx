@@ -9,7 +9,10 @@ import Grid from "../../../components/DataFields/Grid";
 // import ReleaseOfProduct from "../../../components/Modals/InstructionModal/ReleaseOfProduct";
 // import ControlofNonConforming from "../../../components/Modals/InstructionModal/ControlofNonConforming";
 import InputDate from "../../../components/DataFields/InputDate";
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 import { managementReview, site, Agenda, actionItem, attachment, performanceEvaluation, capaDetails, formList, workFlow, currentYear, } from './ManagementReviewFunction';
 import { CurrentDate } from "../../../components/DateReturners";
 

@@ -2,6 +2,7 @@ import './Dashboard.css';
 import React, { useState } from 'react'
 import HeaderTop from '../../components/Header/HeaderTop';
 import HeaderBottom from '../../components/Header/HeaderBottom';
+import './Dashboard.css'
 
 function Dashboard() {
     const [form, setForm] = useState("Internal Audit");
@@ -10,60 +11,58 @@ function Dashboard() {
         <>
             <HeaderTop />
             <HeaderBottom />
-            <>
-                <div id='multitab_header_tabs'>
-                    <div
-                        onClick={() => setForm("Internal Audit")}
-                        className={`process_group ${form === "Internal Audit" ? 'active' : 'inactive'}`}>
-                        Internal Audit
-                    </div>
-                    <div
-                        onClick={() => setForm("External Audit")}
-                        className={`process_group ${form === "External Audit" ? 'active' : 'inactive'}`}>
-                        External Audit
-                    </div>
-                    <div
-                        onClick={() => setForm("CAPA")}
-                        className={`process_group ${form === "CAPA" ? 'active' : 'inactive'}`}>
-                        CAPA
-                    </div>
-                    <div
-                        onClick={() => setForm("Audit Program")}
-                        className={`process_group ${form === "Audit Program" ? 'active' : 'inactive'}`}>
-                        Audit Program
-                    </div>
-                    <div
-                        onClick={() => setForm("Lab Incident")}
-                        className={`process_group ${form === "Lab Incident" ? 'active' : 'inactive'}`}>
-                        Lab Incident
-                    </div>
-                    <div
-                        onClick={() => setForm("Change Control")}
-                        className={`process_group ${form === "Change Control" ? 'active' : 'inactive'}`}>
-                        Change Control
-                    </div>
-                    <div
-                        onClick={() => setForm("Risk Assessment")}
-                        className={`process_group ${form === "Risk Assessment" ? 'active' : 'inactive'}`}>
-                        Risk Assessment
-                    </div>
-                    <div
-                        onClick={() => setForm("Root Cause Analysis")}
-                        className={`process_group ${form === "Root Cause Analysis" ? 'active' : 'inactive'}`}>
-                        Root Cause Analysis
-                    </div>
-                    <div
-                        onClick={() => setForm("Management Review")}
-                        className={`process_group ${form === "Management Review" ? 'active' : 'inactive'}`}>
-                        Management Review
-                    </div>
-                    <div
-                        onClick={() => setForm("New Document")}
-                        className={`process_group ${form === "New Document" ? 'active' : 'inactive'}`}>
-                        New Document
-                    </div>
+            <div id='multitab_header_tabs'>
+                <div
+                    onClick={() => setForm("Internal Audit")}
+                    className={`process_group ${form === "Internal Audit" ? 'active' : 'inactive'}`}>
+                    Internal Audit
                 </div>
-            </>
+                <div
+                    onClick={() => setForm("External Audit")}
+                    className={`process_group ${form === "External Audit" ? 'active' : 'inactive'}`}>
+                    External Audit
+                </div>
+                <div
+                    onClick={() => setForm("CAPA")}
+                    className={`process_group ${form === "CAPA" ? 'active' : 'inactive'}`}>
+                    CAPA
+                </div>
+                <div
+                    onClick={() => setForm("Audit Program")}
+                    className={`process_group ${form === "Audit Program" ? 'active' : 'inactive'}`}>
+                    Audit Program
+                </div>
+                <div
+                    onClick={() => setForm("Lab Incident")}
+                    className={`process_group ${form === "Lab Incident" ? 'active' : 'inactive'}`}>
+                    Lab Incident
+                </div>
+                <div
+                    onClick={() => setForm("Change Control")}
+                    className={`process_group ${form === "Change Control" ? 'active' : 'inactive'}`}>
+                    Change Control
+                </div>
+                <div
+                    onClick={() => setForm("Risk Assessment")}
+                    className={`process_group ${form === "Risk Assessment" ? 'active' : 'inactive'}`}>
+                    Risk Assessment
+                </div>
+                <div
+                    onClick={() => setForm("Root Cause Analysis")}
+                    className={`process_group ${form === "Root Cause Analysis" ? 'active' : 'inactive'}`}>
+                    Root Cause Analysis
+                </div>
+                <div
+                    onClick={() => setForm("Management Review")}
+                    className={`process_group ${form === "Management Review" ? 'active' : 'inactive'}`}>
+                    Management Review
+                </div>
+                <div
+                    onClick={() => setForm("New Document")}
+                    className={`process_group ${form === "New Document" ? 'active' : 'inactive'}`}>
+                    New Document
+                </div>
+            </div>
             <div id="scope_table_container">
                 <div className="scope_bar">
                     <div className="group-input-2">

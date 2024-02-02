@@ -81,7 +81,7 @@ function Desktop() {
                             <option value="6">Records Created Today</option>
                         </select>
                     </div>
-                    <button className='btn'>Print</button>
+                    <button className='themeBtn'>Print</button>
                 </div>
                 <div className="table-wrapper">
                     <table>

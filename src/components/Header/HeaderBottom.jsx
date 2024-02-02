@@ -35,7 +35,7 @@ function HeaderBottom() {
                                 <h3>Standards</h3>
                             </div>
                         </Link>
-                        <Link to="/questionpage">
+                        <Link to="/question-page">
                             <div className="navItem">
                                 <i className="ri-question-fill"></i>
                                 <h3>Question</h3>
