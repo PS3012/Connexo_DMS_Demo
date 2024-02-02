@@ -1,20 +1,12 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-// import DocumentPanel from "./pages/DocumentPanel/DocumentPanel";
 import TrainingManagementSystem from "./pages/TMS/TrainingManagementSystem";
 import Question from "./pages/Question/Question";
 import ChangeControlForm from "./pages/ConfigForms/ChangeControl/ChangeControl";
 import DocumentForm from "./pages/ConfigForms/DocumentForm/DocumentForm";
 import LabIncident from "./pages/ConfigForms/LabIncident/LabIncident";
 import ManageQuiz from "./pages/ManageQuiz/ManageQuiz";
-<<<<<<< Updated upstream
 import RiskAssessment from "./pages/ConfigForms/RiskAssessment/RiskAssessment";
 import RootCauseAnalysis from "./pages/ConfigForms/RootCauseAnalysis/RootCauseAnalysis";
-=======
-import RiskAssessment from "./pages/ConfigForms/RiskAssessment";
-import RootCauseAnalysis from "./pages/ConfigForms/RootCauseAnalysis";
-import InternalAudit from "./pages/ConfigForms/InternalAudit/InternalAudit";
-import ExternalAudit from "./pages/ConfigForms/ExternalAudit/ExternalAudit";
->>>>>>> Stashed changes
 import Desktop from "./pages/Desktop/Desktop";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import ManagementReview from "./pages/ConfigForms/ManagementReview/ManagementReview";
@@ -33,7 +25,6 @@ import AuditProgramPanel from "./pages/DocumentPanel/AuditProgramPanel/AuditProg
 import QuestionPage from "./pages/Tms/TrainingPage/QuestionPage";
 import ManageQuestionBank from "./pages/Tms/TrainingPage/ManageQuestionBank";
 import ManageQuizzes from "./pages/Tms/TrainingPage/ManageQuizzes";
-<<<<<<< Updated upstream
 import { ToastContainer } from "react-toastify";
 import ExternalAudit from "./pages/ConfigForms/ExternalAudit/ExternalAudit";
 import InternalAudit from "./pages/ConfigForms/InternalAudit/InternalAudit";
@@ -46,14 +37,12 @@ import CAPAPanel from "./pages/DocumentPanel/CapaPanel/CapaPanel";
 import ActionItemsss from "./pages/ConfigForms/ActionItems/ActionItemsss";
 import RiskAssessmentPanel from "./pages/DocumentPanel/RiskAssessmentPanel/RiskAssessmentPanel";
 import RootCauseAnalysisPanel from "./pages/DocumentPanel/RootCauseAnalysisPanel/RootCauseAnalysisPanel";
-=======
 import AuditTrail from "./pages/AuditTrail/AuditTrail";
 import Analytics from "./pages/Analytics/Analytics";
 import AuditTrailinner from "./pages/AuditTrail/AuditTrailinner";
 import AddQuestion from "./pages/Question/AddQuestion";
 import AddQuizzes from "./pages/Question/AddQuizzes";
 import DocumentPanel from "./pages/DocumentPanel/NewDocumentPanel/DocumentPanel";
->>>>>>> Stashed changes
 
 function App() {
   return (
@@ -98,15 +87,12 @@ function App() {
           <Route path='/manage-question-bank' element={<ManageQuestionBank />} />
           <Route path='/add-question' element={<AddQuestion />} />
           <Route path='/manage-quizzes' element={<ManageQuizzes />} />
-<<<<<<< Updated upstream
           <Route path='/action' element={<ActionItemsss/>} />
           <Route path='/*' element={<Navigate to="/" />} />
-=======
           <Route path='/audit-trial' element={<AuditTrail />} />
           <Route path='/analytics' element={<Analytics />} />
           <Route path='/audit-trail-inner' element={<AuditTrailinner />} />
           <Route path='/add-quizzes' element={<AddQuizzes />} />
->>>>>>> Stashed changes
         </Routes>
         <ToastContainer />
       </BrowserRouter>
