@@ -49,6 +49,7 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
+          <Route path="/report" element={<BasicDocument />} />
           <Route path="/" element={<Login />} />
           <Route path="/internal-audit-panel" element={<InternalAuditPanel/>} />
           <Route path="/external-audit-panel" element={<ExternalAuditPanel />} />
