@@ -43,6 +43,8 @@ import AuditTrailinner from "./pages/AuditTrail/AuditTrailinner";
 import AddQuestion from "./pages/Question/AddQuestion";
 import AddQuizzes from "./pages/Question/AddQuizzes";
 import DocumentPanel from "./pages/DocumentPanel/NewDocumentPanel/DocumentPanel";
+import BasicDocument from "./components/BasicDocument";
+
 
 function App() {
   return (
@@ -51,14 +53,14 @@ function App() {
         <Routes>
           <Route path="/report" element={<BasicDocument />} />
           <Route path="/" element={<Login />} />
-          <Route path="/internal-audit-panel" element={<InternalAuditPanel/>} />
+          <Route path="/internal-audit-panel" element={<InternalAuditPanel />} />
           <Route path="/external-audit-panel" element={<ExternalAuditPanel />} />
           <Route path='/change-control-panel' element={<ChangeControlPanel />} />
           <Route path='/lab-incident-panel/:formId' element={<LabIncidentPanel />} />
           <Route path='/root-cause-analysis-panel' element={<RootCauseAnalysisPanel />} />
           <Route path='/risk-opportunity-panel' element={<RiskAssessmentPanel />} />
-          <Route path='/management-review-panel' element={<ManagementReviewPanel/>} />
-          <Route path='/extension-panel' element={<ExtensionPanel/>} />
+          <Route path='/management-review-panel' element={<ManagementReviewPanel />} />
+          <Route path='/extension-panel' element={<ExtensionPanel />} />
           <Route path='/desktop' element={<Desktop />} />
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/question' element={<Question />} />
@@ -82,18 +84,19 @@ function App() {
           <Route path='/action-item-panel' element={<ActionItemsPanel />} />
           <Route path='/audit-program-panel' element={<AuditProgramPanel />} />
           <Route path='/capa-panel' element={<CAPAPanel />} />
-          <Route path='/effectiveness-check-panel' element={<EffectivenessCheckPanel/>} />
-          <Route path='/observation-panel' element={<ObservationPanel/>} />
+          <Route path='/effectiveness-check-panel' element={<EffectivenessCheckPanel />} />
+          <Route path='/observation-panel' element={<ObservationPanel />} />
           <Route path='/question-page' element={<QuestionPage />} />
           <Route path='/manage-question-bank' element={<ManageQuestionBank />} />
           <Route path='/add-question' element={<AddQuestion />} />
           <Route path='/manage-quizzes' element={<ManageQuizzes />} />
-          <Route path='/action' element={<ActionItemsss/>} />
+          <Route path='/action' element={<ActionItemsss />} />
           <Route path='/*' element={<Navigate to="/" />} />
           <Route path='/audit-trial' element={<AuditTrail />} />
           <Route path='/analytics' element={<Analytics />} />
           <Route path='/audit-trail-inner' element={<AuditTrailinner />} />
           <Route path='/add-quizzes' element={<AddQuizzes />} />
+
         </Routes>
         <ToastContainer />
       </BrowserRouter>
